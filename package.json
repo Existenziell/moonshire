@@ -1,0 +1,31 @@
+{
+  "name": "moonshire",
+  "author": "Christof Bauer <bauer.christof@gmail.com> (http://christof.digital/)",
+  "version": "0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^7.6.2",
+    "@supabase/supabase-js": "^1.35.2",
+    "@supabase/ui": "^0.36.5",
+    "count-lines-of-code": "^1.0.6",
+    "framer-motion": "^6.3.3",
+    "next": "^12.1.6",
+    "next-pwa": "^5.5.2",
+    "nextjs-progressbar": "^0.0.14",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-intersection-observer": "^9.1.0",
+    "react-select": "^5.3.2",
+    "react-spinners": "^0.11.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.13",
+    "tailwindcss": "^3.0.24"
+  }
+}

@@ -1,0 +1,175 @@
+/* --------------------------------------------------------
+Style Sheet for Project Moonshire
+
+version: 0.9
+author: Christof Bauer
+email: bauer.christof@gmail.com
+----------------------------------------------------------*/
+
+:root {
+  --color-brand: #DBDBDB;
+  --color-brand-dark: #242424;
+  --color-cta: #FF0040;
+  --color-detail: #CFCFCF;
+  --color-detail-dark: #323232;
+  --color-lines: #CCCCCC;
+  --color-lines-dark: #363636;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Atlas-Typewriter";
+  src: url("/fonts/Atlas-Typewriter-Regular.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Didot";
+  src: url("/fonts/Didot.ttc");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+html, body {
+	scroll-behavior: smooth;
+  font-family: 'Atlas-Typewriter';
+}
+
+h1, h2, h3, h4 {
+  @apply font-serif text-3xl;
+}
+
+::selection {
+  @apply text-cta;
+}
+
+::-moz-selection {
+  @apply text-cta;
+}
+
+.link {
+  @apply hover:cursor-pointer hover:text-cta transition-all;
+}
+
+/* ==========================================================================
+	Navigation
+	========================================================================== */
+
+.active-nav {
+  @apply font-bold text-cta;
+}
+
+.mobile-menu .active-nav {
+  @apply font-bold text-cta;
+}
+
+
+/* ==========================================================================
+	Forms 
+	========================================================================== */
+
+.button {
+  @apply w-48 h-10 rounded-full shadow text-xs flex items-center justify-center
+    hover:shadow-sm hover:cursor-pointer transition-all;
+}
+
+.button-cta {
+  @apply text-white bg-cta;
+}
+
+.button-detail {
+  @apply text-black bg-detail dark:bg-detail-dark dark:text-detail; 
+}
+
+.button-detail:hover {
+  @apply text-cta transition-all duration-200; 
+}
+
+.button:disabled {
+  @apply bg-slate-500 text-white shadow-none hover:cursor-not-allowed;
+}
+
+input {
+  @apply text-black;
+}
+
+.login-form input[type='text'], 
+.login-form input[type='number'], 
+.login-form input[type='email'], 
+.login-form input[type='website'] {
+  @apply border px-4 py-3 text-brand-dark text-center rounded-lg
+    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand;
+}
+
+.profile input[type='text'], .profile input[type='number'], .profile input[type='email'], .profile input[type='website'] {
+  @apply border px-3 py-2;
+}
+
+.admin input[type='text']:not(:disabled), 
+.admin input[type='number']:not(:disabled), 
+.admin input[type='email']:not(:disabled), 
+.admin input[type='website']:not(:disabled) {
+  @apply border px-3 py-2;
+}
+
+.admin input[type='text']:disabled {
+  @apply border-none bg-transparent;
+}
+
+
+/* ==========================================================================
+	Supabase UI overrides
+	========================================================================== */
+
+.sbui-btn-primary { 
+  @apply bg-brand-dark dark:bg-brand dark:text-brand-dark !important;
+}
+
+.sbui-typography-link {
+  @apply text-brand-dark dark:text-brand !important;
+}
+
+.sbui-checkbox:checked {
+  @apply bg-brand-dark !important; 
+}
+
+
+/* ==========================================================================
+	Admin
+	========================================================================== */
+
+.admin th {
+  @apply px-2 py-6;
+}
+
+.admin tr, td {
+  @apply px-2 py-4;
+}
+
+
+/* ==========================================================================
+	Sticky header
+	========================================================================== */
+
+  .sticky-header {
+    @apply fixed top-0 left-0 right-0;
+  }
+  
+  .scroll-up .sticky-header {
+    @apply shadow bg-white transition-all duration-300;
+  }
+  
+  .scroll-up:not(.menu-open) .sticky-header {
+    @apply shadow-none bg-transparent;
+  }
+  
+  .scroll-down .sticky-header {
+    @apply shadow-lg bg-white/80 transition-all duration-700;
+  }
+  
