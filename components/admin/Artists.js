@@ -58,7 +58,7 @@ const Artists = ({ artists, users }) => {
     const inputs = document.getElementsByClassName(`${id}-inputArtist`)
     const openEditBtns = document.getElementsByClassName('openBtnArtist')
     openBtn.style.display = "none"
-    closeBtn.style.display = "block"
+    closeBtn.style.display = "flex"
     Array.from(openEditBtns).forEach(el => (el.disabled = true))
     Array.from(inputs).forEach(el => (el.disabled = false))
   }
@@ -129,14 +129,14 @@ const Artists = ({ artists, users }) => {
 
   return (
     <div className='mt-12'>
-      <h1 className='max-w-max px-6 py-3 mb-1 text-brand bg-brand-dark dark:text-brand-dark dark:bg-brand'>Artists</h1>
+      <h2 className='mb-1'>Artists</h2>
 
-      <table className='shadow-lg bg-white text-brand-dark text-sm table-auto w-full' >
+      <table className='text-sm table-auto w-full'>
         <thead className='text-left'>
-          <tr className='bg-brand text-brand-dark dark:text-brand-dark font-bold'>
+          <tr className='font-bold text-xs border-b-2 border-lines dark:border-lines-dark'>
             <th>ID</th>
             <th>Name</th>
-            <th>Headline</th>
+            <th className='text-cta dark:text-admin-green'>Headline</th>
             <th>Description</th>
             <th>Origin</th>
             <th>Avatar</th>
@@ -147,11 +147,11 @@ const Artists = ({ artists, users }) => {
         <tbody>
 
           {!fetchedArtists?.length &&
-            <tr className='p-4 dark:text-brand-dark'><td>No artists found.</td></tr>
+            <tr className='p-4 dark:text-brand'><td>No artists found.</td></tr>
           }
 
           {fetchedArtists?.map((artist, idx) => (
-            <tr key={artist.id + artist.name} className={`relative anchor ${idx % 2 !== 0 && `bg-slate-100`}`}>
+            <tr key={artist.id + artist.name} className='relative'>
               <td>{artist.id}</td>
               <td>
                 <input
@@ -166,7 +166,7 @@ const Artists = ({ artists, users }) => {
                   type='text' name='headline' id='headline'
                   onChange={setData} disabled
                   defaultValue={artist.headline}
-                  className={`${artist.id}-inputArtist`}
+                  className={`${artist.id}-inputArtist text-cta dark:text-admin-green`}
                 />
               </td>
               <td>
@@ -188,33 +188,22 @@ const Artists = ({ artists, users }) => {
               <td>{artist.avatar_url}</td>
 
               <td className='text-center align-middle'>
-
-                <div id={`${artist.id}-closeBtnArtist`} className='hidden'>
-                  <button onClick={() => editArtist(artist.id)} aria-label='Edit Artist'>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer hover:text-green-700 hover:scale-110 pointer-events-auto" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
+                <div id={`${artist.id}-closeBtnArtist`} className='hidden items-center justify-center gap-2'>
+                  <button onClick={() => editArtist(artist.id)} aria-label='Edit Artist' className='button-admin'>
+                    Save
                   </button>
-                  <button onClick={() => closeEdit(artist)} aria-label='Close Edit Dialog'>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer hover:text-red-700 pointer-events-auto" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
+                  <button onClick={() => closeEdit(artist)} aria-label='Close Edit Dialog' className='button-admin'>
+                    Cancel
                   </button>
                 </div>
-
-                <button onClick={() => openEdit(artist.id)} id={`${artist.id}-openBtnArtist`} className='openBtn' aria-label='OpenEdit Dialog'>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-brand-dark hover:text-slate-500 hover:scale-110 transition-all cursor-pointer pointer-events-none" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                    <path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" />
-                  </svg>
+                <button onClick={() => openEdit(artist.id)} id={`${artist.id}-openBtnArtist`} className='openBtn button-admin' aria-label='OpenEdit Dialog'>
+                  Edit
                 </button>
               </td>
 
               <td className='text-center align-middle'>
-                <button onClick={() => toggleDeleteModal(artist.id)} aria-label='Toggle Delete Modal'>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-brand-dark hover:text-brand hover:scale-110 transition-all cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                  </svg>
+                <button onClick={() => toggleDeleteModal(artist.id)} aria-label='Toggle Delete Modal' className='button-admin'>
+                  Delete
                 </button>
               </td>
             </tr>
@@ -223,8 +212,8 @@ const Artists = ({ artists, users }) => {
       </table>
 
       {/* Add artist */}
-      <button onClick={openAdd} className='my-4 link flex items-center' aria-label='Open Add Artist Form'>
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block" viewBox="0 0 20 20" fill="currentColor">
+      <button onClick={openAdd} className='my-4 link flex items-center gap-1 text-xs' aria-label='Open Add Artist Form'>
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline-block" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
         </svg>
         Add artist
@@ -240,23 +229,22 @@ const Artists = ({ artists, users }) => {
 
 
       {/* Delete artist */}
-      {
-        showDelete &&
+      {showDelete &&
         <div className='fixed top-0 bottom-0 left-0 right-0 z-20 text-lg '>
           <div className='w-full h-full bg-black/80 flex items-center justify-center'>
             <div className='flex flex-col items-center justify-center backdrop-blur-lg bg-white text-brand-dark rounded p-12'>
               <button
                 onClick={() => setShowDelete(false)}
-                className='absolute top-0 right-0 px-2 py-0 rounded-sm hover:text-brand text-2xl hover:bg-gray-100'
-                aria-label='Close Delete Modal'
+                className='absolute top-0 right-0 px-2 pb-1 rounded-sm hover:text-cta text-2xl hover:bg-gray-100'
+                aria-label='Close Delete Dialog'
               >
                 &times;
               </button>
               <p className='text-sm'>Deleting artist with ID {ArtistToDelete}</p>
-              <p className='text-2xl mt-2'>Are you sure?</p>
-              <div className='flex items-center gap-4 mt-6'>
-                <button onClick={() => setShowDelete(false)} className='hover:text-brand hover:underline' aria-label='Cancel'>Cancel</button>
-                <button onClick={deleteArtist} className='hover:text-brand hover:underline' aria-label='Delete Artist'>Yes</button>
+              <h1>Are you sure?</h1>
+              <div className='flex items-center gap-4'>
+                <button onClick={() => setShowDelete(false)} className='button button-detail' aria-label='Cancel'>Cancel</button>
+                <button onClick={deleteArtist} className='button button-detail' aria-label='Delete Artist'>Yes</button>
               </div>
             </div>
           </div>

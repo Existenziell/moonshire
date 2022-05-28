@@ -14,6 +14,7 @@ email: bauer.christof@gmail.com
   --color-detail-dark: #323232;
   --color-lines: #CCCCCC;
   --color-lines-dark: #363636;
+  --color-admin-green: #60CE4C;
 }
 
 @tailwind base;
@@ -103,16 +104,14 @@ h2, h3, h4 {
   @apply bg-slate-500 text-white shadow-none hover:cursor-not-allowed;
 }
 
-input {
-  @apply text-black;
+.button-admin {
+  @apply w-24 h-10 rounded-full shadow text-xs flex items-center justify-center
+    hover:shadow-sm hover:cursor-pointer transition-all
+    text-black bg-detail dark:bg-detail-dark dark:text-detail; 
 }
 
-.login-form input[type='text'], 
-.login-form input[type='number'], 
-.login-form input[type='email'], 
-.login-form input[type='website'] {
-  @apply border px-4 py-3 text-brand-dark text-center rounded-lg
-    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand;
+.button-admin:hover {
+  @apply text-cta transition-all duration-200; 
 }
 
 .profile input[type='text'], .profile input[type='number'], .profile input[type='email'], .profile input[type='website'] {
@@ -123,7 +122,7 @@ input {
 .admin input[type='number']:not(:disabled), 
 .admin input[type='email']:not(:disabled), 
 .admin input[type='website']:not(:disabled) {
-  @apply border px-3 py-2;
+  @apply border px-3 py-2 rounded text-brand-dark focus:outline-none;
 }
 
 .admin input[type='text']:disabled {

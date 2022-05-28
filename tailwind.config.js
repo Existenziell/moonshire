@@ -24,6 +24,7 @@ module.exports = {
         'detail-dark': '#323232',
         'lines': '#CCCCCC',
         'lines-dark': '#363636',
+        'admin-green': '#60CE4C',
       },
       backgroundImage: {
         'logo': 'url(/logo.png)',
