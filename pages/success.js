@@ -17,11 +17,11 @@ const Success = () => {
             </svg>
           </a>
         </Link>
-        <h1 className='text-6xl my-8'>Success!</h1>
+        <h1>Success!</h1>
 
         <div className='flex'>
-          <Link href='/'><a className='button mr-6'>Back Home</a></Link>
-          <Link href='/collection'><a className='button'>Collection</a></Link>
+          <Link href='/'><a className='button button-detail mr-6'>Back Home</a></Link>
+          <Link href='/collection'><a className='button button-detail'>Collection</a></Link>
         </div>
 
       </div>

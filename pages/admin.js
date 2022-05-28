@@ -21,8 +21,8 @@ const Admin = ({ users, artists, roles }) => {
       </Head>
 
       <div className='admin flex flex-col items-start'>
-        <h1 className='text-4xl mt-8'>Admin Control</h1>
-        <p className='py-4'>Remember, with great power comes great responsibility.</p>
+        <h1 className='mb-1'>Admin</h1>
+        <p className='mb-4'>Remember, with great power comes great responsibility.</p>
         <Users users={users} roles={roles} />
         <Artists artists={artists} users={users} />
       </div>

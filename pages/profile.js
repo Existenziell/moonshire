@@ -38,7 +38,7 @@ const Profile = () => {
       </Head>
 
       <div className='px-8 profile'>
-        <h1 className='text-4xl md:text-6xl mb-12 mt-4'>Profile</h1>
+        <h1>Profile</h1>
 
         <h2>{username}</h2>
         <p className='text-tiny'>Joined: {createdAt?.slice(0, 10)}</p>

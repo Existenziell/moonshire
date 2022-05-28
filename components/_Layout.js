@@ -33,7 +33,7 @@ const Layout = ({ children }) => {
         <Nav />
       </div>
 
-      <main className='w-full text-black bg-brand dark:text-white dark:bg-brand-dark min-h-screen px-8 py-24'>
+      <main className='w-full text-black bg-brand dark:text-white dark:bg-brand-dark min-h-screen px-8 py-8'>
         {children}
       </main>
 
