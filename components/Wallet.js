@@ -48,7 +48,7 @@ const Wallet = () => {
 
     window.ethereum?.on('connect', (accounts) => {
       // console.log('Connected:', accounts, accounts.chainId)
-      router.reload(window.location.pathname)
+      // router.reload(window.location.pathname)
     })
 
     window.ethereum?.on('accountsChanged', (accounts) => {
