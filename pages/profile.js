@@ -15,7 +15,7 @@ const Profile = () => {
     walletAddress, setWalletAddress,
     provider, setProvider,
     isCorrectChain, setIsCorrectChain,
-    notify } = appCtx
+    disconnectWallet, notify } = appCtx
 
   const [loading, setLoading] = useState(false)
   const [id, setId] = useState(null)
@@ -104,6 +104,10 @@ const Profile = () => {
               updateProfile({ id, username, email, role, avatar_url: url, notify })
             }}
           />
+        </div>
+
+        <div>
+          <button onClick={disconnectWallet} className='button button-detail'>Disconnect Wallet</button>
         </div>
       </div>
     </>

@@ -24,25 +24,37 @@ const AppWrapper = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    if (walletAddress) setUser()
+    if (walletAddress) checkUser()
   }, [walletAddress])
 
-  const setUser = async () => {
+  // Check of a user exists for this Wallet
+  const checkUser = async () => {
     const user = await getProfile(walletAddress)
     if (user) {
       setCurrentUser(user)
     } else {
-      // NEW USER
-      const { data, error } = await supabase
-        .from('users')
-        .insert([
-          { id: uuid(), wallet: walletAddress },
-        ])
-      if (!error) {
-        notify("Welcome to Project Moonshire.")
-        setUser(data[0])
-      }
+      createUser()
     }
+  }
+
+  // Write new user to DB
+  const createUser = async () => {
+    const { data, error } = await supabase
+      .from('users')
+      .insert([
+        { id: uuid(), wallet: walletAddress },
+      ])
+    if (!error) {
+      notify("Welcome to Project Moonshire.")
+      setCurrentUser(data[0])
+    }
+  }
+
+  const disconnectWallet = () => {
+    // We can only pretend a disconnect by resetting the provider, chainId and selectedAccount
+    setProvider(null)
+    setWalletAddress(null)
+    setWalletConnected(false)
   }
 
   const notify = (msg) => {
@@ -64,7 +76,8 @@ const AppWrapper = ({ children }) => {
     isCorrectChain, setIsCorrectChain,
     provider, setProvider,
 
-    notify
+    disconnectWallet,
+    notify,
   }
 
   return (
