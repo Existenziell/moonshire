@@ -10,7 +10,7 @@ const Home = () => {
         <meta name='description' content="It's gonna be epic | Project Moonshire" />
       </Head>
 
-      <div className='flex items-center justify-center gap-8 text-sm'>
+      <div className='flex flex-col md:flex-row items-center justify-center gap-8 text-sm pt-12'>
         <img src='/landing.png' alt='Landing' className='w-1/2' />
         <div>
           <h1>Synthetic Wave Field Collection</h1>
