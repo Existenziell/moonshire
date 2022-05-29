@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react'
 import { motion, useAnimation } from 'framer-motion'
-// import ControlPanel from './ControlPanel'
 import DarkModeToggle from './DarkModeToggle'
 
 const Footer = () => {

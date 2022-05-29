@@ -1,11 +1,8 @@
-import { supabase } from '../lib/supabase'
 import Head from 'next/head'
 import Link from 'next/link'
 import AddToHomeScreen from '../components/AddToHomeScreen'
 
 const Home = () => {
-  const user = supabase.auth.user()
-
   return (
     <>
       <Head>

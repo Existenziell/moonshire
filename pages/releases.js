@@ -1,10 +1,7 @@
-import { supabase } from '../lib/supabase'
 import Head from 'next/head'
 import Link from 'next/link'
 
 const Releases = () => {
-  const user = supabase.auth.user()
-
   return (
     <>
       <Head>

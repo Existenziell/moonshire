@@ -1,17 +1,20 @@
 import React, { useState } from "react"
 import { createContext, useContext, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
+import { uuid } from "../lib/uuid"
 import getProfile from "../lib/getProfile"
 
 const AppContext = createContext({})
 
 const AppWrapper = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null)
   const [session, setSession] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [theme, setTheme] = useState(null)
+  const [currentUser, setCurrentUser] = useState(null)
   const [notificationMsg, setNotificationMsg] = useState('')
-  const [showControlPanel, setShowControlPanel] = useState(false)
+
+  const [walletAddress, setWalletAddress] = useState('')
+  const [walletConnected, setWalletConnected] = useState(false)
+  const [isCorrectChain, setIsCorrectChain] = useState(false)
+  const [provider, setProvider] = useState()
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -20,31 +23,26 @@ const AppWrapper = ({ children }) => {
     })
   }, [])
 
-  const setUser = async () => {
-    const authUser = supabase.auth.user()
-    if (!authUser) return
+  useEffect(() => {
+    if (walletAddress) setUser()
+  }, [walletAddress])
 
-    const user = await getProfile(() => { })
+  const setUser = async () => {
+    const user = await getProfile(walletAddress)
     if (user) {
       setCurrentUser(user)
+    } else {
+      // NEW USER
+      const { data, error } = await supabase
+        .from('users')
+        .insert([
+          { id: uuid(), wallet: walletAddress },
+        ])
+      if (!error) {
+        notify("Welcome to Project Moonshire.")
+        setUser(data[0])
+      }
     }
-  }
-
-  useEffect(() => {
-    setUser()
-  }, [session])
-
-  const toggleControlPanel = (e) => {
-    e.preventDefault()
-    const trigger = document.getElementsByClassName('controlPanelTrigger')[0]
-    const panel = document.getElementsByClassName('controlPanel')[0]
-
-    panel.classList.toggle('-translate-y-16')
-    trigger.classList.add('animate-ping')
-    setTimeout(() => {
-      trigger.classList.remove('animate-ping')
-    }, 400)
-    setShowControlPanel(!showControlPanel)
   }
 
   const notify = (msg) => {
@@ -57,20 +55,15 @@ const AppWrapper = ({ children }) => {
   }
 
   let app = {
-    currentUser,
-    session,
-    loading,
-    theme,
-    notificationMsg,
-    showControlPanel,
-    setCurrentUser,
-    setSession,
-    setLoading,
-    setTheme,
-    setNotificationMsg,
-    setShowControlPanel,
+    session, setSession,
+    currentUser, setCurrentUser,
+    notificationMsg, setNotificationMsg,
 
-    toggleControlPanel,
+    walletAddress, setWalletAddress,
+    walletConnected, setWalletConnected,
+    isCorrectChain, setIsCorrectChain,
+    provider, setProvider,
+
     notify
   }
 

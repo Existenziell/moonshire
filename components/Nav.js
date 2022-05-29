@@ -15,9 +15,7 @@ const Nav = () => {
         { name: 'Releases', href: '/releases', title: 'Releases' },
         { name: 'Live', href: '/live', title: 'Live' },
         { name: 'Collection', href: '/collection', title: 'Collection' },
-        // { name: currentUser ? 'Profile' : 'Connect Wallet', href: '/profile', title: currentUser ? 'Profile' : 'Connect Wallet' },
     ]
-
     if (currentUser?.roles?.name === 'Admin') urls.push({ name: 'Admin', href: '/admin', title: 'Admin' },)
 
     const intercept = (e) => {
@@ -27,9 +25,9 @@ const Nav = () => {
     }
 
     return (
-        <nav className='w-full text-black bg-brand dark:text-white dark:bg-brand-dark pt-14'>
+        <nav className='w-full'>
             {/* Desktop menu */}
-            <ul className="hidden md:flex justify-end items-center gap-6 pr-8 w-full">
+            <ul className="hidden md:flex justify-end items-center gap-6 pr-8 w-full text-sm">
                 {urls.map(u => (
                     <li key={u.name}>
                         <Link href={u.href}>
@@ -64,11 +62,11 @@ const Nav = () => {
             {/* Mobile Hamburger Button */}
             <button className='mobile-menu-button md:hidden outline-none' onClick={() => setIsOpen(!isOpen)} aria-label='Open Mobile Navigation'>
                 {!isOpen ?
-                    <svg xmlns='http://www.w3.org/2000/svg' className='absolute top-10 right-10 h-14 w-14 text-brand-dark dark:text-brand hover:text-cta dark:hover:text-cta  hover:scale-105 transition-all' fill='none' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' viewBox='0 0 24 24' stroke='currentColor'>
+                    <svg xmlns='http://www.w3.org/2000/svg' className='absolute top-7 right-44 h-14 w-14 text-brand-dark dark:text-brand hover:text-cta dark:hover:text-cta  hover:scale-105 transition-all' fill='none' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' viewBox='0 0 24 24' stroke='currentColor'>
                         <path d='M4 6h16M4 12h16M4 18h16'></path>
                     </svg>
                     :
-                    <svg xmlns='http://www.w3.org/2000/svg' className='absolute top-10 right-10 h-14 w-14 z-20 text-brand-dark dark:text-brand hover:text-cta dark:hover:text-cta hover:scale-105 transition-all' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                    <svg xmlns='http://www.w3.org/2000/svg' className='absolute top-7 right-10 h-14 w-14 z-20 text-brand-dark dark:text-brand hover:text-cta dark:hover:text-cta hover:scale-105 transition-all' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                         <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
                     </svg>
                 }

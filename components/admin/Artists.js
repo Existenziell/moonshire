@@ -32,7 +32,6 @@ const Artists = ({ artists, users }) => {
 
   const addArtist = async (e) => {
     e.preventDefault()
-    console.log(formData);
     const { data, error } = await supabase
       .from('artists')
       .insert([{

@@ -10,7 +10,7 @@ const Admin = ({ users, artists, roles }) => {
   const appCtx = useContext(AppContext)
   const { session, currentUser } = appCtx
 
-  if (!session || !currentUser) return <SupaAuth />
+  if (!session) return <SupaAuth />
   if (currentUser?.roles?.name !== 'Admin') return <SupaAuth />
 
   return (

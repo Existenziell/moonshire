@@ -80,7 +80,7 @@ h2, h3, h4 {
 
 
 /* ==========================================================================
-	Forms 
+	Buttons 
 	========================================================================== */
 
 .button {
@@ -104,29 +104,23 @@ h2, h3, h4 {
   @apply bg-slate-500 text-white shadow-none hover:cursor-not-allowed;
 }
 
-.button-admin {
-  @apply w-24 h-10 rounded-full shadow text-xs flex items-center justify-center
-    hover:shadow-sm hover:cursor-pointer transition-all
-    text-black bg-detail dark:bg-detail-dark dark:text-detail; 
+.button-connect {
+  @apply w-36 h-14 rounded-full shadow-xl flex items-center justify-center bg-cta text-white
+    hover:shadow-sm hover:cursor-pointer transition-all;
 }
 
-.button-admin:hover {
-  @apply text-cta transition-all duration-200; 
-}
 
-.profile input[type='text'], .profile input[type='number'], .profile input[type='email'], .profile input[type='website'] {
-  @apply border px-3 py-2;
-}
+/* ==========================================================================
+	Profile
+	========================================================================== */
 
-.admin input[type='text']:not(:disabled), 
-.admin input[type='number']:not(:disabled), 
-.admin input[type='email']:not(:disabled), 
-.admin input[type='website']:not(:disabled) {
-  @apply border px-3 py-2 rounded text-brand-dark focus:outline-none;
-}
-
-.admin input[type='text']:disabled {
-  @apply border-none bg-transparent;
+.profile input[type='text'], 
+.profile input[type='number'], 
+.profile input[type='email'], 
+.profile input[type='website'] {
+  @apply bg-brand dark:bg-brand-dark text-center rounded 
+    focus:border-none focus:outline-none focus:scale-105 transition-all 
+    visited:bg-red-300;
 }
 
 
@@ -159,24 +153,23 @@ h2, h3, h4 {
   @apply px-2 py-4;
 }
 
+.admin input[type='text']:not(:disabled), 
+.admin input[type='number']:not(:disabled), 
+.admin input[type='email']:not(:disabled), 
+.admin input[type='website']:not(:disabled) {
+  @apply border px-3 py-2 rounded text-brand-dark focus:outline-none;
+}
 
-/* ==========================================================================
-	Sticky header
-	========================================================================== */
+.admin input[type='text']:disabled {
+  @apply border-none bg-transparent;
+}
 
-  .sticky-header {
-    @apply fixed top-0 left-0 right-0;
-  }
-  
-  .scroll-up .sticky-header {
-    @apply shadow bg-white transition-all duration-300;
-  }
-  
-  .scroll-up:not(.menu-open) .sticky-header {
-    @apply shadow-none bg-transparent;
-  }
-  
-  .scroll-down .sticky-header {
-    @apply shadow-lg bg-white/80 transition-all duration-700;
-  }
-  
+.button-admin {
+  @apply w-24 h-10 rounded-full shadow text-xs flex items-center justify-center
+    hover:shadow-sm hover:cursor-pointer transition-all
+    text-black bg-detail dark:bg-detail-dark dark:text-detail; 
+}
+
+.button-admin:hover {
+  @apply text-cta transition-all duration-200; 
+}

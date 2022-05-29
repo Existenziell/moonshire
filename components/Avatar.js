@@ -17,7 +17,7 @@ export default function Avatar({ url, size, onUpload }) {
         <img
           src={avatarUrl}
           alt="Avatar"
-          className="rounded border border-brand"
+          className="rounded shadow-lg p-2"
           style={{ height: size, width: size }}
         />
       ) : (
@@ -25,7 +25,11 @@ export default function Avatar({ url, size, onUpload }) {
       )}
       <div className='my-8'>
         <label className="text-sm" htmlFor="single">
-          {uploading ? 'Uploading ...' : <span className='button button-detail'>Change Avatar</span>}
+          {uploading ?
+            <span className='button button-detail mx-auto'>Uploading ...</span>
+            :
+            <span className='button button-detail mx-auto'>Change Avatar</span>
+          }
         </label>
         <input
           type="file"
