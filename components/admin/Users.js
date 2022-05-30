@@ -186,8 +186,7 @@ const Users = ({ users, roles }) => {
       </table>
 
       <p className='text-xs mt-2 text-right'>
-        New users can only be added via valid Auth flow, aka they need to create a new account.<br />
-        The email is connected to auth.user and cannot be changed.
+        New users can only be added via valid Auth flow, aka they need to connect their wallet.<br />
       </p>
 
       {/* Delete user */}
