@@ -1,12 +1,11 @@
-import React, { useState } from "react"
-import { createContext, useContext, useEffect } from 'react'
+import { createContext, useState, useContext, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { v4 as uuid } from 'uuid'
-import getProfile from "../lib/getProfile"
-import detectEthereumProvider from '@metamask/detect-provider'
 import { useRouter } from "next/router"
 import { chainId, signMessage } from '../lib/config'
 import { ethers } from "ethers"
+import getProfile from "../lib/getProfile"
+import detectEthereumProvider from '@metamask/detect-provider'
 
 const AppContext = createContext({})
 
@@ -18,7 +17,7 @@ const AppWrapper = ({ children }) => {
   const [avatar_url, setAvatarUrl] = useState(null)
   const [notificationMsg, setNotificationMsg] = useState('')
 
-  const [walletAddress, setWalletAddress] = useState('')
+  const [walletAddress, setWalletAddress] = useState(null)
   const [walletConnected, setWalletConnected] = useState(false)
   const [isCorrectChain, setIsCorrectChain] = useState(false)
   const [provider, setProvider] = useState()
@@ -79,30 +78,31 @@ const AppWrapper = ({ children }) => {
       setWalletAddress('')
       setWalletConnected(false)
     } else {
-      setWalletAddress(accounts[0])
+      const address = accounts[0]
+      setWalletAddress(address)
       setWalletConnected(true)
-      checkUser()
+      checkUser(address)
     }
   }
 
   // Check if a user exists for this Wallet
-  const checkUser = async () => {
-    const user = await getProfile(walletAddress)
+  const checkUser = async (address) => {
+    const user = await getProfile(address)
     if (user) {
       setUsername(user.username)
       setAvatarUrl(user.avatar_url)
       setCurrentUser(user)
     } else {
-      createUser()
+      createUser(address)
     }
   }
 
   // Write new user to DB
-  const createUser = async () => {
+  const createUser = async (address) => {
     const { data, error } = await supabase
       .from('users')
       .insert([
-        { id: uuid(), walletAddress, nonce: uuid() },
+        { id: uuid(), walletAddress: address, nonce: uuid() },
       ])
     if (!error) {
       notify("Welcome to Project Moonshire.")
