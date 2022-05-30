@@ -93,16 +93,34 @@ const AppWrapper = ({ children }) => {
       setAvatarUrl(user.avatar_url)
       setCurrentUser(user)
     } else {
-      createUser(address)
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+      const nonce = uuid()
+      const signMessage = `
+Welcome to Project Moonshire!
+            
+This signature is used to sign you in and accept the Moonshire Terms of Service: https://moonshire.io/tos
+           
+This request will not trigger a blockchain transaction or cost any gas fees.
+              
+Your authentication status will reset after 24 hours.
+
+Wallet address: ${address}
+
+Nonce: ${nonce}
+      `
+
+      const signature = await signer.signMessage(signMessage)
+      createUser(address, nonce, signature)
     }
   }
 
   // Write new user to DB
-  const createUser = async (address) => {
+  const createUser = async (address, nonce, signature) => {
     const { data, error } = await supabase
       .from('users')
       .insert([
-        { id: uuid(), walletAddress: address, nonce: uuid() },
+        { id: uuid(), walletAddress: address, nonce, signature },
       ])
     if (!error) {
       notify("Welcome to Project Moonshire.")
