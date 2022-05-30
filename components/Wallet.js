@@ -5,62 +5,43 @@ import { hasEthereum, requestAccount } from '../lib/ethereum'
 import { AppContext } from '../context/AppContext'
 import Image from 'next/image'
 import Link from 'next/link'
-import { chainId } from '../lib/config'
+import { chainId, signMessage } from '../lib/config'
 
 const Wallet = () => {
   const appCtx = useContext(AppContext)
   const {
     walletConnected, setWalletConnected,
     walletAddress, setWalletAddress,
-    provider, setProvider,
     isCorrectChain, setIsCorrectChain,
     notify
   } = appCtx
 
   const [overlayShown, setOverlayShown] = useState(false)
+  const [accounts, setAccounts] = useState(null)
   const router = useRouter()
 
   async function connectWallet() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const userNetwork = await provider.getNetwork()
-    const signer = provider.getSigner()
-
-    try {
-      const signerAddress = await signer.getAddress()
-      setWalletAddress(signerAddress)
-      setWalletConnected(true)
-      setProvider(provider)
+    if (hasEthereum()) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const userNetwork = await provider.getNetwork()
 
       if (userNetwork.chainId === chainId) {
         setIsCorrectChain(true)
+        await provider.send('eth_requestAccounts', [])
+
       } else {
         notify(`Please change network to Rinkeby in Metamask.`)
         setIsCorrectChain(false)
+        return
       }
-    } catch {
-      setWalletAddress('')
-      setWalletConnected(false)
+
+      // Signer is current account
+      const signer = provider.getSigner()
+      const walletAddress = await signer.getAddress()
+      setWalletAddress(walletAddress)
+      setWalletConnected(true)
     }
   }
-
-  useEffect(() => {
-    if (hasEthereum()) connectWallet()
-
-    window.ethereum?.on('connect', (accounts) => {
-      // console.log('Connected:', accounts, accounts.chainId)
-      // router.reload(window.location.pathname)
-    })
-
-    window.ethereum?.on('accountsChanged', (accounts) => {
-      // console.log('accountsChanged', accounts)
-      router.reload(window.location.pathname)
-    })
-
-    window.ethereum?.on('chainChanged', (chainId) => {
-      // console.log('Chain changed:', chainId)
-      router.reload(window.location.pathname)
-    })
-  }, [])
 
   if (walletConnected && walletAddress) return (
     <div className='mr-4'>
@@ -85,7 +66,7 @@ const Wallet = () => {
       <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 rounded-xl bg-white dark:bg-brand-dark md:max-w-2xl p-6'>
         <h1 className='text-2xl md:text-4xl mb-4'>Connect your wallet</h1>
         <p className='text-sm mb-8 max-w-md mx-auto'>By connecting your wallet, you agree to our Terms of Services and our Privacy Policy.</p>
-        <div onClick={requestAccount} className='button button-detail flex items-center justify-between divide-x divide-dashed divide-brand dark:divide-brand-dark mx-auto'>
+        <div onClick={connectWallet} className='button button-detail flex items-center justify-between divide-x divide-dashed divide-brand dark:divide-brand-dark mx-auto'>
           <span className='pr-4'>MetaMask</span>
           <span className='pl-4'><Image src='/metamask.svg' alt='MetaMask' width={20} height={20} /></span>
         </div>
@@ -100,9 +81,10 @@ const Wallet = () => {
   )
 
   return (
-    <div className='bg-brand dark:bg-brand-dark pr-4'>
+    <div className='bg-brand dark:bg-brand-dark md:pr-4 '>
       <button
-        onClick={() => setOverlayShown(true)}
+        // onClick={() => setOverlayShown(true)}
+        onClick={connectWallet}
         className='button button-connect'>
         Sync Wallet
       </button>

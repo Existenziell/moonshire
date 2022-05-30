@@ -10,31 +10,32 @@ import Wallet from '../components/Wallet'
 
 const Profile = () => {
   const appCtx = useContext(AppContext)
-  const { currentUser,
+  const {
+    currentUser, setCurrentUser,
+    userId, setUserId,
+    username, setUsername,
+    avatar_url, setAvatarUrl,
     walletConnected, setWalletConnected,
     walletAddress, setWalletAddress,
     provider, setProvider,
     isCorrectChain, setIsCorrectChain,
-    disconnectWallet, notify } = appCtx
+    disconnectWallet, notify
+  } = appCtx
 
   const [loading, setLoading] = useState(false)
-  const [id, setId] = useState(null)
-  const [username, setUsername] = useState(null)
   const [email, setEmail] = useState(null)
   const [role, setRole] = useState(null)
   const [is_premium, setIsPremium] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
   const [createdAt, setCreatedAt] = useState(null)
   const [modified, setModified] = useState(false)
 
   useEffect(() => {
     if (currentUser) {
-      setId(currentUser.id)
-      setUsername(currentUser.username)
-      setEmail(currentUser.email)
-      setRole(currentUser.role)
-      setAvatarUrl(currentUser.avatar_url)
-      setCreatedAt(currentUser.created_at)
+      const { id, email, role, created_at } = currentUser
+      setUserId(id)
+      setEmail(email)
+      setRole(role)
+      setCreatedAt(created_at)
     }
   }, [currentUser])
 
@@ -44,8 +45,8 @@ const Profile = () => {
   }
 
   const updateUser = () => {
-    updateProfile({ id, username, notify })
     setModified(false)
+    updateProfile({ id: userId, username, avatar_url, notify })
   }
 
   const resetInput = () => {
@@ -78,7 +79,7 @@ const Profile = () => {
               value={username || ''}
               onChange={(e) => setUser(e)}
               placeholder='Username'
-              className='text-4xl font-serif'
+              className='text-4xl md:text-6xl font-serif'
             />
           </label>
           {modified &&
@@ -95,13 +96,13 @@ const Profile = () => {
           <p>Wallet {walletAddress}</p>
         </div>
 
-        <div className='w-1/3'>
+        <div className='max-w-lg'>
           <Avatar
             url={avatar_url}
             // size={150}
             onUpload={(url) => {
               setAvatarUrl(url)
-              updateProfile({ id, username, email, role, avatar_url: url, notify })
+              updateProfile({ id: userId, username, email, role, avatar_url: url, notify })
             }}
           />
         </div>

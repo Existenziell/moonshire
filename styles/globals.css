@@ -118,9 +118,8 @@ h2, h3, h4 {
 .profile input[type='number'], 
 .profile input[type='email'], 
 .profile input[type='website'] {
-  @apply bg-brand dark:bg-brand-dark text-center rounded 
-    focus:border-none focus:outline-none focus:scale-105 transition-all 
-    visited:bg-red-300;
+  @apply bg-brand dark:bg-brand-dark text-center rounded py-2
+    focus:border-none focus:outline-none focus:scale-105 transition-all;
 }
 
 

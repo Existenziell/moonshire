@@ -27,10 +27,21 @@ const Layout = ({ children }) => {
         color='var(--color-brand)'
         options={{ showSpinner: false }}
       />
-      <div className='flex justify-between items-center z-20 bg-brand dark:bg-brand-dark text-black dark:text-white' >
+
+      <div className='hidden md:flex justify-between items-center z-20 bg-brand dark:bg-brand-dark text-black dark:text-white' >
         <Logo />
         <Nav />
         <Wallet />
+      </div>
+
+      <div className='flex md:hidden justify-between items-center z-20 bg-brand dark:bg-brand-dark text-black dark:text-white' >
+        <div className=''>
+          <Logo />
+        </div>
+        <div className='flex items-center gap-2 px-4'>
+          <Wallet />
+          <Nav />
+        </div>
       </div>
 
       <main className='w-full text-black bg-brand dark:text-white dark:bg-brand-dark min-h-screen px-8 py-8'>
