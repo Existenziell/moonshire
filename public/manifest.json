@@ -1,28 +1,28 @@
 {
-  "theme_color": "#C90076",
-  "background_color": "#200530",
+  "theme_color": "#DBDBDB",
+  "background_color": "#242424",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
   "name": "Project Moonshire",
   "short_name": "PM",
-  "description": "A WEB3 WHITE-LABEL PLATFORM DISRUPTING THE 2.0 STATUS QUO",
+  "description": "A Web3 White-Label Platform Disrupting The 2.0 Status Quo",
   "icons": [
     {
       "src": "/favicon/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
-    {
-      "src": "/favicon/android-chrome-256x256.png",
-      "sizes": "256x256",
-      "type": "image/png"
-    },
-    {
-      "src": "/favicon/android-chrome-384x384.png",
-      "sizes": "384x384",
-      "type": "image/png"
-    },
+    // {
+    //   "src": "/favicon/android-chrome-256x256.png",
+    //   "sizes": "256x256",
+    //   "type": "image/png"
+    // },
+    // {
+    //   "src": "/favicon/android-chrome-384x384.png",
+    //   "sizes": "384x384",
+    //   "type": "image/png"
+    // },
     {
       "src": "/favicon/android-chrome-512x512.png",
       "sizes": "512x512",
