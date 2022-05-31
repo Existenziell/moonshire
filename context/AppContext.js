@@ -60,6 +60,7 @@ const AppWrapper = ({ children }) => {
     }
   }
 
+  // Persisting Wallet Connection Status
   useEffect(() => {
     const connectWalletOnPageLoad = async () => {
       if (localStorage?.getItem('walletConnected') === 'true') {
