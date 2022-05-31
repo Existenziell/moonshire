@@ -9,11 +9,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "@ethersproject/providers": "^5.6.8",
     "@metamask/detect-provider": "^1.2.0",
     "@openzeppelin/contracts": "^4.6.0",
     "@sendgrid/mail": "^7.6.2",
     "@supabase/supabase-js": "^1.35.2",
     "@supabase/ui": "^0.36.5",
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
     "count-lines-of-code": "^1.0.6",
     "ethers": "^5.6.8",
     "framer-motion": "^6.3.3",

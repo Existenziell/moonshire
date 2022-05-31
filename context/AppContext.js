@@ -2,25 +2,26 @@ import { createContext, useState, useContext, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { v4 as uuid } from 'uuid'
 import { useRouter } from "next/router"
-import { chainId, signMessage } from '../lib/config'
 import { ethers } from "ethers"
 import getProfile from "../lib/getProfile"
 import detectEthereumProvider from '@metamask/detect-provider'
+import { getSigningMsg } from '../lib/getSigningMsg'
+import { useWeb3React } from "@web3-react/core"
+import { InjectedConnector } from "@web3-react/injected-connector"
+import { injected } from "../components/Connector"
+import { hasEthereum } from '../lib/ethereum'
 
 const AppContext = createContext({})
 
 const AppWrapper = ({ children }) => {
   const [session, setSession] = useState(null)
-  const [currentUser, setCurrentUser] = useState(null)
-  const [userId, setUserId] = useState(null)
-  const [username, setUsername] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
   const [notificationMsg, setNotificationMsg] = useState('')
 
-  const [walletAddress, setWalletAddress] = useState(null)
-  const [walletConnected, setWalletConnected] = useState(false)
+  const [currentUser, setCurrentUser] = useState(null)
+  const [hasMetamask, setHasMetamask] = useState(false)
   const [isCorrectChain, setIsCorrectChain] = useState(false)
-  const [provider, setProvider] = useState()
+
+  const { account, chainId, active, library: provider, connector, activate, deactivate, error, setError } = useWeb3React()
   const router = useRouter()
 
   // Session for Admin
@@ -31,91 +32,63 @@ const AppWrapper = ({ children }) => {
     })
   }, [])
 
+  // Check if user wallet is connected 
   useEffect(() => {
-    initMetaMask()
+    if (account) checkUser()
+  }, [account])
+
+  // Connect to Metamask wallet
+  async function connect() {
+    if (hasMetamask) {
+      try {
+        await activate(injected)
+        checkUser()
+        localStorage.setItem('walletConnected', true)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  }
+
+  // Disconnect from Metamask wallet
+  async function disconnect() {
+    try {
+      localStorage.setItem('walletConnected', false)
+      deactivate()
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    const connectWalletOnPageLoad = async () => {
+      if (localStorage?.getItem('walletConnected') === 'true') {
+        try {
+          await activate(injected)
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    }
+    connectWalletOnPageLoad()
   }, [])
 
-  const initMetaMask = async () => {
-    const provider = await detectEthereumProvider()
-    if (provider) {
-      setProvider(provider)
-      if (provider.isMetaMask) {
-        provider.on('accountsChanged', handleAccountsChanged)
-        provider.on('chainChanged', handleChainChanged)
-        checkConnection()
-      } else {
-        notify('Please install MetaMask!')
-      }
-
-      // Legacy providers may only have ethereum.sendAsync
-      const chainId = await provider.request({
-        method: 'eth_chainId'
-      })
-    } else {
-      // if the provider is not detected, detectEthereumProvider resolves to null
-      notify('Please install MetaMask!')
-    }
-  }
-
-  const checkConnection = () => {
-    ethereum
-      .request({ method: 'eth_accounts' })
-      .then(handleAccountsChanged)
-      .catch(console.error)
-  }
-
-  const handleChainChanged = (chainId) => {
-    if (parseInt(chainId) === 4) {
-      setIsCorrectChain(true)
-    } else {
-      notify(`Please change network to Rinkeby in Metamask.`)
-      setIsCorrectChain(false)
-    }
-  }
-
-  const handleAccountsChanged = (accounts) => {
-    if (accounts.length === 0) {
-      setWalletAddress('')
-      setWalletConnected(false)
-    } else {
-      const address = accounts[0]
-      setWalletAddress(address)
-      setWalletConnected(true)
-      checkUser(address)
-    }
-  }
-
   // Check if a user exists for this Wallet
-  const checkUser = async (address) => {
-    const user = await getProfile(address)
+  const checkUser = async () => {
+    const user = await getProfile(account)
     if (user) {
-      setUsername(user.username)
-      setAvatarUrl(user.avatar_url)
       setCurrentUser(user)
     } else {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
       const nonce = uuid()
-      const signMessage = `
-Welcome to Project Moonshire!
-            
-This signature is used to sign you in and accept the Moonshire Terms of Service: https://moonshire.io/tos
-           
-This request will not trigger a blockchain transaction or cost any gas fees.
-              
-Your authentication status will reset after 24 hours.
-
-Wallet address: ${address}
-
-Nonce: ${nonce}
-      `
-
-      const signature = await signer.signMessage(signMessage)
-      createUser(address, nonce, signature)
+      const message = getSigningMsg(nonce, account)
+      const signature = await signer.signMessage(message)
+      createUser(account, nonce, signature)
     }
   }
 
-  // Write new user to DB
+  // Create new user in DB
   const createUser = async (address, nonce, signature) => {
     const { data, error } = await supabase
       .from('users')
@@ -128,14 +101,7 @@ Nonce: ${nonce}
     }
   }
 
-  const disconnectWallet = async () => {
-    // We can only pretend a disconnect by resetting the provider, chainId and selectedAccount
-    await setProvider(null)
-    await setWalletAddress(null)
-    await setWalletConnected(false)
-    router.push('/')
-  }
-
+  // System wide notification service
   const notify = (msg) => {
     const notification = document.querySelector('.notification')
     notification.classList.remove('-translate-y-20')
@@ -145,21 +111,56 @@ Nonce: ${nonce}
     }, 3500)
   }
 
+  // Listeners for changes in account/chain/network
+  useEffect(() => {
+    if (hasEthereum()) {
+      setHasMetamask(true)
+    } else {
+      setHasMetamask(false)
+      return
+    }
+
+    const handleConnect = (accounts) => {
+      // console.log("Handling 'connect' event with accounts: ", accounts)
+      activate(injected)
+    }
+
+    const handleChainChanged = (chainId) => {
+      // console.log("Handling 'chainChanged' event with chainId: ", parseInt(chainId))
+      if (parseInt(chainId) === 4) {
+        setIsCorrectChain(true)
+      } else {
+        notify(`Please change network to Rinkeby in Metamask.`)
+        setIsCorrectChain(false)
+      }
+    }
+
+    const handleAccountsChanged = (accounts) => {
+      // console.log("Handling 'accountsChanged' event with accounts: ", accounts)
+      if (accounts.length > 0) {
+        activate(injected)
+      }
+    }
+
+    ethereum.on('connect', handleConnect)
+    ethereum.on('accountsChanged', handleAccountsChanged)
+    ethereum.on('chainChanged', handleChainChanged)
+  }, [])
+
+
   let app = {
     session, setSession,
     currentUser, setCurrentUser,
-    userId, setUserId,
-    username, setUsername,
-    avatar_url, setAvatarUrl,
     notificationMsg, setNotificationMsg,
-
-    walletAddress, setWalletAddress,
-    walletConnected, setWalletConnected,
-    isCorrectChain, setIsCorrectChain,
-    provider, setProvider,
-
-    disconnectWallet,
     notify,
+
+    // userId, setUserId,
+    // username, setUsername,
+    // avatar_url, setAvatarUrl,
+
+    hasMetamask, setHasMetamask,
+    isCorrectChain, setIsCorrectChain,
+    connect, disconnect,
   }
 
   return (

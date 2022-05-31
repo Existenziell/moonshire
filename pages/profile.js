@@ -8,34 +8,28 @@ import SupaAuth from '../components/SupaAuth'
 import getProfile from '../lib/getProfile'
 import Wallet from '../components/Wallet'
 
+import { useWeb3React } from "@web3-react/core"
+import { InjectedConnector } from "@web3-react/injected-connector"
+import { injected } from "../components/Connector"
+
 const Profile = () => {
   const appCtx = useContext(AppContext)
-  const {
-    currentUser, setCurrentUser,
-    userId, setUserId,
-    username, setUsername,
-    avatar_url, setAvatarUrl,
-    walletConnected, setWalletConnected,
-    walletAddress, setWalletAddress,
-    provider, setProvider,
-    isCorrectChain, setIsCorrectChain,
-    disconnectWallet, notify
-  } = appCtx
+  const { currentUser, setCurrentUser, notify, connect, disconnect, hasMetamask } = appCtx
+  const { account } = useWeb3React()
 
-  const [loading, setLoading] = useState(false)
-  const [email, setEmail] = useState(null)
-  const [role, setRole] = useState(null)
-  const [is_premium, setIsPremium] = useState(null)
+  const [username, setUsername] = useState(null)
+  const [avatar_url, setAvatarUrl] = useState(null)
   const [createdAt, setCreatedAt] = useState(null)
+  const [is_premium, setIsPremium] = useState(null)
   const [modified, setModified] = useState(false)
 
   useEffect(() => {
     if (currentUser) {
-      const { id, email, role, created_at } = currentUser
-      setUserId(id)
-      setEmail(email)
-      setRole(role)
+      const { id, email, role, is_premium, created_at, username, avatar_url } = currentUser
+      setUsername(username)
+      setAvatarUrl(avatar_url)
       setCreatedAt(created_at)
+      setIsPremium(is_premium)
     }
   }, [currentUser])
 
@@ -46,7 +40,11 @@ const Profile = () => {
 
   const updateUser = () => {
     setModified(false)
-    updateProfile({ id: userId, username, avatar_url, notify })
+    setCurrentUser(currentUser => ({
+      ...currentUser,
+      ...{ username }
+    }))
+    updateProfile({ id: currentUser.id, username, avatar_url, notify })
   }
 
   const resetInput = () => {
@@ -54,7 +52,24 @@ const Profile = () => {
     setModified(false)
   }
 
-  if (!walletAddress) {
+  const handleUpload = (url) => {
+    setAvatarUrl(url)
+    setCurrentUser(currentUser => ({
+      ...currentUser,
+      ...{ avatar_url: url }
+    }))
+    updateProfile({ id: currentUser.id, username, avatar_url: url, notify })
+  }
+
+  if (!hasMetamask) {
+    return (
+      <p className='w-full h-full flex items-center justify-center'>
+        Please install Metamask to proceed.
+      </p>
+    )
+  }
+
+  if (!account) {
     return (
       <p className='w-full h-full flex items-center justify-center'>
         Please connect your wallet first.
@@ -93,22 +108,19 @@ const Profile = () => {
         <div className='mb-8 text-xs flex flex-col gap-1'>
           <p>Membership: {is_premium ? `Premium` : `Free`}</p>
           <p>Joined: {createdAt?.slice(0, 10)}</p>
-          <p>Wallet {walletAddress}</p>
+          <p>Wallet {account}</p>
         </div>
 
         <div className='max-w-lg'>
           <Avatar
             url={avatar_url}
             // size={150}
-            onUpload={(url) => {
-              setAvatarUrl(url)
-              updateProfile({ id: userId, username, email, role, avatar_url: url, notify })
-            }}
+            onUpload={(url) => handleUpload(url)}
           />
         </div>
 
         <div>
-          <button onClick={disconnectWallet} className='button button-detail'>Disconnect Wallet</button>
+          <button onClick={disconnect} className='button button-detail'>Disconnect Wallet</button>
         </div>
       </div>
     </>
