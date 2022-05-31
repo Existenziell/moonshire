@@ -6,7 +6,7 @@ const Home = () => {
     <>
       <Head>
         <title>Project Moonshire</title>
-        <meta name='description' content="It's gonna be epic | Project Moonshire" />
+        <meta name='description' content="It is gonna be epic | Project Moonshire" />
       </Head>
 
       <div className='flex flex-col md:flex-row items-center justify-center gap-8 text-sm pt-12'>
