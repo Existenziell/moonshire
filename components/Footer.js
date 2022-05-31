@@ -1,12 +1,10 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react'
-import { motion, useAnimation } from 'framer-motion'
+import { useAnimation } from 'framer-motion'
 import DarkModeToggle from './DarkModeToggle'
 
 const Footer = () => {
-  const router = useRouter()
   const { ref, inView } = useInView({})
   const fadeIn = useAnimation()
 

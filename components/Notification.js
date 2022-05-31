@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { AppContext } from '../context/AppContext'
 
-const Notification = ({ msg }) => {
+const Notification = () => {
   const appCtx = useContext(AppContext)
 
   return (

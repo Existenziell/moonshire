@@ -1,21 +1,11 @@
-import { useContext } from 'react'
-import { AppContext } from '../context/AppContext'
-import { useRouter } from 'next/router'
-import LoginBtn from './LoginBtn'
-import LogoutBtn from './LogoutBtn'
-
 import Nav from './Nav'
 import Footer from './Footer'
 import NextNprogress from 'nextjs-progressbar'
-import DarkModeToggle from './DarkModeToggle'
 import Notification from './Notification'
 import Logo from './Logo'
 import Wallet from './Wallet'
 
 const Layout = ({ children }) => {
-  const appCtx = useContext(AppContext)
-  const router = useRouter()
-
   return (
     <>
       <Notification />

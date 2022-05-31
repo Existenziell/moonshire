@@ -1,19 +1,16 @@
 import 'tailwindcss/tailwind.css'
 import '../styles/globals.css'
-import Layout from '../components/_Layout'
 import Head from 'next/head'
+import Layout from '../components/_Layout'
 import { AppWrapper } from '../context/AppContext'
-import { useWeb3React, Web3ReactProvider } from "@web3-react/core";
-import { Web3Provider } from "@ethersproject/providers";
-import { AppContext } from '../context/AppContext'
+import { Web3ReactProvider } from "@web3-react/core"
+import { Web3Provider } from "@ethersproject/providers"
 
 const getLibrary = (provider) => {
   return new Web3Provider(provider)
 }
 
 function Moonshire({ Component, pageProps }) {
-  const { active, error, activate } = useWeb3React()
-
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <AppWrapper>

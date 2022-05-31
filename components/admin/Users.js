@@ -117,7 +117,7 @@ const Users = ({ users, roles }) => {
             <tr className='p-4 dark:text-brand'><td>No users found.</td></tr>
           }
 
-          {fetchedUsers?.map((user, idx) => (
+          {fetchedUsers?.map((user) => (
             <tr key={user.id + user.username} className='relative'>
               <td>{`${user.id.slice(0, 4)}...${user.id.slice(-4)}`}</td>
               <td>

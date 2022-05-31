@@ -30,7 +30,7 @@ const Admin = ({ users, artists, roles }) => {
   )
 }
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps() {
   const { data: users } = await supabase.from('users').select(`*, roles(*)`).order('id', { ascending: true })
   const { data: artists } = await supabase.from('artists').select(`*`).order('id', { ascending: true })
   const { data: roles } = await supabase.from('roles').select(`id, name`).order('id', { ascending: true })

@@ -19,7 +19,7 @@ const AddToHomeScreen = () => {
       // Update UI to notify the user they can add to home screen
       addBtn.style.display = 'block'
 
-      addBtn.addEventListener('click', (e) => {
+      addBtn.addEventListener('click', () => {
         // hide our user interface that shows our A2HS button
         addBtn.style.display = 'none'
         // Show the prompt
@@ -38,10 +38,7 @@ const AddToHomeScreen = () => {
   }
 
   return (
-    <div className='a2hs-button w-32 mx-auto rounded px-4 py-2 bg-white cursor-pointer flex flex-col items-center space-y-2'>
-      <img src='/img/logo.png' />
-      <button className="text-sm" aria-label='Tap to add to home screen'>Tap to add to home screen</button>
-    </div>
+    <button className="a2hs-button button button-cta absolute bottom-0" aria-label='Tap to add to home screen'>Add to home screen</button>
   )
 
 }

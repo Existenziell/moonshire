@@ -1,6 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
-import { useRouter } from 'next/router'
-import { ethers } from 'ethers'
+import { useState, useContext } from 'react'
 import { AppContext } from '../context/AppContext'
 import { useWeb3React } from "@web3-react/core"
 import Image from 'next/image'
@@ -12,7 +10,7 @@ const Wallet = () => {
   const { account, active } = useWeb3React()
 
   const [overlayShown, setOverlayShown] = useState(false)
-  const router = useRouter()
+
   const closeAndConnect = () => {
     setOverlayShown(false)
     connect()

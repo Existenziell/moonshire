@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import AddToHomeScreen from '../components/AddToHomeScreen'
 
 const Home = () => {
   return (

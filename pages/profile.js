@@ -1,20 +1,14 @@
 import { useEffect, useContext, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import Head from 'next/head'
-import Link from 'next/link'
 import Avatar from '../components/Avatar'
 import updateProfile from '../lib/updateProfile'
-import SupaAuth from '../components/SupaAuth'
-import getProfile from '../lib/getProfile'
-import Wallet from '../components/Wallet'
-
+import AddToHomeScreen from '../components/AddToHomeScreen'
 import { useWeb3React } from "@web3-react/core"
-import { InjectedConnector } from "@web3-react/injected-connector"
-import { injected } from "../components/Connector"
 
 const Profile = () => {
   const appCtx = useContext(AppContext)
-  const { currentUser, setCurrentUser, notify, connect, disconnect, hasMetamask } = appCtx
+  const { currentUser, setCurrentUser, notify, disconnect, hasMetamask } = appCtx
   const { account } = useWeb3React()
 
   const [username, setUsername] = useState(null)
@@ -25,7 +19,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (currentUser) {
-      const { id, email, role, is_premium, created_at, username, avatar_url } = currentUser
+      const { username, avatar_url, is_premium, created_at } = currentUser
       setUsername(username)
       setAvatarUrl(avatar_url)
       setCreatedAt(created_at)
@@ -122,6 +116,8 @@ const Profile = () => {
         <div>
           <button onClick={disconnect} className='button button-detail'>Disconnect Wallet</button>
         </div>
+
+        <AddToHomeScreen />
       </div>
     </>
   )

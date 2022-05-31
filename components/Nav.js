@@ -8,7 +8,6 @@ const Nav = () => {
     const { currentUser } = appCtx
 
     const [isOpen, setIsOpen] = useState(false)
-    const { locale } = useRouter()
     const router = useRouter()
 
     const urls = [

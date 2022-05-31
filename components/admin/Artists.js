@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
-import Select from 'react-select'
 
 const Artists = ({ artists, users }) => {
   const appCtx = useContext(AppContext)
@@ -19,10 +18,6 @@ const Artists = ({ artists, users }) => {
   function setData(e) {
     const { name, value } = e.target
     setFormData({ ...formData, ...{ [name]: value } })
-  }
-
-  function setSelectData(e) {
-    setFormData({ ...formData, ...{ user: e.value } })
   }
 
   const openAdd = () => {
@@ -71,13 +66,13 @@ const Artists = ({ artists, users }) => {
     openBtn.style.display = "block"
     closeBtn.style.display = "none"
     Array.from(openEditBtns).forEach(el => (el.disabled = false))
-    Array.from(inputs).forEach((el, i) => (el.disabled = true))
+    Array.from(inputs).forEach(el => (el.disabled = true))
     setFormData({})
   }
 
   const editArtist = async (id) => {
     const artist = fetchedArtists.filter(c => c.id === id)[0]
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('artists')
       .update({
         name: formData.name ? formData.name : artist.name,
@@ -149,7 +144,7 @@ const Artists = ({ artists, users }) => {
             <tr className='p-4 dark:text-brand'><td>No artists found.</td></tr>
           }
 
-          {fetchedArtists?.map((artist, idx) => (
+          {fetchedArtists?.map((artist) => (
             <tr key={artist.id + artist.name} className='relative'>
               <td>{artist.id}</td>
               <td>
