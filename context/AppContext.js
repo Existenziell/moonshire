@@ -53,7 +53,7 @@ const AppWrapper = ({ children }) => {
   // Disconnect from Metamask wallet
   async function disconnect() {
     try {
-      localStorage.setItem('walletConnected', false)
+      await localStorage.setItem('walletConnected', false)
       deactivate()
     } catch (e) {
       console.log(e)
@@ -83,9 +83,11 @@ const AppWrapper = ({ children }) => {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
       const nonce = uuid()
-      const message = getSigningMsg(nonce, account)
-      const signature = await signer.signMessage(message)
-      createUser(account, nonce, signature)
+      if (nonce && account && signer) {
+        const message = getSigningMsg(nonce, account)
+        const signature = await signer.signMessage(message)
+        createUser(account, nonce, signature)
+      }
     }
   }
 

@@ -24,7 +24,7 @@ const Layout = ({ children }) => {
         startPosition={0.3}
         stopDelayMs={100}
         showOnShallow={true}
-        color='var(--color-brand)'
+        color='var(--color-cta)'
         options={{ showSpinner: false }}
       />
 
