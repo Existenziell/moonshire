@@ -1,6 +1,6 @@
 # PROJECT MOONSHIRE
 
-PROJECT MOONSHIRE IS A WEB3 WHITE-LABEL PLATFORM DISRUPTING THE 2.0 STATUS QUO: A CUTTING EDGE, DECENTRALISED MONETISING SERVICE FOR CONTENT CREATORS RUNNING ON THE TEZOS BLOCKCHAIN.
+Project Moonshire Is A Web3 White-Label Platform Disrupting The 2.0 Status Quo: A Cutting Edge, Decentralised Monetising Service For Content Creators Running On The Polygon Blockchain.
 
 ## App Functionality
 
