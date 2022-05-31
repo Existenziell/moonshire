@@ -1,17 +1,23 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { AppContext } from '../context/AppContext'
 import Head from 'next/head'
 import Users from '../components/admin/Users'
 import Artists from '../components/admin/Artists'
 import SupaAuth from '../components/SupaAuth'
+import GridLoader from 'react-spinners/GridLoader'
 
 const Admin = ({ users, artists, roles }) => {
   const appCtx = useContext(AppContext)
   const { session, currentUser } = appCtx
+  const [isAdmin, setIsAdmin] = useState(false)
 
-  if (!session) return <SupaAuth />
-  if (currentUser?.roles?.name !== 'Admin') return <SupaAuth />
+  useEffect(() => {
+    currentUser?.roles?.name === 'Admin' && setIsAdmin(true)
+  }, [currentUser?.roles?.name])
+
+  if (!currentUser) return <div className='flex items-center justify-center'><GridLoader color={'var(--color-cta)'} size={40} /></div>
+  if (!session || !isAdmin) return <SupaAuth />
 
   return (
     <>
@@ -21,8 +27,8 @@ const Admin = ({ users, artists, roles }) => {
       </Head>
 
       <div className='admin flex flex-col items-start'>
-        <h1 className='mb-1'>Admin</h1>
-        <p className='mb-4'>Remember, with great power comes great responsibility.</p>
+        <h1 className='mb-1 mx-auto'>Admin</h1>
+        <p className='mb-4 mx-auto text-tiny'>Remember, with great power comes great responsibility.</p>
         <Users users={users} roles={roles} />
         <Artists artists={artists} users={users} />
       </div>

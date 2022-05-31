@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
+import { getSignedUrl } from '../../lib/getSignedUrl'
+import { PulseLoader } from 'react-spinners'
 import Select from 'react-select'
 
 const Users = ({ users, roles }) => {
@@ -17,15 +19,23 @@ const Users = ({ users, roles }) => {
   const router = useRouter()
 
   useEffect(() => {
-    setFetchedUsers(users)
+    enrichUsers(users)
   }, [users])
 
-  function setData(e) {
+  const enrichUsers = async () => {
+    for (let user of users) {
+      const url = await getSignedUrl('avatars', user.avatar_url)
+      user.signed_url = url
+    }
+    setFetchedUsers(users)
+  }
+
+  const setData = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, ...{ [name]: value } })
   }
 
-  function setSelectData(e) {
+  const setSelectData = (e) => {
     setFormData({ ...formData, ...{ role: e.value } })
   }
 
@@ -95,6 +105,8 @@ const Users = ({ users, roles }) => {
     roleOptions.push({ value: r.id, label: r.name })
   })
 
+  if (!fetchedUsers) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+
   return (
     <div className='mt-12'>
       <h2 className='mb-1'>Users</h2>
@@ -102,11 +114,12 @@ const Users = ({ users, roles }) => {
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>
           <tr className='font-bold text-xs border-b-2 border-lines dark:border-lines-dark'>
-            <th>ID</th>
-            <th className='text-cta dark:text-admin-green'>Username</th>
+            <th>Avatar</th>
+            <th>Username</th>
             <th>Email</th>
             <th>Premium?</th>
             <th>Role</th>
+            <th>Created</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
@@ -119,28 +132,28 @@ const Users = ({ users, roles }) => {
 
           {fetchedUsers?.map((user) => (
             <tr key={user.id + user.username} className='relative'>
-              <td>{`${user.id.slice(0, 4)}...${user.id.slice(-4)}`}</td>
+              <td><img src={user.signed_url} className='w-12' /></td>
               <td>
                 <input
                   type='text' name='username' id='username'
                   onChange={setData} disabled required
                   defaultValue={user.username}
-                  className={`mr-2 ${user.id}-input text-cta dark:text-admin-green`}
+                  className={`mr-2 ${user.id}-input`}
                 />
               </td>
               <td>{user.email ? `${user.email?.slice(0, 14)}...` : ``}</td>
               <td>
                 <div onChange={setData} className='block'>
-                  <label htmlFor={`${user.id}-isPremiumNo`} className='cursor-pointer block'>
+                  <label htmlFor={`${user.id}-isPremiumNo`} className='cursor-pointer flex items-center gap-2'>
                     <input
                       type="radio" value="false" disabled required
                       name={`${user.id}-is_premium`}
                       id={`${user.id}-isPremiumNo`}
                       defaultChecked={!user.is_premium}
-                      className={`${user.id}-input`}
+                      className={`${user.id}-input bg-white`}
                     /> No
                   </label>
-                  <label htmlFor={`${user.id}-isPremiumYes`} className='cursor-pointer'>
+                  <label htmlFor={`${user.id}-isPremiumYes`} className='cursor-pointer flex items-center gap-2'>
                     <input
                       type="radio" value="true" disabled
                       name={`${user.id}-is_premium`}
@@ -158,8 +171,11 @@ const Users = ({ users, roles }) => {
                   instanceId // Needed to prevent errors being thrown
                   defaultValue={roleOptions.filter(o => o.value === user.role)}
                   isDisabled={!showEdit}
+                  className='dark:text-brand-dark'
                 />
               </td>
+
+              <td className='whitespace-nowrap'>{user.created_at.slice(0, 10)}</td>
 
               <td className='text-center align-middle'>
                 <div id={`${user.id}-closeBtn`} className='hidden items-center justify-center gap-2'>
@@ -185,8 +201,8 @@ const Users = ({ users, roles }) => {
         </tbody>
       </table>
 
-      <p className='text-xs mt-2 text-right'>
-        New users can only be added via valid Auth flow, aka they need to connect their wallet.<br />
+      <p className='text-tiny mt-2 text-right'>
+        Info: New users can only be added via valid Auth flow, aka they need to connect their wallet.<br />
       </p>
 
       {/* Delete user */}

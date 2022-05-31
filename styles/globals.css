@@ -164,11 +164,58 @@ h2, h3, h4 {
 }
 
 .button-admin {
-  @apply w-24 h-10 rounded-full shadow text-xs flex items-center justify-center
+  @apply w-16 h-8 rounded-full shadow text-tiny flex items-center justify-center
     hover:shadow-sm hover:cursor-pointer transition-all
     text-black bg-detail dark:bg-detail-dark dark:text-detail; 
 }
 
 .button-admin:hover {
   @apply text-cta transition-all duration-200; 
+}
+
+
+
+/* ==========================================================================
+	Radio Buttons
+	========================================================================== */
+
+input[type="radio"] {
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+  font: inherit;
+  color: var(--color-brand);
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid var(--color-lines);
+  border-radius: 50%;
+  transform: translateY(0.125em);
+}
+
+input[type="radio"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--color-admin-green);
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+
+input[type="radio"]:checked:disabled::before {
+  box-shadow: inset 1em 1em var(  --color-detail);
+  color: red;
+  transform: scale(1);
+
 }

@@ -1,8 +1,10 @@
 import { useState, useEffect, useContext } from 'react'
 import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
+import { getPublicUrl } from '../../lib/getPublicUrl'
+import { PulseLoader } from 'react-spinners'
 
-const Artists = ({ artists, users }) => {
+const Artists = ({ artists }) => {
   const appCtx = useContext(AppContext)
   const { notify } = appCtx
 
@@ -12,15 +14,25 @@ const Artists = ({ artists, users }) => {
   const [ArtistToDelete, setArtistToDelete] = useState()
 
   useEffect(() => {
-    setFetchedArtists(artists)
+    enrichArtists(artists)
   }, [artists])
 
-  function setData(e) {
+  const enrichArtists = async () => {
+    for (let artist of artists) {
+      if (artist.avatar_url) {
+        const url = await getPublicUrl('artists', artist.avatar_url)
+        artist.public_url = url
+      }
+    }
+    setFetchedArtists(artists)
+  }
+
+  const setData = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, ...{ [name]: value } })
   }
 
-  const openAdd = () => {
+  const toggleNewArtistForm = () => {
     const panel = document.getElementById('addArtistForm')
     panel.classList.toggle('hidden')
   }
@@ -116,10 +128,7 @@ const Artists = ({ artists, users }) => {
     }
   }
 
-  let ownerOptions = []
-  users.forEach(u => {
-    ownerOptions.push({ value: u.id, label: u.name ? u.name : u.username })
-  })
+  if (!fetchedArtists) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
     <div className='mt-12'>
@@ -130,10 +139,11 @@ const Artists = ({ artists, users }) => {
           <tr className='font-bold text-xs border-b-2 border-lines dark:border-lines-dark'>
             <th>ID</th>
             <th>Name</th>
-            <th className='text-cta dark:text-admin-green'>Headline</th>
+            <th>Headline</th>
             <th>Description</th>
             <th>Origin</th>
             <th>Avatar</th>
+            <th>Created</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
@@ -160,7 +170,7 @@ const Artists = ({ artists, users }) => {
                   type='text' name='headline' id='headline'
                   onChange={setData} disabled
                   defaultValue={artist.headline}
-                  className={`${artist.id}-inputArtist text-cta dark:text-admin-green`}
+                  className={`${artist.id}-inputArtist`}
                 />
               </td>
               <td>
@@ -179,7 +189,16 @@ const Artists = ({ artists, users }) => {
                   className={`${artist.id}-inputArtist`}
                 />
               </td>
-              <td>{artist.avatar_url}</td>
+
+              <td>
+                {artist.public_url ?
+                  <img src={artist.public_url} className='w-12' />
+                  :
+                  "n/a"
+                }
+              </td>
+
+              <td className='whitespace-nowrap'>{artist.created_at.slice(0, 10)}</td>
 
               <td className='text-center align-middle'>
                 <div id={`${artist.id}-closeBtnArtist`} className='hidden items-center justify-center gap-2'>
@@ -206,21 +225,23 @@ const Artists = ({ artists, users }) => {
       </table>
 
       {/* Add artist */}
-      <button onClick={openAdd} className='my-4 link flex items-center gap-1 text-xs' aria-label='Open Add Artist Form'>
+      <button onClick={toggleNewArtistForm} className='my-4 link flex items-center gap-1 text-xs' aria-label='Open Add Artist Form'>
         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline-block" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
         </svg>
         Add artist
       </button>
 
-      <form onSubmit={addArtist} className='shadow-lg rounded-sm text-tiny dark:text-brand-dark max-w-max bg-brand p-4 hidden' id='addArtistForm' >
-        Name <input type='text' name='name' id='name' placeholder='...' onChange={setData} required className='block mb-2 text-base' />
-        Headline <input type='text' name='headline' id='headline' placeholder='...' onChange={setData} className='block mb-2 text-base' />
-        Description <input type='text' name='desc' id='desc' placeholder='...' onChange={setData} className='block mb-2 text-base' />
-        Origin <input type='text' name='origin' id='origin' placeholder='...' onChange={setData} className='block mb-2 text-base' />
-        <input type='submit' className='button button-detail mt-6' value='Save' />
+      <form onSubmit={addArtist} className='shadow-lg rounded-sm dark:text-brand-dark max-w-max bg-brand p-4 hidden' id='addArtistForm' >
+        <input type='text' name='name' id='name' placeholder='Name' onChange={setData} required className='block mb-2 text-sm' />
+        <input type='text' name='headline' id='headline' placeholder='Headline' onChange={setData} className='block mb-2 text-sm' />
+        <input type='text' name='desc' id='desc' placeholder='Description' onChange={setData} className='block mb-2 text-sm' />
+        <input type='text' name='origin' id='origin' placeholder='Origin' onChange={setData} className='block mb-2 text-sm' />
+        <div className='flex items-center gap-2 mt-4'>
+          <input type='submit' className='button button-admin' value='Save' />
+          <button onClick={toggleNewArtistForm} className='button button-admin'>Cancel</button>
+        </div>
       </form>
-
 
       {/* Delete artist */}
       {showDelete &&
