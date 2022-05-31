@@ -151,17 +151,13 @@ const AppWrapper = ({ children }) => {
 
   let app = {
     session, setSession,
-    currentUser, setCurrentUser,
     notificationMsg, setNotificationMsg,
-    notify,
 
-    // userId, setUserId,
-    // username, setUsername,
-    // avatar_url, setAvatarUrl,
-
+    currentUser, setCurrentUser,
     hasMetamask, setHasMetamask,
     isCorrectChain, setIsCorrectChain,
-    connect, disconnect,
+
+    notify, connect, disconnect,
   }
 
   return (
