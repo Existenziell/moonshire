@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import { AppContext } from '../../context/AppContext'
 import { supabase } from '../../lib/supabase'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import UploadImage from '../../components/UploadImage'
 import Select from 'react-select'
@@ -11,6 +12,8 @@ const CreateNft = ({ artists, collections }) => {
 
   const [imageUrl, setImageUrl] = useState(null)
   const [formData, setFormData] = useState({})
+
+  const router = useRouter()
 
   const setData = (e) => {
     const { name, value } = e.target
@@ -36,6 +39,7 @@ const CreateNft = ({ artists, collections }) => {
     if (!error) {
       notify("NFT created successfully!")
       setFormData(null)
+      router.reload(window.location.pathname)
     }
   }
 
