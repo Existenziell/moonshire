@@ -5,7 +5,7 @@ import { getPublicUrl } from '../lib/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 
-const Home = ({ artists, collections }) => {
+const Home = ({ artists, collections, nfts }) => {
   const [fetchedCollections, setFetchedCollections] = useState()
   const [fetchedArtists, setFetchedArtists] = useState()
 
@@ -26,7 +26,7 @@ const Home = ({ artists, collections }) => {
       <div className='flex flex-col items-center justify-center w-full pb-16'>
 
         <div>
-          <h1 className='mt-20'>Featured Artists</h1>
+          <h2 className='mt-20 mb-8'>Featured Artists</h2>
           <div className='flex flex-wrap'>
             {fetchedArtists.map(artist => {
               const { id, name, headline, public_url, numberOfNfts } = artist
@@ -52,7 +52,7 @@ const Home = ({ artists, collections }) => {
             })}
           </div>
 
-          <h1 className='mt-24'>Moonshire Collections</h1>
+          <h2 className='mt-24'>Moonshire Collections</h2>
           <div className='flex flex-col items-center justify-center gap-16 text-sm'>
 
             {fetchedCollections.map(collection => {
@@ -83,6 +83,24 @@ const Home = ({ artists, collections }) => {
               )
             })}
           </div>
+
+          <div className='mt-24'>
+            <h2>Featured NFTs</h2>
+            <div className='grid grid-cols-4 gap-6 mt-8'>
+              {nfts.map(nft => {
+                const { id, name, desc, price, artists, public_url } = nft
+                return (
+                  <div key={id} className='p-8 shadow rounded bg-brand-dark dark:bg-brand' >
+                    <Link href={`/nfts/${id}`}>
+                      <a className='w-full'>
+                        <img src={public_url} alt='NFT Image' className='w-full block hover:scale-105 transition-all duration-300' />
+                      </a>
+                    </Link>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
         </div>
 
       </div>
@@ -109,8 +127,13 @@ export async function getServerSideProps() {
     collection.public_url = url
   }
 
+  for (let nft of nfts) {
+    const url = await getPublicUrl('nfts', nft.image_url)
+    nft.public_url = url
+  }
+
   return {
-    props: { collections, artists },
+    props: { collections, artists, nfts },
   }
 }
 
