@@ -13,7 +13,8 @@ const Nav = () => {
     const urls = [
         { name: 'Releases', href: '/releases', title: 'Releases' },
         { name: 'Live', href: '/live', title: 'Live' },
-        { name: 'Collection', href: '/collection', title: 'Collection' },
+        { name: 'Collections', href: '/collections', title: 'Collections' },
+        { name: 'Artists', href: '/artists', title: 'Artists' },
     ]
     if (currentUser?.roles?.name === 'Admin') urls.push({ name: 'Admin', href: '/admin', title: 'Admin' },)
 

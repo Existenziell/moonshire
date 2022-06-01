@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
-import { getSignedUrl } from '../../lib/getSignedUrl'
 import { PulseLoader } from 'react-spinners'
 import Select from 'react-select'
 
@@ -16,18 +15,8 @@ const Users = ({ users, roles }) => {
   const [userToDelete, setUserToDelete] = useState()
 
   useEffect(() => {
-    enrichUsers(users)
-  }, [users])
-
-  const enrichUsers = async () => {
-    for (let user of users) {
-      if (user.avatar_url) {
-        const url = await getSignedUrl('avatars', user.avatar_url)
-        user.signed_url = url
-      }
-    }
     setFetchedUsers(users)
-  }
+  }, [users])
 
   const setData = (e) => {
     const { name, value } = e.target

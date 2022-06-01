@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
-import { getPublicUrl } from '../../lib/getPublicUrl'
 import { PulseLoader } from 'react-spinners'
 
 const Artists = ({ artists }) => {
@@ -14,18 +13,8 @@ const Artists = ({ artists }) => {
   const [ArtistToDelete, setArtistToDelete] = useState()
 
   useEffect(() => {
-    enrichArtists(artists)
-  }, [artists])
-
-  const enrichArtists = async () => {
-    for (let artist of artists) {
-      if (artist.avatar_url) {
-        const url = await getPublicUrl('artists', artist.avatar_url)
-        artist.public_url = url
-      }
-    }
     setFetchedArtists(artists)
-  }
+  }, [artists])
 
   const setData = (e) => {
     const { name, value } = e.target

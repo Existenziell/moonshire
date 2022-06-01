@@ -10,29 +10,9 @@ const Home = ({ artists, collections }) => {
   const [fetchedArtists, setFetchedArtists] = useState()
 
   useEffect(() => {
-    enrichArtists(artists)
-    enrichCollections(collections)
-  }, [artists, collections])
-
-  const enrichArtists = async () => {
-    for (let artist of artists) {
-      if (artist.avatar_url) {
-        const url = await getPublicUrl('artists', artist.avatar_url)
-        artist.public_url = url
-      }
-    }
     setFetchedArtists(artists)
-  }
-
-  const enrichCollections = async () => {
-    for (let collection of collections) {
-      if (collection.image_url) {
-        const url = await getPublicUrl('collections', collection.image_url)
-        collection.public_url = url
-      }
-    }
     setFetchedCollections(collections)
-  }
+  }, [artists, collections])
 
   if (!fetchedCollections) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
@@ -76,23 +56,26 @@ const Home = ({ artists, collections }) => {
           <div className='flex flex-col items-center justify-center gap-16 text-sm'>
 
             {fetchedCollections.map(collection => {
+              const { id, title, headline, desc, year, public_url, created_at } = collection
+
               return (
-                <div key={collection.id} className='flex flex-col md:flex-row items-start justify-start gap-8 text-sm pt-12'>
+                <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-8 pt-12'>
                   <div className='w-full md:w-1/2'>
-                    <Link href={`/collections/${collection.id}`}>
+                    <Link href={`/collections/${id}`}>
                       <a className='w-full'>
-                        <img src={collection.public_url} alt='Cover Image' className='w-full block' />
+                        <img src={public_url} alt='Cover Image' className='w-full block' />
                       </a>
                     </Link>
                   </div>
                   <div className='md:w-1/2'>
-                    <h1>{collection.title}</h1>
-                    <p className='mt-4'>{collection.headline}</p>
+                    <h1 className='mb-8'>{title}</h1>
+                    <p className='mt-4'>{headline}</p>
+                    <p className='text-tiny'>{year}</p>
                     <hr className='border-t-2 border-lines my-8' />
-                    <p className='mt-4'>{collection.desc}</p>
-                    <p>2.2 ETH</p>
-                    <p className='text-tiny my-8'>8/10 available, last sold at 10 ETH (25.345,00 USD)</p>
-                    <Link href={`/collections/${collection.id}`}>
+                    <p className='mt-4 mb-8'>{desc}</p>
+                    <p className='text-tiny'>Created: {created_at.slice(0, 10)}</p>
+                    <p className='text-tiny mb-8'>8/10 available, last sold at 10 ETH (25.345,00 USD)</p>
+                    <Link href={`/collections/${id}`}>
                       <a className='button button-detail'>View Collection</a>
                     </Link>
                   </div>
@@ -114,12 +97,16 @@ export async function getServerSideProps() {
 
   for (let artist of artists) {
     const artistNfts = nfts.filter((n => n.artist === artist.id))
+    const url = await getPublicUrl('artists', artist.avatar_url)
     artist.numberOfNfts = artistNfts.length
+    artist.public_url = url
   }
 
   for (let collection of collections) {
     const collectionNfts = nfts.filter((n => n.collection === collection.id))
+    const url = await getPublicUrl('collections', collection.image_url)
     collection.numberOfNfts = collectionNfts.length
+    collection.public_url = url
   }
 
   return {

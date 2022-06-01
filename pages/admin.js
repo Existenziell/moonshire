@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { AppContext } from '../context/AppContext'
+import { getPublicUrl } from '../lib/getPublicUrl'
+import { getSignedUrl } from '../lib/getSignedUrl'
 import Head from 'next/head'
 import Nfts from '../components/admin/Nfts'
 import Collections from '../components/admin/Collections'
@@ -47,14 +49,30 @@ export async function getServerSideProps() {
   const { data: users } = await supabase.from('users').select(`*, roles(*)`).order('id', { ascending: true })
   const { data: roles } = await supabase.from('roles').select(`id, name`).order('id', { ascending: true })
 
+  for (let nft of nfts) {
+    const url = await getPublicUrl('nfts', nft.image_url)
+    nft.public_url = url
+  }
+
   for (let artist of artists) {
     const artistNfts = nfts.filter((n => n.artist === artist.id))
     artist.numberOfNfts = artistNfts.length
+    const url = await getPublicUrl('artists', artist.avatar_url)
+    artist.public_url = url
   }
 
   for (let collection of collections) {
     const collectionNfts = nfts.filter((n => n.collection === collection.id))
     collection.numberOfNfts = collectionNfts.length
+    const url = await getPublicUrl('collections', collection.image_url)
+    collection.public_url = url
+  }
+
+  for (let user of users) {
+    if (user.avatar_url) {
+      const url = await getSignedUrl('avatars', user.avatar_url)
+      user.signed_url = url
+    }
   }
 
   return {

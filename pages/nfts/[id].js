@@ -20,11 +20,11 @@ const Nft = ({ nft }) => {
       <div className='px-8 pb-24 flex flex-col items-center'>
         <h1 className='mx-auto'>{name}</h1>
         <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-8 text-sm pt-12'>
-          <img src={public_url} alt='NFT Image' className='md:w-1/2 rounded shadow' />
+          <img src={public_url} alt='NFT Image' className='md:w-1/2' />
           <div>
             <h2>
               <span className='text-sm pr-2'>by</span>
-              <Link href={`/artists/${id}`}><a>{artists.name}</a></Link>
+              <Link href={`/artists/${artists.id}`}><a>{artists.name}</a></Link>
             </h2>
             <hr className='border-t-2 border-lines my-8' />
             <p className='my-4'>{desc}</p>

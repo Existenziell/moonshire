@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
-import { getPublicUrl } from '../../lib/getPublicUrl'
 import { PulseLoader } from 'react-spinners'
 
 const Collections = ({ collections }) => {
@@ -14,18 +13,8 @@ const Collections = ({ collections }) => {
   const [collectionToDelete, setCollectionToDelete] = useState()
 
   useEffect(() => {
-    enrichCollections(collections)
-  }, [collections])
-
-  const enrichCollections = async () => {
-    for (let collection of collections) {
-      if (collection.image_url) {
-        const url = await getPublicUrl('collections', collection.image_url)
-        collection.public_url = url
-      }
-    }
     setFetchedCollections(collections)
-  }
+  }, [collections])
 
   const setData = (e) => {
     const { name, value } = e.target

@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
-import { getPublicUrl } from '../../lib/getPublicUrl'
 import { PulseLoader } from 'react-spinners'
 
 const Nfts = ({ nfts }) => {
@@ -13,18 +12,8 @@ const Nfts = ({ nfts }) => {
   const [nftToDelete, setNftToDelete] = useState()
 
   useEffect(() => {
-    enrichNfts(nfts)
-  }, [nfts])
-
-  const enrichNfts = async () => {
-    for (let nft of nfts) {
-      if (nft.image_url) {
-        const url = await getPublicUrl('nfts', nft.image_url)
-        nft.public_url = url
-      }
-    }
     setFetchedNfts(nfts)
-  }
+  }, [nfts])
 
   const toggleDeleteModal = (id) => {
     setNftToDelete(id)
@@ -80,7 +69,7 @@ const Nfts = ({ nfts }) => {
                 }
               </td>
               <td className='whitespace-nowrap'>{nft.name}</td>
-              <td className=''>{nft.desc}</td>
+              <td className=''>{nft.desc.slice(0, 30)} ...</td>
               <td className='whitespace-nowrap'>{nft.artists?.name}</td>
               <td className='whitespace-nowrap'>{nft.collections?.title}</td>
               <td className='whitespace-nowrap text-admin-green'>{nft.price} ETH</td>
