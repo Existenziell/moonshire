@@ -81,7 +81,7 @@ const CreateNft = ({ artists, collections }) => {
         <meta name='description' content="Create NFT | Project Moonshire" />
       </Head>
 
-      <form onSubmit={saveNft} className='create-nft flex flex-col items-start max-w-2xl mx-auto'>
+      <form onSubmit={saveNft} className='create-nft flex flex-col items-start max-w-2xl mx-auto pb-24'>
         <h1 className='mx-auto'>Create NFT</h1>
 
         <p>Image, Video, Audio, or 3D Model</p>
@@ -157,7 +157,7 @@ const CreateNft = ({ artists, collections }) => {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { data: collections } = await supabase.from('collections').select(`*`).order('id', { ascending: true })
   const { data: artists } = await supabase.from('artists').select(`*`).order('id', { ascending: true })
 

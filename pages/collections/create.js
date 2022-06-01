@@ -42,7 +42,7 @@ const CreateCollection = () => {
         <meta name='description' content="Create Collection | Project Moonshire" />
       </Head>
 
-      <form onSubmit={saveCollection} className='create-collection flex flex-col items-start max-w-2xl mx-auto'>
+      <form onSubmit={saveCollection} className='create-collection flex flex-col items-start max-w-2xl mx-auto pb-24'>
         <h1 className='mx-auto'>Create Collection</h1>
 
         <p>Cover Image</p>

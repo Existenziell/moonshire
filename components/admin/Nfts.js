@@ -67,7 +67,7 @@ const Nfts = ({ nfts }) => {
         <tbody>
 
           {!fetchedNfts?.length &&
-            <tr className='p-4 dark:text-brand'><td>No nfts found.</td></tr>
+            <tr className='p-4 dark:text-brand'><td>No NFTs found.</td></tr>
           }
 
           {fetchedNfts?.map((nft) => (
