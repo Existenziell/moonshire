@@ -49,20 +49,24 @@ const Home = ({ artists, collections }) => {
           <h1 className='mt-20'>Featured Artists</h1>
           <div className='flex flex-wrap'>
             {fetchedArtists.map(artist => {
+              const { id, name, headline, public_url, numberOfNfts } = artist
               return (
-                <div key={artist.id} className='flex flex-col justify-between w-full md:w-1/2 mb-4 md:pr-4'>
-                  <div className='flex justify-between bg-detail dark:text-brand-dark p-4 rounded border hover:cursor-pointer hover:shadow-xl transition-all'>
-                    <div className='h-full flex flex-col justify-between'>
-                      <div>
-                        <h2>{artist.name}</h2>
-                        <p className='mt-4'>{artist.headline}</p>
+                <div key={id} className='flex flex-col justify-between w-full md:w-1/2 mb-4 md:pr-4'>
+
+                  <Link href={`/artists/${id}`}>
+                    <a className='flex justify-between bg-detail dark:text-brand-dark p-4 rounded border hover:cursor-pointer hover:shadow-xl transition-all'>
+                      <div className='h-full flex flex-col justify-between'>
+                        <div>
+                          <h2>{name}</h2>
+                          <p className='mt-4'>{headline}</p>
+                        </div>
+                        <p className='text-tiny self-baseline'>#NFTs: {numberOfNfts}</p>
                       </div>
-                      <p className='text-tiny self-baseline'>#NFTs: {artist.numberOfNfts}</p>
-                    </div>
-                    {artist.public_url &&
-                      <img src={artist.public_url} alt='Artist Image' className='w-1/2 rounded' />
-                    }
-                  </div>
+                      {public_url &&
+                        <img src={public_url} alt='Artist Image' className='w-1/2 rounded' />
+                      }
+                    </a>
+                  </Link>
                 </div>
               )
             })}

@@ -74,7 +74,7 @@ const Nfts = ({ nfts }) => {
             <tr key={nft.id + nft.name} className='relative'>
               <td>
                 {nft.public_url ?
-                  <img src={nft.public_url} alt='NFT Cover' className='w-12' />
+                  <img src={nft.public_url} alt='NFT Image' className='w-12' />
                   :
                   "n/a"
                 }
