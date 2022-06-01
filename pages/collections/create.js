@@ -81,7 +81,7 @@ const CreateCollection = () => {
           Description
           <span className='block text-tiny mt-1'>The description will be included on the collection&apos;s detail page.</span>
           <textarea
-            name='desc' id='desc'
+            name='desc' id='desc' rows={10}
             onChange={setData} required
             placeholder="Provide a detailed description of your collection."
             className='block mt-2 w-full'

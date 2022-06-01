@@ -110,7 +110,7 @@ const CreateNft = ({ artists, collections }) => {
           Description
           <span className='block text-tiny mt-1'>The description will be included on the item&apos;s detail page underneath its image</span>
           <textarea
-            name='desc' id='desc'
+            name='desc' id='desc' rows={10}
             onChange={setData} required
             placeholder="Provide a detailed description of your item."
             className='block mt-2 w-full'
