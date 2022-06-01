@@ -117,6 +117,7 @@ const Users = ({ users, roles }) => {
         <thead className='text-left'>
           <tr className='font-bold text-xs border-b-2 border-lines dark:border-lines-dark'>
             <th>Avatar</th>
+            <th>Wallet</th>
             <th>Username</th>
             <th>Email</th>
             <th>Premium?</th>
@@ -134,6 +135,7 @@ const Users = ({ users, roles }) => {
 
           {fetchedUsers?.map((user) => (
             <tr key={user.id + user.username} className='relative'>
+
               <td>
                 {user.signed_url ?
                   <img src={user.signed_url} alt='User Image' className='w-12' />
@@ -141,6 +143,11 @@ const Users = ({ users, roles }) => {
                   "n/a"
                 }
               </td>
+
+              <td className='whitespace-nowrap px-6'>
+                {user.walletAddress?.substring(0, 5)}&#8230;{user.walletAddress?.slice(user.walletAddress?.length - 4)}
+              </td>
+
               <td>
                 <input
                   type='text' name='username' id='username'
@@ -149,6 +156,7 @@ const Users = ({ users, roles }) => {
                   className={`mr-2 ${user.id}-input`}
                 />
               </td>
+
               <td>
                 <input
                   type='text' name='email' id='email'
@@ -157,6 +165,7 @@ const Users = ({ users, roles }) => {
                   className={`mr-2 ${user.id}-input`}
                 />
               </td>
+
               <td>
                 <div onChange={setData} className='block'>
                   <label htmlFor={`${user.id}-isPremiumNo`} className='cursor-pointer flex items-center gap-2'>
@@ -179,6 +188,7 @@ const Users = ({ users, roles }) => {
                   </label>
                 </div>
               </td>
+
               <td>
                 <Select
                   options={roleOptions}
