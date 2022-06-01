@@ -19,8 +19,6 @@ const Artists = ({ artists }) => {
 
   const enrichArtists = async () => {
     for (let artist of artists) {
-      // const artistCollections = collections.filter((c => c.artist === artist.id))
-      // artist.numberOfCollections = artistCollections.length
       if (artist.avatar_url) {
         const url = await getPublicUrl('artists', artist.avatar_url)
         artist.public_url = url
