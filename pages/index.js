@@ -47,16 +47,20 @@ const Home = ({ artists, collections }) => {
 
         <div>
           <h1 className='mt-20'>Featured Artists</h1>
-          <div className='flex flex-wrap gap-8'>
+          <div className='flex flex-wrap'>
             {fetchedArtists.map(artist => {
               return (
-                <div key={artist.id} className='flex flex-wrap justify-between gap-8 '>
-                  <div className='bg-detail dark:text-brand-dark p-4 rounded border hover:cursor-pointer hover:scale-105 transition-all'>
-                    <h2>{artist.name}</h2>
-                    <p className='mt-4'>{artist.headline}</p>
-                    <p className='text-tiny'>#NFTs: {artist.numberOfNfts}</p>
+                <div key={artist.id} className='flex flex-wrap justify-between w-1/2 pr-4'>
+                  <div className='flex justify-between bg-detail dark:text-brand-dark p-4 rounded border hover:cursor-pointer hover:shadow-xl transition-all'>
+                    <div className='h-full flex flex-col justify-between'>
+                      <div>
+                        <h2>{artist.name}</h2>
+                        <p className='mt-4'>{artist.headline}</p>
+                      </div>
+                      <p className='text-tiny self-baseline'>#NFTs: {artist.numberOfNfts}</p>
+                    </div>
                     {artist.public_url &&
-                      <img src={artist.public_url} alt='Artist Image' />
+                      <img src={artist.public_url} alt='Artist Image' className='w-1/2 rounded' />
                     }
                   </div>
                 </div>
