@@ -93,7 +93,7 @@ const Home = ({ artists, collections }) => {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('id', { ascending: true })
   const { data: collections } = await supabase.from('collections').select(`*`).order('id', { ascending: true })
   const { data: artists } = await supabase.from('artists').select(`*`).order('id', { ascending: true })

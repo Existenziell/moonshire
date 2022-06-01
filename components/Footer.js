@@ -24,7 +24,7 @@ const Footer = () => {
 
   return (
     <footer ref={ref} className='static bottom-0 flex items-center justify-between px-6 py-2 text-xs 
-      border-t border-black border-opacity-10 text-black bg-brand dark:text-white dark:bg-brand-dark'>
+      text-black bg-brand dark:text-white dark:bg-brand-dark'>
 
       <div className='flex items-center justify-between w-full'>
         <DarkModeToggle />
