@@ -73,9 +73,15 @@ const Home = ({ artists, collections }) => {
 
             {fetchedCollections.map(collection => {
               return (
-                <div key={collection.id} className='flex flex-col md:flex-row items-center justify-start gap-8 text-sm pt-12'>
-                  <img src={collection.public_url} alt='Cover Image' className='md:w-1/3' />
-                  <div>
+                <div key={collection.id} className='flex flex-col md:flex-row items-start justify-start gap-8 text-sm pt-12'>
+                  <div className='w-full md:w-1/2'>
+                    <Link href={`/collections/${collection.id}`}>
+                      <a className='w-full'>
+                        <img src={collection.public_url} alt='Cover Image' className='w-full block' />
+                      </a>
+                    </Link>
+                  </div>
+                  <div className='md:w-1/2'>
                     <h1>{collection.title}</h1>
                     <p className='mt-4'>{collection.headline}</p>
                     <hr className='border-t-2 border-lines my-8' />
