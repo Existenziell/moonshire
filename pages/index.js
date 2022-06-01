@@ -88,7 +88,7 @@ const Home = ({ artists, collections, nfts }) => {
             <h2>Featured NFTs</h2>
             <div className='grid grid-cols-4 gap-6 mt-8'>
               {nfts.map(nft => {
-                const { id, name, desc, price, artists, public_url } = nft
+                const { id, public_url } = nft
                 return (
                   <div key={id} className='p-8 shadow rounded bg-brand-dark dark:bg-brand' >
                     <Link href={`/nfts/${id}`}>
