@@ -50,7 +50,7 @@ const Home = ({ artists, collections }) => {
           <div className='flex flex-wrap'>
             {fetchedArtists.map(artist => {
               return (
-                <div key={artist.id} className='flex flex-wrap justify-between w-1/2 pr-4'>
+                <div key={artist.id} className='flex flex-col justify-between w-full md:w-1/2 mb-4 md:pr-4'>
                   <div className='flex justify-between bg-detail dark:text-brand-dark p-4 rounded border hover:cursor-pointer hover:shadow-xl transition-all'>
                     <div className='h-full flex flex-col justify-between'>
                       <div>
