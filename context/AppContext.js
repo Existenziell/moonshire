@@ -16,6 +16,7 @@ const AppContext = createContext({})
 const AppWrapper = ({ children }) => {
   const [session, setSession] = useState(null)
   const [notificationMsg, setNotificationMsg] = useState('')
+  const [darkmode, setDarkmode] = useState(false)
 
   const [currentUser, setCurrentUser] = useState(null)
   const [hasMetamask, setHasMetamask] = useState(false)
@@ -154,6 +155,7 @@ const AppWrapper = ({ children }) => {
   let app = {
     session, setSession,
     notificationMsg, setNotificationMsg,
+    darkmode, setDarkmode,
 
     currentUser, setCurrentUser,
     hasMetamask, setHasMetamask,

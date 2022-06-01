@@ -2,12 +2,14 @@ import { useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { AppContext } from '../context/AppContext'
 import Head from 'next/head'
-import Users from '../components/admin/Users'
+import Nfts from '../components/admin/Nfts'
+import Collections from '../components/admin/Collections'
 import Artists from '../components/admin/Artists'
+import Users from '../components/admin/Users'
 import SupaAuth from '../components/SupaAuth'
 import GridLoader from 'react-spinners/GridLoader'
 
-const Admin = ({ users, artists, roles }) => {
+const Admin = ({ nfts, collections, artists, users, roles }) => {
   const appCtx = useContext(AppContext)
   const { session, currentUser } = appCtx
   const [isAdmin, setIsAdmin] = useState(false)
@@ -28,21 +30,35 @@ const Admin = ({ users, artists, roles }) => {
 
       <div className='admin flex flex-col items-start'>
         <h1 className='mb-1 mx-auto'>Admin</h1>
-        <p className='mb-4 mx-auto text-tiny'>Remember, with great power comes great responsibility.</p>
+        <p className='mb-20 mx-auto text-tiny'>Remember, with great power comes great responsibility.</p>
+        <Nfts nfts={nfts} />
+        <Collections collections={collections} />
+        <Artists artists={artists} collections={collections} />
         <Users users={users} roles={roles} />
-        <Artists artists={artists} users={users} />
       </div>
     </>
   )
 }
 
 export async function getServerSideProps() {
-  const { data: users } = await supabase.from('users').select(`*, roles(*)`).order('id', { ascending: true })
+  const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('id', { ascending: true })
+  const { data: collections } = await supabase.from('collections').select(`*`).order('id', { ascending: true })
   const { data: artists } = await supabase.from('artists').select(`*`).order('id', { ascending: true })
+  const { data: users } = await supabase.from('users').select(`*, roles(*)`).order('id', { ascending: true })
   const { data: roles } = await supabase.from('roles').select(`id, name`).order('id', { ascending: true })
 
+  for (let artist of artists) {
+    const artistNfts = nfts.filter((n => n.artist === artist.id))
+    artist.numberOfNfts = artistNfts.length
+  }
+
+  for (let collection of collections) {
+    const collectionNfts = nfts.filter((n => n.collection === collection.id))
+    collection.numberOfNfts = collectionNfts.length
+  }
+
   return {
-    props: { users, artists, roles },
+    props: { nfts, collections, artists, users, roles }
   }
 }
 

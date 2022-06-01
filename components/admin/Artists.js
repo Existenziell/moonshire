@@ -19,6 +19,8 @@ const Artists = ({ artists }) => {
 
   const enrichArtists = async () => {
     for (let artist of artists) {
+      // const artistCollections = collections.filter((c => c.artist === artist.id))
+      // artist.numberOfCollections = artistCollections.length
       if (artist.avatar_url) {
         const url = await getPublicUrl('artists', artist.avatar_url)
         artist.public_url = url
@@ -131,18 +133,18 @@ const Artists = ({ artists }) => {
   if (!fetchedArtists) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
-    <div className='mt-12'>
+    <div className='mb-20'>
       <h2 className='mb-1'>Artists</h2>
 
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>
           <tr className='font-bold text-xs border-b-2 border-lines dark:border-lines-dark'>
-            <th>ID</th>
+            <th>Avatar</th>
             <th>Name</th>
             <th>Headline</th>
             <th>Description</th>
             <th>Origin</th>
-            <th>Avatar</th>
+            <th className='whitespace-nowrap'># NFTs</th>
             <th>Created</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -156,7 +158,15 @@ const Artists = ({ artists }) => {
 
           {fetchedArtists?.map((artist) => (
             <tr key={artist.id + artist.name} className='relative'>
-              <td>{artist.id}</td>
+
+              <td>
+                {artist.public_url ?
+                  <img src={artist.public_url} alt='Artist Picture' className='w-12' />
+                  :
+                  "n/a"
+                }
+              </td>
+
               <td>
                 <input
                   type='text' name='name' id='name'
@@ -191,11 +201,7 @@ const Artists = ({ artists }) => {
               </td>
 
               <td>
-                {artist.public_url ?
-                  <img src={artist.public_url} className='w-12' />
-                  :
-                  "n/a"
-                }
+                {artist.numberOfNfts}
               </td>
 
               <td className='whitespace-nowrap'>{artist.created_at.slice(0, 10)}</td>

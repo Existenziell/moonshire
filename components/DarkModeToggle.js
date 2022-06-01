@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useContext } from 'react'
+import { AppContext } from '../context/AppContext'
 
 const DarkModeToggle = () => {
-  const [darkMode, setDarkMode] = useState()
+  const appCtx = useContext(AppContext)
+  const { darkmode, setDarkmode } = appCtx
 
   useEffect(() => {
     // Check for user preference
@@ -20,18 +22,18 @@ const DarkModeToggle = () => {
   const setLight = () => {
     localStorage.theme = 'light'
     document.documentElement.classList.remove('dark')
-    setDarkMode(false)
+    setDarkmode(false)
   }
 
   const setDark = () => {
     localStorage.theme = 'dark'
     document.documentElement.classList.add('dark')
-    setDarkMode(true)
+    setDarkmode(true)
   }
 
   return (
     <section>
-      {!darkMode ?
+      {!darkmode ?
         <svg onClick={setDark} xmlns='http://www.w3.org/2000/svg' className='h-6 w-6 cursor-pointer text-brand-dark dark:text-brand hover:text-cta dark:hover:text-cta hover:scale-105 transition-all' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
           <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z' />
         </svg>

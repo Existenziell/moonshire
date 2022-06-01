@@ -29,6 +29,7 @@ module.exports = {
       backgroundImage: {
         'logo': 'url(/logo.png)',
         'logo-dark': 'url(/logo-dark.png)',
+        'upload-bg': 'url(/upload-bg.svg)',
       },
       animation: {},
       keyframes: {},

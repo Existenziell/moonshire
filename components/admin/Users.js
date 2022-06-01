@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from 'react'
-import { useRouter } from 'next/router'
 import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
 import { getSignedUrl } from '../../lib/getSignedUrl'
@@ -16,16 +15,16 @@ const Users = ({ users, roles }) => {
   const [showDelete, setShowDelete] = useState(false)
   const [userToDelete, setUserToDelete] = useState()
 
-  const router = useRouter()
-
   useEffect(() => {
     enrichUsers(users)
   }, [users])
 
   const enrichUsers = async () => {
     for (let user of users) {
-      const url = await getSignedUrl('avatars', user.avatar_url)
-      user.signed_url = url
+      if (user.avatar_url) {
+        const url = await getSignedUrl('avatars', user.avatar_url)
+        user.signed_url = url
+      }
     }
     setFetchedUsers(users)
   }
@@ -51,14 +50,28 @@ const Users = ({ users, roles }) => {
     Array.from(inputs).forEach(el => (el.disabled = false))
   }
 
+  const closeEdit = (user) => {
+    const openBtn = document.getElementById(`${user.id}-openBtn`)
+    const closeBtn = document.getElementById(`${user.id}-closeBtn`)
+    const inputs = document.getElementsByClassName(`${user.id}-input`)
+    const openEditBtns = document.getElementsByClassName('openBtn')
+
+    openBtn.style.display = "block"
+    closeBtn.style.display = "none"
+    Array.from(openEditBtns).forEach(el => (el.disabled = false))
+    Array.from(inputs).forEach(el => (el.disabled = true))
+    setFormData({})
+  }
+
   const editUser = async (id) => {
     const user = fetchedUsers.filter(c => c.id === id)[0]
-    const { username, role } = formData
+    const { username, email, role } = formData
 
     const { error } = await supabase
       .from('users')
       .update({
         username: username ? username : user.username,
+        email: email ? email : user.email,
         is_premium: formData[`${id}-is_premium`] ? formData[`${id}-is_premium`] : user.is_premium,
         role: formData.role ? role : user.role,
       })
@@ -108,7 +121,7 @@ const Users = ({ users, roles }) => {
   if (!fetchedUsers) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
-    <div className='mt-12'>
+    <div className='mb-20'>
       <h2 className='mb-1'>Users</h2>
 
       <table className='text-sm table-auto w-full'>
@@ -132,7 +145,13 @@ const Users = ({ users, roles }) => {
 
           {fetchedUsers?.map((user) => (
             <tr key={user.id + user.username} className='relative'>
-              <td><img src={user.signed_url} className='w-12' /></td>
+              <td>
+                {user.signed_url ?
+                  <img src={user.signed_url} alt='User Image' className='w-12' />
+                  :
+                  "n/a"
+                }
+              </td>
               <td>
                 <input
                   type='text' name='username' id='username'
@@ -141,7 +160,14 @@ const Users = ({ users, roles }) => {
                   className={`mr-2 ${user.id}-input`}
                 />
               </td>
-              <td>{user.email ? `${user.email?.slice(0, 14)}...` : ``}</td>
+              <td>
+                <input
+                  type='text' name='email' id='email'
+                  onChange={setData} disabled required
+                  defaultValue={user.email}
+                  className={`mr-2 ${user.id}-input`}
+                />
+              </td>
               <td>
                 <div onChange={setData} className='block'>
                   <label htmlFor={`${user.id}-isPremiumNo`} className='cursor-pointer flex items-center gap-2'>
@@ -182,7 +208,7 @@ const Users = ({ users, roles }) => {
                   <button onClick={() => editUser(user.id)} aria-label='Edit User' className='button-admin'>
                     Save
                   </button>
-                  <button onClick={() => router.reload(window.location.pathname)} aria-label='Close Edit Dialog' className='button-admin'>
+                  <button onClick={() => closeEdit(user)} aria-label='Close Edit Dialog' className='button-admin'>
                     Cancel
                   </button>
                 </div>
