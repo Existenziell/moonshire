@@ -40,15 +40,18 @@ export default function ListedMarketItems() {
 
         {nfts.length ?
           <div className="px-4">
-            <div className="flex flex-wrap gap-4 pt-4">
+            <div className="flex flex-wrap justify-evenly gap-8 pt-4">
               {
                 nfts.map((nft, i) => (
-                  <div key={i} className="shadow-xl rounded max-w-xs flex flex-col justify-between">
+                  <div key={i} className="shadow-xl rounded max-w-xs flex flex-col justify-between flex-grow">
                     <img src={nft.image} alt='NFT Image' />
-                    <div className="p-4">
-                      <p className="text-2xl font-semibold">{nft.name}</p>
-                      <div>
-                        <p className="text-gray-400">{nft.description}</p>
+                    <div className="p-4 whitespace-normal">
+                      <h2 className="text-2xl font-semibold">{nft.name}</h2>
+                      <div className="text-gray-400 text-xs">
+
+                        <p >{nft.description}</p>
+                        <p className='mt-4 mb-1'>by {nft.artist}</p>
+                        <p>in {nft.collection}</p>
                       </div>
                     </div>
                     <div className="p-4">
@@ -60,7 +63,6 @@ export default function ListedMarketItems() {
                       >
                         Buy
                       </button>
-
                     </div>
                   </div>
                 ))

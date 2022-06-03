@@ -33,68 +33,51 @@ export default function MyNfts() {
   return (
     <>
       <div className='mt-8 mb-24 flex flex-col items-start justify-start'>
-        <h1 className='mt-20'>Your Assets</h1>
-        <div>
-          <h2 className="text-2xl py-2 border-b-2 border-detail dark:border-detail-dark">Created Assets</h2>
-          {nfts.length > 0 ?
-            <div>
-              <div className="flex flex-wrap gap-4 pt-4">
-                {nfts.map((nft, i) => (
-                  <div key={i} className="shadow rounded flex flex-col max-w-xs">
-                    <img src={nft.image} alt='NFT Image' />
-                    <div className="p-4 flex flex-col justify-between h-full">
-                      <h2 className="text-2xl">{nft.name}</h2>
-                      <p className="text-sm mt-4 mb-6">{nft.description}</p>
-                      <p className="font-bold">Price: {nft.price} Eth</p>
-                      <button
-                        className="mt-4 button button-cta"
-                        onClick={() => listNFT(nft)}
-                      >
-                        List
-                      </button>
-                      <span className='text-tiny mt-2'>Listing price is 0.000001 ETH</span>
-                    </div>
+        <h1 className='mt-20 py-2 border-b-2 border-detail dark:border-detail-dark'>Your Assets</h1>
+        {nfts.length > 0 ?
+          <div>
+            <p className='mt-4'>Sold items: {soldNfts.length}</p>
+            <div className="flex flex-wrap gap-4 pt-4">
+              {nfts.map((nft, i) => (
+                <div key={i} className="shadow rounded flex flex-col max-w-xs">
+                  <img src={nft.image} alt='NFT Image' />
+                  <div className="p-4 flex flex-col justify-between h-full">
+                    <h2 className="text-2xl">{nft.name}</h2>
+                    <p className="text-sm mt-4 mb-6">{nft.description}</p>
+                    <p className="font-bold">Price: {nft.price} Eth</p>
+                    <button
+                      className="mt-4 button button-cta"
+                      onClick={() => listNFT(nft)}
+                    >
+                      List
+                    </button>
+                    <span className='text-tiny mt-2'>Listing price is 0.000001 ETH</span>
                   </div>
-                ))}
-              </div>
-              <Link href='/nfts/create'><a className='button button-detail mt-20'>Create Asset</a></Link>
+                </div>
+              ))}
             </div>
-            :
-            <>
-              <p className='text-sm mb-8'>You don&apos;t own any items.</p>
-              <Link href='/nfts/create'><a className='button button-detail'>Create Asset</a></Link>
-              {/* <Link href='/nfts'><a className='button button-detail'>Discover</a></Link> */}
-            </>
-          }
-        </div>
+            <Link href='/nfts/create'><a className='button button-detail mt-20'>Create Asset</a></Link>
+            <p className='text-tiny mt-2'>By creating an asset it will be minted and put on sale on the marketplace.<br />Listing costs are 0.000001 ETH</p>
+          </div>
+          :
+          <>
+            <p className='text-sm mb-16'>You don&apos;t own any items yet.</p>
+            <div className='flex flex-col md:flex-row items-center justify-center gap-16'>
+              <div className='mb-8 md:mb-0'>
+                <Link href='/nfts/create'><a className='button button-detail mb-8'>Create Asset</a></Link>
+                <p className='text-tiny'>By creating an asset it will be minted and put on sale on the marketplace.<br />Listing costs are 0.000001 ETH</p>
+              </div>
+              <div>
+                <Link href='/nfts'><a className='button button-detail mb-8'>Discover</a></Link>
+                <p className='text-tiny'>Explore the marketplace to find some hidden gems for your wallet.<br />Purchased items will be listed here.</p>
+              </div>
+            </div>
 
-        <div className='my-20'>
-          <h2 className="text-2xl py-2 border-b-2 border-detail dark:border-detail-dark">Sold Assets</h2>
-          {soldNfts.length ?
-            <div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-                {
-                  soldNfts.map((nft, i) => (
-                    <div key={i} className="shadow rounded overflow-hidden">
-                      <img src={nft.image} className="rounded" alt='NFT Image' />
-                      <div className="p-4 bg-brand text-brand-dark">
-                        <p className="text-2xl font-semibold mb-2">{nft.name}</p>
-                        <p className="font-bold">Price - {nft.price} Eth</p>
-                      </div>
-                    </div>
-                  ))
-                }
-              </div>
-              {/* <Link href='/nfts/sell'><a className='button button-detail'>Sell Asset</a></Link> */}
-            </div>
-            :
-            <>
-              <p className='text-sm mt-2 mb-12'>No items sold yet.</p>
-              {/* <Link href='/nfts/sell'><a className='button button-detail'>Sell Asset</a></Link> */}
-            </>
-          }
-        </div>
+          </>
+        }
+
       </div>
+
     </>
   )
 }

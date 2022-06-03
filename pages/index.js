@@ -59,7 +59,7 @@ const Home = ({ artists, collections, nfts }) => {
               const { id, title, headline, description, year, image_url, created_at } = collection
 
               return (
-                <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-8 pt-12'>
+                <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-16 pt-12 max-w-3xl'>
                   <div className='w-full md:w-1/2'>
                     <Link href={`/collections/${id}`}>
                       <a className='w-full'>

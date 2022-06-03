@@ -33,19 +33,19 @@ const Collection = ({ collection, collectionNfts }) => {
         </div>
 
         <h2 className='mt-28 mb-8 self-start text-3xl'>NFTs in this Collection:</h2>
-        <div className='flex flex-wrap'>
+        <div className='flex flex-wrap items-start justify-between w-full'>
           {collectionNfts.map(nft => {
             const { id, name, description, price, artists, image_url } = nft
             return (
               <Link href={`/nfts/${id}`} key={id}>
                 <a>
-                  <div className='hover:shadow px-6 py-4 md:ml-6 mb-8 rounded shadow-lg hover:cursor-pointer transition-all'>
-                    <div className='flex flex-col md:flex-row gap-6 items-start justify-between'>
-                      <img src={image_url} alt='Cover Image' className='max-w-sm md:max-w-[200px]' />
+                  <div className='hover:shadow px-6 py-4 mb-8 rounded shadow-lg border border-detail dark:border-detail-dark hover:cursor-pointer transition-all'>
+                    <div className='flex flex-col gap-6 items-start justify-between'>
+                      <img src={image_url} alt='Cover Image' className='max-w-[200px]' />
                       <div className='flex flex-col justify-between'>
                         <h2>{name}</h2>
                         <p className='text-tiny'>by {artists.name}</p>
-                        <p className='my-4'>{description}</p>
+                        {/* <p className='my-4'>{description}</p> */}
                         <p className='text-admin-green'>{price} ETH</p>
                       </div>
                     </div>

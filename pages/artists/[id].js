@@ -33,21 +33,21 @@ const Artist = ({ artist, artistNfts }) => {
         </div>
 
         <h2 className='mt-28 mb-8 self-start text-3xl'>NFTs made by {name}:</h2>
-        <div className='flex flex-wrap items-center'>
+        <div className='flex flex-wrap items-center gap-4 w-full'>
           {artistNfts.map(nft => {
             const { id, name, description, price, artists, image_url } = nft
 
             return (
               <Link href={`/nfts/${id}`} key={id}>
                 <a>
-                  <div className='max-w-lg w-full hover:shadow px-6 py-4 mb-6 rounded shadow-lg hover:cursor-pointer transition-all'>
-                    <div className='flex flex-col md:flex-row gap-12 items-start justify-center'>
-                      <img src={image_url} alt='NFT Image' className='max-w-sm md:max-w-[200px]' />
+                  <div className='max-w-lg w-full hover:shadow px-6 py-4 mb-6 rounded border border-detail dark:border-detail-dark shadow-lg hover:cursor-pointer transition-all'>
+                    <div className='flex flex-col gap-4 items-start justify-center'>
+                      <img src={image_url} alt='NFT Image' className='max-w-[200px]' />
                       <div className='w-full'>
-                        <h2 className='whitespace-nowrap'>{name}</h2>
+                        <h2 className='whitespace-nowrap mt-0'>{name}</h2>
                         <p className='text-tiny'>by {artists.name}</p>
-                        <p className='my-4'>{description}</p>
-                        <p className='text-admin-green'>{price} ETH</p>
+                        {/* <p className='my-4'>{description}</p> */}
+                        <p className='text-admin-green mt-4'>{price} ETH</p>
                       </div>
                     </div>
                   </div>

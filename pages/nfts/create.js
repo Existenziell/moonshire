@@ -42,7 +42,6 @@ const CreateNft = ({ artists, collections }) => {
       image: fileUrl,
       artist: artistName,
       collection: collectionName,
-
     })
 
     try {
@@ -89,7 +88,7 @@ const CreateNft = ({ artists, collections }) => {
     try {
       let transaction = await contract.createToken(url, price, { value: listingPrice })
       await transaction.wait()
-      logWeb3("Hold on just a little bit longer...  ")
+      logWeb3("Looking good, waiting for Blockchain confirmation...  ")
       contract.on("MarketItemCreated", (tokenId) => {
         tokenId = parseInt(tokenId)
         logWeb3(`Item ${tokenId} successfully created!`)
@@ -107,6 +106,8 @@ const CreateNft = ({ artists, collections }) => {
   }
 
   const saveNftToDb = async (tokenId, url) => {
+    if (!tokenId || !url) return
+
     const result = await saveNft(tokenId, url)
     if (result) {
       logWeb3(`Successfully listed NFT for Sale!`)
@@ -125,7 +126,7 @@ const CreateNft = ({ artists, collections }) => {
     const output = document.getElementById('mintingInfo')
     const element = document.createElement("div")
     element.style.marginBottom = '10px'
-    output.prepend(msg, element)
+    output.append(msg, element)
   }
 
   const setData = (e) => {

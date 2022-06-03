@@ -49,11 +49,6 @@ export async function getServerSideProps() {
   const { data: users } = await supabase.from('users').select(`*, roles(*)`).order('id', { ascending: true })
   const { data: roles } = await supabase.from('roles').select(`id, name`).order('id', { ascending: true })
 
-  for (let nft of nfts) {
-    const url = await getPublicUrl('nfts', nft.image_url)
-    nft.public_url = url
-  }
-
   for (let artist of artists) {
     const artistNfts = nfts.filter((n => n.artist === artist.id))
     artist.numberOfNfts = artistNfts.length
