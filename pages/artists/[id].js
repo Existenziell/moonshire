@@ -1,10 +1,10 @@
 import { supabase } from '../../lib/supabase'
-import { getPublicUrl } from '../../lib/getPublicUrl'
+import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 
 const Artist = ({ artist, artistNfts }) => {
-  const { id, name, headline, desc, origin, public_url, created_at, numberOfNfts } = artist
+  const { id, name, headline, description, origin, public_url, created_at, numberOfNfts } = artist
 
   return (
     <>
@@ -21,7 +21,7 @@ const Artist = ({ artist, artistNfts }) => {
           <div>
             <p className='mt-4 text-xl'>{headline}</p>
             <hr className='border-t-2 border-lines my-8' />
-            <p className='mt-4'>{desc}</p>
+            <p className='mt-4'>{description}</p>
             <p className='mt-4'>Origin: {origin}</p>
             <p>Number of NFTs from this artist: {numberOfNfts}</p>
             <p className='mt-8 text-xs'>On Moonshire since: {created_at.slice(0, 10)}</p>
@@ -31,18 +31,18 @@ const Artist = ({ artist, artistNfts }) => {
         <h2 className='mt-28 mb-8 self-start text-3xl'>NFTs made by {name}:</h2>
         <div>
           {artistNfts.map(nft => {
-            const { id, name, desc, price, artists, public_url } = nft
+            const { id, name, description, price, artists, public_url } = nft
 
             return (
               <Link href={`/nfts/${id}`} key={id}>
                 <a>
                   <div className='hover:shadow px-6 py-4 mb-6 rounded shadow-lg hover:cursor-pointer transition-all'>
-                    <div className='flex flex-col md:flex-row gap-8 items-start justify-center'>
+                    <div className='flex flex-col md:flex-row gap-12 items-start justify-center'>
                       <img src={public_url} alt='NFT Image' className='max-w-sm md:max-w-[200px]' />
-                      <div>
+                      <div className='w-full'>
                         <h2>{name}</h2>
                         <p className='text-tiny'>by {artists.name}</p>
-                        <p className='my-4'>{desc}</p>
+                        <p className='my-4'>{description}</p>
                         <p className='text-admin-green'>{price} ETH</p>
                       </div>
                     </div>

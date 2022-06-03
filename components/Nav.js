@@ -15,6 +15,7 @@ const Nav = () => {
         { name: 'Live', href: '/live', title: 'Live' },
         { name: 'Collections', href: '/collections', title: 'Collections' },
         { name: 'Artists', href: '/artists', title: 'Artists' },
+        { name: 'NFTs', href: '/nfts', title: 'nfts' },
     ]
     if (currentUser?.roles?.name === 'Admin') urls.push({ name: 'Admin', href: '/admin', title: 'Admin' },)
 

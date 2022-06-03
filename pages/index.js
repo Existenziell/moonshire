@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { PulseLoader } from 'react-spinners'
-import { getPublicUrl } from '../lib/getPublicUrl'
+import { getPublicUrl } from '../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 
@@ -29,7 +29,7 @@ const Home = ({ artists, collections, nfts }) => {
           <h2 className='mt-20 mb-8'>Featured Artists</h2>
           <div className='flex flex-wrap'>
             {fetchedArtists.map(artist => {
-              const { id, name, headline, public_url, numberOfNfts } = artist
+              const { id, name, headline, image_url, numberOfNfts } = artist
               return (
                 <div key={id} className='flex flex-col justify-between w-full md:w-1/2 mb-4 md:pr-4'>
 
@@ -42,8 +42,8 @@ const Home = ({ artists, collections, nfts }) => {
                         </div>
                         <p className='text-tiny self-baseline'>#NFTs: {numberOfNfts}</p>
                       </div>
-                      {public_url &&
-                        <img src={public_url} alt='Artist Image' className='w-1/2 rounded' />
+                      {image_url &&
+                        <img src={image_url} alt='Artist Image' className='w-1/2 rounded' />
                       }
                     </a>
                   </Link>
@@ -56,14 +56,14 @@ const Home = ({ artists, collections, nfts }) => {
           <div className='flex flex-col items-center justify-center gap-16 text-sm'>
 
             {fetchedCollections.map(collection => {
-              const { id, title, headline, desc, year, public_url, created_at } = collection
+              const { id, title, headline, description, year, image_url, created_at } = collection
 
               return (
                 <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-8 pt-12'>
                   <div className='w-full md:w-1/2'>
                     <Link href={`/collections/${id}`}>
                       <a className='w-full'>
-                        <img src={public_url} alt='Cover Image' className='w-full block' />
+                        <img src={image_url} alt='Cover Image' className='w-full block' />
                       </a>
                     </Link>
                   </div>
@@ -72,7 +72,7 @@ const Home = ({ artists, collections, nfts }) => {
                     <p className='mt-4'>{headline}</p>
                     <p className='text-tiny'>{year}</p>
                     <hr className='border-t-2 border-lines my-8' />
-                    <p className='mt-4 mb-8'>{desc}</p>
+                    <p className='mt-4 mb-8'>{description}</p>
                     <p className='text-tiny'>Created: {created_at.slice(0, 10)}</p>
                     <p className='text-tiny mb-8'>8/10 available, last sold at 10 ETH (25.345,00 USD)</p>
                     <Link href={`/collections/${id}`}>
@@ -88,12 +88,12 @@ const Home = ({ artists, collections, nfts }) => {
             <h2>Featured NFTs</h2>
             <div className='grid grid-cols-4 gap-6 mt-8'>
               {nfts.map(nft => {
-                const { id, public_url } = nft
+                const { id, image_url } = nft
                 return (
                   <div key={id} className='p-8 shadow rounded bg-brand-dark dark:bg-brand' >
                     <Link href={`/nfts/${id}`}>
                       <a className='w-full'>
-                        <img src={public_url} alt='NFT Image' className='w-full block hover:scale-105 transition-all duration-300' />
+                        <img src={image_url} alt='NFT Image' className='w-full block hover:scale-105 transition-all duration-300' />
                       </a>
                     </Link>
                   </div>
@@ -117,19 +117,14 @@ export async function getServerSideProps() {
     const artistNfts = nfts.filter((n => n.artist === artist.id))
     const url = await getPublicUrl('artists', artist.avatar_url)
     artist.numberOfNfts = artistNfts.length
-    artist.public_url = url
+    artist.image_url = url
   }
 
   for (let collection of collections) {
     const collectionNfts = nfts.filter((n => n.collection === collection.id))
     const url = await getPublicUrl('collections', collection.image_url)
     collection.numberOfNfts = collectionNfts.length
-    collection.public_url = url
-  }
-
-  for (let nft of nfts) {
-    const url = await getPublicUrl('nfts', nft.image_url)
-    nft.public_url = url
+    collection.image_url = url
   }
 
   return {

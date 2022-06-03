@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
 import { PulseLoader } from 'react-spinners'
+import { shortenAddress } from '../../lib/shortenAddress'
 import Select from 'react-select'
 
 const Users = ({ users, roles }) => {
@@ -145,7 +146,7 @@ const Users = ({ users, roles }) => {
               </td>
 
               <td className='whitespace-nowrap px-6'>
-                {user.walletAddress?.substring(0, 5)}&#8230;{user.walletAddress?.slice(user.walletAddress?.length - 4)}
+                {shortenAddress(user.walletAddress)}
               </td>
 
               <td>

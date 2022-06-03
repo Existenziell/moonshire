@@ -1,14 +1,15 @@
 import { useEffect, useContext, useState } from 'react'
 import { AppContext } from '../context/AppContext'
+import { useWeb3React } from "@web3-react/core"
 import Head from 'next/head'
 import Avatar from '../components/Avatar'
 import updateProfile from '../lib/updateProfile'
 import AddToHomeScreen from '../components/AddToHomeScreen'
-import { useWeb3React } from "@web3-react/core"
+import MyNfts from '../components/market/MyNfts'
 
 const Profile = () => {
   const appCtx = useContext(AppContext)
-  const { currentUser, setCurrentUser, notify, disconnect, hasMetamask } = appCtx
+  const { currentUser, setCurrentUser, disconnect, hasMetamask, notify } = appCtx
   const { account } = useWeb3React()
 
   const [username, setUsername] = useState(null)
@@ -112,6 +113,8 @@ const Profile = () => {
             onUpload={(url) => handleUpload(url)}
           />
         </div>
+
+        <MyNfts />
 
         <div>
           <button onClick={disconnect} className='button button-detail'>Disconnect Wallet</button>

@@ -1,5 +1,5 @@
 import { supabase } from '../../lib/supabase'
-import { getPublicUrl } from '../../lib/getPublicUrl'
+import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 
@@ -17,7 +17,7 @@ const Collections = ({ collections }) => {
         <div className='flex flex-col items-center justify-center gap-24 text-sm'>
 
           {collections.map(collection => {
-            const { id, title, headline, desc, year, public_url, created_at, numberOfNfts } = collection
+            const { id, title, headline, description, year, public_url, created_at, numberOfNfts } = collection
 
             return (
               <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-8 text-sm pt-12'>
@@ -33,7 +33,7 @@ const Collections = ({ collections }) => {
                   <p className='mt-4'>{headline}</p>
                   <p className='text-tiny'>{year}</p>
                   <hr className='border-t-2 border-lines my-8' />
-                  <p className='mt-4'>{desc}</p>
+                  <p className='mt-4'>{description}</p>
                   <p className='text-tiny mt-8'>Created: {created_at.slice(0, 10)}</p>
                   <p className='text-tiny mb-8'>{numberOfNfts} Items available in this collection. Last sold at 10 ETH (25.345,00 USD)</p>
                   <Link href={`/collections/${id}`}>

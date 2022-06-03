@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import downloadImage from '../lib/downloadImage'
-import uploadImage from '../lib/uploadImage'
+import downloadImage from '../lib/supabase/downloadImage'
+import uploadImage from '../lib/supabase/uploadImage'
 
 export default function UploadImage({ bucket, url, size, onUpload }) {
   const [imageUrl, setImageUrl] = useState(null)

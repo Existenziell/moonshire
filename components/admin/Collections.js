@@ -52,7 +52,7 @@ const Collections = ({ collections }) => {
       .update({
         title: formData.title ? formData.title : collection.title,
         headline: formData.headline ? formData.headline : collection.headline,
-        desc: formData.desc ? formData.desc : collection.desc,
+        description: formData.description ? formData.description : collection.description,
         year: formData.year ? formData.year : collection.year,
       })
       .eq('id', id)
@@ -144,9 +144,9 @@ const Collections = ({ collections }) => {
               </td>
               <td>
                 <input
-                  type='text' name='desc' id='desc'
+                  type='text' name='description' id='description'
                   onChange={setData} disabled required
-                  defaultValue={collection.desc}
+                  defaultValue={collection.description}
                   className={`${collection.id}-inputCollection`}
                 />
               </td>

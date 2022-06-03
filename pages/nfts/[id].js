@@ -1,13 +1,38 @@
 import { supabase } from '../../lib/supabase'
-import { getPublicUrl } from '../../lib/getPublicUrl'
+import { useState, useContext } from 'react'
+import { useRouter } from 'next/router'
+import { useWeb3React } from '@web3-react/core'
+import { AppContext } from '../../context/AppContext'
+import { PulseLoader } from 'react-spinners'
 import Head from 'next/head'
 import Link from 'next/link'
+import buyNft from '../../lib/market/buyNft'
 
 const Nft = ({ nft }) => {
-  const { id, name, desc, price, format, created_at, public_url, artists } = nft
+  const { id, name, description, price, format, created_at, image_url, artists } = nft
+  const { library: provider } = useWeb3React()
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const appCtx = useContext(AppContext)
+  const { notify } = appCtx
 
-  const mint = () => {
-    alert('Minting coming soon :)')
+  const initiateBuy = async (nft) => {
+    if (!provider) {
+      notify("Please connect your wallet first")
+      return
+    }
+    setLoading(true)
+    const hash = await buyNft(nft, provider)
+    if (hash) {
+      setLoading(false)
+      notify("Transfer to your wallet was successful!")
+      setTimeout(() => {
+        router.push('/profile')
+      }, 3000)
+    } else {
+      notify("Something went horribly wrong...")
+    }
+
   }
 
   return (
@@ -20,19 +45,26 @@ const Nft = ({ nft }) => {
       <div className='px-8 pb-24 flex flex-col items-center'>
         <h1 className='mx-auto'>{name}</h1>
         <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-8 text-sm pt-12'>
-          <img src={public_url} alt='NFT Image' className='md:w-1/2' />
+          <img src={image_url} alt='NFT Image' className='md:w-1/2' />
           <div>
             <h2>
               <span className='text-sm pr-2'>by</span>
               <Link href={`/artists/${artists.id}`}><a>{artists.name}</a></Link>
             </h2>
             <hr className='border-t-2 border-lines my-8' />
-            <p className='my-4'>{desc}</p>
+            <p className='my-4'>{description}</p>
             <p>Created: {created_at.slice(0, 10)}</p>
             <p className='mt-4'>{format}</p>
             <p className='mt-8 text-lg'>Price: {price} ETH</p>
             <p className='text-tiny mt-2'>8/10 available, last sold at 10 ETH (25.345,00 USD)</p>
-            <button onClick={mint} className='button button-cta mt-8'>Buy Now</button>
+
+            {loading ?
+              <div className='mt-8'>
+                <PulseLoader color={'var(--color-cta)'} size={10} />
+              </div>
+              :
+              <button onClick={() => initiateBuy(nft)} className='button button-cta mt-8'>Buy Asset</button>
+            }
           </div>
         </div>
       </div>
@@ -43,12 +75,11 @@ const Nft = ({ nft }) => {
 export async function getStaticProps(context) {
   const id = context.params.id
 
-  let { data: nft } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).eq('id', id).single()
-
-  if (nft.image_url) {
-    const url = await getPublicUrl('nfts', nft.image_url)
-    nft.public_url = url
-  }
+  let { data: nft } = await supabase
+    .from('nfts')
+    .select(`*, artists(*), collections(*)`)
+    .eq('id', id)
+    .single()
 
   return {
     props: { nft },

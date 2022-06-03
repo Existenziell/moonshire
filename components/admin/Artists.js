@@ -33,7 +33,7 @@ const Artists = ({ artists }) => {
       .insert([{
         name: formData.name,
         headline: formData.headline,
-        desc: formData.desc,
+        description: formData.description,
         origin: formData.origin
       }])
 
@@ -78,7 +78,7 @@ const Artists = ({ artists }) => {
       .update({
         name: formData.name ? formData.name : artist.name,
         headline: formData.headline ? formData.headline : artist.headline,
-        desc: formData.desc ? formData.desc : artist.desc,
+        description: formData.description ? formData.description : artist.description,
         origin: formData.origin ? formData.origin : artist.origin,
       })
       .eq('id', id)
@@ -172,9 +172,9 @@ const Artists = ({ artists }) => {
               </td>
               <td>
                 <input
-                  type='text' name='desc' id='desc'
+                  type='text' name='description' id='description'
                   onChange={setData} disabled required
-                  defaultValue={artist.desc}
+                  defaultValue={artist.description}
                   className={`${artist.id}-inputArtist`}
                 />
               </td>
@@ -228,7 +228,7 @@ const Artists = ({ artists }) => {
       <form onSubmit={addArtist} className='shadow-lg rounded-sm dark:text-brand-dark max-w-max bg-brand p-4 hidden' id='addArtistForm' >
         <input type='text' name='name' id='name' placeholder='Name' onChange={setData} required className='block mb-2 text-sm' />
         <input type='text' name='headline' id='headline' placeholder='Headline' onChange={setData} className='block mb-2 text-sm' />
-        <input type='text' name='desc' id='desc' placeholder='Description' onChange={setData} className='block mb-2 text-sm' />
+        <input type='text' name='description' id='description' placeholder='Description' onChange={setData} className='block mb-2 text-sm' />
         <input type='text' name='origin' id='origin' placeholder='Origin' onChange={setData} className='block mb-2 text-sm' />
         <div className='flex items-center gap-2 mt-4'>
           <input type='submit' className='button button-admin' value='Save' />

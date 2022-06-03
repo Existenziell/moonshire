@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
 import { PulseLoader } from 'react-spinners'
+import { shortenAddress } from '../../lib/shortenAddress'
 
 const Nfts = ({ nfts }) => {
   const appCtx = useContext(AppContext)
@@ -49,6 +50,7 @@ const Nfts = ({ nfts }) => {
             <th>Artist</th>
             <th>Collection</th>
             <th>Price</th>
+            <th>Wallet</th>
             <th>Created</th>
             <th>Delete</th>
           </tr>
@@ -69,10 +71,17 @@ const Nfts = ({ nfts }) => {
                 }
               </td>
               <td className='whitespace-nowrap'>{nft.name}</td>
-              <td className=''>{nft.desc.slice(0, 30)} ...</td>
+              <td className=''>{nft.description.slice(0, 30)} ...</td>
               <td className='whitespace-nowrap'>{nft.artists?.name}</td>
               <td className='whitespace-nowrap'>{nft.collections?.title}</td>
               <td className='whitespace-nowrap text-admin-green'>{nft.price} ETH</td>
+              <td className='whitespace-nowrap'>
+                {nft.walletAddress ?
+                  shortenAddress(nft.walletAddress)
+                  :
+                  `n/a`
+                }
+              </td>
               <td className='whitespace-nowrap'>{nft.created_at.slice(0, 10)}</td>
               <td className='text-center align-middle'>
                 <button onClick={() => toggleDeleteModal(nft.id)} aria-label='Toggle Delete Modal' className='button-admin'>

@@ -67,6 +67,7 @@ const AppWrapper = ({ children }) => {
       if (localStorage?.getItem('walletConnected') === 'true') {
         try {
           await activate(injected)
+
         } catch (e) {
           console.log(e)
         }
@@ -74,6 +75,17 @@ const AppWrapper = ({ children }) => {
     }
     connectWalletOnPageLoad()
   }, [])
+
+  const checkChain = (chainId) => {
+    if (parseInt(chainId) === 4) {  // Local: 1337 - Rinkeby: 4 - Mumbai: 80001
+      setIsCorrectChain(true)
+      return true
+    } else {
+      notify(`Please change network to Rinkeby in Metamask.`)
+      setIsCorrectChain(false)
+      return false
+    }
+  }
 
   // Check if a user exists for this Wallet
   const checkUser = async () => {
@@ -131,12 +143,7 @@ const AppWrapper = ({ children }) => {
 
     const handleChainChanged = (chainId) => {
       // console.log("Handling 'chainChanged' event with chainId: ", parseInt(chainId))
-      if (parseInt(chainId) === 4) {
-        setIsCorrectChain(true)
-      } else {
-        notify(`Please change network to Rinkeby in Metamask.`)
-        setIsCorrectChain(false)
-      }
+      checkChain(chainId)
     }
 
     const handleAccountsChanged = (accounts) => {
@@ -151,7 +158,6 @@ const AppWrapper = ({ children }) => {
     ethereum.on('chainChanged', handleChainChanged)
   }, [])
 
-
   let app = {
     session, setSession,
     notificationMsg, setNotificationMsg,
@@ -161,7 +167,7 @@ const AppWrapper = ({ children }) => {
     hasMetamask, setHasMetamask,
     isCorrectChain, setIsCorrectChain,
 
-    notify, connect, disconnect,
+    notify, connect, disconnect, checkChain,
   }
 
   return (

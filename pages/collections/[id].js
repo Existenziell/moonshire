@@ -1,10 +1,10 @@
 import { supabase } from '../../lib/supabase'
-import { getPublicUrl } from '../../lib/getPublicUrl'
+import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 
 const Collection = ({ collection, collectionNfts }) => {
-  const { id, title, headline, desc, year, public_url, numberOfNfts } = collection
+  const { id, title, headline, description, year, public_url, numberOfNfts } = collection
 
   return (
     <>
@@ -21,7 +21,7 @@ const Collection = ({ collection, collectionNfts }) => {
           <div>
             <p className='mt-4 text-xl'>{headline}</p>
             <hr className='border-t-2 border-lines my-8' />
-            <p className='mt-4'>{desc}</p>
+            <p className='mt-4'>{description}</p>
             <p className='mt-8'>2.2 ETH</p>
             <p className='text-tiny mb-8'>8/10 available, last sold at 10 ETH (25.345,00 USD)</p>
             <p>Launched: {year}</p>
@@ -32,17 +32,17 @@ const Collection = ({ collection, collectionNfts }) => {
         <h2 className='mt-28 mb-8 self-start text-3xl'>NFTs contained in this Collection:</h2>
         <div>
           {collectionNfts.map(nft => {
-            const { id, name, desc, price, artists, public_url } = nft
+            const { id, name, description, price, artists, image_url } = nft
             return (
               <Link href={`/nfts/${id}`} key={id}>
                 <a>
                   <div className='hover:shadow px-6 py-4 mb-6 rounded shadow-lg hover:cursor-pointer transition-all'>
-                    <div className='flex flex-col md:flex-row gap-8 items-start justify-center'>
-                      <img src={public_url} alt='Cover Image' className='max-w-sm md:max-w-[200px]' />
-                      <div>
+                    <div className='flex flex-col md:flex-row gap-12 items-start justify-between'>
+                      <img src={image_url} alt='Cover Image' className='max-w-sm md:max-w-[200px]' />
+                      <div className='w-full'>
                         <h2>{name}</h2>
                         <p className='text-tiny'>by {artists.name}</p>
-                        <p className='my-4'>{desc}</p>
+                        <p className='my-4'>{description}</p>
                         <p className='text-admin-green'>{price} ETH</p>
                       </div>
                     </div>
@@ -71,11 +71,6 @@ export async function getStaticProps(context) {
 
   const collectionNfts = nfts.filter((n => n.collection === collection.id))
   collection.numberOfNfts = collectionNfts.length
-
-  for (let nft of collectionNfts) {
-    const url = await getPublicUrl('nfts', nft.image_url)
-    nft.public_url = url
-  }
 
   return {
     props: { collection, collectionNfts },
