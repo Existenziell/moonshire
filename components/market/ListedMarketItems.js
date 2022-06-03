@@ -44,7 +44,7 @@ export default function ListedMarketItems() {
               {
                 nfts.map((nft, i) => (
                   <div key={i} className="shadow-xl rounded max-w-xs flex flex-col justify-between flex-grow">
-                    <img src={nft.image} alt='NFT Image' />
+                    <img src={nft.image} alt='NFT Image' className='aspect-square' />
                     <div className="p-4 whitespace-normal">
                       <h2 className="text-2xl font-semibold">{nft.name}</h2>
                       <div className="text-gray-400 text-xs">

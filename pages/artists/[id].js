@@ -43,7 +43,7 @@ const Artist = ({ artist, artistNfts }) => {
                 <a>
                   <div className='max-w-lg w-full hover:shadow px-6 py-4 mb-6 rounded border border-detail dark:border-detail-dark shadow-lg hover:cursor-pointer transition-all'>
                     <div className='flex flex-col gap-4 items-start justify-center'>
-                      <img src={image_url} alt='NFT Image' className='max-w-[200px]' />
+                      <img src={image_url} alt='NFT Image' className='max-w-[200px] aspect-square' />
                       <div className='w-full'>
                         <h2 className='whitespace-nowrap mt-0'>{name}</h2>
                         <p className='text-tiny'>by {artists.name}</p>

@@ -3,7 +3,7 @@ import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 
-const Collections = ({ collections }) => {
+const Collections = ({ collections, numberOfCollections }) => {
   return (
     <>
       <Head>
@@ -13,18 +13,19 @@ const Collections = ({ collections }) => {
 
       <div className='flex flex-col items-center justify-center'>
 
-        <h1>Collections</h1>
-        <div className='flex flex-col items-center justify-center gap-24 text-sm'>
+        <h1 className='mb-2'>Collections</h1>
+        <p className='text-xs mb-8'>Currently, Moonshire has {numberOfCollections} active collections to be explored</p>
 
+        <div className='flex flex-col items-center justify-center gap-24 text-sm'>
           {collections.map(collection => {
             const { id, title, headline, description, year, public_url, created_at, numberOfNfts } = collection
 
             return (
-              <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-8 text-sm pt-12'>
-                <div className='w-full md:w-1/2'>
+              <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-12 text-sm pt-12'>
+                <div className='max-w-xl'>
                   <Link href={`/collections/${id}`}>
-                    <a className='w-full'>
-                      <img src={public_url} alt='Cover Image' className='w-full block' />
+                    <a className='max-w-xs'>
+                      <img src={public_url} alt='Cover Image' className='max-w-md' />
                     </a>
                   </Link>
                 </div>
@@ -59,9 +60,10 @@ export async function getServerSideProps() {
     collection.numberOfNfts = collectionNfts.length
     collection.public_url = url
   }
+  const numberOfCollections = collections.length
 
   return {
-    props: { collections },
+    props: { collections, numberOfCollections },
   }
 }
 

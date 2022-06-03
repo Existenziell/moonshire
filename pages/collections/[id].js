@@ -21,7 +21,7 @@ const Collection = ({ collection, collectionNfts }) => {
 
         <h1 className='mx-auto'>{title}</h1>
         <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-8 text-sm'>
-          <img src={public_url} alt='Cover Image' className='md:w-1/2' />
+          <img src={public_url} alt='Cover Image' className='md:w-1/2 md:max-w-md' />
           <div>
             <p className='mt-4 text-xl'>{headline}</p>
             <hr className='border-t-2 border-lines my-8' />
@@ -43,7 +43,7 @@ const Collection = ({ collection, collectionNfts }) => {
                 <a>
                   <div className='hover:shadow px-6 py-4 mb-8 rounded shadow-lg border border-detail dark:border-detail-dark hover:cursor-pointer transition-all'>
                     <div className='flex flex-col gap-6 items-start justify-between'>
-                      <img src={image_url} alt='Cover Image' className='max-w-[200px]' />
+                      <img src={image_url} alt='Cover Image' className='max-w-[200px] aspect-square' />
                       <div className='flex flex-col justify-between'>
                         <h2>{name}</h2>
                         <p className='text-tiny'>by {artists.name}</p>

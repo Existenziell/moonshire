@@ -126,7 +126,7 @@ const CreateNft = ({ artists, collections }) => {
     const output = document.getElementById('mintingInfo')
     const element = document.createElement("div")
     element.style.marginBottom = '10px'
-    output.append(msg, element)
+    if (output) output.append(msg, element)
   }
 
   const setData = (e) => {
@@ -288,11 +288,12 @@ const CreateNft = ({ artists, collections }) => {
           />
         </label>
 
-        <div id='mintingInfo' className='mt-16 text-xs'></div>
         {loading ?
-          <div className=' flex flex-col items-start justify-center'>
-            <p className='text-xs mb-4'>Please follow MetaMask prompt.</p>
-            <PulseLoader color={'var(--color-cta)'} size={15} />
+          <div className='flex flex-col items-start justify-center'>
+            <div id='mintingInfo' className='mt-16 text-xs'></div>
+
+            <PulseLoader color={'var(--color-cta)'} size={20} />
+            <p className='text-xs mt-4'>Please follow MetaMask prompt...</p>
           </div>
           :
           <button onClick={createNft} className='button button-cta mt-12'>Create</button>
