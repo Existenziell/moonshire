@@ -11,8 +11,8 @@ const Nav = () => {
     const router = useRouter()
 
     const urls = [
-        { name: 'Releases', href: '/releases', title: 'Releases' },
-        { name: 'Live', href: '/live', title: 'Live' },
+        // { name: 'Releases', href: '/releases', title: 'Releases' },
+        // { name: 'Live', href: '/live', title: 'Live' },
         { name: 'Collections', href: '/collections', title: 'Collections' },
         { name: 'Artists', href: '/artists', title: 'Artists' },
         { name: 'NFTs', href: '/nfts', title: 'nfts' },

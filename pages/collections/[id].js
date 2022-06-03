@@ -2,9 +2,12 @@ import { supabase } from '../../lib/supabase'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import Breadcrumbs from '../../components/Breadcrumbs'
 
 const Collection = ({ collection, collectionNfts }) => {
   const { id, title, headline, description, year, public_url, numberOfNfts } = collection
+  const router = useRouter()
 
   return (
     <>
@@ -13,7 +16,8 @@ const Collection = ({ collection, collectionNfts }) => {
         <meta name='description' content='Collection | Project Moonshire' />
       </Head>
 
-      <div className='px-8 pb-24 flex flex-col items-center'>
+      <div className='px-8 pb-24 flex flex-col items-center relative'>
+        <Breadcrumbs backPath='/collections' currentPath={router.asPath} />
 
         <h1 className='mx-auto'>{title}</h1>
         <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-8 text-sm'>
@@ -23,23 +27,22 @@ const Collection = ({ collection, collectionNfts }) => {
             <hr className='border-t-2 border-lines my-8' />
             <p className='mt-4'>{description}</p>
             <p className='mt-8'>2.2 ETH</p>
-            <p className='text-tiny mb-8'>8/10 available, last sold at 10 ETH (25.345,00 USD)</p>
+            <p className='text-tiny mb-8'>{numberOfNfts} items available, last sold for 10 ETH (25.345,00 USD)</p>
             <p>Launched: {year}</p>
-            <p>Number of NFTs in this collection: {numberOfNfts}</p>
           </div>
         </div>
 
-        <h2 className='mt-28 mb-8 self-start text-3xl'>NFTs contained in this Collection:</h2>
-        <div>
+        <h2 className='mt-28 mb-8 self-start text-3xl'>NFTs in this Collection:</h2>
+        <div className='flex flex-wrap'>
           {collectionNfts.map(nft => {
             const { id, name, description, price, artists, image_url } = nft
             return (
               <Link href={`/nfts/${id}`} key={id}>
                 <a>
-                  <div className='hover:shadow px-6 py-4 mb-6 rounded shadow-lg hover:cursor-pointer transition-all'>
-                    <div className='flex flex-col md:flex-row gap-12 items-start justify-between'>
+                  <div className='hover:shadow px-6 py-4 md:ml-6 mb-8 rounded shadow-lg hover:cursor-pointer transition-all'>
+                    <div className='flex flex-col md:flex-row gap-6 items-start justify-between'>
                       <img src={image_url} alt='Cover Image' className='max-w-sm md:max-w-[200px]' />
-                      <div className='w-full'>
+                      <div className='flex flex-col justify-between'>
                         <h2>{name}</h2>
                         <p className='text-tiny'>by {artists.name}</p>
                         <p className='my-4'>{description}</p>

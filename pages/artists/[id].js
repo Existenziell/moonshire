@@ -1,10 +1,13 @@
 import { supabase } from '../../lib/supabase'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
+import Breadcrumbs from '../../components/Breadcrumbs'
 
 const Artist = ({ artist, artistNfts }) => {
   const { id, name, headline, description, origin, public_url, created_at, numberOfNfts } = artist
+  const router = useRouter()
 
   return (
     <>
@@ -14,6 +17,7 @@ const Artist = ({ artist, artistNfts }) => {
       </Head>
 
       <div className='px-8 pb-24 flex flex-col items-center'>
+        <Breadcrumbs backPath='/artists' currentPath={router.asPath} />
 
         <h1 className='mx-auto'>{name}</h1>
         <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-8'>
@@ -29,18 +33,18 @@ const Artist = ({ artist, artistNfts }) => {
         </div>
 
         <h2 className='mt-28 mb-8 self-start text-3xl'>NFTs made by {name}:</h2>
-        <div>
+        <div className='flex flex-wrap items-center'>
           {artistNfts.map(nft => {
-            const { id, name, description, price, artists, public_url } = nft
+            const { id, name, description, price, artists, image_url } = nft
 
             return (
               <Link href={`/nfts/${id}`} key={id}>
                 <a>
-                  <div className='hover:shadow px-6 py-4 mb-6 rounded shadow-lg hover:cursor-pointer transition-all'>
+                  <div className='max-w-lg w-full hover:shadow px-6 py-4 mb-6 rounded shadow-lg hover:cursor-pointer transition-all'>
                     <div className='flex flex-col md:flex-row gap-12 items-start justify-center'>
-                      <img src={public_url} alt='NFT Image' className='max-w-sm md:max-w-[200px]' />
+                      <img src={image_url} alt='NFT Image' className='max-w-sm md:max-w-[200px]' />
                       <div className='w-full'>
-                        <h2>{name}</h2>
+                        <h2 className='whitespace-nowrap'>{name}</h2>
                         <p className='text-tiny'>by {artists.name}</p>
                         <p className='my-4'>{description}</p>
                         <p className='text-admin-green'>{price} ETH</p>
@@ -71,11 +75,6 @@ export async function getStaticProps(context) {
 
   const artistNfts = nfts.filter((n => n.artist === artist.id))
   artist.numberOfNfts = artistNfts.length
-
-  for (let nft of artistNfts) {
-    const url = await getPublicUrl('nfts', nft.image_url)
-    nft.public_url = url
-  }
 
   return {
     props: { artist, artistNfts },

@@ -14,7 +14,7 @@ const Artists = ({ artists }) => {
       <div className='flex flex-col items-center justify-center pb-24'>
 
         <h1>Artists</h1>
-        <div className='flex flex-col items-center justify-center gap-24 text-sm'>
+        <div className='flex flex-col items-start justify-center gap-24 text-sm'>
 
           {artists.map(artist => {
             const { id, name, headline, description, origin, public_url, created_at, numberOfNfts } = artist
@@ -27,7 +27,7 @@ const Artists = ({ artists }) => {
                     <img src={public_url} alt='Artist Image' className='max-w-sm' />
                   </a>
                 </Link>
-                <div>
+                <div className=' '>
                   <h2>{name}</h2>
                   <p className='mt-4 text-lg'>{headline}</p>
                   <hr className='border-t-2 border-lines my-8' />
