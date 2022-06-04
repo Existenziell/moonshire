@@ -146,6 +146,8 @@ const Profile = () => {
         </div>
 
         <button className='button button-cta mt-24' onClick={addToMetamask}>Add to MetaMask</button>
+        <p className='text-xs max-w-xs text-center mt-4'>This allows you to see the token from the Moonshire smart contract (called MOON) in your Metamask wallet.</p>
+
         <AddToHomeScreen />
         <button onClick={disconnect} className='button button-detail mt-16'>Disconnect Wallet</button>
 

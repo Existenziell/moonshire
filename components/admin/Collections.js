@@ -194,7 +194,7 @@ const Collections = ({ collections }) => {
             <div className='flex flex-col items-center justify-center backdrop-blur-lg bg-white text-brand-dark rounded p-12'>
               <button
                 onClick={() => setShowDelete(false)}
-                className='absolute top-0 right-0 px-2 pb-1 rounded-sm hover:text-cta text-2xl hover:bg-gray-100'
+                className='absolute top-0 right-0 px-2 pb-1 rounded-sm hover:text-cta text-2xl'
                 aria-label='Close Delete Dialog'
               >
                 &times;

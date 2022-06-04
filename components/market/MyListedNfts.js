@@ -48,7 +48,7 @@ export default function MyListedNfts() {
                   <div className="p-4 bg-detail dark:bg-detail-dark flex flex-col justify-between h-full">
                     <h2 className="text-2xl">{nft.name}</h2>
                     <p className="text-sm mt-1 mb-6">{nft.description}</p>
-                    <div className='mb-4 text-xs text-gray-400'>
+                    <div className='mb-4 text-xs text-detail-dark dark:text-detail'>
                       <p>by: {nft.artist}</p>
                       <p>in: {nft.collection}</p>
                     </div>

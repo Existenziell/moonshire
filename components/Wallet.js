@@ -12,14 +12,15 @@ const Wallet = () => {
 
   const [overlayShown, setOverlayShown] = useState(false)
 
-  const closeAndConnect = () => {
+  const connectAndClose = () => {
     setOverlayShown(false)
     connect()
   }
 
   const syncWallet = () => {
     hasMetamask ?
-      setOverlayShown(true)
+      // setOverlayShown(true)
+      connect()
       :
       notify("Please install Metamask to proceed")
   }
@@ -47,7 +48,7 @@ const Wallet = () => {
       <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 rounded-xl bg-white dark:bg-brand-dark md:max-w-2xl px-6 py-8'>
         <h2 className='text-2xl md:text-4xl mb-6'>Connect your wallet</h2>
         <p className='text-xs mb-8 max-w-md mx-auto'>By connecting your wallet, you agree to our Terms of Services and our Privacy Policy.</p>
-        <div onClick={closeAndConnect} className='button button-detail flex items-center justify-between divide-x divide-dashed divide-brand dark:divide-brand-dark mx-auto'>
+        <div onClick={connectAndClose} className='button button-detail flex items-center justify-between divide-x divide-dashed divide-brand dark:divide-brand-dark mx-auto'>
           <span className='pr-4'>Metamask</span>
           <span className='pl-4'><Image src='/metamask.svg' alt='MetaMask' width={20} height={20} /></span>
         </div>

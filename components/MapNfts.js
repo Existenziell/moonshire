@@ -19,7 +19,7 @@ const MapNfts = ({ nfts }) => {
 
           <div className="p-4 bg-detail dark:bg-detail-dark flex flex-col justify-between h-full">
             <h2 className="text-2xl font-semibold">{nft.name}</h2>
-            <div className="text-gray-400 text-xs">
+            <div className="text-detail-dark dark:text-detail text-xs">
               <p >{nft.description}</p>
               <p className='mt-4 mb-1'>by {nft.artists?.name ? nft.artists.name : nft.artist}</p>
               <p>in {nft.collections?.title ? nft.collections.title : nft.collection}</p>
