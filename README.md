@@ -1,6 +1,6 @@
 # PROJECT MOONSHIRE
 
-Project Moonshire Is A Web3 White-Label Platform Disrupting The 2.0 Status Quo: A Cutting Edge, Decentralised Monetising Service For Content Creators Running On The Polygon Blockchain.
+Project Moonshire is a web3 white-label platform disrupting the 2.0 status quo: A cutting edge, decentralised monetising service for content creators running on the Rinkeby Blockchain.
 
 ## App Functionality
 
