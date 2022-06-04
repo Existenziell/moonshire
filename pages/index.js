@@ -30,7 +30,7 @@ const Home = ({ artists, collections, nfts }) => {
           <h2 className='border-b border-detail dark:border-detail-dark mb-8'>Featured Artists</h2>
           <div className='grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full'>
             {fetchedArtists.map(artist => {
-              const { id, name, headline, image_url, numberOfNfts } = artist
+              const { id, name, image_url } = artist
               return (
                 <Link href={`/artists/${id}`} key={id} >
                   <a className=' flex max-w-sm bg-detail dark:bg-detail-dark p-4 rounded shadow-xl hover:cursor-pointer hover:shadow-sm transition-all relative'>
@@ -48,7 +48,7 @@ const Home = ({ artists, collections, nfts }) => {
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12'>
 
             {fetchedCollections.map(collection => {
-              const { id, title, headline, description, year, image_url, created_at, numberOfNfts } = collection
+              const { id, title, description, image_url, numberOfNfts } = collection
 
               return (
                 <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-8 bg-detail dark:bg-detail-dark rounded p-4'>
