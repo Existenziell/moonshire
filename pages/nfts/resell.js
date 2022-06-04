@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { getMeta } from '../../lib/market/getMeta'
 import resellNft from '../../lib/market/resellNft'
 import { PulseLoader } from 'react-spinners'
+import updatePrice from '../../lib/updatePrice'
 
 export default function ResellNft() {
   const appCtx = useContext(AppContext)
@@ -40,10 +41,12 @@ export default function ResellNft() {
       notify("Are you sure you want to sell it for that price...?")
       return
     }
-    setLoading(true)
 
+    setLoading(true)
     const hash = await resellNft(id, price, provider)
+
     if (hash) {
+      await updatePrice(id, tokenURI, price)
       setLoading(false)
       setTimeout(() => {
         router.push('/profile')

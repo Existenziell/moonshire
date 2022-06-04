@@ -7,6 +7,7 @@ import { PulseLoader } from 'react-spinners'
 import Head from 'next/head'
 import Link from 'next/link'
 import buyNft from '../../lib/market/buyNft'
+import logWeb3 from '../../lib/logWeb3'
 
 const Nft = ({ nft }) => {
   const { id, name, description, price, format, created_at, image_url, artists } = nft
@@ -22,6 +23,7 @@ const Nft = ({ nft }) => {
       return
     }
     setLoading(true)
+    logWeb3(`Initiating blockchain transfer...`)
     const hash = await buyNft(nft, provider)
     if (hash) {
       setLoading(false)
@@ -32,7 +34,6 @@ const Nft = ({ nft }) => {
     } else {
       notify("Something went horribly wrong...")
     }
-
   }
 
   return (
@@ -59,8 +60,10 @@ const Nft = ({ nft }) => {
             <p className='text-tiny mt-2'>8/10 available, last sold at 10 ETH (25.345,00 USD)</p>
 
             {loading ?
-              <div className='mt-8'>
-                <PulseLoader color={'var(--color-cta)'} size={10} />
+              <div className='flex flex-col items-start justify-center mt-8'>
+                <div id='mintingInfo' className='mt-16 text-xs'></div>
+                <PulseLoader color={'var(--color-cta)'} size={20} />
+                <p className='text-xs mt-4'>Please follow MetaMask prompt...</p>
               </div>
               :
               <button onClick={() => initiateBuy(nft)} className='button button-cta mt-8'>Buy Asset</button>

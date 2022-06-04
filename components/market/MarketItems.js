@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useWeb3React } from "@web3-react/core"
 import { PulseLoader } from 'react-spinners'
-import fetchListedItems from '../../lib/market/fetchListedItems'
+import fetchMarketItems from '../../lib/market/fetchMarketItems'
 import MapNfts from '../MapNfts'
 
-export default function ListedMarketItems() {
+export default function MarketItems() {
   const [nfts, setNfts] = useState([])
   const [numberOfNfts, setNumberOfNfts] = useState(null)
   const [loadingState, setLoadingState] = useState('not-loaded')
@@ -15,7 +15,7 @@ export default function ListedMarketItems() {
   }, [provider])
 
   const loadNfts = async () => {
-    const nfts = await fetchListedItems(provider)
+    const nfts = await fetchMarketItems(provider)
     setNfts(nfts)
     setNumberOfNfts(nfts.length)
     setLoadingState('loaded')
@@ -25,8 +25,8 @@ export default function ListedMarketItems() {
 
   return (
     <>
+      <p className='text-xs mb-16'>MarketItems: {numberOfNfts}</p>
       {/* <p className='text-xs mb-8'>Currently, Moonshire has {numberOfNfts} NFTs for sale.</p> */}
-      <p className='text-xs mb-16'>ListedMarketItems: {numberOfNfts}</p>
       <div className="flex justify-center">
         {nfts.length ?
           <MapNfts nfts={nfts} />

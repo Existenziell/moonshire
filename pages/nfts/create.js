@@ -7,6 +7,7 @@ import { useWeb3React } from "@web3-react/core"
 import { PulseLoader } from 'react-spinners'
 import Head from 'next/head'
 import Select from 'react-select'
+import logWeb3 from '../../lib/logWeb3'
 import FilePicker from '../../components/market/FilePicker'
 import uploadFileToIpfs from '../../lib/uploadFileToIpfs'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
@@ -120,13 +121,6 @@ const CreateNft = ({ artists, collections }) => {
     } else {
       notify("Something went wrong...")
     }
-  }
-
-  const logWeb3 = (msg) => {
-    const output = document.getElementById('mintingInfo')
-    const element = document.createElement("div")
-    element.style.marginBottom = '10px'
-    if (output) output.append(msg, element)
   }
 
   const setData = (e) => {
@@ -291,7 +285,6 @@ const CreateNft = ({ artists, collections }) => {
         {loading ?
           <div className='flex flex-col items-start justify-center'>
             <div id='mintingInfo' className='mt-16 text-xs'></div>
-
             <PulseLoader color={'var(--color-cta)'} size={20} />
             <p className='text-xs mt-4'>Please follow MetaMask prompt...</p>
           </div>
