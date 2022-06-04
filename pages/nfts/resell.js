@@ -67,6 +67,7 @@ export default function ResellNft() {
             focus:border-none focus:outline-none focus:scale-105 transition-all"
             onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
             required
+            disabled={loading}
           />
           {image && <img className="rounded mt-4" src={image} alt='NFT Image' />}
           {loading ?
