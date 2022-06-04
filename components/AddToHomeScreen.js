@@ -38,7 +38,7 @@ const AddToHomeScreen = () => {
   }
 
   return (
-    <button className="a2hs-button button button-cta absolute bottom-0" aria-label='Tap to add to home screen'>Add to home screen</button>
+    <button className="a2hs-button button button-cta mt-6" aria-label='Tap to add to home screen'>Add to home screen</button>
   )
 
 }

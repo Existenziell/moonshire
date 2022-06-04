@@ -8,6 +8,7 @@ import AddToHomeScreen from '../components/AddToHomeScreen'
 import MyNfts from '../components/market/MyNfts'
 import MyListedNfts from '../components/market/MyListedNfts'
 import Link from 'next/link'
+import { addToMetamask } from '../lib/addToMetamask'
 
 const Profile = () => {
   const appCtx = useContext(AppContext)
@@ -143,9 +144,10 @@ const Profile = () => {
           </div>
         </div>
 
-        <button onClick={disconnect} className='button button-detail mt-24'>Disconnect Wallet</button>
-
+        <button className='button button-cta mt-24' onClick={addToMetamask}>Add to MetaMask</button>
         <AddToHomeScreen />
+        <button onClick={disconnect} className='button button-detail mt-16'>Disconnect Wallet</button>
+
       </div>
     </>
   )
