@@ -10,7 +10,7 @@ import buyNft from '../../lib/market/buyNft'
 import logWeb3 from '../../lib/logWeb3'
 
 const Nft = ({ nft }) => {
-  const { id, name, description, price, format, created_at, image_url, artists } = nft
+  const { id, name, description, price, format, created_at, image_url, artists, tokenURI } = nft
   const { library: provider } = useWeb3React()
   const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -54,7 +54,10 @@ const Nft = ({ nft }) => {
             </h2>
             <hr className='border-t-2 border-lines my-8' />
             <p className='my-4'>{description}</p>
-            <p>Created: {created_at.slice(0, 10)}</p>
+            <p className='text-xs'>Created: {created_at.slice(0, 10)}</p>
+            <a href={tokenURI} target='_blank' rel='noopener noreferrer nofollow'>
+              <span className='whitespace-nowrap link'>{tokenURI.substring(0, 30)}&#8230;{tokenURI.slice(tokenURI.length - 4)}</span>
+            </a>
             <p className='mt-4'>{format}</p>
             <p className='mt-8 text-lg'>Price: {price} ETH</p>
             <p className='text-tiny mt-2'>8/10 available, last sold at 10 ETH (25.345,00 USD)</p>
