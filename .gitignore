@@ -45,4 +45,3 @@ yarn-error.log*
 # hardhat
 hardhat.config.js
 scripts
-test
