@@ -117,7 +117,6 @@ const CreateNft = ({ artists, collections }) => {
       setTimeout(() => {
         router.push('/profile')
       }, 3000)
-
     } else {
       notify("Something went wrong...")
     }

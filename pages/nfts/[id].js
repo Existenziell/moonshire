@@ -26,7 +26,6 @@ const Nft = ({ nft }) => {
     logWeb3(`Initiating blockchain transfer...`)
     const hash = await buyNft(nft, provider)
     if (hash) {
-      setLoading(false)
       notify("Transfer to your wallet was successful!")
       setTimeout(() => {
         router.push('/profile')
@@ -34,6 +33,7 @@ const Nft = ({ nft }) => {
     } else {
       notify("Something went horribly wrong...")
     }
+    setLoading(false)
   }
 
   return (
