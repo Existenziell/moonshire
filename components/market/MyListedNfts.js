@@ -24,6 +24,7 @@ export default function MyListedNfts() {
         const dbId = await getDbIdForTokenURI(nft.tokenURI)
         nft.dbId = dbId
       }
+
       const soldNfts = nfts.filter(i => i.sold)
       setNfts(nfts)
       setSoldNfts(soldNfts)

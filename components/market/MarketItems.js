@@ -3,6 +3,7 @@ import { useWeb3React } from "@web3-react/core"
 import { PulseLoader } from 'react-spinners'
 import fetchMarketItems from '../../lib/market/fetchMarketItems'
 import MapNfts from '../MapNfts'
+import getDbIdForTokenURI from '../../lib/getDbIdForTokenURI'
 
 export default function MarketItems() {
   const [nfts, setNfts] = useState([])
@@ -16,9 +17,15 @@ export default function MarketItems() {
 
   const loadNfts = async () => {
     const nfts = await fetchMarketItems(provider)
-    setNfts(nfts)
-    setNumberOfNfts(nfts.length)
-    setLoadingState('loaded')
+    if (nfts) {
+      for (let nft of nfts) {
+        const id = await getDbIdForTokenURI(nft.tokenURI)
+        nft.id = id
+      }
+      setNfts(nfts)
+      setNumberOfNfts(nfts.length)
+      setLoadingState('loaded')
+    }
   }
 
   if (loadingState === 'not-loaded') return <PulseLoader color={'var(--color-cta)'} size={20} />
