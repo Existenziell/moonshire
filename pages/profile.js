@@ -135,7 +135,7 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className=''>
+        <div className='w-full'>
           <MyNfts setSoldNfts={setSoldNfts} />
           <MyListedNfts />
           <div className='mt-8 mb-24 flex flex-col items-start justify-start w-full'>

@@ -28,12 +28,11 @@ export default function MarketItems() {
     }
   }
 
-  if (loadingState === 'not-loaded') return <PulseLoader color={'var(--color-cta)'} size={20} />
+  if (loadingState === 'not-loaded') return <div className='mt-12'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
     <>
-      <p className='text-xs mb-16'>MarketItems: {numberOfNfts}</p>
-      {/* <p className='text-xs mb-8'>Currently, Moonshire has {numberOfNfts} NFTs for sale.</p> */}
+      <p className='text-xs mb-16'>Currently, Moonshire has {numberOfNfts} NFTs for sale.</p>
       <div className="flex justify-center">
         {nfts.length ?
           <MapNfts nfts={nfts} />
