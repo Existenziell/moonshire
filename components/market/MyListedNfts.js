@@ -11,11 +11,11 @@ export default function MyListedNfts() {
   const [soldNfts, setSoldNfts] = useState([])
   /* eslint-enable no-unused-vars */
   const [loadingState, setLoadingState] = useState('not-loaded')
-  const { library: provider } = useWeb3React()
+  const { account, library: provider } = useWeb3React()
 
   useEffect(() => {
     if (provider) loadNfts()
-  }, [provider])
+  }, [account, provider])
 
   const loadNfts = async () => {
     const nfts = await fetchListedItems(provider)

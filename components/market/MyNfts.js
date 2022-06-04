@@ -8,11 +8,11 @@ export default function MyNfts({ setSoldNfts }) {
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
   const router = useRouter()
-  const { library: provider } = useWeb3React()
+  const { account, library: provider } = useWeb3React()
 
   useEffect(() => {
     if (provider) loadNfts()
-  }, [provider])
+  }, [account, provider])
 
   const loadNfts = async () => {
     const nfts = await fetchMyNfts(provider)
