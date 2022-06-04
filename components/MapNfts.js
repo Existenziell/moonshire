@@ -1,4 +1,5 @@
-import Link from "next/link";
+import Link from "next/link"
+import { shortenAddress } from '../lib/shortenAddress'
 
 const MapNfts = ({ nfts }) => {
 
@@ -22,6 +23,8 @@ const MapNfts = ({ nfts }) => {
               <p >{nft.description}</p>
               <p className='mt-4 mb-1'>by {nft.artists?.name ? nft.artists.name : nft.artist}</p>
               <p>in {nft.collections?.title ? nft.collections.title : nft.collection}</p>
+              <p className="mt-4">Owner: {shortenAddress(nft.owner)}</p>
+              <p>Seller: {shortenAddress(nft.seller)}</p>
             </div>
             <p className="text-2xl mt-6">{nft.price} ETH</p>
           </div>
