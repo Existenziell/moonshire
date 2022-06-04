@@ -1,6 +1,8 @@
 import { useEffect, useContext, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import { useWeb3React } from "@web3-react/core"
+import { addToMetamask } from '../lib/addToMetamask'
+import { shortenAddress } from '../lib/shortenAddress'
 import Head from 'next/head'
 import Avatar from '../components/Avatar'
 import updateProfile from '../lib/updateProfile'
@@ -8,7 +10,6 @@ import AddToHomeScreen from '../components/AddToHomeScreen'
 import MyNfts from '../components/market/MyNfts'
 import MyListedNfts from '../components/market/MyListedNfts'
 import Link from 'next/link'
-import { addToMetamask } from '../lib/addToMetamask'
 
 const Profile = () => {
   const appCtx = useContext(AppContext)
@@ -106,10 +107,10 @@ const Profile = () => {
               }
             </div>
 
-            <div className='mb-8 text-xs flex flex-col gap-1 text-center '>
+            <div className='mb-8 text-xs flex flex-col gap-2 text-center bg-detail dark:bg-detail-dark p-4 rounded-lg'>
               <p>Membership: {is_premium ? `Premium` : `Free`}</p>
               <p>Joined: {createdAt?.slice(0, 10)}</p>
-              <p>Wallet {account}</p>
+              <p>Wallet {shortenAddress(account)}</p>
             </div>
           </div>
 

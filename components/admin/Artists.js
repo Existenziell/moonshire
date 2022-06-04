@@ -137,7 +137,7 @@ const Artists = ({ artists }) => {
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='bg-detail dark:bg-detail-dark rounded'>
 
           {!fetchedArtists?.length &&
             <tr className='p-4 dark:text-brand'><td>No artists found.</td></tr>

@@ -128,7 +128,7 @@ const Users = ({ users, roles }) => {
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='bg-detail dark:bg-detail-dark rounded'>
 
           {!fetchedUsers?.length &&
             <tr className='p-4 dark:text-brand'><td>No users found.</td></tr>

@@ -111,7 +111,7 @@ const Collections = ({ collections }) => {
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='bg-detail dark:bg-detail-dark rounded'>
 
           {!fetchedCollections?.length &&
             <tr className='p-4 dark:text-brand'><td>No collections found.</td></tr>

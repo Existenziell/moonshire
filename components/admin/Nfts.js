@@ -55,7 +55,7 @@ const Nfts = ({ nfts }) => {
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='bg-detail dark:bg-detail-dark rounded'>
 
           {!fetchedNfts?.length &&
             <tr className='p-4 dark:text-brand'><td>No NFTs found.</td></tr>

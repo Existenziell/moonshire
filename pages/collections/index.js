@@ -14,18 +14,18 @@ const Collections = ({ collections, numberOfCollections }) => {
       <div className='flex flex-col items-center justify-center'>
 
         <h1 className='mb-2'>Collections</h1>
-        <p className='text-xs mb-8'>Currently, Moonshire has {numberOfCollections} active collections to be explored</p>
+        <p className='text-xs mb-12 text-center'>Currently, Moonshire has {numberOfCollections} active collections to be explored</p>
 
-        <div className='flex flex-col items-center justify-center gap-24 text-sm'>
+        <div className='flex flex-col items-center justify-center gap-16 text-sm'>
           {collections.map(collection => {
             const { id, title, headline, description, year, public_url, created_at, numberOfNfts } = collection
 
             return (
-              <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-12 text-sm pt-12'>
-                <div className='max-w-xl'>
+              <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-4 md:gap-12 text-sm bg-detail dark:bg-detail-dark rounded p-4'>
+                <div className='max-w-md'>
                   <Link href={`/collections/${id}`}>
-                    <a className='max-w-xs'>
-                      <img src={public_url} alt='Cover Image' className='max-w-md' />
+                    <a className=''>
+                      <img src={public_url} alt='Cover Image' className='aspect-square bg-cover' />
                     </a>
                   </Link>
                 </div>
@@ -38,7 +38,7 @@ const Collections = ({ collections, numberOfCollections }) => {
                   <p className='text-tiny mt-8'>Created: {created_at.slice(0, 10)}</p>
                   <p className='text-tiny mb-8'>{numberOfNfts} Items available in this collection. Last sold at 10 ETH (25.345,00 USD)</p>
                   <Link href={`/collections/${id}`}>
-                    <a className='button button-detail'>View Collection</a>
+                    <a className='button button-detail mx-auto'>View Collection</a>
                   </Link>
                 </div>
               </div>

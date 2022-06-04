@@ -45,7 +45,7 @@ export default function MyListedNfts() {
               {nfts.map((nft, i) => (
                 <div key={i} className="w-64 shadow rounded flex flex-col max-w-xs">
                   <img src={nft.image} alt='NFT Image' className='w-full aspect-square object-cover' />
-                  <div className="p-4 flex flex-col justify-between h-full">
+                  <div className="p-4 bg-detail dark:bg-detail-dark flex flex-col justify-between h-full">
                     <h2 className="text-2xl">{nft.name}</h2>
                     <p className="text-sm mt-1 mb-6">{nft.description}</p>
                     <div className='mb-4 text-xs text-gray-400'>

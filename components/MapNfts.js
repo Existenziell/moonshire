@@ -17,7 +17,7 @@ const MapNfts = ({ nfts }) => {
             </a>
           </Link>
 
-          <div className="p-4 flex flex-col justify-between h-full">
+          <div className="p-4 bg-detail dark:bg-detail-dark flex flex-col justify-between h-full">
             <h2 className="text-2xl font-semibold">{nft.name}</h2>
             <div className="text-gray-400 text-xs">
               <p >{nft.description}</p>
