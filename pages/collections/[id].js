@@ -1,13 +1,25 @@
 import { supabase } from '../../lib/supabase'
+import { useContext, useEffect, useState } from 'react'
+import { AppContext } from '../../context/AppContext'
+import { useRouter } from 'next/router'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import Breadcrumbs from '../../components/Breadcrumbs'
 
 const Collection = ({ collection, collectionNfts }) => {
   const { id, title, headline, description, year, public_url, numberOfNfts } = collection
+  const appCtx = useContext(AppContext)
+  const { currentUser } = appCtx
   const router = useRouter()
+  const [userOwnsCollection, setUserOwnsCollection] = useState(false)
+
+  useEffect(() => {
+    if (currentUser) {
+      // Check if currentUser owns collection
+      if (currentUser.id === collection.user) setUserOwnsCollection(true)
+    }
+  }, [currentUser])
 
   return (
     <>
@@ -33,31 +45,57 @@ const Collection = ({ collection, collectionNfts }) => {
         </div>
 
         <h2 className='mt-28 mb-8 self-start text-3xl'>NFTs in this Collection:</h2>
-        <div className='flex flex-wrap items-start justify-between w-full'>
-          {collectionNfts.map(nft => {
-            /* eslint-disable no-unused-vars */
-            const { id, name, description, price, artists, image_url } = nft
-            /* eslint-enable no-unused-vars */
-            return (
-              <Link href={`/nfts/${id}`} key={id}>
-                <a>
-                  <div className='hover:shadow px-6 py-4 mb-8 rounded shadow-lg border border-detail dark:border-detail-dark hover:cursor-pointer transition-all'>
-                    <div className='flex flex-col gap-6 items-start justify-between'>
-                      <img src={image_url} alt='Cover Image' className='max-w-[200px] aspect-square' />
-                      <div className='flex flex-col justify-between'>
-                        <h2>{name}</h2>
-                        <p className='text-tiny'>by {artists.name}</p>
-                        {/* <p className='my-4'>{description}</p> */}
-                        <p className='text-admin-green'>{price} ETH</p>
+
+        {collectionNfts.length ?
+          <div className='flex flex-wrap items-start justify-start gap-4 w-full'>
+            {collectionNfts.map(nft => {
+              /* eslint-disable no-unused-vars */
+              const { id, name, description, price, artists, image_url } = nft
+              /* eslint-enable no-unused-vars */
+              return (
+                <Link href={`/nfts/${id}`} key={id}>
+                  <a>
+                    <div className='hover:shadow px-6 py-4 mb-8 rounded shadow-lg border border-detail dark:border-detail-dark hover:cursor-pointer transition-all'>
+                      <div className='flex flex-col gap-6 items-start justify-between'>
+                        <img src={image_url} alt='Cover Image' className='max-w-[200px] aspect-square' />
+                        <div className='flex flex-col justify-between'>
+                          <h2>{name}</h2>
+                          <p className='text-tiny'>by {artists.name}</p>
+                          {/* <p className='my-4'>{description}</p> */}
+                          <p className='text-admin-green'>{price} ETH</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </a>
+                </Link>
+              )
+            })}
+          </div>
+          :
+          <div className='w-full'>
+            <p className='text-sm mb-6'>No NFTs found in this collection.</p>
+            {userOwnsCollection ?
+              <Link href='/nfts/create'>
+                <a className='button button-detail'>
+                  Create NFT
                 </a>
               </Link>
-            )
-          })}
+              :
+              <div className='mt-12'>
+                <p className='text-xs max-w-xs'>
+                  Unfortunately, you are not able to add NFTs to this collection,
+                  since you&apos;re not the owner. But you can:
+                </p>
+                <Link href='/collections/create'>
+                  <a className='button button-detail mt-4'>
+                    Create your own
+                  </a>
+                </Link>
 
-        </div>
+              </div>
+            }
+          </div>
+        }
       </div>
     </>
   )

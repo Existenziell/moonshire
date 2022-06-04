@@ -4,13 +4,17 @@ import { supabase } from '../../lib/supabase'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import UploadImage from '../../components/UploadImage'
+import { useWeb3React } from '@web3-react/core'
 
 const CreateCollection = () => {
+
   const appCtx = useContext(AppContext)
-  const { notify } = appCtx
+  const { currentUser, notify } = appCtx
+  const { account, library: provider } = useWeb3React()
 
   const [imageUrl, setImageUrl] = useState(null)
   const [formData, setFormData] = useState({})
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter()
 
@@ -21,17 +25,28 @@ const CreateCollection = () => {
 
   const saveCollection = async (e) => {
     e.preventDefault()
+    setLoading(true)
+
+    if (!provider || !account) {
+      notify("Please connect your wallet first")
+      return
+    }
 
     const { error } = await supabase
       .from('collections')
       .insert([{
-        ...formData
+        ...formData,
+        walletAddress: account,
+        user: currentUser.id,
       }])
 
     if (!error) {
       notify("Collection created successfully!")
       setFormData(null)
-      router.reload(window.location.pathname)
+      setLoading(false)
+      setTimeout(() => {
+        router.push('/profile')
+      }, 3000)
     }
   }
 
@@ -64,6 +79,7 @@ const CreateCollection = () => {
             onChange={setData} required
             placeholder='Collection Title'
             className='block mt-2 w-full'
+            disabled={loading}
           />
         </label>
 
@@ -74,6 +90,7 @@ const CreateCollection = () => {
             onChange={setData} required
             placeholder='Collection Headline'
             className='block mt-2 w-full'
+            disabled={loading}
           />
         </label>
 
@@ -85,6 +102,7 @@ const CreateCollection = () => {
             onChange={setData} required
             placeholder="Provide a detailed description of your collection."
             className='block mt-2 w-full'
+            disabled={loading}
           />
         </label>
 
@@ -95,10 +113,11 @@ const CreateCollection = () => {
             onChange={setData} required
             placeholder='Year of Appearance'
             className='block mt-2 w-full'
+            disabled={loading}
           />
         </label>
 
-        <input type='submit' className='button button-cta mt-12' value='Create' />
+        <input type='submit' className='button button-cta mt-12' value='Create' disabled={loading} />
       </form>
     </>
   )

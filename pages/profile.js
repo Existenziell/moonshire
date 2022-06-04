@@ -22,14 +22,16 @@ const Profile = () => {
   const [is_premium, setIsPremium] = useState(null)
   const [modified, setModified] = useState(false)
   const [soldNfts, setSoldNfts] = useState(0)
+  const [collections, setCollections] = useState([])
 
   useEffect(() => {
     if (currentUser) {
-      const { username, avatar_url, is_premium, created_at } = currentUser
+      const { username, avatar_url, is_premium, created_at, collections } = currentUser
       setUsername(username)
       setAvatarUrl(avatar_url)
       setCreatedAt(created_at)
       setIsPremium(is_premium)
+      setCollections(collections)
     }
   }, [currentUser])
 
@@ -112,6 +114,19 @@ const Profile = () => {
               <p>Joined: {createdAt?.slice(0, 10)}</p>
               <p>Wallet {shortenAddress(account)}</p>
             </div>
+
+            <div className='flex flex-col md:flex-row justify-center items-center gap-2 my-8'>
+              <Link href='/collections/create'>
+                <a className='button button-detail'>
+                  Create Collection
+                </a>
+              </Link>
+              <Link href='/nfts/create'>
+                <a className='button button-detail'>
+                  Create Asset
+                </a>
+              </Link>
+            </div>
           </div>
 
           <div className='max-w-md flex-shrink-0'>
@@ -122,6 +137,30 @@ const Profile = () => {
             />
           </div>
         </div>
+
+        <h1 className='mt-12 mb-4 py-2 border-b-2 border-detail dark:border-detail-dark'>Your Collections</h1>
+        {collections.length ?
+          <div>
+            {collections.map(collection => (
+              <Link href={`/collections/${collection.id}`} key={collection.id}>
+                <a className='flex items-start justify-between gap-16 text-sm link mb-2 px-4 py-2 bg-detail rounded-lg shadow hover:shadow-sm'>
+                  <p>{collection.title}</p>
+                  <p className='self-center'>{collection.numberOfNfts}</p>
+                </a>
+              </Link>
+            )
+            )}
+          </div>
+          :
+          <div className='flex flex-col items-center'>
+            <p className='text-sm mb-6'>You haven&apos;t created any collections yet.</p>
+            <Link href='/collections/create'>
+              <a className='button button-detail'>
+                Create Collection
+              </a>
+            </Link>
+          </div>
+        }
 
         <h1 className='mt-20 py-2 border-b-2 border-detail dark:border-detail-dark'>Your Assets</h1>
 

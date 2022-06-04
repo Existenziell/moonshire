@@ -18,10 +18,10 @@ const Collections = ({ collections, numberOfCollections }) => {
 
         <div className='flex flex-col items-center justify-center gap-16 text-sm'>
           {collections.map(collection => {
-            const { id, title, headline, description, year, public_url, created_at, numberOfNfts } = collection
+            const { id, title, headline, description, year, public_url, created_at, numberOfNfts, walletAddress } = collection
 
             return (
-              <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-4 md:gap-12 text-sm bg-detail dark:bg-detail-dark rounded p-4'>
+              <div key={id} className='w-full flex flex-col md:flex-row items-start justify-start gap-4 md:gap-12 text-sm bg-detail dark:bg-detail-dark rounded p-4'>
                 <div className='max-w-md'>
                   <Link href={`/collections/${id}`}>
                     <a className=''>
@@ -31,14 +31,15 @@ const Collections = ({ collections, numberOfCollections }) => {
                 </div>
                 <div className='md:w-1/2'>
                   <h1>{title}</h1>
-                  <p className='mt-4'>{headline}</p>
+                  <p className=''>{headline}</p>
                   <p className='text-tiny'>{year}</p>
-                  <hr className='border-t-2 border-lines my-8' />
-                  <p className='mt-4'>{description}</p>
-                  <p className='text-tiny mt-8'>Created: {created_at.slice(0, 10)}</p>
-                  <p className='text-tiny mb-8'>{numberOfNfts} Items available in this collection. Last sold at 10 ETH (25.345,00 USD)</p>
+                  <hr className='border-t-1 border-brand-dark/10 my-8' />
+                  <p className='my-4'>{description}</p>
+                  <p className='mb-4'>{numberOfNfts} Items available in this collection.</p>
+                  <p className='text-tiny'>Created: {created_at.slice(0, 10)}</p>
+                  <p className='text-tiny mb-4'>Owner: {walletAddress}</p>
                   <Link href={`/collections/${id}`}>
-                    <a className='button button-detail mx-auto'>View Collection</a>
+                    <a className='button button-detail mx-auto md:mx-0'>View Collection</a>
                   </Link>
                 </div>
               </div>
