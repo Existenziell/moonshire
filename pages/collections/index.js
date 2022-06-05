@@ -11,9 +11,8 @@ const Collections = ({ collections, numberOfCollections }) => {
         <meta name='description' content="Collections | Project Moonshire" />
       </Head>
 
-      <div className='flex flex-col items-center justify-center'>
+      <div className='flex flex-col items-center justify-center pb-24'>
 
-        <h1 className='mb-2'>Collections</h1>
         <p className='text-xs mb-12 text-center'>Currently, Moonshire has {numberOfCollections} active collections to be explored</p>
 
         <div className='flex flex-col items-center justify-center gap-16 text-sm'>

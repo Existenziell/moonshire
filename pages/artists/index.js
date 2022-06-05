@@ -3,7 +3,8 @@ import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 
-const Artists = ({ artists }) => {
+const Artists = ({ artists, numberOfArtists }) => {
+  console.log(numberOfArtists);
   return (
     <>
       <Head>
@@ -13,7 +14,7 @@ const Artists = ({ artists }) => {
 
       <div className='flex flex-col items-center justify-center pb-24'>
 
-        <h1>Artists</h1>
+        <p className='text-xs mb-12 text-center'>Currently, {numberOfArtists} artists sell curated collections on Moonshire</p>
         <div className='flex flex-col items-start justify-center gap-16 text-sm'>
 
           {artists.map(artist => {
@@ -61,9 +62,11 @@ export async function getServerSideProps() {
     artist.numberOfNfts = collectionNfts.length
     artist.public_url = url
   }
+  const numberOfArtists = artists.length
+  console.log(numberOfArtists);
 
   return {
-    props: { artists },
+    props: { artists, numberOfArtists },
   }
 }
 

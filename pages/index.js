@@ -33,8 +33,8 @@ const Home = ({ artists, collections, nfts }) => {
               const { id, name, image_url } = artist
               return (
                 <Link href={`/artists/${id}`} key={id} >
-                  <a className=' flex max-w-sm bg-detail dark:bg-detail-dark p-4 rounded shadow-xl hover:cursor-pointer hover:shadow-sm transition-all relative'>
-                    <h2 className='whitespace-nowrap absolute top-2 right-2 text-sm bg-black/20 backdrop-blur px-4 py-2'>{name}</h2>
+                  <a className='flex max-w-sm bg-detail dark:bg-detail-dark p-4 rounded shadow-xl hover:cursor-pointer hover:shadow-sm transition-all relative'>
+                    <h2 className='whitespace-nowrap absolute text-white top-2 right-2 text-sm bg-black/50 backdrop-blur px-4 py-2'>{name}</h2>
                     {image_url &&
                       <img src={image_url} alt='Artist Image' className='rounded' />
                     }

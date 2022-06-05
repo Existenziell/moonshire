@@ -31,8 +31,7 @@ const Admin = ({ nfts, collections, artists, users, roles }) => {
       </Head>
 
       <div className='admin flex flex-col items-start'>
-        <h1 className='mb-1 mx-auto'>Admin</h1>
-        <p className='mb-20 mx-auto text-tiny'>Remember, with great power comes great responsibility.</p>
+        <p className='mb-20 mx-auto text-xs'>Remember, with great power comes great responsibility.</p>
         <Nfts nfts={nfts} />
         <Collections collections={collections} />
         <Artists artists={artists} collections={collections} />
