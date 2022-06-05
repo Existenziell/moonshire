@@ -4,7 +4,6 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 const Artists = ({ artists, numberOfArtists }) => {
-  console.log(numberOfArtists);
   return (
     <>
       <Head>
@@ -62,7 +61,6 @@ export async function getServerSideProps() {
     artist.public_url = url
   }
   const numberOfArtists = artists.length
-  console.log(numberOfArtists);
 
   return {
     props: { artists, numberOfArtists },

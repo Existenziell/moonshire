@@ -56,10 +56,6 @@ export async function getServerSideProps() {
   const { data: collections } = await supabase.from('collections').select(`*`).order('id', { ascending: true })
   const { data: nfts } = await supabase.from('nfts').select(`*, collections(*)`).order('id', { ascending: true })
 
-  // Set overall number of collections on Moonshire
-  let numberOfCollections
-  numberOfCollections = collections.length
-
   // Enrich each collection with numberOfNfts, public_url, floorPrice, highestPrice
   for (let collection of collections) {
     const collectionNfts = nfts.filter((n => n.collection === collection.id))
@@ -86,6 +82,10 @@ export async function getServerSideProps() {
   }
 
   const notEmptyCollections = collections.filter(collection => collection.numberOfNfts !== 0)
+
+  // Set overall number of non empty collections
+  let numberOfCollections
+  numberOfCollections = notEmptyCollections.length
 
   return {
     props: { collections: notEmptyCollections, numberOfCollections },

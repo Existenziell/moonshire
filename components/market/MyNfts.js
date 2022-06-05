@@ -22,7 +22,7 @@ export default function MyNfts({ setSoldNfts }) {
     setLoadingState('loaded')
   }
 
-  function listNFT(nft) {
+  const listNFT = (nft) => {
     router.push(`/nfts/resell?id=${nft.tokenId}&tokenURI=${nft.tokenURI}`)
   }
 
