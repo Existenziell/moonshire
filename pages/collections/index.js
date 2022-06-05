@@ -34,13 +34,16 @@ const Collections = ({ collections, numberOfCollections }) => {
                   <hr className='border-t-1 border-brand-dark/10 dark:border-brand/10 my-8' />
                   <p className='my-4'>{description}</p>
                   <p className='mb-4'>{numberOfNfts} NFTs available in this collection.</p>
-                  <p><span className='w-32 whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
-                  <p className='mb-8'><span className='w-32 whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
-
+                  {floorPrice &&
+                    <p><span className='w-32 whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
+                  }
+                  {highestPrice &&
+                    <p className='mb-8'><span className='w-32 whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
+                  }
                   <p className='text-tiny'>Launched: {created_at.slice(0, 10)}</p>
                   <p className='text-tiny mb-4'>Owner: {walletAddress}</p>
                   <Link href={`/collections/${id}`}>
-                    <a className='button button-cta mx-auto mt-8 md:mx-0'>View Collection</a>
+                    <a className='button button-cta mx-auto mt-8 md:mx-0'>View</a>
                   </Link>
                 </div>
               </div>
@@ -59,7 +62,8 @@ export async function getServerSideProps() {
   // Enrich each collection with numberOfNfts, public_url, floorPrice, highestPrice
   for (let collection of collections) {
     const collectionNfts = nfts.filter((n => n.collection === collection.id))
-    if (collectionNfts) {
+    console.log(collectionNfts);
+    if (collectionNfts.length > 0) {
       collection.numberOfNfts = collectionNfts.length
 
       let floorPrice = 100000
@@ -75,6 +79,9 @@ export async function getServerSideProps() {
       }
       collection.floorPrice = floorPrice
       collection.highestPrice = highestPrice
+    } else {
+      collection.numberOfNfts = 0
+
     }
 
     const url = await getPublicUrl('collections', collection.image_url)

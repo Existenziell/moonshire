@@ -39,8 +39,12 @@ const Collection = ({ collection, collectionNfts }) => {
             <hr className='border-t-2 border-lines dark:border-lines-dark my-8' />
             <p className='mb-8'>{description}</p>
             <p className='mb-4'>{numberOfNfts} NFTs available</p>
-            <p><span className='w-32 whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
-            <p className='mb-8'><span className='w-32 whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
+            {floorPrice &&
+              <p><span className='w-32 whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
+            }
+            {highestPrice &&
+              <p className='mb-8'><span className='w-32 whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
+            }
             <p>Launched: {year}</p>
           </div>
         </div>
@@ -119,7 +123,7 @@ export async function getStaticProps(context) {
   collection.numberOfNfts = collectionNfts.length
 
   // Set floor and highest price
-  if (collectionNfts) {
+  if (collectionNfts.length > 0) {
     let floorPrice = 100000
     let highestPrice = 0
 

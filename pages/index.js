@@ -66,7 +66,7 @@ const Home = ({ artists, collections, nfts }) => {
                       <p className='text-xs'>{description}</p>
                     </div>
                     <Link href={`/collections/${id}`}>
-                      <a className='button button-cta mt-4'>View Collection</a>
+                      <a className='button button-cta mt-4'>View</a>
                     </Link>
                   </div>
                 </div>

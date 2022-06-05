@@ -1,5 +1,6 @@
 import { supabase } from '../../lib/supabase'
 import Head from 'next/head'
+import Link from 'next/link'
 import MapNfts from '../../components/MapNfts'
 
 const Nfts = ({ nfts, numberOfNfts }) => {
@@ -12,12 +13,16 @@ const Nfts = ({ nfts, numberOfNfts }) => {
       </Head>
 
       <div className='flex flex-col items-center justify-center pb-24'>
-        <p className='text-xs mb-16'>Currently, Moonshire has {numberOfNfts} NFTs for sale.</p>
-
         {nfts.length ?
-          <MapNfts nfts={nfts} />
+          <>
+            <p className='text-xs mb-16'>Currently, Moonshire has {numberOfNfts} NFTs for sale.</p>
+            <MapNfts nfts={nfts} />
+          </>
           :
-          <h1 className="px-20 py-10 text-3xl">No items currently listed in marketplace.</h1>
+          <div>
+            <h1 className="px-20 mt-10 text-3xl">No items currently listed in marketplace.</h1>
+            <Link href='/nfts/create'><a className='button button-detail mx-auto'>Create Asset</a></Link>
+          </div>
         }
       </div>
     </>
