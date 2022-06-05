@@ -3,7 +3,6 @@ import { AppContext } from '../context/AppContext'
 import { useWeb3React } from "@web3-react/core"
 import Image from 'next/image'
 import Link from 'next/link'
-import { shortenAddress } from '../lib/shortenAddress'
 
 const Wallet = () => {
   const appCtx = useContext(AppContext)

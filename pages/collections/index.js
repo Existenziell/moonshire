@@ -85,8 +85,10 @@ export async function getServerSideProps() {
     collection.public_url = url
   }
 
+  const notEmptyCollections = collections.filter(collection => collection.numberOfNfts !== 0)
+
   return {
-    props: { collections, numberOfCollections },
+    props: { collections: notEmptyCollections, numberOfCollections },
   }
 }
 
