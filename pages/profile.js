@@ -5,7 +5,7 @@ import { addToMetamask } from '../lib/addToMetamask'
 import { shortenAddress } from '../lib/shortenAddress'
 import Head from 'next/head'
 import Avatar from '../components/Avatar'
-import updateProfile from '../lib/updateProfile'
+import updateProfile from '../lib/supabase/updateProfile'
 import AddToHomeScreen from '../components/AddToHomeScreen'
 import MyNfts from '../components/market/MyNfts'
 import MyListedNfts from '../components/market/MyListedNfts'
@@ -143,7 +143,7 @@ const Profile = () => {
           <div>
             {collections.map(collection => (
               <Link href={`/collections/${collection.id}`} key={collection.id}>
-                <a className='flex items-start justify-between gap-16 text-sm link mb-2 px-4 py-2 bg-detail rounded-lg shadow hover:shadow-sm'>
+                <a className='flex items-start justify-between gap-16 text-sm link mb-2 px-4 py-2 bg-detail dark:bg-detail-dark rounded-lg shadow hover:shadow-sm'>
                   <p>{collection.title}</p>
                   <p className='self-center'>{collection.numberOfNfts}</p>
                 </a>

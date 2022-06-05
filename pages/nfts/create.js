@@ -11,7 +11,7 @@ import Select from 'react-select'
 import logWeb3 from '../../lib/logWeb3'
 import FilePicker from '../../components/market/FilePicker'
 import uploadFileToIpfs from '../../lib/uploadFileToIpfs'
-import getUserCollections from '../../lib/getUserCollections'
+import getUserCollections from '../../lib/supabase/getUserCollections'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
@@ -323,7 +323,7 @@ const CreateNft = ({ artists }) => {
 
           {loading ?
             <div className='flex flex-col items-start justify-center'>
-              <div id='mintingInfo' className='mt-16 text-xs'></div>
+              <div id='mintingInfo' className='mt-16 mb-8 text-xs'></div>
               <PulseLoader color={'var(--color-cta)'} size={20} />
               <p className='text-xs mt-4'>Please follow MetaMask prompt...</p>
             </div>

@@ -6,14 +6,14 @@ const MapNfts = ({ nfts }) => {
   return (
     <div className="flex flex-wrap justify-evenly gap-8">
       {nfts.map((nft, i) => (
-        <div key={i} className="w-[250px] flex flex-col justify-between shadow-xl rounded">
+        <div key={i} className="flex flex-col basis-0 justify-between shadow-xl rounded">
 
           <Link href={`/nfts/${nft.id}`}>
             <a className='w-full rounded-t'>
               <img
                 src={nft.image_url ? nft.image_url : nft.image}
                 alt='NFT Image'
-                className='w-full aspect-square object-cover rounded-t' />
+                className='w-full aspect-square object-cover rounded-t min-w-[300px]' />
             </a>
           </Link>
 
@@ -23,8 +23,12 @@ const MapNfts = ({ nfts }) => {
               <p >{nft.description}</p>
               <p className='mt-4 mb-1'>by {nft.artists?.name ? nft.artists.name : nft.artist}</p>
               <p>in {nft.collections?.title ? nft.collections.title : nft.collection}</p>
-              <p className="mt-4">Owner: {shortenAddress(nft.owner)}</p>
-              <p>Seller: {shortenAddress(nft.seller)}</p>
+              {nft.owner && nft.seller &&
+                <>
+                  <p className="mt-4">Owner: {shortenAddress(nft.owner)}</p>
+                  <p>Seller: {shortenAddress(nft.seller)}</p>
+                </>
+              }
             </div>
             <p className="text-2xl mt-6">{nft.price} ETH</p>
           </div>

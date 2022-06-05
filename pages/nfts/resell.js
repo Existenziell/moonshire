@@ -2,10 +2,11 @@ import { useEffect, useState, useContext } from 'react'
 import { AppContext } from '../../context/AppContext'
 import { useWeb3React } from '@web3-react/core'
 import { useRouter } from 'next/router'
-import { getMeta } from '../../lib/market/getMeta'
-import resellNft from '../../lib/market/resellNft'
+import { fetchMeta } from '../../lib/contract/fetchMeta'
 import { PulseLoader } from 'react-spinners'
-import updatePrice from '../../lib/updatePrice'
+import resellNft from '../../lib/contract/resellNft'
+import setItemPrice from '../../lib/supabase/setItemPrice'
+import setItemListedState from '../../lib/supabase/setItemListedState'
 
 export default function ResellNft() {
   const appCtx = useContext(AppContext)
@@ -24,7 +25,7 @@ export default function ResellNft() {
 
   async function fetchNft() {
     if (!tokenURI) return
-    const meta = await getMeta(tokenURI)
+    const meta = await fetchMeta(tokenURI)
     updateFormInput(state => ({
       ...state,
       image: meta.data.image,
@@ -46,7 +47,9 @@ export default function ResellNft() {
     const hash = await resellNft(id, price, provider)
 
     if (hash) {
-      await updatePrice(id, tokenURI, price)
+      await setItemListedState(id, true)
+      await setItemPrice(id, tokenURI, price)
+      notify(`Item succesfully listed on the market for ${price} ETH`)
       setLoading(false)
       setTimeout(() => {
         router.push('/profile')
@@ -73,6 +76,7 @@ export default function ResellNft() {
           {loading ?
             <div className='mt-8'>
               <PulseLoader color={'var(--color-cta)'} size={10} />
+              <p className='text-xs'>Waiting for blockchain confirmation...</p>
             </div>
             :
             <button onClick={initiateResell} className="mt-4 button button-cta">

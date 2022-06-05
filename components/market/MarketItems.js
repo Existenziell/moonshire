@@ -1,18 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useWeb3React } from "@web3-react/core"
+import { AppContext } from '../../context/AppContext'
 import { PulseLoader } from 'react-spinners'
-import fetchMarketItems from '../../lib/market/fetchMarketItems'
+import fetchMarketItems from '../../lib/contract/fetchMarketItems'
 import MapNfts from '../MapNfts'
-import getDbIdForTokenURI from '../../lib/getDbIdForTokenURI'
+import getDbIdForTokenURI from '../../lib/supabase/getDbIdForTokenURI'
 
 export default function MarketItems() {
   const [nfts, setNfts] = useState([])
   const [numberOfNfts, setNumberOfNfts] = useState(null)
   const [loadingState, setLoadingState] = useState('not-loaded')
+  const appCtx = useContext(AppContext)
+  const { notify } = appCtx
   const { library: provider } = useWeb3React()
 
   useEffect(() => {
     if (provider) loadNfts()
+    // ToDo: Remove when merging with /nft
+    if (!provider) {
+      notify("Please connect your wallet to proceed")
+      return
+    }
   }, [provider])
 
   const loadNfts = async () => {

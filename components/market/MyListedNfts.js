@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { PulseLoader } from 'react-spinners'
 import Link from 'next/link'
-import fetchListedItems from '../../lib/market/fetchListedItems'
-import getDbIdForTokenURI from '../../lib/getDbIdForTokenURI'
+import fetchListedItems from '../../lib/contract/fetchListedItems'
+import getDbIdForTokenURI from '../../lib/supabase/getDbIdForTokenURI'
 
 export default function MyListedNfts() {
   const [nfts, setNfts] = useState([])

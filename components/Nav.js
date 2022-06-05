@@ -13,11 +13,11 @@ const Nav = () => {
     const urls = [
         // { name: 'Releases', href: '/releases', title: 'Releases' },
         // { name: 'Live', href: '/live', title: 'Live' },
-        { name: 'Collections', href: '/collections', title: 'Collections' },
+        { name: 'NFTs', href: '/nfts', title: 'nfts' },
         { name: 'Artists', href: '/artists', title: 'Artists' },
-        // { name: 'NFTs', href: '/nfts', title: 'nfts' },
+        { name: 'Collections', href: '/collections', title: 'Collections' },
         // { name: 'NFTs', href: '/nfts/nfts-listed', title: 'nfts' },
-        { name: 'NFTs', href: '/nfts/nfts-market', title: 'nfts' },
+        // { name: 'NFTsMarket', href: '/nfts/nfts-market', title: 'nftsMarket' },
     ]
     if (currentUser?.roles?.name === 'Admin') urls.push({ name: 'Admin', href: '/admin', title: 'Admin' },)
 

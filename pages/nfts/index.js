@@ -15,15 +15,11 @@ const Nfts = ({ nfts, numberOfNfts }) => {
         <h1 className='mb-2'>NFTs</h1>
         <p className='text-xs mb-16'>Currently, Moonshire has {numberOfNfts} NFTs for sale.</p>
 
-        <div className='flex flex-col items-center justify-center gap-24 text-sm'>
-          <div className="flex justify-center">
-            {nfts.length ?
-              <MapNfts nfts={nfts} />
-              :
-              <h1 className="px-20 py-10 text-3xl">No items currently listed in marketplace.</h1>
-            }
-          </div>
-        </div>
+        {nfts.length ?
+          <MapNfts nfts={nfts} />
+          :
+          <h1 className="px-20 py-10 text-3xl">No items currently listed in marketplace.</h1>
+        }
       </div>
     </>
   )
@@ -33,7 +29,9 @@ export async function getServerSideProps() {
   const { data: nfts } = await supabase
     .from('nfts')
     .select(`*, collections(*), artists(*)`)
+    .eq('listed', true)
     .order('id', { ascending: true })
+
   const numberOfNfts = nfts.length
 
   return {
