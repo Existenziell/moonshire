@@ -13,7 +13,6 @@ const Artists = ({ artists, numberOfArtists }) => {
       </Head>
 
       <div className='flex flex-col items-center justify-center pb-24'>
-
         <p className='text-xs mb-12 text-center'>Currently, {numberOfArtists} artists sell curated collections on Moonshire</p>
         <div className='flex flex-col items-start justify-center gap-16 text-sm'>
 

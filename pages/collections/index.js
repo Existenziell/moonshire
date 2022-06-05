@@ -12,7 +12,6 @@ const Collections = ({ collections, numberOfCollections }) => {
       </Head>
 
       <div className='flex flex-col items-center justify-center pb-24'>
-
         <p className='text-xs mb-12 text-center'>Currently, Moonshire has {numberOfCollections} active collections to be explored</p>
 
         <div className='flex flex-col items-center justify-center gap-16 text-sm'>

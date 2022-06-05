@@ -188,9 +188,9 @@ const CreateNft = ({ artists }) => {
   const selectStyles = {
     control: styles => ({
       ...styles,
-      backgroundColor: darkmode ? 'var(--color-brand-dark)' : 'var(--color-brand)',
-      color: darkmode ? 'var(--color-brand) !important' : 'var(--color-brand-dark) !important',
-      border: `1px solid ${darkmode ? 'var(--color-detail-dark)' : 'var(--color-detail)'} !important`,
+      backgroundColor: darkmode === 'dark' ? 'var(--color-brand-dark)' : 'var(--color-brand)',
+      color: darkmode === 'dark' ? 'var(--color-brand) !important' : 'var(--color-brand-dark) !important',
+      border: `1px solid ${darkmode === 'dark' ? 'var(--color-detail-dark)' : 'var(--color-detail)'} !important`,
       // This line disable the blue border
       boxShadow: '0 !important'
     }),
@@ -202,7 +202,7 @@ const CreateNft = ({ artists }) => {
     option: (styles, { isFocused }) => {
       return {
         ...styles,
-        backgroundColor: darkmode ? 'var(--color-brand-dark)' : 'var(--color-brand)',
+        backgroundColor: darkmode === 'dark' ? 'var(--color-brand-dark)' : 'var(--color-brand)',
         color: isFocused && 'var(--color-cta)',
         cursor: 'pointer',
       }
