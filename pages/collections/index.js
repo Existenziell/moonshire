@@ -18,7 +18,7 @@ const Collections = ({ collections, numberOfCollections }) => {
 
         <div className='flex flex-col items-center justify-center gap-16 text-sm'>
           {collections.map(collection => {
-            const { id, title, headline, description, year, public_url, created_at, numberOfNfts, walletAddress } = collection
+            const { id, title, headline, description, year, public_url, created_at, numberOfNfts, walletAddress, floorPrice, highestPrice } = collection
 
             return (
               <div key={id} className='w-full flex flex-col md:flex-row items-start justify-start gap-4 md:gap-12 text-sm bg-detail dark:bg-detail-dark rounded p-4'>
@@ -30,16 +30,19 @@ const Collections = ({ collections, numberOfCollections }) => {
                   </Link>
                 </div>
                 <div className='md:w-1/2'>
-                  <h1>{title}</h1>
-                  <p className=''>{headline}</p>
-                  <p className='text-tiny'>{year}</p>
-                  <hr className='border-t-1 border-brand-dark/10 my-8' />
+                  <h1 className='mb-4'>{title}</h1>
+                  <p className='mb-4'>{headline}</p>
+                  <p className=''>{year}</p>
+                  <hr className='border-t-1 border-brand-dark/10 dark:border-brand/10 my-8' />
                   <p className='my-4'>{description}</p>
-                  <p className='mb-4'>{numberOfNfts} Items available in this collection.</p>
-                  <p className='text-tiny'>Created: {created_at.slice(0, 10)}</p>
+                  <p className='mb-4'>{numberOfNfts} NFTs available in this collection.</p>
+                  <p><span className='w-32 whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
+                  <p className='mb-8'><span className='w-32 whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
+
+                  <p className='text-tiny'>Launched: {created_at.slice(0, 10)}</p>
                   <p className='text-tiny mb-4'>Owner: {walletAddress}</p>
                   <Link href={`/collections/${id}`}>
-                    <a className='button button-detail mx-auto md:mx-0'>View Collection</a>
+                    <a className='button button-cta mx-auto mt-8 md:mx-0'>View Collection</a>
                   </Link>
                 </div>
               </div>
@@ -55,13 +58,34 @@ export async function getServerSideProps() {
   const { data: collections } = await supabase.from('collections').select(`*`).order('id', { ascending: true })
   const { data: nfts } = await supabase.from('nfts').select(`*, collections(*)`).order('id', { ascending: true })
 
+  // Set overall number of collections on Moonshire
+  let numberOfCollections
+  numberOfCollections = collections.length
+
+  // Enrich each collection with numberOfNfts, public_url, floorPrice, highestPrice
   for (let collection of collections) {
     const collectionNfts = nfts.filter((n => n.collection === collection.id))
+    if (collectionNfts) {
+      collection.numberOfNfts = collectionNfts.length
+
+      let floorPrice = 100000
+      let highestPrice = 0
+
+      for (let nft of collectionNfts) {
+        if (highestPrice < nft.price) {
+          highestPrice = nft.price
+        }
+        if (floorPrice > nft.price) {
+          floorPrice = nft.price
+        }
+      }
+      collection.floorPrice = floorPrice
+      collection.highestPrice = highestPrice
+    }
+
     const url = await getPublicUrl('collections', collection.image_url)
-    collection.numberOfNfts = collectionNfts.length
     collection.public_url = url
   }
-  const numberOfCollections = collections.length
 
   return {
     props: { collections, numberOfCollections },

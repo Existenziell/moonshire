@@ -8,7 +8,7 @@ import Link from 'next/link'
 import Breadcrumbs from '../../components/Breadcrumbs'
 
 const Collection = ({ collection, collectionNfts }) => {
-  const { id, title, headline, description, year, public_url, numberOfNfts } = collection
+  const { id, title, headline, description, year, public_url, numberOfNfts, floorPrice, highestPrice } = collection
   const appCtx = useContext(AppContext)
   const { currentUser } = appCtx
   const router = useRouter()
@@ -36,10 +36,11 @@ const Collection = ({ collection, collectionNfts }) => {
           <img src={public_url} alt='Cover Image' className='md:w-1/2 md:max-w-md' />
           <div>
             <p className='mt-4 text-xl'>{headline}</p>
-            <hr className='border-t-2 border-lines my-8' />
-            <p className='mt-4'>{description}</p>
-            <p className='mt-8'>2.2 ETH</p>
-            <p className='text-tiny mb-8'>{numberOfNfts} items available, last sold for 10 ETH (25.345,00 USD)</p>
+            <hr className='border-t-2 border-lines dark:border-lines-dark my-8' />
+            <p className='mb-8'>{description}</p>
+            <p className='mb-4'>{numberOfNfts} NFTs available</p>
+            <p><span className='w-32 whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
+            <p className='mb-8'><span className='w-32 whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
             <p>Launched: {year}</p>
           </div>
         </div>
@@ -107,13 +108,32 @@ export async function getStaticProps(context) {
   let { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('id', { ascending: true })
   let { data: collection } = await supabase.from('collections').select(`*`).eq('id', id).single()
 
+  // Set public IPFS url for collection cover image
   if (collection.image_url) {
     const url = await getPublicUrl('collections', collection.image_url)
     collection.public_url = url
   }
 
+  // Set Number of NFTs in collection
   const collectionNfts = nfts.filter((n => n.collection === collection.id))
   collection.numberOfNfts = collectionNfts.length
+
+  // Set floor and highest price
+  if (collectionNfts) {
+    let floorPrice = 100000
+    let highestPrice = 0
+
+    for (let nft of collectionNfts) {
+      if (highestPrice < nft.price) {
+        highestPrice = nft.price
+      }
+      if (floorPrice > nft.price) {
+        floorPrice = nft.price
+      }
+    }
+    collection.floorPrice = floorPrice
+    collection.highestPrice = highestPrice
+  }
 
   return {
     props: { collection, collectionNfts },
