@@ -19,7 +19,7 @@ const Nft = ({ nft }) => {
 
   const initiateBuy = async (nft) => {
     if (!provider) {
-      notify("Please connect your wallet first")
+      notify("Please connect your wallet to proceed")
       return
     }
     setLoading(true)

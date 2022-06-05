@@ -28,7 +28,7 @@ const CreateCollection = () => {
     setLoading(true)
 
     if (!provider || !account) {
-      notify("Please connect your wallet first")
+      notify("Please connect your wallet to proceed")
       return
     }
 

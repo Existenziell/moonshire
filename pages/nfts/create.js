@@ -1,15 +1,17 @@
 import { ethers } from 'ethers'
 import { supabase } from '../../lib/supabase'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/AppContext'
 import { useRouter } from 'next/router'
 import { useWeb3React } from "@web3-react/core"
 import { PulseLoader } from 'react-spinners'
 import Head from 'next/head'
+import Link from 'next/link'
 import Select from 'react-select'
 import logWeb3 from '../../lib/logWeb3'
 import FilePicker from '../../components/market/FilePicker'
 import uploadFileToIpfs from '../../lib/uploadFileToIpfs'
+import getUserCollections from '../../lib/getUserCollections'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
@@ -18,7 +20,7 @@ import {
   marketplaceAddress
 } from '../../config'
 
-const CreateNft = ({ artists, collections }) => {
+const CreateNft = ({ artists }) => {
   const appCtx = useContext(AppContext)
   const { currentUser, notify, checkChain, hasMetamask, darkmode } = appCtx
 
@@ -27,12 +29,26 @@ const CreateNft = ({ artists, collections }) => {
   const [fileUrl, setFileUrl] = useState(null)
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
-
+  const [userCollections, setUserCollections] = useState([])
+  const [fetching, setFetching] = useState(true)
   const [artistName, setArtistName] = useState('')
   const [collectionName, setCollectionName] = useState('')
 
   const router = useRouter()
   const ipfsUrl = 'https://ipfs.infura.io/ipfs/'
+
+  useEffect(() => {
+    if (currentUser && account) {
+      fetchUserCollections()
+    }
+  }, [currentUser, account])
+
+  const fetchUserCollections = async () => {
+    const userCollections = await getUserCollections(account)
+    currentUser.collections = userCollections
+    setUserCollections(userCollections)
+    setFetching(false)
+  }
 
   const uploadMetadataToIpfs = async () => {
     const { name, description, price } = formData
@@ -163,9 +179,11 @@ const CreateNft = ({ artists, collections }) => {
   })
 
   let collectionOptions = []
-  collections.forEach(c => {
-    collectionOptions.push({ value: c.id, label: c.title })
-  })
+  if (userCollections) {
+    userCollections.forEach(c => {
+      collectionOptions.push({ value: c.id, label: c.title })
+    })
+  }
 
   const selectStyles = {
     control: styles => ({
@@ -202,8 +220,17 @@ const CreateNft = ({ artists, collections }) => {
   if (!account) {
     return (
       <p className='w-full h-full flex items-center justify-center'>
-        Please connect your wallet first.
+        Please connect your wallet to proceed.
       </p>
+    )
+  }
+
+  if (fetching) {
+    return (
+      <div className='flex flex-col gap-2 items-center justify-center'>
+        <PulseLoader color={'var(--color-cta)'} size={20} />
+        <p className='text-xs'>Gathering required information...</p>
+      </div>
     )
   }
 
@@ -214,93 +241,108 @@ const CreateNft = ({ artists, collections }) => {
         <meta name='description' content="Create NFT | Project Moonshire" />
       </Head>
 
-      <form className='create-nft flex flex-col items-start max-w-2xl mx-auto pb-24'>
-        <h1 className='mx-auto'>Create NFT</h1>
+      {!userCollections.length ?
 
-        <p>Image, Video, Audio, or 3D Model</p>
-        <p className='text-tiny mb-4'>File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB</p>
+        <div className='flex flex-col items-center justify-center mt-8 text-center'>
+          <h2>You&apos;ll need to create a collection to proceed!</h2>
+          <p className='text-sm'>Every NFT needs to be connected to a collection.</p>
+          <Link href='/collections/create'>
+            <a className='button button-detail mt-8'>
+              Create Collection
+            </a>
+          </Link>
+        </div>
+        :
+        <form onSubmit={createNft} className='create-nft flex flex-col items-start max-w-2xl mx-auto pb-24'>
+          <h1 className='mx-auto'>Create NFT</h1>
 
-        <FilePicker onChange={(e) => handleUpload(e)} size={200} url={fileUrl} />
-        <label htmlFor='name' className='mt-12 w-full'>
-          Name
-          <input
-            type='text' name='name' id='name'
-            onChange={setData} required
-            placeholder='NFT name'
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+          <p>Image, Video, Audio, or 3D Model</p>
+          <p className='text-tiny mb-4'>File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB</p>
 
-        <label htmlFor='description' className='mt-12 w-full'>
-          Description
-          <span className='block text-tiny mt-1'>The description will be included on the item&apos;s detail page underneath its image</span>
-          <textarea
-            name='description' id='description' rows={10}
-            onChange={setData} required
-            placeholder="Provide a detailed description of your item."
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+          <FilePicker onChange={(e) => handleUpload(e)} size={200} url={fileUrl} />
+          <label htmlFor='name' className='mt-12 w-full'>
+            Name
+            <input
+              type='text' name='name' id='name'
+              onChange={setData} required
+              placeholder='NFT name'
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <label htmlFor='price' className='mt-12 w-full'>
-          Price
-          <span className='block text-tiny mt-1'>This is the initial price, which can be adapted later for specific auctions.</span>
-          <input
-            type='text' name='price' id='price'
-            onChange={setData} required
-            placeholder='0.02 ETH'
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+          <label htmlFor='description' className='mt-12 w-full'>
+            Description
+            <span className='block text-tiny mt-1'>The description will be included on the item&apos;s detail page underneath its image</span>
+            <textarea
+              name='description' id='description' rows={10}
+              onChange={setData} required
+              placeholder="Provide a detailed description of your item."
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <label htmlFor='artist' className='mt-12 w-full'>
-          Artist
-          <span className='block text-tiny mt-1 mb-2'>This is the artist who will be credited for this NFT.</span>
-          <Select
-            options={artistOptions}
-            onChange={setArtist}
-            instanceId // Needed to prevent errors being thrown
-            className='focus:outline-none focus:shadow-2xl dark:text-white'
-            styles={selectStyles}
-            disabled={loading}
-          />
-        </label>
+          <label htmlFor='price' className='mt-12 w-full'>
+            Price
+            <span className='block text-tiny mt-1'>This is the initial price, which can be adapted later for specific auctions.</span>
+            <input
+              type='text' name='price' id='price'
+              onChange={setData} required
+              placeholder='0.02 ETH'
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <label htmlFor='collection' className='mt-12 w-full'>
-          Collection
-          <span className='block text-tiny mt-1 mb-2'>This is the collection where your item will appear.</span>
-          <Select
-            options={collectionOptions}
-            onChange={setCollection}
-            instanceId // Needed to prevent errors being thrown
-            styles={selectStyles}
-            disabled={loading}
-          />
-        </label>
+          <label htmlFor='artist' className='mt-12 w-full'>
+            Artist
+            <span className='block text-tiny mt-1 mb-2'>This is the artist who will be credited for this NFT.</span>
+            <Select
+              options={artistOptions}
+              onChange={setArtist}
+              isReq={true}
+              instanceId // Needed to prevent errors being thrown
+              className='focus:outline-none focus:shadow-2xl dark:text-white'
+              styles={selectStyles}
+              disabled={loading}
+            />
+          </label>
 
-        {loading ?
-          <div className='flex flex-col items-start justify-center'>
-            <div id='mintingInfo' className='mt-16 text-xs'></div>
-            <PulseLoader color={'var(--color-cta)'} size={20} />
-            <p className='text-xs mt-4'>Please follow MetaMask prompt...</p>
-          </div>
-          :
-          <button onClick={createNft} className='button button-cta mt-12'>Create</button>
-        }
-      </form>
+          <label htmlFor='collection' className='mt-12 w-full'>
+            Collection
+            <span className='block text-tiny mt-1 mb-2'>This is the collection where your item will appear.</span>
+            <Select
+              options={collectionOptions}
+              onChange={setCollection}
+              instanceId // Needed to prevent errors being thrown
+              styles={selectStyles}
+              disabled={loading}
+            />
+          </label>
+
+          {loading ?
+            <div className='flex flex-col items-start justify-center'>
+              <div id='mintingInfo' className='mt-16 text-xs'></div>
+              <PulseLoader color={'var(--color-cta)'} size={20} />
+              <p className='text-xs mt-4'>Please follow MetaMask prompt...</p>
+            </div>
+            :
+            // <button onClick={createNft} className='button button-cta mt-12'>Create</button>
+            <input type='submit' className='button button-cta mt-12' value='Create' />
+          }
+        </form>
+      }
     </>
   )
 }
 
 export async function getServerSideProps() {
-  const { data: collections } = await supabase.from('collections').select(`*`).order('id', { ascending: true })
+  // const { data: collections } = await supabase.from('collections').select(`*`).order('id', { ascending: true })
   const { data: artists } = await supabase.from('artists').select(`*`).order('id', { ascending: true })
 
   return {
-    props: { collections, artists },
+    props: { artists },
   }
 }
 

@@ -74,7 +74,7 @@ const Profile = () => {
   if (!account) {
     return (
       <p className='w-full h-full flex items-center justify-center'>
-        Please connect your wallet first.
+        Please connect your wallet to proceed.
       </p>
     )
   }

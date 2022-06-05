@@ -34,7 +34,7 @@ export default function ResellNft() {
   async function initiateResell(e) {
     e.preventDefault()
     if (!provider) {
-      notify("Please connect your wallet first")
+      notify("Please connect your wallet to proceed")
       return
     }
     if (!price) {
