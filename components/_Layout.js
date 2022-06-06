@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
         options={{ showSpinner: false }}
       />
 
-      <div className='pt-5 px-10 hidden md:flex justify-between items-start z-20 bg-brand dark:bg-brand-dark text-black dark:text-white' >
+      <div className='pt-[20px] px-[40px] hidden md:flex justify-between items-start z-20 bg-brand dark:bg-brand-dark text-black dark:text-white' >
         <Logo />
         <div className='flex items-center'>
           <Nav />
@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
         </div>
       </div>
 
-      <div className='pt-5 px-10 flex md:hidden justify-between items-start z-20 bg-brand dark:bg-brand-dark text-black dark:text-white' >
+      <div className='pt-[20px] px-[40px] flex md:hidden justify-between items-start z-20 bg-brand dark:bg-brand-dark text-black dark:text-white' >
         <div>
           <Logo />
         </div>
@@ -36,7 +36,7 @@ const Layout = ({ children }) => {
         </div>
       </div>
 
-      <main className='w-full text-black bg-brand dark:text-white dark:bg-brand-dark min-h-[calc(100vh-160px)] px-10 py-[60px]'>
+      <main className='w-full text-black bg-brand dark:text-white dark:bg-brand-dark min-h-[calc(100vh-160px)] px-[40px] py-[60px]'>
         {children}
       </main>
 
