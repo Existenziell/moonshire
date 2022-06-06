@@ -107,7 +107,7 @@ h2, h3, h4 {
 }
 
 .button-connect {
-  @apply w-36 h-14 rounded-full shadow-xl flex items-center justify-center bg-cta text-white
+  @apply w-36 h-10 rounded-full shadow-md flex items-center justify-center bg-cta text-white
     hover:shadow-sm hover:cursor-pointer transition-all;
 }
 
