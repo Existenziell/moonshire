@@ -79,11 +79,11 @@ h2, h3, h4 {
 
 .button {
   @apply w-48 h-10 rounded-full shadow text-tiny flex items-center justify-center
-    hover:shadow-sm hover:cursor-pointer transition-all;
+    hover:shadow-sm hover:cursor-pointer transition-all duration-100 uppercase font-serif;
 }
 
 .button-cta {
-  @apply text-white bg-cta hover:bg-cta/90 transition-all;
+  @apply text-white bg-cta transition-all;
 }
 
 .button-detail {
