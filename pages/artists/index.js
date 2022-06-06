@@ -26,7 +26,7 @@ const Artists = ({ artists, numberOfArtists }) => {
                   </a>
                 </Link>
                 <div className='max-w-md flex-grow'>
-                  <h2>{name}</h2>
+                  <h1>{name}</h1>
                   <p className='mt-4'>{headline}</p>
                   <hr className='border-t border-lines-dark/50 my-8 hidden md:block' />
                   <p className='mt-4'>{description}</p>
