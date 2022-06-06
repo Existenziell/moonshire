@@ -162,8 +162,8 @@ h2, h3, h4 {
 }
 
 .button-admin {
-  @apply w-16 h-8 rounded-full shadow text-tiny flex items-center justify-center
-    hover:shadow-sm hover:cursor-pointer transition-all
+  @apply w-16 h-8 rounded-full shadow text-tiny font-serif flex items-center justify-center
+    hover:shadow-sm hover:cursor-pointer transition-all uppercase
     text-black bg-detail dark:bg-detail-dark dark:text-detail; 
 }
 

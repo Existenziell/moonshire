@@ -112,7 +112,7 @@ const Users = ({ users, roles }) => {
 
   return (
     <div className='mb-20 w-full'>
-      <h2 className='mb-1'>Users</h2>
+      <h2 className='mb-6'>Users</h2>
 
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>

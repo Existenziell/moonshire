@@ -34,7 +34,7 @@ const MapNfts = ({ nfts }) => {
           </div>
 
           <Link href={`/nfts/${nft.id}`}>
-            <a className='button button-detail my-4 mx-auto py-4'>
+            <a className='button button-detail my-4 mx-auto py-4 uppercase'>
               View
             </a>
           </Link>

@@ -40,7 +40,7 @@ const Nfts = ({ nfts }) => {
 
   return (
     <div className='mb-20 w-full'>
-      <h2 className='mb-1'>NFTs</h2>
+      <h2 className='mb-6'>NFTs</h2>
 
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>

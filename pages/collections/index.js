@@ -41,7 +41,7 @@ const Collections = ({ collections, numberOfCollections }) => {
                   <p className='text-tiny'>Launched: {created_at.slice(0, 10)}</p>
                   <p className='text-tiny mb-4'>Owner: {walletAddress}</p>
                   <Link href={`/collections/${id}`}>
-                    <a className='button button-cta mx-auto mt-8 md:mx-0'>View</a>
+                    <a className='button button-cta mx-auto mt-8 md:mx-0 uppercase'>View</a>
                   </Link>
                 </div>
               </div>
