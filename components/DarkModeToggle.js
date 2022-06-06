@@ -46,10 +46,10 @@ const DarkModeToggle = () => {
   }
 
   return (
-    <section className='flex items-center gap-3 text-tiny uppercase font-serif'>
-      <button onClick={setLight} className={darkmode === 'light' ? `text-cta` : ``}>Light</button>
-      <button onClick={setDark} className={darkmode === 'dark' ? `text-cta` : ``}>Dark</button>
-      <button onClick={setAuto} className={darkmode === 'auto' ? `text-cta` : ``}>Auto</button>
+    <section className='flex items-center gap-3 text-tiny font-serif'>
+      <button onClick={setLight} className={darkmode === 'light' ? `text-cta` : ``}>LIGHT</button>
+      <button onClick={setDark} className={darkmode === 'dark' ? `text-cta` : ``}>DARK</button>
+      <button onClick={setAuto} className={darkmode === 'auto' ? `text-cta` : ``}>AUTO</button>
     </section>
   )
 }
