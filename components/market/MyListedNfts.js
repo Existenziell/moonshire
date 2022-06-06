@@ -7,9 +7,6 @@ import getDbIdForTokenURI from '../../lib/supabase/getDbIdForTokenURI'
 
 export default function MyListedNfts() {
   const [nfts, setNfts] = useState([])
-  /* eslint-disable no-unused-vars */
-  const [soldNfts, setSoldNfts] = useState([])
-  /* eslint-enable no-unused-vars */
   const [loadingState, setLoadingState] = useState('not-loaded')
   const { account, library: provider } = useWeb3React()
 
@@ -53,11 +50,7 @@ export default function MyListedNfts() {
                       <p>in: {nft.collection}</p>
                     </div>
                     <p className="text-xl">{nft.price} Eth</p>
-                    {cancelling ?
-                      <PulseLoader color={'var(--color-cta)'} size={10} />
-                      :
-                      <button onClick={() => initiateCancelListing(nft.tokenId)} className='mt-4 button button-cta'>Cancel Listing</button>
-                    }
+                    <Link href={`/nfts/${nft.dbId}`}><a className='mt-4 button button-cta'>Details</a></Link>
                   </div>
                 </div>
               ))}
