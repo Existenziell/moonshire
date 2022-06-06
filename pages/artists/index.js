@@ -34,8 +34,8 @@ const Artists = ({ artists, numberOfArtists }) => {
                   <p>Number of NFTs: {numberOfNfts}</p>
                   <p className='mt-8 text-xs'>On Moonshire since: {created_at.slice(0, 10)}</p>
                   <Link href={`/artists/${id}`}>
-                    <a className='button button-detail mt-8 mx-auto md:mr-auto md:ml-0'>
-                      Details
+                    <a className='button button-cta mt-8 mx-auto md:mr-auto md:ml-0'>
+                      View
                     </a>
                   </Link>
                 </div>

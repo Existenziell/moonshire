@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
 import { PulseLoader } from 'react-spinners'
+import Link from 'next/link'
 
 const Artists = ({ artists }) => {
   const appCtx = useContext(AppContext)
@@ -145,15 +146,17 @@ const Artists = ({ artists }) => {
 
           {fetchedArtists?.map((artist) => (
             <tr key={artist.id + artist.name} className='relative'>
-
               <td>
-                {artist.public_url ?
-                  <img src={artist.public_url} alt='Artist Picture' className='w-12' />
-                  :
-                  "n/a"
-                }
+                <Link href={`/artists/${artist.id}`}>
+                  <a>
+                    {artist.public_url ?
+                      <img src={artist.public_url} alt='Artist Image' className='w-12' />
+                      :
+                      "n/a"
+                    }
+                  </a>
+                </Link>
               </td>
-
               <td>
                 <input
                   type='text' name='name' id='name'

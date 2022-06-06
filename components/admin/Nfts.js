@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
 import { PulseLoader } from 'react-spinners'
 import { shortenAddress } from '../../lib/shortenAddress'
+import Link from 'next/link'
 
 const Nfts = ({ nfts }) => {
   const appCtx = useContext(AppContext)
@@ -64,17 +65,21 @@ const Nfts = ({ nfts }) => {
           {fetchedNfts?.map((nft) => (
             <tr key={nft.id + nft.name} className='relative'>
               <td>
-                {nft.image_url ?
-                  <img src={nft.image_url} alt='NFT Image' className='w-12' />
-                  :
-                  "n/a"
-                }
+                <Link href={`/nfts/${nft.id}`}>
+                  <a>
+                    {nft.image_url ?
+                      <img src={nft.image_url} alt='NFT Image' className='w-12' />
+                      :
+                      "n/a"
+                    }
+                  </a>
+                </Link>
               </td>
               <td className='whitespace-nowrap'>{nft.name}</td>
               <td className=''>{nft.description.slice(0, 30)} ...</td>
               <td className='whitespace-nowrap'>{nft.artists?.name}</td>
               <td className='whitespace-nowrap'>{nft.collections?.title}</td>
-              <td className='whitespace-nowrap text-admin-green'>{nft.price} ETH</td>
+              <td className='whitespace-nowrap text-cta'>{nft.price} ETH</td>
               <td className='whitespace-nowrap'>
                 {nft.walletAddress ?
                   shortenAddress(nft.walletAddress)

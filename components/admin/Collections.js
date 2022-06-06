@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
 import { PulseLoader } from 'react-spinners'
+import Link from 'next/link'
 
 const Collections = ({ collections }) => {
   const appCtx = useContext(AppContext)
@@ -120,11 +121,15 @@ const Collections = ({ collections }) => {
           {fetchedCollections?.map((collection) => (
             <tr key={collection.id + collection.title} className='relative'>
               <td>
-                {collection.public_url ?
-                  <img src={collection.public_url} alt='Collection Cover' className='w-12' />
-                  :
-                  "n/a"
-                }
+                <Link href={`/collections/${collection.id}`}>
+                  <a>
+                    {collection.public_url ?
+                      <img src={collection.public_url} alt='Collection Image' className='w-12' />
+                      :
+                      "n/a"
+                    }
+                  </a>
+                </Link>
               </td>
               <td>
                 <input

@@ -71,7 +71,7 @@ const Collection = ({ collection, collectionNfts }) => {
                           <div className='flex flex-col justify-between'>
                             <h2>{name}</h2>
                             <p className='text-tiny'>by {artists.name}</p>
-                            <p className='text-admin-green'>{price} ETH</p>
+                            <p className='mt-4'>{price} ETH</p>
                           </div>
                         </div>
                       </div>

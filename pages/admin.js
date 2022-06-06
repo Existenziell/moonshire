@@ -10,6 +10,7 @@ import Artists from '../components/admin/Artists'
 import Users from '../components/admin/Users'
 import SupaAuth from '../components/SupaAuth'
 import GridLoader from 'react-spinners/GridLoader'
+import { marketplaceAddress } from '../config'
 
 const Admin = ({ nfts, collections, artists, users, roles }) => {
   const appCtx = useContext(AppContext)
@@ -31,7 +32,9 @@ const Admin = ({ nfts, collections, artists, users, roles }) => {
       </Head>
 
       <div className='admin flex flex-col items-start'>
-        <p className='mb-20 mx-auto text-xs'>Remember, with great power comes great responsibility.</p>
+        <p className='text-xs mb-8 text-center mx-auto'>
+          Contract Address: <a href={`https://rinkeby.etherscan.io/address/${marketplaceAddress}#code`} target='_blank' rel='noopener noreferrer nofollow' >{marketplaceAddress}</a>
+        </p>
         <Nfts nfts={nfts} />
         <Collections collections={collections} />
         <Artists artists={artists} collections={collections} />

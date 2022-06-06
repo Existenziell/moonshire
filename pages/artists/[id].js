@@ -31,9 +31,7 @@ const Artist = ({ artist, artistNfts }) => {
         <h2 className='mt-28 mb-8 self-start text-3xl'>NFTs made by {name}:</h2>
         <div className='flex flex-wrap items-center gap-4 w-full'>
           {artistNfts.map(nft => {
-            /* eslint-disable no-unused-vars */
-            const { id, name, description, price, artists, image_url } = nft
-            /* eslint-enable no-unused-vars */
+            const { id, name, price, artists, image_url } = nft
             return (
               <Link href={`/nfts/${id}`} key={id}>
                 <a>
@@ -43,8 +41,7 @@ const Artist = ({ artist, artistNfts }) => {
                       <div className='w-full'>
                         <h2 className='whitespace-nowrap mt-0'>{name}</h2>
                         <p className='text-tiny'>by {artists.name}</p>
-                        {/* <p className='my-4'>{description}</p> */}
-                        <p className='text-admin-green mt-4'>{price} ETH</p>
+                        <p className='mt-4'>{price} ETH</p>
                       </div>
                     </div>
                   </div>

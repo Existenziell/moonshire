@@ -25,9 +25,7 @@ export default function MyListedNfts() {
         nft.dbId = dbId
       }
 
-      const soldNfts = nfts.filter(i => i.sold)
       setNfts(nfts)
-      setSoldNfts(soldNfts)
       setLoadingState('loaded')
     }
   }
@@ -37,8 +35,10 @@ export default function MyListedNfts() {
   return (
     <>
       <div className='mt-8 mb-24 flex flex-col items-start justify-start'>
-        <h2 className='py-2 border-b-2 border-detail dark:border-detail-dark'>Listed:</h2>
-        <span className='text-xs my-2'>{nfts.length} {nfts.length > 1 ? `NFTs` : `NFT`} currently listed</span>
+        <h2 className='py-2 border-b-2 border-detail dark:border-detail-dark'>
+          Listed Assets
+          <span className='text-xs ml-4'>{nfts.length}</span>
+        </h2>
         {nfts.length > 0 ?
           <div>
             <div className="flex flex-wrap gap-12 pt-4 flex-grow">
@@ -53,7 +53,11 @@ export default function MyListedNfts() {
                       <p>in: {nft.collection}</p>
                     </div>
                     <p className="text-xl">{nft.price} Eth</p>
-                    <Link href={`/nfts/${nft.dbId}`}><a className='mt-4 button button-cta'>Details</a></Link>
+                    {cancelling ?
+                      <PulseLoader color={'var(--color-cta)'} size={10} />
+                      :
+                      <button onClick={() => initiateCancelListing(nft.tokenId)} className='mt-4 button button-cta'>Cancel Listing</button>
+                    }
                   </div>
                 </div>
               ))}
