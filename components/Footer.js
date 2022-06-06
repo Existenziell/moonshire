@@ -23,9 +23,7 @@ const Footer = () => {
   }, [inView, fadeIn])
 
   return (
-    <footer ref={ref} className='static bottom-0 flex items-center justify-between px-10 h-20 text-xs 
-      text-black bg-brand dark:text-white dark:bg-brand-dark'>
-
+    <footer ref={ref} className='static bottom-0 flex items-center justify-between px-10 h-20 text-xs text-black bg-brand dark:text-white dark:bg-brand-dark'>
       <div className='flex items-center justify-between w-full'>
         <DarkModeToggle />
         <div>
