@@ -26,7 +26,7 @@ const Collections = ({ collections, numberOfCollections }) => {
                   </Link>
                 </div>
                 <div className='md:w-1/2'>
-                  <h1 className='mb-4'>{title}</h1>
+                  <h1>{title}</h1>
                   <p className='mb-4'>{headline}</p>
                   <p className=''>{year}</p>
                   <hr className='border-t-1 border-brand-dark/10 dark:border-brand/10 my-8' />
