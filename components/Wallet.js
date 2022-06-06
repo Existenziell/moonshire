@@ -28,7 +28,7 @@ const Wallet = () => {
     <div>
       <Link href='/profile'>
         <a className='button button-connect flex justify-around items-center relative'>
-          <span className='h-full flex items-center justify-center overflow-hidden'>
+          <span className='h-full flex items-center justify-center overflow-hidden uppercase'>
             {currentUser?.username && currentUser.username}
           </span>
         </a>
