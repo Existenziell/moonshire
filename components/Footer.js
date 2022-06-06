@@ -2,11 +2,13 @@ import Link from 'next/link'
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react'
 import { useAnimation } from 'framer-motion'
+import { useRouter } from 'next/router'
 import DarkModeToggle from './DarkModeToggle'
 
 const Footer = () => {
   const { ref, inView } = useInView({})
   const fadeIn = useAnimation()
+  const router = useRouter()
 
   useEffect(() => {
     inView ?
@@ -27,9 +29,12 @@ const Footer = () => {
       <div className='flex items-center justify-between w-full'>
         <DarkModeToggle />
         <div>
+
+
+
           <span className='text-tiny'>&copy; 2022 FE1</span>
-          <Link href='/about'><a className='link text-tiny ml-4'>About</a></Link>
-          <Link href='/imprint'><a className='link text-tiny ml-4'>Imprint</a></Link>
+          <Link href='/about'><a className={`${router.pathname === '/about' ? 'active-nav' : ''} link text-tiny ml-4 uppercase font-serif`}>About</a></Link>
+          <Link href='/imprint'><a className={`${router.pathname === '/imprint' ? 'active-nav' : ''} link text-tiny ml-4 uppercase font-serif`}>Imprint</a></Link>
         </div>
       </div>
     </footer>

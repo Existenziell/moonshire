@@ -16,8 +16,6 @@ const Wallet = () => {
     connect()
   }
 
-  const truncate = (input) => input.length > 14 ? `Profile` : input;
-
   const syncWallet = () => {
     hasMetamask ?
       // setOverlayShown(true)
@@ -27,15 +25,11 @@ const Wallet = () => {
   }
 
   if (active && account) return (
-    <div className='mr-4'>
+    <div>
       <Link href='/profile'>
         <a className='button button-connect flex justify-around items-center relative'>
-          <span className='h-full w-full flex items-center justify-center overflow-hidden'>
-            {currentUser?.username ?
-              truncate(currentUser.username)
-              :
-              `Profile`
-            }
+          <span className='h-full flex items-center justify-center overflow-hidden'>
+            {currentUser?.username && currentUser.username}
           </span>
         </a>
       </Link>
@@ -70,7 +64,7 @@ const Wallet = () => {
     <div className='bg-brand dark:bg-brand-dark '>
       <button
         onClick={syncWallet}
-        className='button button-connect'>
+        className='button button-connect uppercase font-serif'>
         Sync Wallet
       </button>
     </div>

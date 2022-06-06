@@ -36,7 +36,7 @@ const Nav = () => {
                         <Link href={u.href}>
                             <a
                                 href={u.href}
-                                className={`${router.pathname === u.href ? 'active-nav' : ''} hover:text-cta transition-all`}>
+                                className={`${router.pathname === u.href ? 'active-nav' : ''} hover:text-cta transition-all uppercase font-serif`}>
                                 {u.name}
                             </a>
                         </Link>
@@ -54,7 +54,7 @@ const Nav = () => {
                                 onClick={intercept}
                                 className={`${router.pathname === url.href && 'active-nav'} 
                                 w-full block text-2xl md:text-4xl text-center leading-loose px-8 py-2 md:py-8 
-                                hover:bg-brand-dark dark:hover:bg-brand hover:text-cta transition-all`}>
+                                hover:bg-brand-dark dark:hover:bg-brand hover:text-cta transition-all uppercase font-serif`}>
                                 {url.name}
                             </a>
                         </li>
