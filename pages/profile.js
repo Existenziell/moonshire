@@ -147,10 +147,8 @@ const Profile = () => {
             <div className='flex items-center justify-evenly flex-wrap gap-4'>
               {collections.map(collection => (
                 <Link href={`/collections/${collection.id}`} key={collection.id}>
-                  <a className='flex items-center justify-between gap-16 text-sm link mb-2 px-4 py-2 bg-detail dark:bg-detail-dark rounded-lg shadow hover:shadow-sm'>
+                  <a className='flex items-center justify-between gap-16 p-2 bg-detail dark:bg-detail-dark rounded-lg shadow hover:shadow-sm'>
                     <img src={collection.public_url} alt='Collection Image' className='w-20 aspect-square' />
-                    <p className='text-xl'>{collection.title}</p>
-                    <p className='self-center'>{collection.numberOfNfts}</p>
                   </a>
                 </Link>
               )
