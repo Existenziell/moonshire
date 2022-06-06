@@ -21,7 +21,6 @@ const Profile = () => {
   const [createdAt, setCreatedAt] = useState(null)
   const [is_premium, setIsPremium] = useState(null)
   const [modified, setModified] = useState(false)
-  const [soldNfts, setSoldNfts] = useState(0)
   const [collections, setCollections] = useState([])
 
   useEffect(() => {
@@ -86,11 +85,11 @@ const Profile = () => {
         <meta name='description' content='Profile | Project Moonshire' />
       </Head>
 
-      <div className='profile flex flex-col items-center justify-center px-4 md:px-8 pb-12'>
+      <div className='profile flex flex-col items-center justify-center'>
 
         <div className='flex flex-col md:flex-row md:gap-12'>
           <div className='md:order-2'>
-            <div className='flex flex-col items-center gap-2 mb-12'>
+            <div className='flex flex-col items-center gap-2 mb-10'>
               <label htmlFor="username">
                 <input
                   id="username"
@@ -109,7 +108,7 @@ const Profile = () => {
               }
             </div>
 
-            <div className='mb-8 text-xs flex flex-col gap-2 text-center bg-detail dark:bg-detail-dark p-4 rounded'>
+            <div className='mb-10 text-xs flex flex-col gap-2 text-center rounded'>
               <p>Membership: {is_premium ? `Premium` : `Free`}</p>
               <p>Joined: {createdAt?.slice(0, 10)}</p>
               <p>Wallet {shortenAddress(account)}</p>
@@ -127,6 +126,7 @@ const Profile = () => {
                 </a>
               </Link>
             </div>
+            <p className='text-tiny text-center'>By creating an asset it will be minted and put on sale on the marketplace.<br />Listing costs are 0.000001 ETH</p>
           </div>
 
           <div className='max-w-md flex-shrink-0'>
@@ -138,50 +138,39 @@ const Profile = () => {
           </div>
         </div>
 
-        <h1 className='mt-12 mb-4 py-2 border-b-2 border-detail dark:border-detail-dark'>Your Collections</h1>
-        {collections.length ?
-          <div>
-            {collections.map(collection => (
-              <Link href={`/collections/${collection.id}`} key={collection.id}>
-                <a className='flex items-start justify-between gap-16 text-sm link mb-2 px-4 py-2 bg-detail dark:bg-detail-dark rounded-lg shadow hover:shadow-sm'>
-                  <p>{collection.title}</p>
-                  <p className='self-center'>{collection.numberOfNfts}</p>
+        <div className='flex flex-col items-start w-full mb-20'>
+          <h2 className='mt-12 mb-4 py-2 border-b-2 border-detail dark:border-detail-dark'>
+            Collections
+            <span className='text-xs ml-4'>{collections.length}</span>
+          </h2>
+          {collections.length ?
+            <div className='flex items-center justify-evenly flex-wrap gap-4'>
+              {collections.map(collection => (
+                <Link href={`/collections/${collection.id}`} key={collection.id}>
+                  <a className='flex items-center justify-between gap-16 text-sm link mb-2 px-4 py-2 bg-detail dark:bg-detail-dark rounded-lg shadow hover:shadow-sm'>
+                    <img src={collection.public_url} alt='Collection Image' className='w-20 aspect-square' />
+                    <p className='text-xl'>{collection.title}</p>
+                    <p className='self-center'>{collection.numberOfNfts}</p>
+                  </a>
+                </Link>
+              )
+              )}
+            </div>
+            :
+            <div className='flex flex-col items-center'>
+              <p className='text-sm mb-6'>You haven&apos;t created any collections yet.</p>
+              <Link href='/collections/create'>
+                <a className='button button-detail'>
+                  Create Collection
                 </a>
               </Link>
-            )
-            )}
-          </div>
-          :
-          <div className='flex flex-col items-center'>
-            <p className='text-sm mb-6'>You haven&apos;t created any collections yet.</p>
-            <Link href='/collections/create'>
-              <a className='button button-detail'>
-                Create Collection
-              </a>
-            </Link>
-          </div>
-        }
-
-        <h1 className='mt-20 py-2 border-b-2 border-detail dark:border-detail-dark'>Your Assets</h1>
-
-        <div className='flex flex-col md:flex-row items-center justify-center gap-12 mb-8'>
-          <div className='mb-8 md:mb-0 text-center md:text-right'>
-            <Link href='/nfts/create'><a className='button button-detail mb-8 mx-auto md:ml-auto md:mr-0'>Create Asset</a></Link>
-            <p className='text-tiny'>By creating an asset it will be minted and put on sale on the marketplace.<br />Listing costs are 0.000001 ETH</p>
-          </div>
-          <div>
-            <Link href='/nfts'><a className='button button-detail mb-8 mx-auto md:mr-auto md:ml-0'>Discover</a></Link>
-            <p className='text-tiny text-center md:text-left'>Explore the marketplace to find some hidden gems for your wallet.<br />Purchased items will be listed here.</p>
-          </div>
+            </div>
+          }
         </div>
 
         <div className='w-full'>
-          <MyNfts setSoldNfts={setSoldNfts} />
+          <MyNfts />
           <MyListedNfts />
-          <div className='mt-8 mb-24 flex flex-col items-start justify-start w-full'>
-            <h2 className='py-2 border-b-2 border-detail dark:border-detail-dark'>Sold:</h2>
-            <p className='mt-3 text-xs'>Sold items: {soldNfts.length}</p>
-          </div>
         </div>
 
         <button className='button button-cta mt-24' onClick={addToMetamask}>Add to MetaMask</button>

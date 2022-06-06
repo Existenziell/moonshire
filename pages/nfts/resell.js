@@ -53,7 +53,7 @@ export default function ResellNft() {
       setLoading(false)
       setTimeout(() => {
         router.push('/profile')
-      }, 3000)
+      }, 2000)
     } else {
       notify("Something went horribly wrong...")
     }

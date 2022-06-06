@@ -47,7 +47,7 @@ const Nft = ({ nft }) => {
 
         setTimeout(() => {
           router.push('/profile')
-        }, 3000)
+        }, 2000)
       } else {
         notify("Something went horribly wrong...")
       }

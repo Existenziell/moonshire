@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
 import fetchMyNfts from '../../lib/contract/fetchMyNfts'
 
-export default function MyNfts({ setSoldNfts }) {
+export default function MyNfts() {
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
   const router = useRouter()
@@ -16,9 +16,7 @@ export default function MyNfts({ setSoldNfts }) {
 
   const loadNfts = async () => {
     const nfts = await fetchMyNfts(provider)
-    const soldNfts = nfts.filter(i => i.sold)
     setNfts(nfts)
-    setSoldNfts(soldNfts)
     setLoadingState('loaded')
   }
 
@@ -30,9 +28,11 @@ export default function MyNfts({ setSoldNfts }) {
 
   return (
     <>
-      <div className='mt-8 mb-24 flex flex-col items-start justify-start'>
-        <h2 className='py-2 border-b-2 border-detail dark:border-detail-dark'>Owned:</h2>
-        <span className='text-xs my-2'>You own {nfts.length} {nfts.length > 1 ? `NFTs` : `NFT`}</span>
+      <div className='mb-20 flex flex-col items-start justify-start'>
+        <h2 className='py-2 border-b-2 border-detail dark:border-detail-dark'>
+          Owned Assets
+          <span className='text-xs ml-4'>{nfts.length}</span>
+        </h2>
         {nfts.length > 0 ?
           <div>
             <div className="flex flex-wrap gap-12 pt-4 flex-grow">

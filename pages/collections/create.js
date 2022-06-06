@@ -46,7 +46,7 @@ const CreateCollection = () => {
       setLoading(false)
       setTimeout(() => {
         router.push('/profile')
-      }, 3000)
+      }, 2000)
     }
   }
 
