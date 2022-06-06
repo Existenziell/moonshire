@@ -92,9 +92,9 @@ const Nft = ({ nft }) => {
 
             {loading ?
               <div className='flex flex-col items-start justify-center mt-8'>
-                <div id='mintingInfo' className='mt-16 text-xs'></div>
                 <PulseLoader color={'var(--color-cta)'} size={20} />
-                <p className='text-xs mt-4'>Please follow MetaMask prompt...</p>
+                <p className='text-xs my-4'>Please follow MetaMask prompt...</p>
+                <div id='mintingInfo' className='text-xs'></div>
               </div>
               :
               <button onClick={() => initiateBuy(nft)} className='button button-cta mt-8'>Buy Asset</button>

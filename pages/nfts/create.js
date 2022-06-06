@@ -89,7 +89,7 @@ const CreateNft = ({ artists }) => {
     logWeb3(`Uploading Metadata to IPFS...`)
     const url = await uploadMetadataToIpfs()
     if (url) {
-      logWeb3(`Upload successful! ${url}`)
+      logWeb3(`Successfully uploaded to ${url}`)
       listNFTForSale(url)
     }
   }
@@ -131,8 +131,8 @@ const CreateNft = ({ artists }) => {
       notify("NFT created successfully!")
       setLoading(false)
       setTimeout(() => {
-        router.push('/profile')
-      }, 3000)
+        router.push(`/nfts`)
+      }, 2000)
     } else {
       notify("Something went wrong...")
     }
@@ -322,14 +322,14 @@ const CreateNft = ({ artists }) => {
           </label>
 
           {loading ?
-            <div className='flex flex-col items-start justify-center'>
-              <div id='mintingInfo' className='mt-16 mb-8 text-xs'></div>
+            <div className='flex flex-col items-start justify-center mt-10'>
               <PulseLoader color={'var(--color-cta)'} size={20} />
-              <p className='text-xs mt-4'>Please follow MetaMask prompt...</p>
+              <p className='text-xs my-4'>Please follow MetaMask prompt...</p>
+              <div id='mintingInfo' className='text-xs'></div>
             </div>
             :
             // <button onClick={createNft} className='button button-cta mt-12'>Create</button>
-            <input type='submit' className='button button-cta mt-12' value='Create' />
+            <input type='submit' className='button button-cta mt-10' value='Create' />
           }
         </form>
       }
