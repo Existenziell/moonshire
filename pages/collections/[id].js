@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
-import Breadcrumbs from '../../components/Breadcrumbs'
+// import Breadcrumbs from '../../components/Breadcrumbs'
 
 const Collection = ({ collection, collectionNfts }) => {
   const { id, title, headline, description, year, public_url, numberOfNfts, floorPrice, highestPrice } = collection
@@ -28,8 +28,8 @@ const Collection = ({ collection, collectionNfts }) => {
         <meta name='description' content='Collection | Project Moonshire' />
       </Head>
 
-      <div className='px-8 pb-24 flex flex-col items-center relative'>
-        <Breadcrumbs backPath='/collections' currentPath={router.asPath} />
+      <div className='px-8 flex flex-col items-center relative'>
+        {/* <Breadcrumbs backPath='/collections' currentPath={router.asPath} /> */}
 
         <h1 className='mx-auto'>{title}</h1>
         <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-8 text-sm'>

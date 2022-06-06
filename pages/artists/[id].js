@@ -3,7 +3,7 @@ import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
-import Breadcrumbs from '../../components/Breadcrumbs'
+// import Breadcrumbs from '../../components/Breadcrumbs'
 
 const Artist = ({ artist, artistNfts }) => {
   const { id, name, headline, description, origin, public_url, created_at, numberOfNfts } = artist
@@ -16,11 +16,11 @@ const Artist = ({ artist, artistNfts }) => {
         <meta name='description' content='Artist | Project Moonshire' />
       </Head>
 
-      <div className='px-8 pb-24 flex flex-col items-center'>
-        <Breadcrumbs backPath='/artists' currentPath={router.asPath} />
+      <div className='px-8 flex flex-col items-center'>
+        {/* <Breadcrumbs backPath='/artists' currentPath={router.asPath} /> */}
 
         <h1 className='mx-auto'>{name}</h1>
-        <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-8'>
+        <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-10'>
           <img src={public_url} alt='Artist Image' className='md:w-1/2' />
           <div>
             <p className='mt-4 text-xl'>{headline}</p>

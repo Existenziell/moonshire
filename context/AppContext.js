@@ -1,15 +1,15 @@
-import { createContext, useState, useContext, useEffect } from 'react'
+import { ethers } from "ethers"
 import { supabase } from '../lib/supabase'
+import { createContext, useState, useContext, useEffect } from 'react'
 import { v4 as uuid } from 'uuid'
 import { useRouter } from "next/router"
-import { ethers } from "ethers"
-import getProfile from "../lib/supabase/getProfile"
-import detectEthereumProvider from '@metamask/detect-provider'
 import { getSigningMsg } from '../lib/getSigningMsg'
 import { useWeb3React } from "@web3-react/core"
 import { InjectedConnector } from "@web3-react/injected-connector"
 import { injected } from "../components/Connector"
 import { hasEthereum } from '../lib/ethereum'
+import getProfile from "../lib/supabase/getProfile"
+import detectEthereumProvider from '@metamask/detect-provider'
 
 const AppContext = createContext({})
 
@@ -55,7 +55,9 @@ const AppWrapper = ({ children }) => {
   async function disconnect() {
     try {
       await localStorage.setItem('walletConnected', false)
-      deactivate()
+      await deactivate()
+      router.push('/')
+
     } catch (e) {
       console.log(e)
     }

@@ -30,7 +30,7 @@ function Moonshire({ Component, pageProps }) {
           <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
           <meta name="theme-color" content="#DBDBDB" />
           {/* Fonts */}
-          <link rel="preload" href="/fonts/Didot.ttc" as="font" crossOrigin="" />
+          {/* <link rel="preload" href="/fonts/Didot.ttc" as="font" crossOrigin="" /> */}
           <link rel="preload" href="/fonts/Atlas-Typewriter-Regular.ttf" as="font" crossOrigin="" />
         </Head>
         <Layout>

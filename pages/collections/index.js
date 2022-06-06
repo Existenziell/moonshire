@@ -11,15 +11,13 @@ const Collections = ({ collections, numberOfCollections }) => {
         <meta name='description' content="Collections | Project Moonshire" />
       </Head>
 
-      <div className='flex flex-col items-center justify-center pb-24'>
-        <p className='text-xs mb-12 text-center'>Currently, Moonshire has {numberOfCollections} active collections to be explored</p>
-
-        <div className='flex flex-col items-center justify-center gap-16 text-sm'>
+      <div className='flex flex-col items-center justify-center'>
+        <div className='flex flex-col items-center justify-center gap-10 text-sm'>
           {collections.map(collection => {
             const { id, title, headline, description, year, public_url, created_at, numberOfNfts, walletAddress, floorPrice, highestPrice } = collection
 
             return (
-              <div key={id} className='w-full flex flex-col md:flex-row items-start justify-start gap-4 md:gap-12 text-sm bg-detail dark:bg-detail-dark rounded p-4'>
+              <div key={id} className='w-full flex flex-col md:flex-row items-start justify-start gap-4 md:gap-10 text-sm bg-detail dark:bg-detail-dark rounded p-4'>
                 <div className='max-w-md'>
                   <Link href={`/collections/${id}`}>
                     <a className=''>
@@ -50,6 +48,8 @@ const Collections = ({ collections, numberOfCollections }) => {
             )
           })}
         </div>
+        <p className='text-xs mt-10 text-center'>There is a total of {numberOfCollections} active collections on Moonshire to be explored.</p>
+
       </div>
     </>
   )

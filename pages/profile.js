@@ -109,7 +109,7 @@ const Profile = () => {
               }
             </div>
 
-            <div className='mb-8 text-xs flex flex-col gap-2 text-center bg-detail dark:bg-detail-dark p-4 rounded-lg'>
+            <div className='mb-8 text-xs flex flex-col gap-2 text-center bg-detail dark:bg-detail-dark p-4 rounded'>
               <p>Membership: {is_premium ? `Premium` : `Free`}</p>
               <p>Joined: {createdAt?.slice(0, 10)}</p>
               <p>Wallet {shortenAddress(account)}</p>

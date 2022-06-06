@@ -29,6 +29,7 @@ email: bauer.christof@gmail.com
   font-display: swap;
 }
 
+/*
 @font-face {
   font-family: "Didot";
   src: url("/fonts/Didot.ttc");
@@ -36,6 +37,7 @@ email: bauer.christof@gmail.com
   font-weight: 400;
   font-display: swap;
 }
+*/
 
 html, body {
 	scroll-behavior: smooth;
@@ -47,7 +49,7 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  @apply text-4xl md:text-6xl mb-12 mt-4;
+  @apply text-4xl md:text-6xl mb-12;
 }
 
 h2, h3, h4 {
@@ -63,7 +65,7 @@ h2, h3, h4 {
 }
 
 .link {
-  @apply hover:cursor-pointer hover:text-cta transition-all;
+  @apply hover:cursor-pointer hover:text-cta transition-all duration-100;
 }
 
 /* ==========================================================================
@@ -71,7 +73,7 @@ h2, h3, h4 {
 	========================================================================== */
 
 .active-nav {
-  @apply font-bold text-cta;
+  @apply font-extrabold text-cta;
 }
 
 .mobile-menu .active-nav {
@@ -84,7 +86,7 @@ h2, h3, h4 {
 	========================================================================== */
 
 .button {
-  @apply w-48 h-10 rounded-full shadow text-xs flex items-center justify-center
+  @apply w-48 h-10 rounded-full shadow text-[9px] flex items-center justify-center
     hover:shadow-sm hover:cursor-pointer transition-all;
 }
 

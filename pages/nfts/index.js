@@ -12,11 +12,11 @@ const Nfts = ({ nfts, numberOfNfts }) => {
         <meta name='description' content="NFTs | Project Moonshire" />
       </Head>
 
-      <div className='flex flex-col items-center justify-center pb-24'>
+      <div className='flex flex-col items-center justify-center'>
         {nfts.length ?
           <>
-            <p className='text-xs mb-16'>Currently, Moonshire has {numberOfNfts} NFTs for sale.</p>
             <MapNfts nfts={nfts} />
+            <p className='text-xs mt-10'>Currently, there is a total of {numberOfNfts} NFTs for sale on Moonshire.</p>
           </>
           :
           <div>

@@ -10,7 +10,7 @@ export default function Nfts() {
         <meta name='description' content="NFTs | Project Moonshire" />
       </Head>
 
-      <div className='flex flex-col items-center justify-center pb-24'>
+      <div className='flex flex-col items-center justify-center'>
         <h1 className='mb-2'>NFTs</h1>
         <MarketItems />
       </div>

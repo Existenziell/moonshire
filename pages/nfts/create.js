@@ -253,7 +253,7 @@ const CreateNft = ({ artists }) => {
           </Link>
         </div>
         :
-        <form onSubmit={createNft} className='create-nft flex flex-col items-start max-w-2xl mx-auto pb-24'>
+        <form onSubmit={createNft} className='create-nft flex flex-col items-start max-w-2xl mx-auto'>
           <h1 className='mx-auto'>Create NFT</h1>
 
           <p>Image, Video, Audio, or 3D Model</p>
@@ -311,7 +311,7 @@ const CreateNft = ({ artists }) => {
 
           <label htmlFor='collection' className='mt-12 w-full'>
             Collection
-            <span className='block text-tiny mt-1 mb-2'>This is the collection where your item will appear.</span>
+            <span className='block text-tiny mt-1 mb-2'>This is the collection in which your item will appear.</span>
             <Select
               options={collectionOptions}
               onChange={setCollection}

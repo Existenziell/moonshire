@@ -10,7 +10,7 @@ module.exports = {
           'Atlas-Typewriter',
         ],
         serif: [
-          'Didot'
+          'Arial',
         ]
       },
       fontSize: {

@@ -30,7 +30,7 @@ const Nav = () => {
     return (
         <nav className='w-full'>
             {/* Desktop menu */}
-            <ul className="hidden md:flex justify-end items-center gap-6 pr-8 w-full text-sm">
+            <ul className="hidden md:flex justify-end items-center gap-6 pr-8 w-full text-[9px]">
                 {urls.map(u => (
                     <li key={u.name}>
                         <Link href={u.href}>
