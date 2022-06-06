@@ -67,28 +67,27 @@ const Nft = ({ nft }) => {
 
       <div className='px-8 flex flex-col items-center'>
         <h1 className='mx-auto border-b-2 border-detail dark:border-detail-dark'>{name}</h1>
-        <div key={id} className=' flex flex-col md:flex-row items-start justify-between gap-8 text-sm bg-detail dark:bg-detail-dark rounded-lg p-8'>
+        <div key={id} className='flex flex-col md:flex-row items-start justify-between gap-8 text-sm bg-detail dark:bg-detail-dark rounded-lg p-8'>
           <img src={image_url} alt='NFT Image' className='md:w-1/2' />
           <div className='w-full flex-grow'>
             <h2>
               <span className='text-sm pr-2'>by</span>
               <Link href={`/artists/${artists.id}`}><a>{artists.name}</a></Link>
             </h2>
-            <hr className='border-t-2 border-lines dark:border-lines-dark my-8' />
             <p className='my-4'>{description}</p>
-            <div className='text-xs whitespace-nowrap flex flex-col gap-1'>
-              <a href={tokenURI} target='_blank' rel='noopener noreferrer nofollow'>
-                <span className=' link'>{tokenURI.substring(0, 30)}&#8230;{tokenURI.slice(tokenURI.length - 4)}</span>
-              </a>
+            <div className='whitespace-nowrap flex flex-col gap-1'>
               <p>Created: {created_at.slice(0, 10)}</p>
               {nft.owner && nft.seller &&
                 <>
-                  <p className='mt-2'>Owner: {shortenAddress(nft.owner)}</p>
+                  <p>Owner: {shortenAddress(nft.owner)}</p>
                   <p>Seller: {shortenAddress(nft.seller)}</p>
                 </>
               }
+              <a href={tokenURI} target='_blank' rel='noopener noreferrer nofollow'>
+                <span className='link'>{tokenURI.substring(0, 30)}&#8230;{tokenURI.slice(tokenURI.length - 4)}</span>
+              </a>
             </div>
-            <p className='mt-8 text-lg'>Price: {price} ETH</p>
+            <p className='mt-8'>Price: {price} ETH</p>
 
             {loading ?
               <div className='flex flex-col items-start justify-center mt-8'>

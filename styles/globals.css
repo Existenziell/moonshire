@@ -29,19 +29,19 @@ email: bauer.christof@gmail.com
   font-display: swap;
 }
 
-/*
-@font-face {
-  font-family: "Didot";
-  src: url("/fonts/Didot.ttc");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
+::selection {
+  @apply text-cta;
 }
-*/
+
+::-moz-selection {
+  @apply text-cta;
+}
 
 html, body {
 	scroll-behavior: smooth;
   font-family: 'Atlas-Typewriter';
+  font-size: 12px;
+  line-height: 15px;
 }
 
 h1, h2, h3, h4 {
@@ -49,19 +49,11 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  @apply text-4xl md:text-6xl mb-12;
+  @apply text-[30px] mb-10;
 }
 
 h2, h3, h4 {
-  @apply text-2xl md:text-4xl;
-}
-
-::selection {
-  @apply text-cta;
-}
-
-::-moz-selection {
-  @apply text-cta;
+  @apply text-[20px];
 }
 
 .link {

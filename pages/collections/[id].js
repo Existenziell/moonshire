@@ -29,7 +29,7 @@ const Collection = ({ collection, collectionNfts }) => {
 
         <div className='snap-start snap-always w-full h-screen flex items-start justify-center'>
           <div className='flex items-center justify-center h-[calc(100vh-200px)]'>
-            <div className="frame max-w-xl">
+            <div className="frame max-w-xl bg-brand">
               <img src={public_url} alt='Cover Image' className='aspect-square bg-cover' />
             </div>
           </div>

@@ -27,8 +27,8 @@ const Artists = ({ artists, numberOfArtists }) => {
                 </Link>
                 <div className='max-w-md flex-grow'>
                   <h2>{name}</h2>
-                  <p className='mt-4 text-lg'>{headline}</p>
-                  <hr className='border-t-2 border-lines my-8 hidden md:block' />
+                  <p className='mt-4'>{headline}</p>
+                  <hr className='border-t border-lines-dark/50 my-8 hidden md:block' />
                   <p className='mt-4'>{description}</p>
                   <p className='mt-4'>Origin: {origin}</p>
                   <p>Number of NFTs: {numberOfNfts}</p>
