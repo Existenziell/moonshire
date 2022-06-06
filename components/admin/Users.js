@@ -111,12 +111,12 @@ const Users = ({ users, roles }) => {
   if (!fetchedUsers) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
-    <div className='mb-20'>
+    <div className='mb-20 w-full'>
       <h2 className='mb-1'>Users</h2>
 
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>
-          <tr className='font-bold text-xs border-b-2 border-lines dark:border-lines-dark'>
+          <tr className='font-bold text-xs border-b border-lines dark:border-lines-dark'>
             <th>Avatar</th>
             <th>Wallet</th>
             <th>Username</th>
@@ -128,7 +128,7 @@ const Users = ({ users, roles }) => {
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody className='bg-detail dark:bg-detail-dark rounded'>
+        <tbody>
 
           {!fetchedUsers?.length &&
             <tr className='p-4 dark:text-brand'><td>No users found.</td></tr>
@@ -227,7 +227,7 @@ const Users = ({ users, roles }) => {
         </tbody>
       </table>
 
-      <p className='text-tiny mt-2 text-right'>
+      <p className='text-tiny mt-6'>
         Info: New users can only be added via valid Auth flow, aka they need to connect their wallet.<br />
       </p>
 

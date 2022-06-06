@@ -121,12 +121,12 @@ const Artists = ({ artists }) => {
   if (!fetchedArtists) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
-    <div className='mb-20'>
+    <div className='mb-20 w-full'>
       <h2 className='mb-1'>Artists</h2>
 
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>
-          <tr className='font-bold text-xs border-b-2 border-lines dark:border-lines-dark'>
+          <tr className='font-bold text-xs border-b border-lines dark:border-lines-dark'>
             <th>Avatar</th>
             <th>Name</th>
             <th>Headline</th>
@@ -138,7 +138,7 @@ const Artists = ({ artists }) => {
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody className='bg-detail dark:bg-detail-dark rounded'>
+        <tbody>
 
           {!fetchedArtists?.length &&
             <tr className='p-4 dark:text-brand'><td>No artists found.</td></tr>
