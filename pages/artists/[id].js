@@ -1,23 +1,19 @@
 import { supabase } from '../../lib/supabase'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
-import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
-// import Breadcrumbs from '../../components/Breadcrumbs'
 
 const Artist = ({ artist, artistNfts }) => {
   const { id, name, headline, description, origin, public_url, created_at, numberOfNfts } = artist
-  const router = useRouter()
 
   return (
     <>
       <Head>
-        <title>{name} | Project Moonshire</title>
-        <meta name='description' content='Artist | Project Moonshire' />
+        <title>{name} | Artist | Project Moonshire</title>
+        <meta name='description' content={`${name} | Artist | Project Moonshire`} />
       </Head>
 
       <div className='px-8 flex flex-col items-center'>
-        {/* <Breadcrumbs backPath='/artists' currentPath={router.asPath} /> */}
 
         <h1 className='mx-auto'>{name}</h1>
         <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-10'>

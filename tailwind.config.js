@@ -14,7 +14,7 @@ module.exports = {
         ]
       },
       fontSize: {
-        'tiny': '10px',
+        'tiny': '9px',
       },
       colors: {
         'brand': '#DBDBDB',

@@ -1,17 +1,14 @@
 import { supabase } from '../../lib/supabase'
 import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/AppContext'
-import { useRouter } from 'next/router'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
-// import Breadcrumbs from '../../components/Breadcrumbs'
 
 const Collection = ({ collection, collectionNfts }) => {
   const { id, title, headline, description, year, public_url, numberOfNfts, floorPrice, highestPrice } = collection
   const appCtx = useContext(AppContext)
   const { currentUser } = appCtx
-  const router = useRouter()
   const [userOwnsCollection, setUserOwnsCollection] = useState(false)
 
   useEffect(() => {
@@ -24,12 +21,11 @@ const Collection = ({ collection, collectionNfts }) => {
   return (
     <>
       <Head>
-        <title>Collection | Project Moonshire</title>
-        <meta name='description' content='Collection | Project Moonshire' />
+        <title>{title} | Collection | Project Moonshire</title>
+        <meta name='description' content={`${title} | Collection | Project Moonshire`} />
       </Head>
 
       <div className='px-8 flex flex-col items-center relative'>
-        {/* <Breadcrumbs backPath='/collections' currentPath={router.asPath} /> */}
 
         <h1 className='mx-auto'>{title}</h1>
         <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-8 text-sm'>
@@ -54,9 +50,7 @@ const Collection = ({ collection, collectionNfts }) => {
         {collectionNfts.length ?
           <div className='flex flex-wrap items-start justify-start gap-4 w-full'>
             {collectionNfts.map(nft => {
-              /* eslint-disable no-unused-vars */
-              const { id, name, description, price, artists, image_url } = nft
-              /* eslint-enable no-unused-vars */
+              const { id, name, price, artists, image_url } = nft
               return (
                 <Link href={`/nfts/${id}`} key={id}>
                   <a>
@@ -66,7 +60,6 @@ const Collection = ({ collection, collectionNfts }) => {
                         <div className='flex flex-col justify-between'>
                           <h2>{name}</h2>
                           <p className='text-tiny'>by {artists.name}</p>
-                          {/* <p className='my-4'>{description}</p> */}
                           <p className='text-admin-green'>{price} ETH</p>
                         </div>
                       </div>

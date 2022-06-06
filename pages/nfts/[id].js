@@ -61,8 +61,8 @@ const Nft = ({ nft }) => {
   return (
     <>
       <Head>
-        <title>NFT | Project Moonshire</title>
-        <meta name='description' content='NFT | Project Moonshire' />
+        <title>{name} | NFT | Project Moonshire</title>
+        <meta name='description' content={`${name} | NFT | Project Moonshire`} />
       </Head>
 
       <div className='px-8 flex flex-col items-center'>
