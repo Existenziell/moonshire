@@ -17,6 +17,8 @@ const Nfts = ({ nfts }) => {
     setFetchedNfts(nfts)
   }, [nfts])
 
+  const truncate = (input) => input.length > 30 ? `${input.substring(0, 30)}...` : input;
+
   const toggleDeleteModal = (id) => {
     setNftToDelete(id)
     setShowDelete(true)
@@ -76,7 +78,7 @@ const Nfts = ({ nfts }) => {
                 </Link>
               </td>
               <td className='whitespace-nowrap'>{nft.name}</td>
-              <td className=''>{nft.description.slice(0, 30)} ...</td>
+              <td className=''>{truncate(nft.description)}</td>
               <td className='whitespace-nowrap'>{nft.artists?.name}</td>
               <td className='whitespace-nowrap'>{nft.collections?.title}</td>
               <td className='whitespace-nowrap text-cta'>{nft.price} ETH</td>
