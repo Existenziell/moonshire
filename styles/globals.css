@@ -52,7 +52,7 @@ h1 {
 }
 
 h2, h3, h4 {
-  @apply text-[30px];
+  @apply text-[30px] mb-5;
 }
 
 .link {
@@ -77,7 +77,7 @@ h2, h3, h4 {
 	========================================================================== */
 
 .button {
-  @apply w-48 h-10 rounded-full shadow text-tiny flex items-center justify-center
+  @apply w-max h-10 px-6 rounded-full shadow text-tiny flex items-center justify-center
     hover:shadow-sm hover:cursor-pointer transition-all duration-100 uppercase font-serif;
 }
 

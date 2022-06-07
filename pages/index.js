@@ -29,11 +29,10 @@ const Home = ({ artists, collections, nfts }) => {
           <h2 className='border-b border-detail dark:border-detail-dark mb-8'>Featured Artists</h2>
           <div className='grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full'>
             {fetchedArtists.map(artist => {
-              const { id, name, image_url } = artist
+              const { id, image_url } = artist
               return (
                 <Link href={`/artists/${id}`} key={id} >
-                  <a className='flex max-w-sm bg-detail dark:bg-detail-dark p-4 rounded shadow-xl hover:cursor-pointer hover:shadow-sm transition-all relative'>
-                    <h2 className='whitespace-nowrap absolute top-2 right-2 text-sm text-white bg-black/50 backdrop-blur px-4 py-2 rounded-sm'>{name}</h2>
+                  <a className='flex max-w-sm shadow-md hover:cursor-pointer relative'>
                     {image_url &&
                       <img src={image_url} alt='Artist Image' className='rounded' />
                     }
@@ -44,28 +43,29 @@ const Home = ({ artists, collections, nfts }) => {
           </div>
 
           <h2 className='mt-24 border-b border-detail dark:border-detail-dark mb-8'>Moonshire Collections</h2>
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12'>
+          <div className=''>
 
             {fetchedCollections.map(collection => {
-              const { id, title, description, image_url, numberOfNfts } = collection
+              const { id, title, headline, description, image_url } = collection
 
               return (
-                <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-8 bg-detail dark:bg-detail-dark rounded p-4'>
-                  <div className='w-full md:w-1/2'>
+                <div key={id} className='flex flex-col md:flex-row items-center justify-evenly gap-8 mb-20'>
+                  <div className=''>
                     <Link href={`/collections/${id}`}>
-                      <a className=''>
-                        <img src={image_url} alt='Cover Image' className='aspect-square bg-cover' />
+                      <a>
+                        <img src={image_url} alt='Cover Image' className='aspect-square bg-cover max-w-md' />
                       </a>
                     </Link>
                   </div>
-                  <div className='md:w-1/2 h-full flex flex-col justify-between'>
+                  <div className='h-full flex flex-col flex-grow justify-between'>
                     <div>
-                      <h2 className='md:text-2xl'>{title}</h2>
-                      <p className='text-tiny mb-8'>{numberOfNfts} NFTs</p>
-                      <p className='text-xs'>{description}</p>
+                      <h1 className=''>{title}</h1>
+                      <p>{headline}</p>
+                      <hr className='my-4 border-lines' />
+                      <p>{description}</p>
                     </div>
                     <Link href={`/collections/${id}`}>
-                      <a className='button button-cta mt-4'>View</a>
+                      <a className='button button-detail mt-6'>View Collection</a>
                     </Link>
                   </div>
                 </div>
@@ -77,10 +77,9 @@ const Home = ({ artists, collections, nfts }) => {
             <h2 className='border-b border-detail dark:border-detail-dark mb-8'>Featured NFTs</h2>
             <div className='grid grid-cols-2 md:grid-cols-4 gap-6'>
               {nfts.map(nft => {
-                const { id, name, image_url } = nft
+                const { id, image_url } = nft
                 return (
-                  <div key={id} className='bg-detail dark:bg-detail-dark p-4 shadow-xl rounded hover:cursor-pointer hover:shadow-sm transition-all relative' >
-                    <h2 className='whitespace-nowrap absolute top-2 right-2 text-sm text-white bg-black/50 backdrop-blur px-4 py-2 rounded-sm'>{name}</h2>
+                  <div key={id} className='bg-detail dark:bg-detail-dark p-4 shadow-md rounded hover:cursor-pointer transition-all relative' >
                     <Link href={`/nfts/${id}`}>
                       <a className='w-full'>
                         <img src={image_url} alt='NFT Image' className='w-full block aspect-square bg-cover' />
