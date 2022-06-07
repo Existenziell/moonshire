@@ -244,7 +244,7 @@ const CreateNft = ({ artists }) => {
       {!userCollections.length ?
 
         <div className='flex flex-col items-center justify-center mt-8 text-center px-[40px]'>
-          <h2>You&apos;ll need to create a collection to proceed!</h2>
+          <h2>Please create a collection first</h2>
           <p className='text-sm'>Every NFT needs to be connected to a collection.</p>
           <Link href='/collections/create'>
             <a className='button button-detail mt-8'>
