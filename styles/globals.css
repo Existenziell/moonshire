@@ -41,7 +41,6 @@ html, body {
 	scroll-behavior: smooth;
   font-family: 'Atlas-Typewriter';
   font-size: 12px;
-  line-height: 15px;
 }
 
 h1, h2, h3, h4 {
@@ -99,7 +98,7 @@ h2, h3, h4 {
 }
 
 .button-connect {
-  @apply h-10 w-max px-8 rounded-full flex items-center justify-center bg-cta text-white hover:cursor-pointer transition-all;
+  @apply h-10 w-max px-5 rounded-full flex items-center justify-center bg-cta text-white hover:cursor-pointer transition-all;
   box-shadow: 10px 10px 40px rgba(255, 0, 64, 0.3);
 }
 

@@ -24,8 +24,7 @@ const Home = ({ artists, collections, nfts }) => {
       </Head>
 
       <div className='flex flex-col items-center justify-center w-full'>
-        <h1>Project Moonshire</h1>
-        <p className='text-sm max-w-sm mx-auto text-center mb-20'>Project Moonshire is a web3 white-label platform disrupting the 2.0 status quo: A cutting edge, decentralised monetising service for content creators running on the Rinkeby Blockchain.</p>
+        <h1 className='mb-20'>Project Moonshire</h1>
         <div>
           <h2 className='border-b border-detail dark:border-detail-dark mb-8'>Featured Artists</h2>
           <div className='grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full'>
