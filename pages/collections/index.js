@@ -13,12 +13,12 @@ const Collections = ({ collections }) => {
       </Head>
 
       {collections.length > 0 ?
-        <div className='snap-y snap-mandatory w-full h-[calc(100vh-160px)] overflow-y-scroll'>
+        <div className='snap-y snap-mandatory w-full h-[calc(100vh-140px)] overflow-y-scroll'>
           {collections.map(collection => {
             const { id, title, headline, description, public_url, created_at, numberOfNfts, walletAddress, floorPrice, highestPrice, artists } = collection
 
             return (
-              <div key={id} className='snap-start snap-always w-full h-[calc(100vh-160px)] flex flex-col md:flex-row items-start justify-center gap-[40px] mb-20 md:mb-0 px-[40px]'>
+              <div key={id} className='snap-start snap-always w-full h-[calc(100vh-140px)] flex flex-col md:flex-row items-start justify-center gap-[40px] mb-20 md:mb-0 px-[40px]'>
                 <div>
                   <Link href={`/collections/${id}`}>
                     <a>

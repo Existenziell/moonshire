@@ -25,17 +25,17 @@ const Collection = ({ collection, collectionNfts }) => {
         <meta name='description' content={`${title} | Collection | Project Moonshire`} />
       </Head>
 
-      <div className="snap-y snap-mandatory w-full h-[calc(100vh-160px)] overflow-y-scroll">
+      <div className="snap-y snap-mandatory w-full h-[calc(100vh-140px)] overflow-y-scroll">
 
         <div className='snap-start snap-always w-full h-screen flex items-start justify-center px-[40px]'>
-          <div className='flex items-center justify-center h-[calc(100vh-200px)]'>
+          <div className='flex items-center justify-center h-[calc(100vh-220px)]'>
             <div className="frame max-w-xl bg-brand">
               <img src={public_url} alt='Cover Image' className='aspect-square bg-cover' />
             </div>
           </div>
         </div>
 
-        <div className="snap-start snap-always w-full h-[calc(100vh-160px)] px-[40px] flex items-start">
+        <div className="snap-start snap-always w-full h-[calc(100vh-140px)] px-[40px] flex items-start">
           <div>
             <div className='flex justify-between w-full relative'>
               <div className='grid grid-rows-2 items-center'>
@@ -84,7 +84,7 @@ const Collection = ({ collection, collectionNfts }) => {
           </div>
         </div>
 
-        <div className="snap-start snap-always w-full h-[calc(100vh-160px)] px-[40px] flex items-start">
+        <div className="snap-start snap-always w-full h-[calc(100vh-140px)] px-[40px] flex items-start">
           {collectionNfts.length ?
             <table className='w-full'>
               <thead className='text-left mb-44'>
