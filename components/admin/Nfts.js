@@ -104,9 +104,11 @@ const Nfts = ({ nfts }) => {
           ))}
         </tbody>
       </table>
-      <div className='mt-8'>
-        Please use the existing form <Link href='/collections/create/'><a className='font-bold link border-b border-lines-dark dark:border-lines border-dotted'>here</a></Link> to add assets.
-      </div>
+      {fetchedNfts.length > 0 &&
+        <div className='mt-8'>
+          Please use the existing form <Link href='/collections/create/'><a className='font-bold link border-b border-lines-dark dark:border-lines border-dotted'>here</a></Link> to add assets.
+        </div>
+      }
 
       {/* Delete nft */}
       {showDelete &&

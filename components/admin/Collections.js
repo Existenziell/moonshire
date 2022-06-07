@@ -196,9 +196,11 @@ const Collections = ({ collections }) => {
           ))}
         </tbody>
       </table>
-      <div className='mt-8'>
-        You can add new collections <Link href='/collections/create/'><a className='font-bold link border-b border-lines-dark dark:border-lines border-dotted'>here</a></Link>.
-      </div>
+      {fetchedCollections.length > 0 &&
+        <div className='mt-8'>
+          You can add new collections <Link href='/collections/create/'><a className='font-bold link border-b border-lines-dark dark:border-lines border-dotted'>here</a></Link>.
+        </div>
+      }
 
       {/* Delete collection */}
       {showDelete &&
