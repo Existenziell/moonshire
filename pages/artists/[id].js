@@ -1,10 +1,9 @@
 import { supabase } from '../../lib/supabase'
-import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 
 const Artist = ({ artist, artistNfts }) => {
-  const { id, name, headline, description, origin, public_url, created_at, numberOfNfts } = artist
+  const { id, name, headline, description, origin, avatar_url, created_at, numberOfNfts } = artist
 
   return (
     <>
@@ -17,7 +16,7 @@ const Artist = ({ artist, artistNfts }) => {
 
         <h1 className='mx-auto'>{name}</h1>
         <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-10'>
-          <img src={public_url} alt='Artist Image' className='md:w-1/2' />
+          <img src={avatar_url} alt='Artist Image' className='md:w-1/2' />
           <div>
             <p className='mt-4 text-xl'>{headline}</p>
             <hr className='my-8' />
@@ -61,11 +60,6 @@ export async function getStaticProps(context) {
 
   let { data: nfts } = await supabase.from('nfts').select(`*, artists(*)`).order('id', { ascending: true })
   let { data: artist } = await supabase.from('artists').select(`*`).eq('id', id).single()
-
-  if (artist.avatar_url) {
-    const url = await getPublicUrl('artists', artist.avatar_url)
-    artist.public_url = url
-  }
 
   const artistNfts = nfts.filter((n => n.artist === artist.id))
   artist.numberOfNfts = artistNfts.length
