@@ -16,8 +16,10 @@ export default function MyNfts() {
 
   const loadNfts = async () => {
     const nfts = await fetchMyNfts(provider)
-    setNfts(nfts)
-    setLoadingState('loaded')
+    if (nfts) {
+      setNfts(nfts)
+      setLoadingState('loaded')
+    }
   }
 
   const listNFT = (nft) => {

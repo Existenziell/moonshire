@@ -88,7 +88,14 @@ const Profile = () => {
       <div className='profile flex flex-col items-center justify-center'>
 
         <div className='flex flex-col md:flex-row md:gap-12'>
-          <div className='md:order-2'>
+          <div className='max-w-md mx-auto flex-shrink-0'>
+            <Avatar
+              url={avatar_url}
+              // size={150}
+              onUpload={(url) => handleUpload(url)}
+            />
+          </div>
+          <div className=''>
             <div className='flex flex-col items-center gap-2 mb-10'>
               <label htmlFor="username">
                 <input
@@ -127,14 +134,6 @@ const Profile = () => {
               </Link>
             </div>
             <p className='text-tiny text-center'>By creating an asset it will be minted and put on sale on the marketplace.<br />Listing costs are 0.000001 ETH</p>
-          </div>
-
-          <div className='max-w-md flex-shrink-0'>
-            <Avatar
-              url={avatar_url}
-              // size={150}
-              onUpload={(url) => handleUpload(url)}
-            />
           </div>
         </div>
 
