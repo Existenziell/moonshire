@@ -1,5 +1,4 @@
 import { supabase } from '../../lib/supabase'
-import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 
@@ -15,14 +14,14 @@ const Artists = ({ artists }) => {
         <div className='flex flex-col items-start justify-center gap-20 text-sm'>
 
           {artists.map(artist => {
-            const { id, name, headline, description, origin, public_url, created_at, numberOfNfts } = artist
+            const { id, name, headline, description, origin, avatar_url, created_at, numberOfNfts } = artist
 
             return (
               <div key={id} className='w-full flex flex-col md:flex-row items-start justify-center gap-4 md:gap-[40px] '>
 
                 <Link href={`/artists/${id}`}>
                   <a>
-                    <img src={public_url} alt='Artist Image' className='aspect-square bg-cover max-w-md' />
+                    <img src={avatar_url} alt='Artist Image' className='aspect-square bg-cover max-w-md' />
                   </a>
                 </Link>
                 <div className='max-w-md flex-grow'>
@@ -55,9 +54,7 @@ export async function getServerSideProps() {
 
   for (let artist of artists) {
     const collectionNfts = nfts.filter((n => n.artist === artist.id))
-    const url = await getPublicUrl('artists', artist.avatar_url)
     artist.numberOfNfts = collectionNfts.length
-    artist.public_url = url
   }
 
   return {

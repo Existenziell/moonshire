@@ -3,6 +3,8 @@ import { supabase } from '../../lib/supabase'
 import { AppContext } from '../../context/AppContext'
 import { PulseLoader } from 'react-spinners'
 import Link from 'next/link'
+import uploadFileToIpfs from '../../lib/uploadFileToIpfs'
+import FilePicker from '../market/FilePicker'
 
 const Artists = ({ artists }) => {
   const appCtx = useContext(AppContext)
@@ -12,6 +14,7 @@ const Artists = ({ artists }) => {
   const [formData, setFormData] = useState({})
   const [showDelete, setShowDelete] = useState(false)
   const [ArtistToDelete, setArtistToDelete] = useState()
+  const [fileUrl, setFileUrl] = useState(null)
 
   useEffect(() => {
     setFetchedArtists(artists)
@@ -20,6 +23,11 @@ const Artists = ({ artists }) => {
   const setData = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, ...{ [name]: value } })
+  }
+
+  const handleUpload = async (e) => {
+    const url = await uploadFileToIpfs(e)
+    setFileUrl(url)
   }
 
   const toggleNewArtistForm = () => {
@@ -35,7 +43,8 @@ const Artists = ({ artists }) => {
         name: formData.name,
         headline: formData.headline,
         description: formData.description,
-        origin: formData.origin
+        origin: formData.origin,
+        avatar_url: fileUrl,
       }])
 
     if (!error) {
@@ -149,8 +158,8 @@ const Artists = ({ artists }) => {
               <td>
                 <Link href={`/artists/${artist.id}`}>
                   <a>
-                    {artist.public_url ?
-                      <img src={artist.public_url} alt='Artist Image' className='w-12' />
+                    {artist.avatar_url ?
+                      <img src={artist.avatar_url} alt='Artist Image' className='w-12' />
                       :
                       "n/a"
                     }
@@ -228,11 +237,13 @@ const Artists = ({ artists }) => {
         Add artist
       </button>
 
-      <form onSubmit={addArtist} className='shadow-md rounded-sm dark:text-brand-dark max-w-max bg-brand p-4 hidden' id='addArtistForm' >
-        <input type='text' name='name' id='name' placeholder='Name' onChange={setData} required className='block mb-2 text-sm' />
-        <input type='text' name='headline' id='headline' placeholder='Headline' onChange={setData} className='block mb-2 text-sm' />
-        <input type='text' name='description' id='description' placeholder='Description' onChange={setData} className='block mb-2 text-sm' />
-        <input type='text' name='origin' id='origin' placeholder='Origin' onChange={setData} className='block mb-2 text-sm' />
+      <form onSubmit={addArtist} className='shadow-md p-4 max-w-max hidden' id='addArtistForm' >
+        <FilePicker onChange={(e) => handleUpload(e)} size={200} url={fileUrl} />
+
+        <input type='text' name='name' id='name' placeholder='Name' onChange={setData} required className='block mb-2 w-full mt-8' />
+        <input type='text' name='headline' id='headline' placeholder='Headline' onChange={setData} className='block mb-2 w-full' />
+        <input type='text' name='description' id='description' placeholder='Description' onChange={setData} className='block mb-2 w-full' />
+        <input type='text' name='origin' id='origin' placeholder='Origin' onChange={setData} className='block mb-2 w-full' />
         <div className='flex items-center gap-2 mt-4'>
           <input type='submit' className='button button-admin' value='Save' />
           <button onClick={toggleNewArtistForm} className='button button-admin'>Cancel</button>

@@ -153,7 +153,7 @@ hr {
 .admin input[type='number']:not(:disabled), 
 .admin input[type='email']:not(:disabled), 
 .admin input[type='website']:not(:disabled) {
-  @apply border px-3 py-2 rounded text-brand-dark focus:outline-none;
+  @apply border px-3 py-2 rounded bg-brand dark:bg-brand-dark text-black dark:text-white focus:outline-none;
 }
 
 .admin input[type='text']:disabled {

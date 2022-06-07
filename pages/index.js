@@ -10,6 +10,7 @@ const Home = ({ artists, collections, nfts }) => {
   const [fetchedArtists, setFetchedArtists] = useState()
 
   useEffect(() => {
+    console.log(artists);
     setFetchedArtists(artists)
     setFetchedCollections(collections)
   }, [artists, collections])
@@ -31,12 +32,12 @@ const Home = ({ artists, collections, nfts }) => {
             <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Artists</h2>
             <div className='grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full'>
               {fetchedArtists.map(artist => {
-                const { id, image_url } = artist
+                const { id, avatar_url } = artist
                 return (
                   <Link href={`/artists/${id}`} key={id} >
                     <a className='flex max-w-sm shadow-md hover:cursor-pointer relative'>
-                      {image_url &&
-                        <img src={image_url} alt='Artist Image' className='rounded' />
+                      {avatar_url &&
+                        <img src={avatar_url} alt='Artist Image' className='rounded' />
                       }
                     </a>
                   </Link>
@@ -112,9 +113,7 @@ export async function getServerSideProps() {
 
   for (let artist of artists) {
     const artistNfts = nfts.filter((n => n.artist === artist.id))
-    const url = await getPublicUrl('artists', artist.avatar_url)
     artist.numberOfNfts = artistNfts.length
-    artist.image_url = url
   }
 
   for (let collection of collections) {

@@ -61,7 +61,12 @@ const Nfts = ({ nfts }) => {
         <tbody>
 
           {!fetchedNfts?.length &&
-            <tr className='p-4 dark:text-brand'><td>No NFTs found.</td></tr>
+            <tr className='p-4 dark:text-brand'>
+              <td>
+                No NFTs found.
+                Please use the existing form <Link href='/collections/create/'><a className='font-bold link border-b border-lines-dark dark:border-lines border-dotted'>here</a></Link> to add assets.
+              </td>
+            </tr>
           }
 
           {fetchedNfts?.map((nft) => (
