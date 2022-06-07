@@ -197,7 +197,7 @@ const Artists = ({ artists }) => {
               <td className='whitespace-nowrap'>{artist.created_at.slice(0, 10)}</td>
 
               <td className='text-center align-middle'>
-                <div id={`${artist.id}-closeBtnArtist`} className='hidden items-center justify-center gap-2'>
+                <div id={`${artist.id}-closeBtnArtist`} className='hidden items-center justify-between gap-2'>
                   <button onClick={() => editArtist(artist.id)} aria-label='Edit Artist' className='button-admin'>
                     Save
                   </button>

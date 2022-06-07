@@ -204,7 +204,7 @@ const Users = ({ users, roles }) => {
               <td className='whitespace-nowrap'>{user.created_at.slice(0, 10)}</td>
 
               <td className='text-center align-middle'>
-                <div id={`${user.id}-closeBtn`} className='hidden items-center justify-center gap-2'>
+                <div id={`${user.id}-closeBtn`} className='hidden items-center justify-between gap-2'>
                   <button onClick={() => editUser(user.id)} aria-label='Edit User' className='button-admin'>
                     Save
                   </button>
@@ -226,10 +226,6 @@ const Users = ({ users, roles }) => {
           ))}
         </tbody>
       </table>
-
-      <p className='text-tiny mt-6'>
-        Info: New users can only be added via valid Auth flow, aka they need to connect their wallet.<br />
-      </p>
 
       {/* Delete user */}
       {showDelete &&

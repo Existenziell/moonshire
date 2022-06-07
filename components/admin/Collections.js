@@ -169,7 +169,7 @@ const Collections = ({ collections }) => {
               <td className='whitespace-nowrap'>{collection.created_at.slice(0, 10)}</td>
 
               <td className='text-center align-middle'>
-                <div id={`${collection.id}-closeBtnCollection`} className='hidden items-center justify-center gap-2'>
+                <div id={`${collection.id}-closeBtnCollection`} className='hidden items-center justify-between gap-2'>
                   <button onClick={() => editCollection(collection.id)} aria-label='Edit Collection' className='button-admin'>
                     Save
                   </button>
