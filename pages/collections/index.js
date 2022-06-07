@@ -30,7 +30,9 @@ const Collections = ({ collections }) => {
                 <p className='mb-4'>{headline}</p>
                 <hr className='my-8' />
                 <p className='my-4'>{description}</p>
-                <p className='mb-4'>{numberOfNfts} NFTs available by {artists.length > 1 ? `artists` : `artist`} {artists.join(', ')}.</p>
+                <p className='mb-4'>
+                  {numberOfNfts} NFTs available by {artists.length > 1 ? `artists` : `artist`} {artists ? artists.join(', ') : `None`}.
+                </p>
                 {floorPrice &&
                   <p><span className='w-36 whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
                 }

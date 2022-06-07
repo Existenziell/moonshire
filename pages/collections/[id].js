@@ -60,7 +60,7 @@ const Collection = ({ collection, collectionNfts }) => {
               </div>
               <div className='grid grid-rows-2 items-center '>
                 <span>Artists</span>
-                <p className='whitespace-nowrap'>{artists.join(', ')}</p>
+                <p className='whitespace-nowrap'>{artists ? artists.join(', ') : `None`}</p>
               </div>
               <div className='absolute top-14 w-full h-[1px] bg-lines dark:bg-lines-dark'></div>
             </div>
