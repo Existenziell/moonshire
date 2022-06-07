@@ -3,10 +3,11 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract NFTMarketplace is ERC721URIStorage, Ownable {
+import "hardhat/console.sol";
+
+contract NFTMarketplace is ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     Counters.Counter private _itemsSold;
@@ -26,7 +27,6 @@ contract NFTMarketplace is ERC721URIStorage, Ownable {
 
     event MarketItemCreated(
         uint256 indexed tokenId,
-        string tokenURI,
         address seller,
         address owner,
         uint256 price,
@@ -36,7 +36,7 @@ contract NFTMarketplace is ERC721URIStorage, Ownable {
     // if tokenURI is not an empty string => an NFT was created
     // if price is not 0 => an NFT was listed
     // if price is 0 && tokenURI is an empty string => NFT was transferred (either bought, or the listing was canceled)
-    event NFTTransfer(uint256 tokenID, address from, address to, string tokenURI, uint256 price);
+    // event NFTTransfer(uint256 tokenID, address from, address to, string tokenURI, uint256 price);
 
     constructor() ERC721("Moonshire NFT", "MOON") {
         owner = payable(msg.sender);
@@ -45,6 +45,15 @@ contract NFTMarketplace is ERC721URIStorage, Ownable {
     /* Returns the listing price of the contract */
     function getListingPrice() public view returns (uint256) {
         return listingPrice;
+    }
+
+    /* Updates the listing price of the contract */
+    function updateListingPrice(uint256 _listingPrice) public payable {
+        require(
+            owner == msg.sender,
+            "Only marketplace owner can update listing price."
+        );
+        listingPrice = _listingPrice;
     }
 
     /* Mints a token and lists it in the marketplace */
@@ -58,11 +67,11 @@ contract NFTMarketplace is ERC721URIStorage, Ownable {
 
         _mint(msg.sender, newTokenId);
         _setTokenURI(newTokenId, tokenURI);
-        createMarketItem(newTokenId, tokenURI, price);
+        createMarketItem(newTokenId, price);
         return newTokenId;
     }
 
-    function createMarketItem(uint256 tokenId, string memory tokenURI, uint256 price) private {
+    function createMarketItem(uint256 tokenId, uint256 price) private {
         require(price > 0, "Price must be at least 1 wei");
         require(
             msg.value == listingPrice,
@@ -78,8 +87,13 @@ contract NFTMarketplace is ERC721URIStorage, Ownable {
         );
 
         _transfer(msg.sender, address(this), tokenId);
-        emit MarketItemCreated(tokenId, tokenURI, msg.sender, address(this), price, false);
-        emit NFTTransfer(tokenId, address(0), msg.sender, tokenURI, 0);
+        emit MarketItemCreated(
+            tokenId,
+            msg.sender,
+            address(this),
+            price,
+            false
+        );
     }
 
     /* Creates the sale of a marketplace item */
@@ -98,8 +112,6 @@ contract NFTMarketplace is ERC721URIStorage, Ownable {
         _transfer(address(this), msg.sender, tokenId);
         payable(owner).transfer(listingPrice);
         payable(seller).transfer(msg.value);
-             
-        emit NFTTransfer(tokenId, address(this), msg.sender, "", 0);
     }
 
     /* Allows for resell of purchased token */
@@ -119,7 +131,6 @@ contract NFTMarketplace is ERC721URIStorage, Ownable {
         _itemsSold.decrement();
 
         _transfer(msg.sender, address(this), tokenId);
-        emit NFTTransfer(tokenId, msg.sender, address(this), "", price);
     }
 
     function cancelListing(uint256 tokenId) public {
@@ -128,10 +139,10 @@ contract NFTMarketplace is ERC721URIStorage, Ownable {
         require(listing.seller == msg.sender, "NFTMarketplace: You're not the seller");
         ERC721(address(this)).transferFrom(address(this), msg.sender, tokenId);
         idToMarketItem[tokenId].price = 0;
-        idToMarketItem[tokenId].seller = payable(address(0));
-        emit NFTTransfer(tokenId, address(this), msg.sender, "", 0);
+        idToMarketItem[tokenId].seller = payable(msg.sender);
+        idToMarketItem[tokenId].owner = payable(address(0)) ;
     }
-   
+
     /* Returns all listed unsold market items */
     function fetchMarketItems() public view returns (MarketItem[] memory) {
         uint256 itemCount = _tokenIds.current();
@@ -197,19 +208,11 @@ contract NFTMarketplace is ERC721URIStorage, Ownable {
         }
         return items;
     }
-
-    /* Updates the listing price of the contract */
-    function updateListingPrice(uint256 _listingPrice) public payable {
-        require(
-            owner == msg.sender,
-            "Only marketplace owner can update listing price."
-        );
-        listingPrice = _listingPrice;
-    }
-
-    function withdraw() public onlyOwner {
+    
+    function withdraw() public {
         uint256 balance =  address(this).balance;
-        require(balance > 0, "NFTMarketplace: balance is 0");
-        payable(msg.sender).transfer(balance); 
+        require(balance > 0, "NFTMarketplace: Contract balance is 0");
+        require(owner == msg.sender, "NFTMarketplace: Only owner can perform this operation.");
+        payable(msg.sender).transfer(address(this).balance);
     }
 }
