@@ -28,7 +28,7 @@ const Home = ({ artists, collections, nfts }) => {
 
         {fetchedArtists.length > 0 &&
           <>
-            <h2 className='border-b border-detail dark:border-detail-dark mb-8'>Featured Artists</h2>
+            <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Artists</h2>
             <div className='grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full'>
               {fetchedArtists.map(artist => {
                 const { id, image_url } = artist
@@ -48,13 +48,13 @@ const Home = ({ artists, collections, nfts }) => {
 
         {fetchedCollections.length > 0 &&
           <>
-            <h2 className='mt-24 border-b border-detail dark:border-detail-dark mb-8'>Moonshire Collections</h2>
+            <h2 className='mt-24 border-b border-detail dark:border-detail-dark mb-8 self-start'>Moonshire Collections</h2>
 
             {fetchedCollections.map(collection => {
               const { id, title, headline, description, image_url } = collection
 
               return (
-                <div key={id} className='flex flex-col md:flex-row items-center justify-evenly gap-8 mb-20'>
+                <div key={id} className='w-full flex flex-col md:flex-row items-center justify-between gap-[40px] mb-20'>
                   <div>
                     <Link href={`/collections/${id}`}>
                       <a>
@@ -62,6 +62,7 @@ const Home = ({ artists, collections, nfts }) => {
                       </a>
                     </Link>
                   </div>
+
                   <div className='h-full flex flex-col flex-grow justify-between'>
                     <div>
                       <h1>{title}</h1>
