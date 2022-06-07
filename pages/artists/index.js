@@ -3,7 +3,7 @@ import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 
-const Artists = ({ artists, numberOfArtists }) => {
+const Artists = ({ artists }) => {
   return (
     <>
       <Head>
@@ -44,8 +44,6 @@ const Artists = ({ artists, numberOfArtists }) => {
             )
           })}
         </div>
-
-        <p className='text-xs mt-10 text-center'>{numberOfArtists} artists sell curated collections on Moonshire.</p>
       </div>
     </>
   )
@@ -61,10 +59,9 @@ export async function getServerSideProps() {
     artist.numberOfNfts = collectionNfts.length
     artist.public_url = url
   }
-  const numberOfArtists = artists.length
 
   return {
-    props: { artists, numberOfArtists },
+    props: { artists },
   }
 }
 

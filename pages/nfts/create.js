@@ -256,12 +256,15 @@ const CreateNft = ({ artists }) => {
         <form onSubmit={createNft} className='create-nft flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
           <h1 className='mx-auto'>Create NFT</h1>
 
-          <p>Image, Video, Audio, or 3D Model</p>
-          <p className='text-tiny mb-4'>File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB</p>
+          <h1 className='mb-2'>Media</h1>
+          <p className='text-tiny mb-4'>
+            Image, Video, Audio, or 3D Model<br />
+            File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB
+          </p>
 
           <FilePicker onChange={(e) => handleUpload(e)} size={200} url={fileUrl} />
           <label htmlFor='name' className='mt-12 w-full'>
-            Name
+            <h1 className='mb-2'>Name</h1>
             <input
               type='text' name='name' id='name'
               onChange={setData} required
@@ -272,7 +275,7 @@ const CreateNft = ({ artists }) => {
           </label>
 
           <label htmlFor='description' className='mt-12 w-full'>
-            Description
+            <h1 className='mb-2'>Description</h1>
             <span className='block text-tiny mt-1'>The description will be included on the item&apos;s detail page underneath its image</span>
             <textarea
               name='description' id='description' rows={10}
@@ -284,7 +287,7 @@ const CreateNft = ({ artists }) => {
           </label>
 
           <label htmlFor='price' className='mt-12 w-full'>
-            Price
+            <h1 className='mb-2'>Price</h1>
             <span className='block text-tiny mt-1'>This is the initial price, which can be adapted later for specific auctions.</span>
             <input
               type='text' name='price' id='price'
@@ -296,7 +299,7 @@ const CreateNft = ({ artists }) => {
           </label>
 
           <label htmlFor='artist' className='mt-12 w-full'>
-            Artist
+            <h1 className='mb-2'>Artist</h1>
             <span className='block text-tiny mt-1 mb-2'>This is the artist who will be credited for this NFT.</span>
             <Select
               options={artistOptions}
@@ -310,7 +313,7 @@ const CreateNft = ({ artists }) => {
           </label>
 
           <label htmlFor='collection' className='mt-12 w-full'>
-            Collection
+            <h1 className='mb-2'>Collection</h1>
             <span className='block text-tiny mt-1 mb-2'>This is the collection in which your item will appear.</span>
             <Select
               options={collectionOptions}

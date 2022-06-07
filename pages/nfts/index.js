@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import MapNfts from '../../components/MapNfts'
 
-const Nfts = ({ nfts, numberOfNfts }) => {
+const Nfts = ({ nfts }) => {
 
   return (
     <>
@@ -14,13 +14,10 @@ const Nfts = ({ nfts, numberOfNfts }) => {
 
       <div className='flex flex-col items-center justify-center px-[40px]'>
         {nfts.length ?
-          <>
-            <MapNfts nfts={nfts} />
-            <p className='text-xs mt-10'>Currently, there is a total of {numberOfNfts} NFTs for sale on Moonshire.</p>
-          </>
+          <MapNfts nfts={nfts} />
           :
           <div>
-            <h1 className="px-20 mt-10 text-3xl">No items currently listed in marketplace.</h1>
+            <h1 className="px-20 mt-10 text-3xl">No items listed in marketplace</h1>
             <Link href='/nfts/create'><a className='button button-detail mx-auto'>Create Asset</a></Link>
           </div>
         }
@@ -36,10 +33,8 @@ export async function getServerSideProps() {
     .eq('listed', true)
     .order('id', { ascending: true })
 
-  const numberOfNfts = nfts.length
-
   return {
-    props: { nfts, numberOfNfts }
+    props: { nfts }
   }
 }
 

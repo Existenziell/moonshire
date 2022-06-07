@@ -13,11 +13,14 @@ import fetchMarketItemsMeta from '../../lib/contract/fetchMarketItemsMeta'
 
 const Nft = ({ nft }) => {
   const { id, name, description, price, created_at, image_url, artists, tokenURI, tokenId } = nft
-  const { library: provider } = useWeb3React()
-  const [loading, setLoading] = useState(false)
+  const { account, library: provider } = useWeb3React()
+
   const router = useRouter()
   const appCtx = useContext(AppContext)
   const { notify } = appCtx
+
+  const [loading, setLoading] = useState(false)
+  const [sellerIsOwner, setSellerIsOwner] = useState(false)
 
   useEffect(() => {
     if (provider) fetchMeta()
@@ -29,6 +32,8 @@ const Nft = ({ nft }) => {
       nft.owner = meta.owner
       nft.seller = meta.seller
     }
+    // If seller is current owner, don't offer 'Buy' option
+    if (nft.seller === account) setSellerIsOwner(true)
   }
 
   const initiateBuy = async (nft) => {
@@ -96,8 +101,16 @@ const Nft = ({ nft }) => {
                 <div id='mintingInfo' className='text-xs'></div>
               </div>
               :
-              <button onClick={() => initiateBuy(nft)} className='button button-cta mt-8'>Buy Asset</button>
+              sellerIsOwner ?
+                <Link href={`/profile`}>
+                  <a className='button button-detail mt-8'>
+                    View in Profile
+                  </a>
+                </Link>
+                :
+                <button onClick={() => initiateBuy(nft)} className='button button-cta mt-8'>Buy Asset</button>
             }
+
           </div>
         </div>
       </div>

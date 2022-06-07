@@ -60,7 +60,7 @@ const CreateCollection = () => {
       <form onSubmit={saveCollection} className='create-collection flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
         <h1 className='mx-auto'>Create Collection</h1>
 
-        <p>Cover Image</p>
+        <h1 className='mb-2'>Cover Image</h1>
         <p className='text-tiny mb-4'>File types supported: JPG, PNG, GIF, SVG. Max size: 50 MB</p>
         <UploadImage
           bucket='collections'
@@ -73,7 +73,7 @@ const CreateCollection = () => {
         />
 
         <label htmlFor='title' className='mt-12 w-full'>
-          Title
+          <h1 className='mb-2'>Title</h1>
           <input
             type='text' name='title' id='title'
             onChange={setData} required
@@ -84,7 +84,7 @@ const CreateCollection = () => {
         </label>
 
         <label htmlFor='headline' className='mt-12 w-full'>
-          Headline
+          <h1 className='mb-2'>Headline</h1>
           <input
             type='text' name='headline' id='headline'
             onChange={setData} required
@@ -95,7 +95,7 @@ const CreateCollection = () => {
         </label>
 
         <label htmlFor='description' className='mt-12 w-full'>
-          Description
+          <h1 className='mb-2'>Description</h1>
           <span className='block text-tiny mt-1'>The description will be included on the collection&apos;s detail page.</span>
           <textarea
             name='description' id='description' rows={10}
@@ -107,7 +107,7 @@ const CreateCollection = () => {
         </label>
 
         <label htmlFor='year' className='mt-12 w-full'>
-          Year
+          <h1 className='mb-2'>Year</h1>
           <input
             type='text' name='year' id='year'
             onChange={setData} required

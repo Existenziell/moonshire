@@ -140,7 +140,6 @@ const Profile = () => {
         <div className='flex flex-col items-start w-full mb-20'>
           <h2 className='mt-12 mb-4 py-2 border-b-2 border-detail dark:border-detail-dark'>
             Collections
-            <span className='text-xs ml-4'>{collections.length}</span>
           </h2>
           {collections.length ?
             <div className='flex items-center justify-evenly flex-wrap gap-4'>

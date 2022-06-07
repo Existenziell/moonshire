@@ -25,25 +25,30 @@ const Home = ({ artists, collections, nfts }) => {
 
       <div className='flex flex-col items-center justify-center w-full px-[40px]'>
         <h1 className='mb-20'>Project Moonshire</h1>
-        <div>
-          <h2 className='border-b border-detail dark:border-detail-dark mb-8'>Featured Artists</h2>
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full'>
-            {fetchedArtists.map(artist => {
-              const { id, image_url } = artist
-              return (
-                <Link href={`/artists/${id}`} key={id} >
-                  <a className='flex max-w-sm shadow-md hover:cursor-pointer relative'>
-                    {image_url &&
-                      <img src={image_url} alt='Artist Image' className='rounded' />
-                    }
-                  </a>
-                </Link>
-              )
-            })}
-          </div>
 
-          <h2 className='mt-24 border-b border-detail dark:border-detail-dark mb-8'>Moonshire Collections</h2>
-          <div>
+        {fetchedArtists.length > 0 &&
+          <>
+            <h2 className='border-b border-detail dark:border-detail-dark mb-8'>Featured Artists</h2>
+            <div className='grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full'>
+              {fetchedArtists.map(artist => {
+                const { id, image_url } = artist
+                return (
+                  <Link href={`/artists/${id}`} key={id} >
+                    <a className='flex max-w-sm shadow-md hover:cursor-pointer relative'>
+                      {image_url &&
+                        <img src={image_url} alt='Artist Image' className='rounded' />
+                      }
+                    </a>
+                  </Link>
+                )
+              })}
+            </div>
+          </>
+        }
+
+        {fetchedCollections.length > 0 &&
+          <>
+            <h2 className='mt-24 border-b border-detail dark:border-detail-dark mb-8'>Moonshire Collections</h2>
 
             {fetchedCollections.map(collection => {
               const { id, title, headline, description, image_url } = collection
@@ -71,8 +76,10 @@ const Home = ({ artists, collections, nfts }) => {
                 </div>
               )
             })}
-          </div>
+          </>
+        }
 
+        {nfts.length > 0 &&
           <div className='mt-24'>
             <h2 className='border-b border-detail dark:border-detail-dark mb-8'>Featured NFTs</h2>
             <div className='grid grid-cols-2 md:grid-cols-8 gap-6'>
@@ -90,7 +97,7 @@ const Home = ({ artists, collections, nfts }) => {
               })}
             </div>
           </div>
-        </div>
+        }
 
       </div>
     </>

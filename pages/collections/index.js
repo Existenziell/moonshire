@@ -12,43 +12,50 @@ const Collections = ({ collections }) => {
         <meta name='description' content="Collections | Project Moonshire" />
       </Head>
 
-      <div className='snap-y snap-mandatory w-full h-[calc(100vh-160px)] overflow-y-scroll'>
-        {collections.map(collection => {
-          const { id, title, headline, description, public_url, created_at, numberOfNfts, walletAddress, floorPrice, highestPrice, artists } = collection
+      {collections.length > 0 ?
+        <div className='snap-y snap-mandatory w-full h-[calc(100vh-160px)] overflow-y-scroll'>
+          {collections.map(collection => {
+            const { id, title, headline, description, public_url, created_at, numberOfNfts, walletAddress, floorPrice, highestPrice, artists } = collection
 
-          return (
-            <div key={id} className='snap-start snap-always w-full h-[calc(100vh-160px)] flex flex-col md:flex-row items-start justify-center gap-[40px] mb-20 md:mb-0 px-[40px]'>
-              <div>
-                <Link href={`/collections/${id}`}>
-                  <a>
-                    <img src={public_url} alt='Cover Image' className='aspect-square bg-cover max-w-xs md:max-w-xl' />
-                  </a>
-                </Link>
+            return (
+              <div key={id} className='snap-start snap-always w-full h-[calc(100vh-160px)] flex flex-col md:flex-row items-start justify-center gap-[40px] mb-20 md:mb-0 px-[40px]'>
+                <div>
+                  <Link href={`/collections/${id}`}>
+                    <a>
+                      <img src={public_url} alt='Cover Image' className='aspect-square bg-cover max-w-xs md:max-w-xl' />
+                    </a>
+                  </Link>
+                </div>
+                <div className='md:w-1/2'>
+                  <h1>{title}</h1>
+                  <p className='mb-4'>{headline}</p>
+                  <hr className='my-8' />
+                  <p className='my-4'>{description}</p>
+                  <p className='mb-4'>
+                    {numberOfNfts} NFTs available by {artists.length > 1 ? `artists` : `artist`} {artists ? artists.join(', ') : `None`}.
+                  </p>
+                  {floorPrice &&
+                    <p><span className='w-36 whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
+                  }
+                  {highestPrice &&
+                    <p className='mb-8'><span className='w-36 whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
+                  }
+                  <p>Launched: {created_at.slice(0, 10)}</p>
+                  <p className='mb-4'>Owner: {shortenAddress(walletAddress)}</p>
+                  <Link href={`/collections/${id}`}>
+                    <a className='button button-detail mx-auto mt-8 md:mx-0 uppercase'>View Collection</a>
+                  </Link>
+                </div>
               </div>
-              <div className='md:w-1/2'>
-                <h1>{title}</h1>
-                <p className='mb-4'>{headline}</p>
-                <hr className='my-8' />
-                <p className='my-4'>{description}</p>
-                <p className='mb-4'>
-                  {numberOfNfts} NFTs available by {artists.length > 1 ? `artists` : `artist`} {artists ? artists.join(', ') : `None`}.
-                </p>
-                {floorPrice &&
-                  <p><span className='w-36 whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
-                }
-                {highestPrice &&
-                  <p className='mb-8'><span className='w-36 whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
-                }
-                <p>Launched: {created_at.slice(0, 10)}</p>
-                <p className='mb-4'>Owner: {shortenAddress(walletAddress)}</p>
-                <Link href={`/collections/${id}`}>
-                  <a className='button button-detail mx-auto mt-8 md:mx-0 uppercase'>View Collection</a>
-                </Link>
-              </div>
-            </div>
-          )
-        })}
-      </div>
+            )
+          })}
+        </div>
+        :
+        <div>
+          <h1 className="px-20 mt-10 text-3xl mx-auto w-max">No collections found</h1>
+          <Link href='/collections/create'><a className='button button-detail mx-auto'>Create Collection</a></Link>
+        </div>
+      }
     </>
   )
 }
