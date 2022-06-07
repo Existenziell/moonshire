@@ -37,7 +37,7 @@ const Admin = ({ nfts, collections, artists, users, roles }) => {
         <Artists artists={artists} collections={collections} />
         <Users users={users} roles={roles} />
         <p className='text-xs mb-8 text-center mx-auto'>
-          Contract Address: <a href={`https://rinkeby.etherscan.io/address/${marketplaceAddress}#code`} target='_blank' rel='noopener noreferrer nofollow' >{marketplaceAddress}</a>
+          Contract Address: <a href={`https://rinkeby.etherscan.io/address/${marketplaceAddress}#code`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{marketplaceAddress}</a>
         </p>
       </div>
     </>
