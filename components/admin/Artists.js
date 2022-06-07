@@ -228,7 +228,7 @@ const Artists = ({ artists }) => {
         Add artist
       </button>
 
-      <form onSubmit={addArtist} className='shadow-lg rounded-sm dark:text-brand-dark max-w-max bg-brand p-4 hidden' id='addArtistForm' >
+      <form onSubmit={addArtist} className='shadow-md rounded-sm dark:text-brand-dark max-w-max bg-brand p-4 hidden' id='addArtistForm' >
         <input type='text' name='name' id='name' placeholder='Name' onChange={setData} required className='block mb-2 text-sm' />
         <input type='text' name='headline' id='headline' placeholder='Headline' onChange={setData} className='block mb-2 text-sm' />
         <input type='text' name='description' id='description' placeholder='Description' onChange={setData} className='block mb-2 text-sm' />

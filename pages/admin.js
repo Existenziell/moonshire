@@ -31,7 +31,7 @@ const Admin = ({ nfts, collections, artists, users, roles }) => {
         <meta name='description' content="Admin | Project Moonshire" />
       </Head>
 
-      <div className='admin flex flex-col items-start'>
+      <div className='admin flex flex-col items-start px-[40px]'>
         <Nfts nfts={nfts} />
         <Collections collections={collections} />
         <Artists artists={artists} collections={collections} />

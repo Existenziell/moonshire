@@ -12,7 +12,7 @@ const Nfts = ({ nfts, numberOfNfts }) => {
         <meta name='description' content="NFTs | Project Moonshire" />
       </Head>
 
-      <div className='flex flex-col items-center justify-center'>
+      <div className='flex flex-col items-center justify-center px-[40px]'>
         {nfts.length ?
           <>
             <MapNfts nfts={nfts} />

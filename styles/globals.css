@@ -55,6 +55,10 @@ h2, h3, h4 {
   @apply text-[30px] mb-5;
 }
 
+hr {
+  @apply border-t border-lines dark:border-lines-dark; 
+}
+
 .link {
   @apply hover:cursor-pointer hover:text-cta transition-all duration-100;
 }

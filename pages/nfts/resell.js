@@ -61,8 +61,8 @@ export default function ResellNft() {
 
   return (
     <div>
-      <div className="flex justify-center">
-        <form className="shadow-2xl rounded flex flex-col items-center max-w-xs p-6">
+      <div className="flex justify-center px-[40px]">
+        <form className="shadow-md rounded flex flex-col items-center max-w-xs p-6">
           <p className='text-xs'>Price in ETH</p>
           <input
             placeholder="0.25"

@@ -65,13 +65,13 @@ const Nft = ({ nft }) => {
         <meta name='description' content={`${name} | NFT | Project Moonshire`} />
       </Head>
 
-      <div className='px-8 flex flex-col items-center'>
+      <div className='flex flex-col items-center px-[40px]'>
         <h1 className='mx-auto border-b-2 border-detail dark:border-detail-dark'>{name}</h1>
-        <div key={id} className='flex flex-col md:flex-row items-start justify-between gap-8 text-sm bg-detail dark:bg-detail-dark rounded-lg p-8'>
+        <div key={id} className='flex flex-col md:flex-row items-start justify-between gap-8'>
           <img src={image_url} alt='NFT Image' className='md:w-1/2' />
           <div className='w-full flex-grow'>
             <h2>
-              <span className='text-sm pr-2'>by</span>
+              <span className='text-sm pr-4'>by</span>
               <Link href={`/artists/${artists.id}`}><a>{artists.name}</a></Link>
             </h2>
             <p className='my-4'>{description}</p>

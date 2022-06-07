@@ -23,7 +23,7 @@ const Home = ({ artists, collections, nfts }) => {
         <meta name='description' content="It is gonna be epic | Project Moonshire" />
       </Head>
 
-      <div className='flex flex-col items-center justify-center w-full'>
+      <div className='flex flex-col items-center justify-center w-full px-[40px]'>
         <h1 className='mb-20'>Project Moonshire</h1>
         <div>
           <h2 className='border-b border-detail dark:border-detail-dark mb-8'>Featured Artists</h2>
@@ -43,14 +43,14 @@ const Home = ({ artists, collections, nfts }) => {
           </div>
 
           <h2 className='mt-24 border-b border-detail dark:border-detail-dark mb-8'>Moonshire Collections</h2>
-          <div className=''>
+          <div>
 
             {fetchedCollections.map(collection => {
               const { id, title, headline, description, image_url } = collection
 
               return (
                 <div key={id} className='flex flex-col md:flex-row items-center justify-evenly gap-8 mb-20'>
-                  <div className=''>
+                  <div>
                     <Link href={`/collections/${id}`}>
                       <a>
                         <img src={image_url} alt='Cover Image' className='aspect-square bg-cover max-w-md' />
@@ -59,9 +59,9 @@ const Home = ({ artists, collections, nfts }) => {
                   </div>
                   <div className='h-full flex flex-col flex-grow justify-between'>
                     <div>
-                      <h1 className=''>{title}</h1>
+                      <h1>{title}</h1>
                       <p>{headline}</p>
-                      <hr className='my-4 border-lines' />
+                      <hr className='my-4' />
                       <p>{description}</p>
                     </div>
                     <Link href={`/collections/${id}`}>

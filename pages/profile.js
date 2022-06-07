@@ -85,7 +85,7 @@ const Profile = () => {
         <meta name='description' content='Profile | Project Moonshire' />
       </Head>
 
-      <div className='profile flex flex-col items-center justify-center'>
+      <div className='profile flex flex-col items-center justify-center px-[40px]'>
 
         <div className='flex flex-col md:flex-row md:gap-12'>
           <div className='max-w-md mx-auto flex-shrink-0'>
@@ -95,7 +95,7 @@ const Profile = () => {
               onUpload={(url) => handleUpload(url)}
             />
           </div>
-          <div className=''>
+          <div>
             <div className='flex flex-col items-center gap-2 mb-10'>
               <label htmlFor="username">
                 <input

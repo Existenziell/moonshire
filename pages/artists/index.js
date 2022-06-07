@@ -11,14 +11,14 @@ const Artists = ({ artists, numberOfArtists }) => {
         <meta name='description' content="Artists | Project Moonshire" />
       </Head>
 
-      <div className='flex flex-col items-center justify-center'>
-        <div className='flex flex-col items-start justify-center gap-16 text-sm'>
+      <div className='flex flex-col items-center justify-center px-[40px]'>
+        <div className='flex flex-col items-start justify-center gap-20 text-sm'>
 
           {artists.map(artist => {
             const { id, name, headline, description, origin, public_url, created_at, numberOfNfts } = artist
 
             return (
-              <div key={id} className='w-full flex flex-col md:flex-row items-start justify-center gap-4 md:gap-12 bg-detail dark:bg-detail-dark rounded p-4'>
+              <div key={id} className='w-full flex flex-col md:flex-row items-start justify-center gap-4 md:gap-[40px] '>
 
                 <Link href={`/artists/${id}`}>
                   <a>
@@ -28,14 +28,14 @@ const Artists = ({ artists, numberOfArtists }) => {
                 <div className='max-w-md flex-grow'>
                   <h1>{name}</h1>
                   <p className='mt-4'>{headline}</p>
-                  <hr className='border-t border-lines-dark/50 my-8 hidden md:block' />
+                  <hr className='my-8' />
                   <p className='mt-4'>{description}</p>
                   <p className='mt-4'>Origin: {origin}</p>
                   <p>Number of NFTs: {numberOfNfts}</p>
                   <p className='mt-8 text-xs'>On Moonshire since: {created_at.slice(0, 10)}</p>
                   <Link href={`/artists/${id}`}>
-                    <a className='button button-cta mt-8 mx-auto md:mr-auto md:ml-0 uppercase'>
-                      View
+                    <a className='button button-detail mt-8 mx-auto md:mr-auto md:ml-0 uppercase'>
+                      View Artist
                     </a>
                   </Link>
                 </div>

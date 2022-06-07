@@ -36,7 +36,7 @@ const Layout = ({ children }) => {
         </div>
       </div>
 
-      <main className='w-full text-black bg-brand dark:text-white dark:bg-brand-dark min-h-[calc(100vh-160px)] px-[40px] py-[60px]'>
+      <main className='w-full text-black bg-brand dark:text-white dark:bg-brand-dark min-h-[calc(100vh-160px)] py-[60px]'>
         {children}
       </main>
 

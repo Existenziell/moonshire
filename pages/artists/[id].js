@@ -13,14 +13,14 @@ const Artist = ({ artist, artistNfts }) => {
         <meta name='description' content={`${name} | Artist | Project Moonshire`} />
       </Head>
 
-      <div className='px-8 flex flex-col items-center'>
+      <div className='flex flex-col items-center px-[40px]'>
 
         <h1 className='mx-auto'>{name}</h1>
         <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-10'>
           <img src={public_url} alt='Artist Image' className='md:w-1/2' />
           <div>
             <p className='mt-4 text-xl'>{headline}</p>
-            <hr className='border-t-2 border-lines my-8' />
+            <hr className='my-8' />
             <p className='mt-4'>{description}</p>
             <p className='mt-4'>Origin: {origin}</p>
             <p>Number of NFTs from this artist: {numberOfNfts}</p>
@@ -35,7 +35,7 @@ const Artist = ({ artist, artistNfts }) => {
             return (
               <Link href={`/nfts/${id}`} key={id}>
                 <a>
-                  <div className='max-w-lg w-full hover:shadow px-6 py-4 mb-6 rounded border border-detail dark:border-detail-dark shadow-lg hover:cursor-pointer transition-all'>
+                  <div className='max-w-lg w-full px-6 py-4 mb-6 rounded border border-detail dark:border-detail-dark shadow-md hover:cursor-pointer transition-all'>
                     <div className='flex flex-col gap-4 items-start justify-center'>
                       <img src={image_url} alt='NFT Image' className='max-w-[200px] aspect-square' />
                       <div className='w-full'>

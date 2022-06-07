@@ -6,7 +6,7 @@ const MapNfts = ({ nfts }) => {
   return (
     <div className="flex flex-wrap justify-evenly gap-8">
       {nfts.map((nft, i) => (
-        <div key={i} className="flex flex-col basis-0 justify-between shadow-xl rounded">
+        <div key={i} className="flex flex-col basis-0 justify-between shadow-md rounded">
 
           <Link href={`/nfts/${nft.id}`}>
             <a className='w-full rounded-t'>

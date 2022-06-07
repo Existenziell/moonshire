@@ -78,7 +78,7 @@ const Nfts = ({ nfts }) => {
                 </Link>
               </td>
               <td className='whitespace-nowrap'>{nft.name}</td>
-              <td className=''>{truncate(nft.description)}</td>
+              <td>{truncate(nft.description)}</td>
               <td className='whitespace-nowrap'>{nft.artists?.name}</td>
               <td className='whitespace-nowrap'>{nft.collections?.title}</td>
               <td className='whitespace-nowrap text-cta'>{nft.price} ETH</td>

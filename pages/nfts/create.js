@@ -243,7 +243,7 @@ const CreateNft = ({ artists }) => {
 
       {!userCollections.length ?
 
-        <div className='flex flex-col items-center justify-center mt-8 text-center'>
+        <div className='flex flex-col items-center justify-center mt-8 text-center px-[40px]'>
           <h2>You&apos;ll need to create a collection to proceed!</h2>
           <p className='text-sm'>Every NFT needs to be connected to a collection.</p>
           <Link href='/collections/create'>
@@ -253,7 +253,7 @@ const CreateNft = ({ artists }) => {
           </Link>
         </div>
         :
-        <form onSubmit={createNft} className='create-nft flex flex-col items-start max-w-2xl mx-auto'>
+        <form onSubmit={createNft} className='create-nft flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
           <h1 className='mx-auto'>Create NFT</h1>
 
           <p>Image, Video, Audio, or 3D Model</p>

@@ -39,7 +39,7 @@ export default function MyNfts() {
           <div>
             <div className="flex flex-wrap gap-12 pt-4 flex-grow">
               {nfts.map((nft, i) => (
-                <div key={i} className="w-64 shadow-lg rounded flex flex-col max-w-xs">
+                <div key={i} className="w-64 shadow-md rounded flex flex-col max-w-xs">
                   <img src={nft.image} alt='NFT Image' className='w-full aspect-square object-cover' />
                   <div className="p-4 bg-detail dark:bg-detail-dark flex flex-col justify-between h-full">
                     <h2 className="text-2xl">{nft.name}</h2>
