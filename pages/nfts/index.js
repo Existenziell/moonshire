@@ -13,7 +13,7 @@ const Nfts = ({ nfts }) => {
       </Head>
 
       <div className='flex flex-col items-center justify-center px-[40px]'>
-        {nfts.length ?
+        {nfts?.length ?
           <MapNfts nfts={nfts} />
           :
           <div>

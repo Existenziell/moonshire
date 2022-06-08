@@ -59,10 +59,15 @@ export async function getServerSideProps() {
   }
 
   for (let collection of collections) {
-    const collectionNfts = nfts.filter((n => n.collection === collection.id))
-    collection.numberOfNfts = collectionNfts.length
     const url = await getPublicUrl('collections', collection.image_url)
     collection.public_url = url
+
+    if (nfts) {
+      const collectionNfts = nfts.filter((n => n.collection === collection.id))
+      collection.numberOfNfts = collectionNfts.length
+    } else {
+      collection.numberOfNfts = 0
+    }
   }
 
   for (let user of users) {

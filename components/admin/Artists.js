@@ -241,9 +241,9 @@ const Artists = ({ artists }) => {
         <FilePicker onChange={(e) => handleUpload(e)} size={200} url={fileUrl} />
 
         <input type='text' name='name' id='name' placeholder='Name' onChange={setData} required className='block mb-2 w-full mt-8' />
-        <input type='text' name='headline' id='headline' placeholder='Headline' onChange={setData} className='block mb-2 w-full' />
-        <input type='text' name='description' id='description' placeholder='Description' onChange={setData} className='block mb-2 w-full' />
-        <input type='text' name='origin' id='origin' placeholder='Origin' onChange={setData} className='block mb-2 w-full' />
+        <input type='text' name='headline' id='headline' placeholder='Headline' required onChange={setData} className='block mb-2 w-full' />
+        <input type='text' name='description' id='description' placeholder='Description' required onChange={setData} className='block mb-2 w-full' />
+        <input type='text' name='origin' id='origin' placeholder='Origin' required onChange={setData} className='block mb-2 w-full' />
         <div className='flex items-center gap-2 mt-4'>
           <input type='submit' className='button button-admin' value='Save' />
           <button onClick={toggleNewArtistForm} className='button button-admin'>Cancel</button>

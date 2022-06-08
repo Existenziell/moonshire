@@ -33,6 +33,7 @@ const CreateNft = ({ artists }) => {
   const [fetching, setFetching] = useState(true)
   const [artistName, setArtistName] = useState('')
   const [collectionName, setCollectionName] = useState('')
+  const [formIsReady, setFormIsReady] = useState(false)
 
   const router = useRouter()
   const ipfsUrl = 'https://ipfs.infura.io/ipfs/'
@@ -146,11 +147,14 @@ const CreateNft = ({ artists }) => {
   const setCollection = (e) => {
     setCollectionName(e.label)
     setFormData({ ...formData, ...{ collection: e.value } })
+    if (artistName != '' && fileUrl) setFormIsReady(true)
+
   }
 
   const setArtist = (e) => {
     setArtistName(e.label)
     setFormData({ ...formData, ...{ artist: e.value } })
+    if (collectionName != '' && fileUrl) setFormIsReady(true)
   }
 
   const saveNft = async (tokenId, url) => {
@@ -163,6 +167,7 @@ const CreateNft = ({ artists }) => {
         tokenURI: url,
         walletAddress: account,
         user: currentUser.id,
+        listed: true,
       }])
 
     if (!error) {
@@ -331,8 +336,7 @@ const CreateNft = ({ artists }) => {
               <div id='mintingInfo' className='text-xs'></div>
             </div>
             :
-            // <button onClick={createNft} className='button button-cta mt-12'>Create</button>
-            <input type='submit' className='button button-cta mt-10' value='Create' />
+            <input type='submit' disabled={!formIsReady} className='button button-cta mt-10' value='Create' />
           }
         </form>
       }
@@ -341,7 +345,6 @@ const CreateNft = ({ artists }) => {
 }
 
 export async function getServerSideProps() {
-  // const { data: collections } = await supabase.from('collections').select(`*`).order('id', { ascending: true })
   const { data: artists } = await supabase.from('artists').select(`*`).order('id', { ascending: true })
 
   return {

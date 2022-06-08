@@ -81,7 +81,7 @@ const Nft = ({ nft }) => {
             </h2>
             <p className='my-4'>{description}</p>
             <div className='whitespace-nowrap flex flex-col gap-1'>
-              <p>Created: {created_at.slice(0, 10)}</p>
+              <p>Created: {created_at?.slice(0, 10)}</p>
               {nft.owner && nft.seller &&
                 <>
                   <p>Owner: {shortenAddress(nft.owner)}</p>

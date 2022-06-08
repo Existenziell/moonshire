@@ -66,44 +66,49 @@ export async function getServerSideProps() {
 
   // Enrich each collection with numberOfNfts, public_url, floorPrice, highestPrice, artists
   for (let collection of collections) {
-    const collectionNfts = nfts.filter((n => n.collection === collection.id))
-
-    if (collectionNfts.length > 0) {
-      // Set the number of NFT in each collection
-      collection.numberOfNfts = collectionNfts.length
-
-      // Collect artists that have NFTs for each collection
-      let collectionArtists = []
-      for (let nft of collectionNfts) {
-        collectionArtists.push(nft.artists.name)
-      }
-
-      /* eslint-disable no-undef */
-      const uniqueCollectionArtists = [...new Set(collectionArtists)]
-      /* eslint-enable no-undef */
-      collection.artists = uniqueCollectionArtists
-
-      // Calculate lowest and highest price of NFTs in each collection
-      let floorPrice = 100000
-      let highestPrice = 0
-
-      for (let nft of collectionNfts) {
-        if (highestPrice < nft.price) {
-          highestPrice = nft.price
-        }
-        if (floorPrice > nft.price) {
-          floorPrice = nft.price
-        }
-      }
-      collection.floorPrice = floorPrice
-      collection.highestPrice = highestPrice
-    } else {
-      collection.numberOfNfts = 0
-    }
 
     // Get the public_url (IPFS) of the cover image for each collection
     const url = await getPublicUrl('collections', collection.image_url)
     collection.public_url = url
+
+    if (nfts) {
+      const collectionNfts = nfts.filter((n => n.collection === collection.id))
+
+      if (collectionNfts.length > 0) {
+        // Set the number of NFT in each collection
+        collection.numberOfNfts = collectionNfts.length
+
+        // Collect artists that have NFTs for each collection
+        let collectionArtists = []
+        for (let nft of collectionNfts) {
+          collectionArtists.push(nft.artists.name)
+        }
+
+        /* eslint-disable no-undef */
+        const uniqueCollectionArtists = [...new Set(collectionArtists)]
+        /* eslint-enable no-undef */
+        collection.artists = uniqueCollectionArtists
+
+        // Calculate lowest and highest price of NFTs in each collection
+        let floorPrice = 100000
+        let highestPrice = 0
+
+        for (let nft of collectionNfts) {
+          if (highestPrice < nft.price) {
+            highestPrice = nft.price
+          }
+          if (floorPrice > nft.price) {
+            floorPrice = nft.price
+          }
+        }
+        collection.floorPrice = floorPrice
+        collection.highestPrice = highestPrice
+      } else {
+        collection.numberOfNfts = 0
+      }
+    } else {
+      collection.numberOfNfts = 0
+    }
   }
 
   // Filter to only get collections with more than 0 NFTs

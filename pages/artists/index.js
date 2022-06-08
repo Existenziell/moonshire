@@ -10,40 +10,46 @@ const Artists = ({ artists }) => {
         <meta name='description' content="Artists | Project Moonshire" />
       </Head>
 
-      <div className='flex flex-col items-center justify-center px-[40px]'>
-        <div className='flex flex-col items-start justify-center gap-20 text-sm'>
+      {artists.length ?
+        <div className='flex flex-col items-center justify-center px-[40px]'>
+          <div className='flex flex-col items-start justify-center gap-20 text-sm'>
 
-          {artists.map(artist => {
-            const { id, name, headline, description, origin, avatar_url, created_at, numberOfNfts } = artist
+            {artists.map(artist => {
+              const { id, name, headline, description, origin, avatar_url, created_at, numberOfNfts } = artist
 
-            return (
-              <div key={id} className='w-full flex flex-col md:flex-row items-start justify-center gap-4 md:gap-[40px] '>
+              return (
+                <div key={id} className='w-full flex flex-col md:flex-row items-start justify-center gap-4 md:gap-[40px] '>
 
-                <Link href={`/artists/${id}`}>
-                  <a>
-                    <img src={avatar_url} alt='Artist Image' className='aspect-square bg-cover max-w-md' />
-                  </a>
-                </Link>
-                <div className='max-w-md flex-grow'>
-                  <h1>{name}</h1>
-                  <p className='mt-4'>{headline}</p>
-                  <hr className='my-8' />
-                  <p className='mt-4'>{description}</p>
-                  <p className='mt-4'>Origin: {origin}</p>
-                  <p>Number of NFTs: {numberOfNfts}</p>
-                  <p className='mt-8 text-xs'>On Moonshire since: {created_at.slice(0, 10)}</p>
                   <Link href={`/artists/${id}`}>
-                    <a className='button button-detail mt-8 mx-auto md:mr-auto md:ml-0 uppercase'>
-                      View Artist
+                    <a>
+                      <img src={avatar_url} alt='Artist Image' className='aspect-square bg-cover max-w-md' />
                     </a>
                   </Link>
-                </div>
+                  <div className='max-w-md flex-grow'>
+                    <h1>{name}</h1>
+                    <p className='mt-4'>{headline}</p>
+                    <hr className='my-8' />
+                    <p className='mt-4'>{description}</p>
+                    <p className='mt-4'>Origin: {origin}</p>
+                    <p>Number of NFTs: {numberOfNfts}</p>
+                    <p className='mt-8 text-xs'>On Moonshire since: {created_at.slice(0, 10)}</p>
+                    <Link href={`/artists/${id}`}>
+                      <a className='button button-detail mt-8 mx-auto md:mr-auto md:ml-0 uppercase'>
+                        View Artist
+                      </a>
+                    </Link>
+                  </div>
 
-              </div>
-            )
-          })}
+                </div>
+              )
+            })}
+          </div>
         </div>
-      </div>
+        :
+        <div>
+          <h1 className="px-20 mt-10 text-3xl mx-auto w-max">No artists found</h1>
+        </div>
+      }
     </>
   )
 }

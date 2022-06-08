@@ -9,11 +9,14 @@ const Nfts = ({ nfts }) => {
   const appCtx = useContext(AppContext)
   const { notify } = appCtx
 
-  const [fetchedNfts, setFetchedNfts] = useState()
+  const [fetchedNfts, setFetchedNfts] = useState([])
   const [showDelete, setShowDelete] = useState(false)
   const [nftToDelete, setNftToDelete] = useState()
 
   useEffect(() => {
+    if (!nfts) {
+      return
+    }
     setFetchedNfts(nfts)
   }, [nfts])
 
@@ -64,7 +67,7 @@ const Nfts = ({ nfts }) => {
             <tr className='p-4 dark:text-brand'>
               <td>
                 No NFTs found.
-                Please use the existing form <Link href='/collections/create/'><a className='font-bold link border-b border-lines-dark dark:border-lines border-dotted'>here</a></Link> to add assets.
+                Please use the existing form <Link href='/nfts/create/'><a className='font-bold link border-b border-lines-dark dark:border-lines border-dotted'>here</a></Link> to add assets.
               </td>
             </tr>
           }
@@ -94,7 +97,7 @@ const Nfts = ({ nfts }) => {
                   `n/a`
                 }
               </td>
-              <td className='whitespace-nowrap'>{nft.created_at.slice(0, 10)}</td>
+              <td className='whitespace-nowrap'>{nft.created_at?.slice(0, 10)}</td>
               <td className='text-center align-middle'>
                 <button onClick={() => toggleDeleteModal(nft.id)} aria-label='Toggle Delete Modal' className='button-admin'>
                   Delete
