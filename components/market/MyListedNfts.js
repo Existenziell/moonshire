@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react'
-import { useWeb3React } from '@web3-react/core'
 import { PulseLoader } from 'react-spinners'
 import Link from 'next/link'
 import fetchListedItems from '../../lib/contract/fetchListedItems'
 import getDbIdForTokenURI from '../../lib/supabase/getDbIdForTokenURI'
+import useApp from "../../context/App"
 
 export default function MyListedNfts() {
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
-  const { account, library: provider } = useWeb3React()
+  const { address, signer } = useApp()
 
   useEffect(() => {
-    if (provider) loadNfts()
-  }, [account, provider])
+    if (signer) loadNfts()
+  }, [address, signer])
 
   const loadNfts = async () => {
-    const nfts = await fetchListedItems(provider)
+    const nfts = await fetchListedItems(signer)
     if (nfts) {
       for (let nft of nfts) {
         const dbId = await getDbIdForTokenURI(nft.tokenURI)

@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react'
-import { useWeb3React } from '@web3-react/core'
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
 import fetchMyNfts from '../../lib/contract/fetchMyNfts'
+import useApp from "../../context/App"
 
 export default function MyNfts() {
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
   const router = useRouter()
-  const { account, library: provider } = useWeb3React()
+  const { address, signer } = useApp()
 
   useEffect(() => {
-    if (provider) loadNfts()
-  }, [account, provider])
+    if (signer) loadNfts()
+  }, [address, signer])
 
   const loadNfts = async () => {
-    const nfts = await fetchMyNfts(provider)
+    const nfts = await fetchMyNfts(signer)
     if (nfts) {
       setNfts(nfts)
       setLoadingState('loaded')

@@ -1,14 +1,13 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
-import { AppContext } from '../../context/AppContext'
 import { PulseLoader } from 'react-spinners'
 import Link from 'next/link'
 import uploadFileToIpfs from '../../lib/uploadFileToIpfs'
 import FilePicker from '../market/FilePicker'
+import useApp from "../../context/App"
 
 const Artists = ({ artists }) => {
-  const appCtx = useContext(AppContext)
-  const { notify } = appCtx
+  const { notify } = useApp()
 
   const [fetchedArtists, setFetchedArtists] = useState()
   const [formData, setFormData] = useState({})

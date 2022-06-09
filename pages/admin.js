@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
-import { AppContext } from '../context/AppContext'
 import { getPublicUrl } from '../lib/supabase/getPublicUrl'
 import { getSignedUrl } from '../lib/supabase/getSignedUrl'
+import { marketplaceAddress } from '../config'
 import Head from 'next/head'
 import Nfts from '../components/admin/Nfts'
 import Collections from '../components/admin/Collections'
@@ -10,12 +10,19 @@ import Artists from '../components/admin/Artists'
 import Users from '../components/admin/Users'
 import SupaAuth from '../components/SupaAuth'
 import GridLoader from 'react-spinners/GridLoader'
-import { marketplaceAddress } from '../config'
+import useApp from "../context/App"
 
 const Admin = ({ nfts, collections, artists, users, roles }) => {
-  const appCtx = useContext(AppContext)
-  const { session, currentUser } = appCtx
+  const { currentUser } = useApp()
   const [isAdmin, setIsAdmin] = useState(false)
+  const [session, setSession] = useState(null)
+
+  useEffect(() => {
+    setSession(supabase.auth.session())
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
 
   useEffect(() => {
     currentUser?.roles?.name === 'Admin' && setIsAdmin(true)

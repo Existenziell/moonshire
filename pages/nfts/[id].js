@@ -1,10 +1,9 @@
 import { supabase } from '../../lib/supabase'
-import { useState, useContext, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useWeb3React } from '@web3-react/core'
-import { AppContext } from '../../context/AppContext'
 import { PulseLoader } from 'react-spinners'
 import { shortenAddress } from '../../lib/shortenAddress'
+import useApp from "../../context/App"
 import Head from 'next/head'
 import Link from 'next/link'
 import buyNft from '../../lib/contract/buyNft'
@@ -13,31 +12,28 @@ import fetchMarketItemsMeta from '../../lib/contract/fetchMarketItemsMeta'
 
 const Nft = ({ nft }) => {
   const { id, name, description, price, created_at, image_url, artists, tokenURI, tokenId } = nft
-  const { account, library: provider } = useWeb3React()
-
+  const { address, signer, notify } = useApp()
   const router = useRouter()
-  const appCtx = useContext(AppContext)
-  const { notify } = appCtx
 
   const [loading, setLoading] = useState(false)
   const [sellerIsOwner, setSellerIsOwner] = useState(false)
 
   useEffect(() => {
-    if (provider) fetchMeta()
-  }, [provider])
+    if (address) fetchMeta()
+  }, [address])
 
   const fetchMeta = async () => {
-    const meta = await fetchMarketItemsMeta(provider, tokenId)
+    const meta = await fetchMarketItemsMeta(tokenId, signer)
     if (meta) {
       nft.owner = meta.owner
       nft.seller = meta.seller
     }
     // If seller is current owner, don't offer 'Buy' option
-    if (nft.seller === account) setSellerIsOwner(true)
+    if (nft.seller === address) setSellerIsOwner(true)
   }
 
   const initiateBuy = async (nft) => {
-    if (!provider) {
+    if (!address) {
       notify("Please connect your wallet to proceed")
       return
     }
@@ -45,7 +41,7 @@ const Nft = ({ nft }) => {
     logWeb3(`Initiating blockchain transfer...`)
 
     try {
-      const hash = await buyNft(nft, provider)
+      const hash = await buyNft(nft, signer)
       if (hash) {
         notify("Transfer to your wallet was successful!")
         logWeb3(`Transaction hash: ${hash}`)
@@ -58,7 +54,6 @@ const Nft = ({ nft }) => {
       }
       setLoading(false)
     } catch (e) {
-      console.log(e);
       notify("Something went horribly wrong...")
     }
   }
@@ -88,8 +83,8 @@ const Nft = ({ nft }) => {
                   <p>Seller: {shortenAddress(nft.seller)}</p>
                 </>
               }
-              <a href={tokenURI} target='_blank' rel='noopener noreferrer nofollow'>
-                <span className='link'>{tokenURI.substring(0, 30)}&#8230;{tokenURI.slice(tokenURI.length - 4)}</span>
+              <a href={tokenURI} target='_blank' rel='noopener noreferrer nofollow link'>
+                {tokenURI.substring(0, 30)}&#8230;{tokenURI.slice(tokenURI.length - 4)}
               </a>
             </div>
             <p className='mt-8'>Price: {price} ETH</p>

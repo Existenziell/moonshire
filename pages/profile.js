@@ -1,8 +1,7 @@
-import { useEffect, useContext, useState } from 'react'
-import { AppContext } from '../context/AppContext'
-import { useWeb3React } from "@web3-react/core"
+import { useEffect, useState } from 'react'
 import { addToMetamask } from '../lib/addToMetamask'
 import { shortenAddress } from '../lib/shortenAddress'
+import useApp from "../context/App"
 import Head from 'next/head'
 import Avatar from '../components/Avatar'
 import updateProfile from '../lib/supabase/updateProfile'
@@ -12,9 +11,7 @@ import MyListedNfts from '../components/market/MyListedNfts'
 import Link from 'next/link'
 
 const Profile = () => {
-  const appCtx = useContext(AppContext)
-  const { currentUser, setCurrentUser, disconnect, hasMetamask, notify } = appCtx
-  const { account } = useWeb3React()
+  const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify } = useApp()
 
   const [username, setUsername] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
@@ -70,7 +67,7 @@ const Profile = () => {
     )
   }
 
-  if (!account) {
+  if (!address) {
     return (
       <p className='w-full h-full flex items-center justify-center'>
         Please connect your wallet to proceed.
@@ -118,7 +115,7 @@ const Profile = () => {
             <div className='mb-10 text-xs flex flex-col gap-2 text-center rounded'>
               <p>Membership: {is_premium ? `Premium` : `Free`}</p>
               <p>Joined: {createdAt?.slice(0, 10)}</p>
-              <p>Wallet {shortenAddress(account)}</p>
+              <p>Wallet {shortenAddress(address)}</p>
             </div>
 
             <div className='flex flex-col md:flex-row justify-center items-center gap-2 my-8'>
@@ -141,7 +138,7 @@ const Profile = () => {
           <h2 className='mt-12 mb-4 py-2 border-b-2 border-detail dark:border-detail-dark'>
             Collections
           </h2>
-          {collections.length ?
+          {collections?.length ?
             <div className='flex items-center justify-evenly flex-wrap gap-4'>
               {collections.map(collection => (
                 <Link href={`/collections/${collection.id}`} key={collection.id}>

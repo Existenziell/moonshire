@@ -1,12 +1,11 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
-import { AppContext } from '../../context/AppContext'
 import { PulseLoader } from 'react-spinners'
 import Link from 'next/link'
+import useApp from "../../context/App"
 
 const Collections = ({ collections }) => {
-  const appCtx = useContext(AppContext)
-  const { notify } = appCtx
+  const { notify } = useApp()
 
   const [fetchedCollections, setFetchedCollections] = useState()
   const [formData, setFormData] = useState({})

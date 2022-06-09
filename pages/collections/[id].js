@@ -1,14 +1,13 @@
 import { supabase } from '../../lib/supabase'
-import { useContext, useEffect, useState } from 'react'
-import { AppContext } from '../../context/AppContext'
+import { useEffect, useState } from 'react'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
+import useApp from "../../context/App"
 import Head from 'next/head'
 import Link from 'next/link'
 
 const Collection = ({ collection, collectionNfts }) => {
   const { id, title, headline, description, year, public_url, numberOfNfts, floorPrice, highestPrice, artists } = collection
-  const appCtx = useContext(AppContext)
-  const { currentUser } = appCtx
+  const { currentUser } = useApp()
   const [userOwnsCollection, setUserOwnsCollection] = useState(false)
 
   useEffect(() => {
@@ -35,7 +34,7 @@ const Collection = ({ collection, collectionNfts }) => {
           </div>
         </div>
 
-        <div className="snap-start snap-always w-full h-[calc(100vh-140px)] px-[40px] flex items-start">
+        <div className="snap-start snap-always w-full h-[calc(100vh-140px)] px-[40px] flex items-start justify-between">
           <div>
             <div className='flex justify-between w-full relative'>
               <div className='grid grid-rows-2 items-center'>

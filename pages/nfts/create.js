@@ -1,10 +1,9 @@
 import { ethers } from 'ethers'
 import { supabase } from '../../lib/supabase'
-import { useContext, useEffect, useState } from 'react'
-import { AppContext } from '../../context/AppContext'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { useWeb3React } from "@web3-react/core"
 import { PulseLoader } from 'react-spinners'
+import useApp from "../../context/App"
 import Head from 'next/head'
 import Link from 'next/link'
 import Select from 'react-select'
@@ -16,15 +15,10 @@ import { create as ipfsHttpClient } from 'ipfs-http-client'
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
 import NFTMarketplace from '../../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json'
-import {
-  marketplaceAddress
-} from '../../config'
+import { marketplaceAddress } from '../../config'
 
 const CreateNft = ({ artists }) => {
-  const appCtx = useContext(AppContext)
-  const { currentUser, notify, checkChain, hasMetamask, darkmode } = appCtx
-
-  const { account, chainId, library: provider } = useWeb3React()
+  const { address, signer, currentUser, darkmode, hasMetamask, notify, checkChain, chainId } = useApp()
 
   const [fileUrl, setFileUrl] = useState(null)
   const [formData, setFormData] = useState({})
@@ -39,13 +33,13 @@ const CreateNft = ({ artists }) => {
   const ipfsUrl = 'https://ipfs.infura.io/ipfs/'
 
   useEffect(() => {
-    if (currentUser && account) {
+    if (currentUser && address) {
       fetchUserCollections()
     }
-  }, [currentUser, account])
+  }, [currentUser, address])
 
   const fetchUserCollections = async () => {
-    const userCollections = await getUserCollections(account)
+    const userCollections = await getUserCollections(currentUser.id)
     currentUser.collections = userCollections
     setUserCollections(userCollections)
     setFetching(false)
@@ -97,7 +91,6 @@ const CreateNft = ({ artists }) => {
 
   const listNFTForSale = async (url) => {
     logWeb3("Creating Asset on Blockchain...")
-    const signer = provider.getSigner()
     const price = ethers.utils.parseUnits(formData.price, 'ether')
     let contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer)
     let listingPrice = await contract.getListingPrice()
@@ -165,7 +158,7 @@ const CreateNft = ({ artists }) => {
         image_url: fileUrl,
         tokenId,
         tokenURI: url,
-        walletAddress: account,
+        walletAddress: address,
         user: currentUser.id,
         listed: true,
       }])
@@ -222,7 +215,7 @@ const CreateNft = ({ artists }) => {
     )
   }
 
-  if (!account) {
+  if (!address) {
     return (
       <p className='w-full h-full flex items-center justify-center'>
         Please connect your wallet to proceed.
@@ -246,7 +239,7 @@ const CreateNft = ({ artists }) => {
         <meta name='description' content="Create NFT | Project Moonshire" />
       </Head>
 
-      {!userCollections.length ?
+      {!userCollections?.length ?
 
         <div className='flex flex-col items-center justify-center mt-8 text-center px-[40px]'>
           <h2>Please create a collection first</h2>

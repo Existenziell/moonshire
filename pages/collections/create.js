@@ -1,16 +1,12 @@
-import { useContext, useState } from 'react'
-import { AppContext } from '../../context/AppContext'
+import { useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import UploadImage from '../../components/UploadImage'
-import { useWeb3React } from '@web3-react/core'
+import useApp from "../../context/App"
 
 const CreateCollection = () => {
-
-  const appCtx = useContext(AppContext)
-  const { currentUser, notify } = appCtx
-  const { account, library: provider } = useWeb3React()
+  const { address, signer, currentUser, notify } = useApp()
 
   const [imageUrl, setImageUrl] = useState(null)
   const [formData, setFormData] = useState({})
@@ -27,7 +23,7 @@ const CreateCollection = () => {
     e.preventDefault()
     setLoading(true)
 
-    if (!provider || !account) {
+    if (!signer || !address) {
       notify("Please connect your wallet to proceed")
       return
     }
@@ -36,7 +32,6 @@ const CreateCollection = () => {
       .from('collections')
       .insert([{
         ...formData,
-        walletAddress: account,
         user: currentUser.id,
       }])
 

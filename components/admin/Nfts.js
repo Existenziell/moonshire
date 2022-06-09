@@ -1,13 +1,12 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
-import { AppContext } from '../../context/AppContext'
 import { PulseLoader } from 'react-spinners'
 import { shortenAddress } from '../../lib/shortenAddress'
 import Link from 'next/link'
+import useApp from "../../context/App"
 
 const Nfts = ({ nfts }) => {
-  const appCtx = useContext(AppContext)
-  const { notify } = appCtx
+  const { notify } = useApp()
 
   const [fetchedNfts, setFetchedNfts] = useState([])
   const [showDelete, setShowDelete] = useState(false)
@@ -20,7 +19,7 @@ const Nfts = ({ nfts }) => {
     setFetchedNfts(nfts)
   }, [nfts])
 
-  const truncate = (input) => input.length > 30 ? `${input.substring(0, 30)}...` : input;
+  const truncate = (input) => input.length > 30 ? `${input.substring(0, 30)}...` : input
 
   const toggleDeleteModal = (id) => {
     setNftToDelete(id)

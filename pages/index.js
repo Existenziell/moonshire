@@ -10,7 +10,6 @@ const Home = ({ artists, collections, nfts }) => {
   const [fetchedArtists, setFetchedArtists] = useState()
 
   useEffect(() => {
-    console.log(artists);
     setFetchedArtists(artists)
     setFetchedCollections(collections)
   }, [artists, collections])
@@ -123,8 +122,11 @@ export async function getServerSideProps() {
     collection.image_url = url
   }
 
+  // Filter to only get collections with more than 0 NFTs
+  const notEmptyCollections = collections.filter(collection => collection.numberOfNfts !== 0)
+
   return {
-    props: { collections, artists, nfts },
+    props: { collections: notEmptyCollections, artists, nfts },
   }
 }
 

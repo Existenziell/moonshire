@@ -1,13 +1,12 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
-import { AppContext } from '../../context/AppContext'
 import { PulseLoader } from 'react-spinners'
 import { shortenAddress } from '../../lib/shortenAddress'
 import Select from 'react-select'
+import useApp from "../../context/App"
 
 const Users = ({ users, roles }) => {
-  const appCtx = useContext(AppContext)
-  const { notify } = appCtx
+  const { notify } = useApp()
 
   const [fetchedUsers, setFetchedUsers] = useState()
   const [formData, setFormData] = useState({})

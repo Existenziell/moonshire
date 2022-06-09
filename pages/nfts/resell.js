@@ -1,27 +1,24 @@
-import { useEffect, useState, useContext } from 'react'
-import { AppContext } from '../../context/AppContext'
-import { useWeb3React } from '@web3-react/core'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { fetchMeta } from '../../lib/contract/fetchMeta'
 import { PulseLoader } from 'react-spinners'
 import resellNft from '../../lib/contract/resellNft'
 import setItemPrice from '../../lib/supabase/setItemPrice'
 import setItemListedState from '../../lib/supabase/setItemListedState'
+import useApp from "../../context/App"
 
 export default function ResellNft() {
-  const appCtx = useContext(AppContext)
-  const { notify } = appCtx
+  const { address, signer, notify } = useApp()
   const [loading, setLoading] = useState(false)
   const [formInput, updateFormInput] = useState({ price: '', image: '' })
   const { image, price } = formInput
 
   const router = useRouter()
-  const { library: provider } = useWeb3React()
   const { id, tokenURI } = router.query
 
   useEffect(() => {
     fetchNft()
-  }, [id, provider])
+  }, [id, signer])
 
   async function fetchNft() {
     if (!tokenURI) return
@@ -34,7 +31,7 @@ export default function ResellNft() {
 
   async function initiateResell(e) {
     e.preventDefault()
-    if (!provider) {
+    if (!address) {
       notify("Please connect your wallet to proceed")
       return
     }
@@ -44,7 +41,7 @@ export default function ResellNft() {
     }
 
     setLoading(true)
-    const hash = await resellNft(id, price, provider)
+    const hash = await resellNft(id, price, signer)
 
     if (hash) {
       await setItemListedState(id, true)

@@ -1,11 +1,10 @@
-import { useState, useContext } from 'react'
-import { AppContext } from '../context/AppContext'
+import { useState } from 'react'
+import useApp from "../context/App"
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 const Nav = () => {
-    const appCtx = useContext(AppContext)
-    const { currentUser } = appCtx
+    const { currentUser } = useApp()
 
     const [isOpen, setIsOpen] = useState(false)
     const router = useRouter()
@@ -74,7 +73,6 @@ const Nav = () => {
                     </svg>
                 }
             </button>
-
         </nav>
     )
 }

@@ -1,30 +1,28 @@
-import { useEffect, useState, useContext } from 'react'
-import { useWeb3React } from "@web3-react/core"
-import { AppContext } from '../../context/AppContext'
+import { useEffect, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
-import fetchMarketItems from '../../lib/contract/fetchMarketItems'
+import useApp from "../../context/App"
 import MapNfts from '../MapNfts'
+import fetchMarketItems from '../../lib/contract/fetchMarketItems'
 import getDbIdForTokenURI from '../../lib/supabase/getDbIdForTokenURI'
 
 export default function MarketItems() {
   const [nfts, setNfts] = useState([])
   const [numberOfNfts, setNumberOfNfts] = useState(null)
   const [loadingState, setLoadingState] = useState('not-loaded')
-  const appCtx = useContext(AppContext)
-  const { notify } = appCtx
-  const { library: provider } = useWeb3React()
+
+  const { address, signer, notify } = useApp()
 
   useEffect(() => {
-    if (provider) loadNfts()
+    if (address) loadNfts()
     // ToDo: Remove when merging with /nft
-    if (!provider) {
+    if (!address) {
       notify("Please connect your wallet to proceed")
       return
     }
-  }, [provider])
+  }, [address])
 
   const loadNfts = async () => {
-    const nfts = await fetchMarketItems(provider)
+    const nfts = await fetchMarketItems(signer)
     if (nfts) {
       for (let nft of nfts) {
         const id = await getDbIdForTokenURI(nft.tokenURI)
