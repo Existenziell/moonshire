@@ -28,7 +28,6 @@ const Admin = ({ nfts, collections, artists, users, roles }) => {
     currentUser?.roles?.name === 'Admin' && setIsAdmin(true)
   }, [currentUser?.roles?.name])
 
-  if (!currentUser) return <div className='flex items-center justify-center'><GridLoader color={'var(--color-cta)'} size={40} /></div>
   if (!session || !isAdmin) return <SupaAuth />
 
   return (
