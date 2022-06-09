@@ -50,7 +50,7 @@ export const AppProvider = ({ children }) => {
     if (web3modal.cachedProvider) connectWallet()
     ethereum.on("accountsChanged", connectWallet)
     ethereum.on("chainChanged", (chainId) => {
-      setChainId(parseInt(chainId))
+      if (checkChain(chainId)) setChainId(parseInt(chainId))
     })
   }, [])
 
@@ -66,7 +66,8 @@ export const AppProvider = ({ children }) => {
       const signer = provider.getSigner()
       const address = await signer.getAddress()
       const { chainId } = await provider.getNetwork()
-
+      const isCorrectChain = await checkChain(chainId)
+      if (!isCorrectChain) return
       setSigner(signer)
       setAddress(address)
       setChainId(parseInt(chainId))
