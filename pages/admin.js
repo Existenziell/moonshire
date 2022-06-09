@@ -9,7 +9,6 @@ import Collections from '../components/admin/Collections'
 import Artists from '../components/admin/Artists'
 import Users from '../components/admin/Users'
 import SupaAuth from '../components/SupaAuth'
-import GridLoader from 'react-spinners/GridLoader'
 import useApp from "../context/App"
 
 const Admin = ({ nfts, collections, artists, users, roles }) => {
