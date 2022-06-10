@@ -6,8 +6,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 const Home = ({ artists, collections, nfts }) => {
-  const [fetchedCollections, setFetchedCollections] = useState([])
-  const [fetchedArtists, setFetchedArtists] = useState([])
+  const [fetchedCollections, setFetchedCollections] = useState()
+  const [fetchedArtists, setFetchedArtists] = useState()
 
   useEffect(() => {
     setFetchedArtists(artists)

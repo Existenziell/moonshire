@@ -10,9 +10,9 @@ const Wallet = () => {
     setWalletAddress(address)
   }, [address])
 
-  const syncWallet = () => {
+  const syncWallet = async () => {
     hasMetamask ?
-      connectWallet()
+      await connectWallet()
       :
       notify("Please install Metamask to proceed")
   }

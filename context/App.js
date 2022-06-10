@@ -18,11 +18,11 @@ export const AppProvider = ({ children }) => {
   const [signer, setSigner] = useState()
   const [address, setAddress] = useState()
 
-  const [notificationMsg, setNotificationMsg] = useState('')
-  const [darkmode, setDarkmode] = useState('')
   const [currentUser, setCurrentUser] = useState(null)
   const [hasMetamask, setHasMetamask] = useState(false)
+  const [notificationMsg, setNotificationMsg] = useState('')
   const [chainId, setChainId] = useState(null)
+  const [darkmode, setDarkmode] = useState('')
 
   const router = useRouter()
 
@@ -139,10 +139,8 @@ export const AppProvider = ({ children }) => {
   const contextValue = {
     signer, address, connectWallet, disconnect,
     currentUser, setCurrentUser,
-    hasMetamask, setHasMetamask,
-    notify,
-    notificationMsg, setNotificationMsg, darkmode, setDarkmode,
-    checkChain, chainId,
+    hasMetamask, setHasMetamask, chainId, checkChain,
+    notify, notificationMsg, setNotificationMsg, darkmode, setDarkmode,
   }
 
   return (
