@@ -55,22 +55,22 @@ const Collection = ({ collection, collectionNfts }) => {
                   <td className='pl-8 py-0'>{floorPrice} ETH</td>
                   <td className='pl-8 py-0'>{highestPrice} ETH</td>
                   <td className='pl-8 py-0'>{year}</td>
-                  <td className='py-0'>{artists ? artists.join(', ') : `None`}</td>
+                  <td className='p-0'>{artists ? artists.join(', ') : `None`}</td>
                 </tr>
               </tbody>
             </table>
 
-            <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-[40px] mt-20'>
+            <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-[40px] mt-20'>
               <img src={public_url} alt='Cover Image' className='md:w-1/2 md:max-w-md' />
               <div>
                 <p>{headline}</p>
                 <hr className='my-8' />
                 <p className='mb-8'>{description}</p>
                 {floorPrice &&
-                  <p><span className='w-32 whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
+                  <p><span className='whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
                 }
                 {highestPrice &&
-                  <p className='mb-8'><span className='w-32 whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
+                  <p className='mb-8'><span className='whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
                 }
                 <p>Launched: {year}</p>
                 <p className='mb-4'>{numberOfNfts} NFTs available</p>

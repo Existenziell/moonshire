@@ -18,11 +18,26 @@ const MapNfts = ({ nfts }) => {
           </Link>
 
           <div className="p-4 bg-detail dark:bg-detail-dark flex flex-col justify-between h-full">
-            <h2 className=" mb-8">{nft.name}</h2>
+            <h2 className="mb-8">{nft.name}</h2>
             <div className="text-detail-dark dark:text-detail">
-              <p>{nft.description}</p>
-              <p className='mt-4 mb-1'>by {nft.artists?.name ? nft.artists.name : nft.artist}</p>
-              <p>in {nft.collections?.title ? nft.collections.title : nft.collection}</p>
+              {/* <p>{nft.description}</p> */}
+              <div className='mt-4 mb-1'>
+                by{` `}
+                <Link href={`/artists/${nft.artists.id}`}>
+                  <a className='link'>
+                    {nft.artists?.name ? nft.artists.name : nft.artist}
+                  </a>
+                </Link>
+              </div>
+              <div>
+                in{` `}
+                <Link href={`/collections/${nft.collections.id}`}>
+                  <a className='link'>
+                    {nft.collections?.title ? nft.collections.title : nft.collection}
+                  </a>
+                </Link>
+
+              </div>
               {nft.owner && nft.seller &&
                 <>
                   <p className="mt-4">Owner: {shortenAddress(nft.owner)}</p>
