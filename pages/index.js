@@ -26,7 +26,7 @@ const Home = ({ artists, collections, nfts }) => {
       <div className='flex flex-col items-center justify-center w-full px-[40px]'>
         <h1 className='mb-20'>Project Moonshire</h1>
 
-        {fetchedArtists.length > 0 &&
+        {fetchedArtists?.length > 0 &&
           <>
             <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Artists</h2>
             <div className='grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full'>
@@ -46,7 +46,7 @@ const Home = ({ artists, collections, nfts }) => {
           </>
         }
 
-        {fetchedCollections.length > 0 &&
+        {fetchedCollections?.length > 0 &&
           <>
             <h2 className='mt-24 border-b border-detail dark:border-detail-dark mb-8 self-start'>Moonshire Collections</h2>
 
@@ -80,7 +80,7 @@ const Home = ({ artists, collections, nfts }) => {
           </>
         }
 
-        {nfts.length > 0 &&
+        {nfts?.length > 0 &&
           <div className='mt-24'>
             <h2 className='border-b border-detail dark:border-detail-dark mb-8'>Featured NFTs</h2>
             <div className='grid grid-cols-2 md:grid-cols-8 gap-6'>
