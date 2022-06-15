@@ -65,17 +65,19 @@ const Nft = ({ nft }) => {
         <meta name='description' content={`${name} | NFT | Project Moonshire`} />
       </Head>
 
-      <div className='flex flex-col items-center px-[40px]'>
-        <h1 className='mx-auto border-b-2 border-detail dark:border-detail-dark'>{name}</h1>
-        <div key={id} className='flex flex-col md:flex-row items-start justify-between gap-8'>
+      <div className='flex flex-col items-center h-[calc(100vh-260px)] px-[40px]'>
+
+        <div key={id} className='flex flex-col md:flex-row items-center justify-between gap-[40px]'>
           <img src={image_url} alt='NFT Image' className='md:w-1/2' />
           <div className='w-full flex-grow'>
-            <h2>
-              <span className='text-sm pr-4'>by</span>
-              <Link href={`/artists/${artists.id}`}><a>{artists.name}</a></Link>
-            </h2>
-            <p className='my-4'>{description}</p>
+            <h1 className='mb-0'>{name}</h1>
+            <hr className='my-6' />
+            <p className='mb-4'>{description}</p>
             <div className='whitespace-nowrap flex flex-col gap-1'>
+              <p>
+                <span className='text-sm'>Artist:{` `}</span>
+                <Link href={`/artists/${artists.id}`}><a className='link'>{artists.name}</a></Link>
+              </p>
               <p>Created: {created_at?.slice(0, 10)}</p>
               {nft.owner && nft.seller &&
                 <>
@@ -83,9 +85,12 @@ const Nft = ({ nft }) => {
                   <p>Seller: {shortenAddress(nft.seller)}</p>
                 </>
               }
-              <a href={tokenURI} target='_blank' rel='noopener noreferrer nofollow link'>
-                {tokenURI.substring(0, 30)}&#8230;{tokenURI.slice(tokenURI.length - 4)}
-              </a>
+              <div>
+                <span>Metadata:{` `}</span>
+                <a href={tokenURI} target='_blank' rel='noopener noreferrer nofollow' className='link inline-block'>
+                  {tokenURI.substring(0, 30)}&#8230;{tokenURI.slice(tokenURI.length - 4)}
+                </a>
+              </div>
             </div>
             <p className='mt-8'>Price: {price} ETH</p>
 
@@ -97,11 +102,14 @@ const Nft = ({ nft }) => {
               </div>
               :
               sellerIsOwner ?
-                <Link href={`/profile`}>
-                  <a className='button button-detail mt-8'>
-                    View in Profile
-                  </a>
-                </Link>
+                <div className='flex items-center mt-8 gap-8'>
+                  <Link href={`/profile`}>
+                    <a className='button button-detail inline-block'>
+                      View in Profile
+                    </a>
+                  </Link>
+                  <span className='text-tiny inline-block'>You own this asset</span>
+                </div>
                 :
                 <button onClick={() => initiateBuy(nft)} className='button button-cta mt-8'>Buy Asset</button>
             }
