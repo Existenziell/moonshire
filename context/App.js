@@ -11,7 +11,6 @@ import detectEthereumProvider from '@metamask/detect-provider'
 import WalletConnectProvider from "@walletconnect/web3-provider"
 
 const AppContext = createContext()
-
 const useApp = () => useContext(AppContext)
 
 export const AppProvider = ({ children }) => {
