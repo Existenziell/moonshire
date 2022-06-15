@@ -115,7 +115,7 @@ const Collections = ({ collections }) => {
 
           {!fetchedCollections?.length &&
             <tr className='p-4 dark:text-brand'>
-              <td>
+              <td colSpan={9}>
                 No collections found.
                 You can add new collections <Link href='/collections/create/'><a className='font-bold link border-b border-lines-dark dark:border-lines border-dotted'>here</a></Link>.
               </td>

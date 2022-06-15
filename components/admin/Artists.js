@@ -154,7 +154,9 @@ const Artists = ({ artists }) => {
         <tbody>
 
           {!fetchedArtists?.length &&
-            <tr className='p-4 dark:text-brand'><td>No artists found.</td></tr>
+            <tr className='p-4 dark:text-brand'>
+              <td colSpan={9}>No artists found.</td>
+            </tr>
           }
 
           {fetchedArtists?.map((artist) => (

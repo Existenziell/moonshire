@@ -64,7 +64,7 @@ const Nfts = ({ nfts }) => {
 
           {!fetchedNfts?.length &&
             <tr className='p-4 dark:text-brand'>
-              <td>
+              <td colSpan={9}>
                 No NFTs found.
                 Please use the existing form <Link href='/nfts/create/'><a className='font-bold link border-b border-lines-dark dark:border-lines border-dotted'>here</a></Link> to add assets.
               </td>
