@@ -36,6 +36,11 @@ const Artists = ({ artists }) => {
 
   const addArtist = async (e) => {
     e.preventDefault()
+    if (!fileUrl) {
+      notify("Please choose a picture for the artist")
+      return
+    }
+
     const { data, error } = await supabase
       .from('artists')
       .insert([{

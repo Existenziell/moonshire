@@ -23,6 +23,11 @@ const CreateCollection = () => {
     e.preventDefault()
     setLoading(true)
 
+    if (!imageUrl) {
+      notify("Please choose an image for the collection")
+      return
+    }
+
     if (!signer || !address) {
       notify("Please connect your wallet to proceed")
       return
