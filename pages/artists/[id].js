@@ -38,7 +38,7 @@ const Artist = ({ artist, artistNfts }) => {
                     <div className='flex flex-col gap-4 items-start justify-center'>
                       <img src={image_url} alt='NFT Image' className='max-w-[200px] aspect-square' />
                       <div className='w-full'>
-                        <h2 className='whitespace-nowrap mt-0'>{name}</h2>
+                        <h2 className='mt-0'>{name}</h2>
                         <p className='text-tiny'>by {artists.name}</p>
                         <p className='mt-4'>{price} ETH</p>
                       </div>
@@ -55,7 +55,7 @@ const Artist = ({ artist, artistNfts }) => {
   )
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const id = context.params.id
 
   let { data: nfts } = await supabase.from('nfts').select(`*, artists(*)`).order('id', { ascending: true })
@@ -67,18 +67,6 @@ export async function getStaticProps(context) {
   return {
     props: { artist, artistNfts },
   }
-}
-
-export async function getStaticPaths() {
-  let { data } = await supabase
-    .from('artists')
-    .select(`*`)
-
-  const paths = data.map(d => ({
-    params: { id: d.id.toString() },
-  }))
-
-  return { paths, fallback: false }
 }
 
 export default Artist

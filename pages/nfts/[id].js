@@ -113,7 +113,7 @@ const Nft = ({ nft }) => {
   )
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const id = context.params.id
 
   let { data: nft } = await supabase
@@ -125,18 +125,6 @@ export async function getStaticProps(context) {
   return {
     props: { nft },
   }
-}
-
-export async function getStaticPaths() {
-  let { data } = await supabase
-    .from('nfts')
-    .select(`*`)
-
-  const paths = data.map(d => ({
-    params: { id: d.id.toString() },
-  }))
-
-  return { paths, fallback: false }
 }
 
 export default Nft

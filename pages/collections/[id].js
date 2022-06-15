@@ -35,7 +35,7 @@ const Collection = ({ collection, collectionNfts }) => {
         </div>
 
         <div className="snap-start snap-always w-full h-[calc(100vh-140px)] px-[40px] flex items-start justify-between">
-          <div>
+          <div className='w-full'>
             <div className='flex justify-between w-full relative'>
               <div className='grid grid-rows-2 items-center'>
                 <span>Name</span>
@@ -98,7 +98,7 @@ const Collection = ({ collection, collectionNfts }) => {
                 </tr>
               </thead>
               <tbody>
-                {collectionNfts.map(nft => (
+                {collectionNfts.map((nft, idx) => (
                   <tr key={nft.id + nft.name} className='relative mt-44'>
                     <td className='pt-6 px-0'>
                       <Link href={`/nfts/${nft.id}`}>
@@ -113,7 +113,7 @@ const Collection = ({ collection, collectionNfts }) => {
                     </td>
                     <td className='whitespace-nowrap pt-6'><h1 className='my-0'>{nft.name}</h1></td>
                     <td className='whitespace-nowrap pt-6'>{nft.artists?.name}</td>
-                    <td className='whitespace-nowrap pt-6'>{nft.id}</td>
+                    <td className='whitespace-nowrap pt-6'>{idx + 1}/{numberOfNfts}</td>
                     <td className='whitespace-nowrap pt-6'>{nft.format ? nft.format : `Digital`} </td>
                     <td className='whitespace-nowrap pt-6'>{nft.price} ETH</td>
                     <td>
@@ -159,7 +159,7 @@ const Collection = ({ collection, collectionNfts }) => {
   )
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const id = context.params.id
 
   let { data: collection } = await supabase.from('collections').select(`*`).eq('id', id).single()
@@ -207,18 +207,6 @@ export async function getStaticProps(context) {
   return {
     props: { collection, collectionNfts },
   }
-}
-
-export async function getStaticPaths() {
-  let { data } = await supabase
-    .from('collections')
-    .select(`*`)
-
-  const paths = data.map(d => ({
-    params: { id: d.id.toString() },
-  }))
-
-  return { paths, fallback: false }
 }
 
 export default Collection
