@@ -35,7 +35,7 @@ const Nav = () => {
                         <Link href={u.href}>
                             <a
                                 href={u.href}
-                                className={`${router.pathname === u.href ? 'active-nav' : ''} hover:text-cta transition-all uppercase font-serif`}>
+                                className={`${router.pathname.startsWith(u.href) ? 'active-nav' : ''} hover:text-cta transition-all uppercase font-serif`}>
                                 {u.name}
                             </a>
                         </Link>
