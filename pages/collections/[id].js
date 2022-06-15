@@ -36,33 +36,29 @@ const Collection = ({ collection, collectionNfts }) => {
 
         <div className="snap-start snap-always w-full h-[calc(100vh-140px)] px-[40px] flex items-start justify-between">
           <div className='w-full'>
-            <div className='flex justify-between w-full relative'>
-              <div className='grid grid-rows-2 items-center'>
-                <span>Name</span>
-                <h1 className='my-0 py-0 whitespace-nowrap'>{title}</h1>
-              </div>
-              <div className='grid grid-rows-2 items-center '>
-                <span>NFTs</span>
-                <p>{numberOfNfts}</p>
-              </div>
-              <div className='grid grid-rows-2 items-center '>
-                <span className='whitespace-nowrap'>Price &darr;</span>
-                <p className='whitespace-nowrap'>{floorPrice} ETH</p>
-              </div>
-              <div className='grid grid-rows-2 items-center '>
-                <span className='whitespace-nowrap'>Price	&uarr;</span>
-                <p className='whitespace-nowrap'>{highestPrice} ETH</p>
-              </div>
-              <div className='grid grid-rows-2 items-center '>
-                <span>Year</span>
-                <p>{year}</p>
-              </div>
-              <div className='grid grid-rows-2 items-center '>
-                <span>Artists</span>
-                <p className='whitespace-nowrap'>{artists ? artists.join(', ') : `None`}</p>
-              </div>
-              <div className='absolute top-14 w-full h-[1px] bg-lines dark:bg-lines-dark'></div>
-            </div>
+
+            <table className='w-full'>
+              <thead className='text-left mb-8'>
+                <tr className='font-bold text-xs border-b border-lines dark:border-lines-dark whitespace-nowrap'>
+                  <th className='pb-6'>Name</th>
+                  <th className='pb-6 pl-8'>NFTs</th>
+                  <th className='pb-6 pl-8'>Price &darr;</th>
+                  <th className='pb-6 pl-8'>Price &uarr;</th>
+                  <th className='pb-6 pl-8'>Year</th>
+                  <th className='pb-6'>Artists</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className='whitespace-nowrap align-middle'>
+                  <td className='whitespace-normal text-[30px] p-0'>{title}</td>
+                  <td className='pl-8 py-0'>{numberOfNfts}</td>
+                  <td className='pl-8 py-0'>{floorPrice} ETH</td>
+                  <td className='pl-8 py-0'>{highestPrice} ETH</td>
+                  <td className='pl-8 py-0'>{year}</td>
+                  <td className='py-0'>{artists ? artists.join(', ') : `None`}</td>
+                </tr>
+              </tbody>
+            </table>
 
             <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-[40px] mt-20'>
               <img src={public_url} alt='Cover Image' className='md:w-1/2 md:max-w-md' />
@@ -87,19 +83,19 @@ const Collection = ({ collection, collectionNfts }) => {
           {collectionNfts.length ?
             <table className='w-full'>
               <thead className='text-left mb-44'>
-                <tr className='text-tiny border-b border-lines dark:border-lines-dark py-8 my-8'>
+                <tr className='text-tiny border-b pb-10 border-lines dark:border-lines-dark py-8 my-8'>
                   <th className='pb-6'>Media</th>
-                  <th className='pb-6'>Name</th>
-                  <th className='pb-6'>Artist</th>
-                  <th className='pb-6'>Edition</th>
-                  <th className='pb-6'>Format</th>
-                  <th className='pb-6'>Price</th>
-                  <th className='pb-6'></th>
+                  <th className='pb-6 pl-8'>Name</th>
+                  <th className='pb-6 pl-8'>Artist</th>
+                  <th className='pb-6 pl-8'>Edition</th>
+                  <th className='pb-6 pl-8'>Format</th>
+                  <th className='pb-6 pl-8'>Price</th>
+                  <th className='pb-6 pl-8'></th>
                 </tr>
               </thead>
               <tbody>
                 {collectionNfts.map((nft, idx) => (
-                  <tr key={nft.id + nft.name} className='relative mt-44'>
+                  <tr key={nft.id + nft.name} className='relative mt-44 whitespace-nowrap'>
                     <td className='pt-6 px-0'>
                       <Link href={`/nfts/${nft.id}`}>
                         <a>
@@ -111,11 +107,11 @@ const Collection = ({ collection, collectionNfts }) => {
                         </a>
                       </Link>
                     </td>
-                    <td className='whitespace-nowrap pt-6'><h1 className='my-0'>{nft.name}</h1></td>
-                    <td className='whitespace-nowrap pt-6'>{nft.artists?.name}</td>
-                    <td className='whitespace-nowrap pt-6'>{idx + 1}/{numberOfNfts}</td>
-                    <td className='whitespace-nowrap pt-6'>{nft.format ? nft.format : `Digital`} </td>
-                    <td className='whitespace-nowrap pt-6'>{nft.price} ETH</td>
+                    <td className='whitespace-normal pt-6 pl-8'><h1 className='my-0'>{nft.name}</h1></td>
+                    <td className='pt-6 pl-8'>{nft.artists?.name}</td>
+                    <td className='pt-6 pl-8'>{idx + 1}/{numberOfNfts}</td>
+                    <td className='pt-6 pl-8'>{nft.format ? nft.format : `Digital`} </td>
+                    <td className='pt-6 pl-8'>{nft.price} ETH</td>
                     <td>
                       <div className='flex items-end justify-end'>
                         <Link href={`/nfts/${nft.id}`}>
