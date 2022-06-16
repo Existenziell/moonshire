@@ -60,7 +60,15 @@ export async function getServerSideProps(context) {
 
   let { data: nfts } = await supabase.from('nfts').select(`*, artists(*)`).order('id', { ascending: true })
   let { data: artist } = await supabase.from('artists').select(`*`).eq('id', id).single()
-
+  if (!artist) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/artists",
+      },
+      props: {}
+    }
+  }
   const artistNfts = nfts.filter((n => n.artist === artist.id))
   artist.numberOfNfts = artistNfts.length
 

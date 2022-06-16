@@ -161,6 +161,16 @@ export async function getServerSideProps(context) {
   let { data: collection } = await supabase.from('collections').select(`*`).eq('id', id).single()
   let { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('id', { ascending: true })
 
+  if (!collection) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/collections",
+      },
+      props: {}
+    }
+  }
+
   // Set public IPFS url for collection cover image
   if (collection.image_url) {
     const url = await getPublicUrl('collections', collection.image_url)

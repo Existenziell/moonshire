@@ -130,6 +130,16 @@ export async function getServerSideProps(context) {
     .eq('id', id)
     .single()
 
+  if (!nft) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/nfts",
+      },
+      props: {}
+    }
+  }
+
   return {
     props: { nft },
   }
