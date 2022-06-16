@@ -5,16 +5,17 @@ import Link from 'next/link'
 import uploadFileToIpfs from '../../lib/uploadFileToIpfs'
 import FilePicker from '../market/FilePicker'
 import useApp from "../../context/App"
+import AddArtist from './AddArtist'
+import { PlusIcon, XIcon } from '@heroicons/react/solid'
 
 const Artists = ({ artists }) => {
   const { notify } = useApp()
 
   const [fetchedArtists, setFetchedArtists] = useState()
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState(null)
   const [showDelete, setShowDelete] = useState(false)
   const [ArtistToDelete, setArtistToDelete] = useState()
-  const [fileUrl, setFileUrl] = useState(null)
-
+  const [showAdd, setShowAdd] = useState(false)
   useEffect(() => {
     setFetchedArtists(artists)
   }, [artists])
@@ -22,43 +23,6 @@ const Artists = ({ artists }) => {
   const setData = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, ...{ [name]: value } })
-  }
-
-  const handleUpload = async (e) => {
-    const url = await uploadFileToIpfs(e)
-    setFileUrl(url)
-  }
-
-  const toggleNewArtistForm = () => {
-    const panel = document.getElementById('addArtistForm')
-    panel.classList.toggle('hidden')
-  }
-
-  const addArtist = async (e) => {
-    e.preventDefault()
-    if (!fileUrl) {
-      notify("Please choose a picture for the artist")
-      return
-    }
-
-    const { data, error } = await supabase
-      .from('artists')
-      .insert([{
-        name: formData.name,
-        headline: formData.headline,
-        description: formData.description,
-        origin: formData.origin,
-        avatar_url: fileUrl,
-      }])
-
-    if (!error) {
-      notify("Artist added successfully!")
-      const panel = document.getElementById('addArtistForm')
-      panel.classList.toggle('hidden')
-      setFormData({})
-      const newEntry = data[0]
-      setFetchedArtists([...fetchedArtists, newEntry])
-    }
   }
 
   const openEdit = (id) => {
@@ -235,26 +199,22 @@ const Artists = ({ artists }) => {
         </tbody>
       </table>
 
+
       {/* Add artist */}
-      <button onClick={toggleNewArtistForm} className='my-4 link flex items-center gap-1 text-xs' aria-label='Open Add Artist Form'>
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline-block" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
-        </svg>
-        Add artist
+      <button onClick={() => setShowAdd(!showAdd)} className='my-4 link flex items-center gap-1 text-xs' aria-label='Open Add Artist Form'>
+        {showAdd ?
+          <>
+            <XIcon className='w-4' />Close
+          </>
+          :
+          <>
+            <PlusIcon className='w-4' />Add artist
+          </>
+        }
       </button>
-
-      <form onSubmit={addArtist} className='shadow-md p-4 max-w-max hidden' id='addArtistForm' >
-        <FilePicker onChange={(e) => handleUpload(e)} size={200} url={fileUrl} />
-
-        <input type='text' name='name' id='name' placeholder='Name' onChange={setData} required className='block mb-2 w-full mt-8' />
-        <input type='text' name='headline' id='headline' placeholder='Headline' required onChange={setData} className='block mb-2 w-full' />
-        <input type='text' name='description' id='description' placeholder='Description' required onChange={setData} className='block mb-2 w-full' />
-        <input type='text' name='origin' id='origin' placeholder='Origin' required onChange={setData} className='block mb-2 w-full' />
-        <div className='flex items-center gap-2 mt-4'>
-          <input type='submit' className='button button-admin' value='Save' />
-          <button onClick={toggleNewArtistForm} className='button button-admin'>Cancel</button>
-        </div>
-      </form>
+      {showAdd &&
+        <AddArtist showAdd={showAdd} setShowAdd={setShowAdd} fetchedArtists={fetchedArtists} setFetchedArtists={setFetchedArtists} />
+      }
 
       {/* Delete artist */}
       {showDelete &&
