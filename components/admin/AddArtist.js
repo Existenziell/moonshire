@@ -54,7 +54,7 @@ const AddArtist = ({ showAdd, setShowAdd, fetchedArtists, setFetchedArtists }) =
       <input type='text' name='headline' id='headline' placeholder='Headline' required onChange={setData} className='block mb-2 w-full' />
       <input type='text' name='description' id='description' placeholder='Description' required onChange={setData} className='block mb-2 w-full' />
       <input type='text' name='origin' id='origin' placeholder='Origin' required onChange={setData} className='block mb-2 w-full' />
-      <div className='flex items-center gap-2 mt-4'>
+      <div className='flex items-center gap-2 mt-8'>
         <input type='submit' className='button button-admin' value='Save' />
         <button onClick={() => setShowAdd(!showAdd)} className='button button-admin'>Cancel</button>
       </div>
