@@ -11,12 +11,14 @@ const CreateCollection = () => {
   const [imageUrl, setImageUrl] = useState(null)
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
+  const [formIsReady, setFormIsReady] = useState(false)
 
   const router = useRouter()
 
   const setData = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, ...{ [name]: value } })
+    if (imageUrl && formData.title && formData.headline && formData.description && formData.year) setFormIsReady(true)
   }
 
   const saveCollection = async (e) => {
@@ -117,7 +119,7 @@ const CreateCollection = () => {
           />
         </label>
 
-        <input type='submit' className='button button-cta mt-12' value='Create' disabled={loading} />
+        <input type='submit' className='button button-cta mt-12' value='Create' disabled={!formIsReady || loading} />
       </form>
     </>
   )

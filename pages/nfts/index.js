@@ -17,7 +17,7 @@ const Nfts = ({ nfts }) => {
           <MapNfts nfts={nfts} />
           :
           <div>
-            <h1 className="px-20 mt-10 text-3xl">No items listed in marketplace</h1>
+            <h1 className="text-3xl">No items listed in marketplace</h1>
             <Link href='/nfts/create'><a className='button button-detail mx-auto'>Create Asset</a></Link>
           </div>
         }

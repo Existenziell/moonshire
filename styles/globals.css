@@ -90,11 +90,11 @@ hr {
 }
 
 .button-detail {
-  @apply text-black bg-detail dark:bg-detail-dark dark:text-detail hover:text-cta transition-all duration-100; 
+  @apply text-black bg-detail dark:bg-detail-dark dark:text-detail hover:text-cta dark:hover:text-cta transition-all duration-100; 
 }
 
 .button:disabled {
-  @apply bg-slate-500 text-white shadow-none hover:cursor-not-allowed;
+  @apply text-black bg-detail dark:bg-detail-dark dark:text-detail hover:cursor-not-allowed;
 }
 
 .button-connect {

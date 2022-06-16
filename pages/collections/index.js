@@ -51,9 +51,10 @@ const Collections = ({ collections }) => {
           })}
         </div>
         :
-        <div>
-          <h1 className="px-20 mt-10 text-3xl mx-auto w-max">No collections found</h1>
-          <Link href='/collections/create'><a className='button button-detail mx-auto'>Create Collection</a></Link>
+        <div className='flex flex-col items-center justify-center w-full'>
+          <h1 className="mb-2 text-3xl">No collections found</h1>
+          <p className='text-tiny mb-8'>If you don&apos;t see your collection here, make sure it has active NFTs attributed to it.</p>
+          <Link href='/collections/create'><a className='button button-detail'>Create Collection</a></Link>
         </div>
       }
     </>

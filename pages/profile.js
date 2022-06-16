@@ -9,6 +9,7 @@ import AddToHomeScreen from '../components/AddToHomeScreen'
 import MyNfts from '../components/market/MyNfts'
 import MyListedNfts from '../components/market/MyListedNfts'
 import Link from 'next/link'
+import getUserCollections from '../lib/supabase/getUserCollections'
 
 const Profile = () => {
   const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify } = useApp()
@@ -22,14 +23,19 @@ const Profile = () => {
 
   useEffect(() => {
     if (currentUser) {
-      const { username, avatar_url, is_premium, created_at, collections } = currentUser
+      const { id, username, avatar_url, is_premium, created_at } = currentUser
       setUsername(username)
       setAvatarUrl(avatar_url)
       setCreatedAt(created_at)
       setIsPremium(is_premium)
-      setCollections(collections)
+      fetchUserCollections(id)
     }
   }, [currentUser])
+
+  const fetchUserCollections = async (id) => {
+    let collections = await getUserCollections(id)
+    setCollections(collections)
+  }
 
   const setUser = (e) => {
     setUsername(e.target.value)
@@ -138,7 +144,7 @@ const Profile = () => {
           <h2 className='mt-12 mb-4 py-2 border-b-2 border-detail dark:border-detail-dark'>
             Collections
           </h2>
-          {collections?.length ?
+          {collections ?
             <div className='flex items-center justify-evenly flex-wrap gap-4'>
               {collections.map(collection => (
                 <Link href={`/collections/${collection.id}`} key={collection.id}>

@@ -47,7 +47,7 @@ const Artists = ({ artists }) => {
         </div>
         :
         <div>
-          <h1 className="px-20 mt-10 text-3xl mx-auto w-max">No artists found</h1>
+          <h1 className="text-3xl mx-auto w-max">No artists found</h1>
         </div>
       }
     </>
