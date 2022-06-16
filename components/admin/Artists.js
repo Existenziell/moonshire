@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
 import Link from 'next/link'
-import uploadFileToIpfs from '../../lib/uploadFileToIpfs'
-import FilePicker from '../market/FilePicker'
 import useApp from "../../context/App"
 import AddArtist from './AddArtist'
 import { PlusIcon, XIcon } from '@heroicons/react/solid'

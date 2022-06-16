@@ -1,6 +1,5 @@
 import { supabase } from '../../lib/supabase'
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import { useState } from 'react'
 import FilePicker from '../market/FilePicker'
 import useApp from "../../context/App"
 import uploadFileToIpfs from '../../lib/uploadFileToIpfs'
