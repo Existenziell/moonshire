@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
 import { shortenAddress } from '../../lib/shortenAddress'
+import { PlusIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import useApp from "../../context/App"
 
@@ -66,7 +67,11 @@ const Nfts = ({ nfts }) => {
             <tr className='p-4 dark:text-brand'>
               <td colSpan={9}>
                 No NFTs found.
-                Please use the existing form <Link href='/nfts/create/'><a className='font-bold link border-b border-lines-dark dark:border-lines border-dotted'>here</a></Link> to add assets.
+                <Link href='/nfts/create/'>
+                  <a className='link flex items-center gap-1 text-xs mt-6'>
+                    <PlusIcon className='w-4' />Add NFT
+                  </a>
+                </Link>
               </td>
             </tr>
           }
@@ -108,7 +113,11 @@ const Nfts = ({ nfts }) => {
       </table>
       {fetchedNfts.length > 0 &&
         <div className='mt-8'>
-          Please use the existing form <Link href='/collections/create/'><a className='font-bold link border-b border-lines-dark dark:border-lines border-dotted'>here</a></Link> to add assets.
+          <Link href='/nfts/create/'>
+            <a className='link flex items-center gap-1 text-xs'>
+              <PlusIcon className='w-4' />Add NFT
+            </a>
+          </Link>
         </div>
       }
 

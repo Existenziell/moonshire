@@ -9,7 +9,8 @@ email: bauer.christof@gmail.com
 :root {
   --color-brand: #DBDBDB;
   --color-brand-dark: #242424;
-  --color-cta: #FF0040;
+  /* --color-cta: #FF0040; */
+  --color-cta: #D6A269;
   --color-detail: #CFCFCF;
   --color-detail-dark: #323232;
   --color-lines: #CCCCCC;
@@ -81,7 +82,7 @@ hr {
 	========================================================================== */
 
 .button {
-  @apply w-max h-10 px-6 rounded-full shadow text-tiny flex items-center justify-center
+  @apply w-max h-10 px-6 rounded-full text-tiny flex items-center justify-center
     hover:cursor-pointer transition-all duration-100 uppercase font-serif;
 }
 
@@ -99,11 +100,6 @@ hr {
 
 .button-connect {
   @apply h-10 w-max px-5 rounded-full flex items-center justify-center bg-cta text-white hover:cursor-pointer transition-all;
-  box-shadow: 10px 10px 40px rgba(255, 0, 64, 0.3);
-}
-
-.button-connect:hover {
-  box-shadow: 10px 10px 40px rgba(255, 0, 64, 0.3);
 }
 
 

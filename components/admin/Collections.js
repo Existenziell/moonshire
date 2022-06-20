@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
 import Link from 'next/link'
 import useApp from "../../context/App"
+import { PlusIcon } from '@heroicons/react/solid'
 
 const Collections = ({ collections }) => {
   const { notify } = useApp()
@@ -117,7 +118,11 @@ const Collections = ({ collections }) => {
             <tr className='p-4 dark:text-brand'>
               <td colSpan={9}>
                 No collections found.
-                You can add new collections <Link href='/collections/create/'><a className='font-bold link border-b border-lines-dark dark:border-lines border-dotted'>here</a></Link>.
+                <Link href='/collections/create/'>
+                  <a className='link flex items-center gap-1 text-xs mt-6'>
+                    <PlusIcon className='w-4' />Add Collection
+                  </a>
+                </Link>
               </td>
             </tr>
           }
@@ -197,7 +202,11 @@ const Collections = ({ collections }) => {
       </table>
       {fetchedCollections.length > 0 &&
         <div className='mt-8'>
-          You can add new collections <Link href='/collections/create/'><a className='font-bold link border-b border-lines-dark dark:border-lines border-dotted'>here</a></Link>.
+          <Link href='/collections/create/'>
+            <a className='link flex items-center gap-1 text-xs'>
+              <PlusIcon className='w-4' />Add Collection
+            </a>
+          </Link>
         </div>
       }
 

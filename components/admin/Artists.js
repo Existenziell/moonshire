@@ -201,13 +201,9 @@ const Artists = ({ artists }) => {
       {/* Add artist */}
       <button onClick={() => setShowAdd(!showAdd)} className='my-4 link flex items-center gap-1 text-xs' aria-label='Open Add Artist Form'>
         {showAdd ?
-          <>
-            <XIcon className='w-4' />Close
-          </>
+          <><XIcon className='w-4' />Close</>
           :
-          <>
-            <PlusIcon className='w-4' />Add artist
-          </>
+          <><PlusIcon className='w-4' />Add artist</>
         }
       </button>
       {showAdd &&
