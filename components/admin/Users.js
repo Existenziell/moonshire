@@ -81,8 +81,8 @@ const Users = ({ users, roles }) => {
     }
   }
 
-  const toggleDeleteModal = (id) => {
-    setUserToDelete(id)
+  const toggleDeleteModal = (user) => {
+    setUserToDelete(user)
     setShowDelete(true)
   }
 
@@ -90,12 +90,12 @@ const Users = ({ users, roles }) => {
     const { error } = await supabase
       .from('users')
       .delete()
-      .eq('id', userToDelete)
+      .eq('id', userToDelete.id)
 
     if (!error) {
       notify("User deleted successfully!")
       setShowDelete(false)
-      const filteredUsers = fetchedUsers.filter(c => { return c.id !== userToDelete })
+      const filteredUsers = fetchedUsers.filter(c => { return c.id !== userToDelete.id })
       setFetchedUsers(filteredUsers)
     } else {
       notify("Error...")
@@ -138,7 +138,7 @@ const Users = ({ users, roles }) => {
 
               <td>
                 {user.signed_url ?
-                  <img src={user.signed_url} alt='User Image' className='w-12' />
+                  <img src={user.signed_url} alt='User Image' className='w-12 shadow' />
                   :
                   "n/a"
                 }
@@ -217,7 +217,7 @@ const Users = ({ users, roles }) => {
               </td>
 
               <td className='text-center align-middle'>
-                <button onClick={() => toggleDeleteModal(user.id)} aria-label='Toggle Delete Modal' className='button-admin'>
+                <button onClick={() => toggleDeleteModal(user)} aria-label='Toggle Delete Modal' className='button-admin'>
                   Delete
                 </button>
               </td>
@@ -238,7 +238,7 @@ const Users = ({ users, roles }) => {
               >
                 &times;
               </button>
-              <p className='text-sm'>Deleting user with ID {userToDelete}</p>
+              <p className='text-sm mb-4'>Deleting user {userToDelete.username}</p>
               <h1>Are you sure?</h1>
               <div className='flex items-center gap-4'>
                 <button onClick={() => setShowDelete(false)} className='button button-detail' aria-label='Cancel'>Cancel</button>

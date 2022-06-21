@@ -11,18 +11,18 @@ const Artists = ({ artists }) => {
       </Head>
 
       {artists.length ?
-        <div className='flex flex-col items-center justify-center px-[40px]'>
-          <div className='flex flex-col items-start justify-center gap-20 text-sm'>
+        <div className='flex flex-col items-center justify-center px-[40px] h-[calc(100vh-260px)]'>
+          <div className='flex flex-col items-start justify-center gap-20 w-full'>
 
             {artists.map(artist => {
               const { id, name, headline, description, origin, avatar_url, created_at, numberOfNfts } = artist
 
               return (
-                <div key={id} className='w-full flex flex-col md:flex-row items-start justify-center gap-4 md:gap-[40px] '>
+                <div key={id} className='w-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-[40px] '>
 
                   <Link href={`/artists/${id}`}>
-                    <a>
-                      <img src={avatar_url} alt='Artist Image' className='aspect-square bg-cover max-w-md' />
+                    <a className='w-[calc(50vw-150px)]'>
+                      <img src={avatar_url} alt='Artist Image' className='aspect-square bg-cover shadow-2xl' />
                     </a>
                   </Link>
                   <div className='max-w-md flex-grow'>
@@ -31,11 +31,11 @@ const Artists = ({ artists }) => {
                     <hr className='my-8' />
                     <p className='mt-4'>{description}</p>
                     <p className='mt-4'>Origin: {origin}</p>
-                    <p>Number of NFTs: {numberOfNfts}</p>
+                    <p>{numberOfNfts} artworks by <span className='text-white'>{name}</span></p>
                     <p className='mt-8 text-xs'>On Moonshire since: {created_at.slice(0, 10)}</p>
                     <Link href={`/artists/${id}`}>
-                      <a className='button button-detail mt-8 mx-auto md:mr-auto md:ml-0 uppercase'>
-                        View Artist
+                      <a className='button button-cta mt-8 mx-auto md:mr-auto md:ml-0 uppercase'>
+                        View Artworks
                       </a>
                     </Link>
                   </div>

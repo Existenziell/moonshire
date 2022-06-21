@@ -1,8 +1,10 @@
 import { supabase } from '../../lib/supabase'
 import Head from 'next/head'
-import Link from 'next/link'
 
+/* eslint-disable no-unused-vars */
 const Artist = ({ artist, artistNfts }) => {
+  /* eslint-enable no-unused-vars */
+
   const { id, name, headline, description, origin, avatar_url, created_at, numberOfNfts } = artist
 
   return (
@@ -12,12 +14,12 @@ const Artist = ({ artist, artistNfts }) => {
         <meta name='description' content={`${name} | Artist | Project Moonshire`} />
       </Head>
 
-      <div className='flex flex-col items-center px-[40px]'>
+      <div className='flex flex-col items-center px-[40px] h-[calc(100vh-260px)]'>
 
-        <h1 className='mx-auto'>{name}</h1>
-        <div key={id} className='flex flex-col md:flex-row items-start justify-center gap-10'>
-          <img src={avatar_url} alt='Artist Image' className='md:w-1/2' />
+        <div key={id} className='flex flex-col md:flex-row items-center justify-center gap-10'>
+          <img src={avatar_url} alt='Artist Image' className='md:w-[calc(50vw-150px)] shadow-2xl' />
           <div>
+            <h1 className='mx-auto'>{name}</h1>
             <p className='mt-4 text-xl'>{headline}</p>
             <hr className='my-8' />
             <p className='mt-4'>{description}</p>
@@ -27,7 +29,7 @@ const Artist = ({ artist, artistNfts }) => {
           </div>
         </div>
 
-        <h2 className='mt-28 mb-8 self-start text-3xl'>NFTs made by {name}:</h2>
+        {/* <h2 className='mt-28 mb-8 self-start text-3xl'>NFTs made by {name}:</h2>
         <div className='flex flex-wrap items-center gap-4 w-full'>
           {artistNfts.map(nft => {
             const { id, name, price, artists, image_url } = nft
@@ -48,8 +50,7 @@ const Artist = ({ artist, artistNfts }) => {
               </Link>
             )
           })}
-
-        </div>
+        </div> */}
       </div>
     </>
   )

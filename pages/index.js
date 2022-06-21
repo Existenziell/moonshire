@@ -26,29 +26,9 @@ const Home = ({ artists, collections, nfts }) => {
       <div className='flex flex-col items-center justify-center w-full px-[40px]'>
         <h1 className='mb-20'>Project Moonshire</h1>
 
-        {fetchedArtists?.length > 0 &&
-          <>
-            <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Artists</h2>
-            <div className='grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full'>
-              {fetchedArtists.map(artist => {
-                const { id, avatar_url } = artist
-                return (
-                  <Link href={`/artists/${id}`} key={id} >
-                    <a className='flex max-w-sm shadow-md hover:cursor-pointer relative'>
-                      {avatar_url &&
-                        <img src={avatar_url} alt='Artist Image' className='rounded' />
-                      }
-                    </a>
-                  </Link>
-                )
-              })}
-            </div>
-          </>
-        }
-
         {fetchedCollections?.length > 0 &&
           <>
-            <h2 className='mt-24 border-b border-detail dark:border-detail-dark mb-8 self-start'>Moonshire Collections</h2>
+            <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Collections</h2>
 
             {fetchedCollections.map(collection => {
               const { id, title, headline, description, image_url } = collection
@@ -58,7 +38,7 @@ const Home = ({ artists, collections, nfts }) => {
                   <div>
                     <Link href={`/collections/${id}`}>
                       <a>
-                        <img src={image_url} alt='Cover Image' className='aspect-square bg-cover max-w-md' />
+                        <img src={image_url} alt='Cover Image' className='aspect-square bg-cover max-w-md rounded-sm shadow-2xl' />
                       </a>
                     </Link>
                   </div>
@@ -71,12 +51,32 @@ const Home = ({ artists, collections, nfts }) => {
                       <p>{description}</p>
                     </div>
                     <Link href={`/collections/${id}`}>
-                      <a className='button button-detail mt-6'>View Collection</a>
+                      <a className='button button-cta mt-6'>View Collection</a>
                     </Link>
                   </div>
                 </div>
               )
             })}
+          </>
+        }
+
+        {fetchedArtists?.length > 0 &&
+          <>
+            <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Artists</h2>
+            <div className='grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full'>
+              {fetchedArtists.map(artist => {
+                const { id, avatar_url } = artist
+                return (
+                  <Link href={`/artists/${id}`} key={id} >
+                    <a className='flex max-w-sm hover:cursor-pointer relative'>
+                      {avatar_url &&
+                        <img src={avatar_url} alt='Artist Image' className='rounded shadow-2xl' />
+                      }
+                    </a>
+                  </Link>
+                )
+              })}
+            </div>
           </>
         }
 

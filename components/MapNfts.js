@@ -4,27 +4,28 @@ import { shortenAddress } from '../lib/shortenAddress'
 const MapNfts = ({ nfts }) => {
 
   return (
-    <div className="flex flex-wrap justify-evenly gap-8">
+    <div className="flex justify-evenly gap-40 mx-16">
       {nfts.map((nft, i) => (
-        <div key={i} className="flex flex-col basis-0 justify-between shadow-md rounded">
+        <div key={i} className="flex flex-col justify-between w-min">
 
           <Link href={`/nfts/${nft.id}`}>
-            <a className='w-full rounded-t'>
+            <a className="">
               <img
                 src={nft.image_url ? nft.image_url : nft.image}
                 alt='NFT Image'
-                className='w-full aspect-square object-cover rounded-t min-w-[300px]' />
+                className='w-full aspect-square object-cover min-w-[300px] shadow-2xl mb-6' />
             </a>
           </Link>
 
-          <div className="p-4 bg-detail dark:bg-detail-dark flex flex-col justify-between h-full">
-            <h2 className="mb-8">{nft.name}</h2>
+          <div className="flex flex-col justify-between h-full">
+            <h2 className="mb-6">{nft.name}</h2>
+            <hr />
             <div className="text-detail-dark dark:text-detail">
               {/* <p>{nft.description}</p> */}
               <div className='mt-4 mb-1'>
-                by{` `}
+                Created by{` `}
                 <Link href={`/artists/${nft.artists.id}`}>
-                  <a className='link'>
+                  <a className='link text-white dark:text-cta'>
                     {nft.artists?.name ? nft.artists.name : nft.artist}
                   </a>
                 </Link>
@@ -45,14 +46,15 @@ const MapNfts = ({ nfts }) => {
                 </>
               }
             </div>
-            <p className="text-2xl mt-6">{nft.price} ETH</p>
+            <div className="flex justify-between items-end">
+              <h1 className="mt-4 mb-0">{nft.price} ETH</h1>
+              <Link href={`/nfts/${nft.id}`}>
+                <a className='button button-cta uppercase'>
+                  View
+                </a>
+              </Link>
+            </div>
           </div>
-
-          <Link href={`/nfts/${nft.id}`}>
-            <a className='button button-detail my-4 mx-auto py-4 uppercase'>
-              View
-            </a>
-          </Link>
         </div>
       ))}
     </div>

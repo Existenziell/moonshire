@@ -73,8 +73,8 @@ const Collections = ({ collections }) => {
     }
   }
 
-  const toggleDeleteModal = (id) => {
-    setCollectionToDelete(id)
+  const toggleDeleteModal = (collection) => {
+    setCollectionToDelete(collection)
     setShowDelete(true)
   }
 
@@ -82,12 +82,12 @@ const Collections = ({ collections }) => {
     const { error } = await supabase
       .from('collections')
       .delete()
-      .eq('id', collectionToDelete)
+      .eq('id', collectionToDelete.id)
 
     if (!error) {
       notify("Collection deleted successfully!")
       setShowDelete(false)
-      const filteredCollections = fetchedCollections.filter(c => { return c.id !== collectionToDelete })
+      const filteredCollections = fetchedCollections.filter(c => { return c.id !== collectionToDelete.id })
       setFetchedCollections(filteredCollections)
     }
   }
@@ -133,7 +133,7 @@ const Collections = ({ collections }) => {
                 <Link href={`/collections/${collection.id}`}>
                   <a>
                     {collection.public_url ?
-                      <img src={collection.public_url} alt='Collection Image' className='w-12' />
+                      <img src={collection.public_url} alt='Collection Image' className='w-12 shadow' />
                       :
                       "n/a"
                     }
@@ -192,7 +192,7 @@ const Collections = ({ collections }) => {
               </td>
 
               <td className='text-center align-middle'>
-                <button onClick={() => toggleDeleteModal(collection.id)} aria-label='Toggle Delete Modal' className='button-admin'>
+                <button onClick={() => toggleDeleteModal(collection)} aria-label='Toggle Delete Modal' className='button-admin'>
                   Delete
                 </button>
               </td>
@@ -201,7 +201,7 @@ const Collections = ({ collections }) => {
         </tbody>
       </table>
       {fetchedCollections.length > 0 &&
-        <div className='mt-8'>
+        <div className='mt-8 w-max'>
           <Link href='/collections/create/'>
             <a className='link flex items-center gap-1 text-xs'>
               <PlusIcon className='w-4' />Add Collection
@@ -222,7 +222,7 @@ const Collections = ({ collections }) => {
               >
                 &times;
               </button>
-              <p className='text-sm'>Deleting collection with ID {collectionToDelete}</p>
+              <p className='text-sm mb-4'>Deleting collection {collectionToDelete.title}</p>
               <h1>Are you sure?</h1>
               <div className='flex items-center gap-4'>
                 <button onClick={() => setShowDelete(false)} className='button button-detail' aria-label='Cancel'>Cancel</button>

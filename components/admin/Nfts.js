@@ -22,8 +22,8 @@ const Nfts = ({ nfts }) => {
 
   const truncate = (input) => input.length > 30 ? `${input.substring(0, 30)}...` : input
 
-  const toggleDeleteModal = (id) => {
-    setNftToDelete(id)
+  const toggleDeleteModal = (nft) => {
+    setNftToDelete(nft)
     setShowDelete(true)
   }
 
@@ -31,12 +31,12 @@ const Nfts = ({ nfts }) => {
     const { error } = await supabase
       .from('nfts')
       .delete()
-      .eq('id', nftToDelete)
+      .eq('id', nftToDelete.id)
 
     if (!error) {
       notify("NFT deleted successfully!")
       setShowDelete(false)
-      const filteredNfts = fetchedNfts.filter(c => { return c.id !== nftToDelete })
+      const filteredNfts = fetchedNfts.filter(c => { return c.id !== nftToDelete.id })
       setFetchedNfts(filteredNfts)
     }
   }
@@ -82,7 +82,7 @@ const Nfts = ({ nfts }) => {
                 <Link href={`/nfts/${nft.id}`}>
                   <a>
                     {nft.image_url ?
-                      <img src={nft.image_url} alt='NFT Image' className='w-12' />
+                      <img src={nft.image_url} alt='NFT Image' className='w-12 shadow' />
                       :
                       "n/a"
                     }
@@ -103,7 +103,7 @@ const Nfts = ({ nfts }) => {
               </td>
               <td className='whitespace-nowrap'>{nft.created_at?.slice(0, 10)}</td>
               <td className='text-center align-middle'>
-                <button onClick={() => toggleDeleteModal(nft.id)} aria-label='Toggle Delete Modal' className='button-admin'>
+                <button onClick={() => toggleDeleteModal(nft)} aria-label='Toggle Delete Modal' className='button-admin'>
                   Delete
                 </button>
               </td>
@@ -112,7 +112,7 @@ const Nfts = ({ nfts }) => {
         </tbody>
       </table>
       {fetchedNfts.length > 0 &&
-        <div className='mt-8'>
+        <div className='mt-8 w-max'>
           <Link href='/nfts/create/'>
             <a className='link flex items-center gap-1 text-xs'>
               <PlusIcon className='w-4' />Add NFT
@@ -133,7 +133,7 @@ const Nfts = ({ nfts }) => {
               >
                 &times;
               </button>
-              <p className='text-sm'>Deleting nft with ID {nftToDelete}</p>
+              <p className='text-sm mb-4'>Deleting NFT {nftToDelete.name}</p>
               <h1>Are you sure?</h1>
               <div className='flex items-center gap-4'>
                 <button onClick={() => setShowDelete(false)} className='button button-detail' aria-label='Cancel'>Cancel</button>

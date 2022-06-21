@@ -13,16 +13,16 @@ const Collections = ({ collections }) => {
       </Head>
 
       {collections.length > 0 ?
-        <div className='snap-y snap-mandatory w-full h-[calc(100vh-140px)] overflow-y-scroll'>
+        <div className={`${collections.length > 1 && `snap-y snap-mandatory overflow-y-scroll`} w-full h-[calc(100vh-140px)]`}>
           {collections.map(collection => {
             const { id, title, headline, description, public_url, created_at, numberOfNfts, walletAddress, floorPrice, highestPrice, artists } = collection
 
             return (
-              <div key={id} className='snap-start snap-always w-full h-[calc(100vh-140px)] flex flex-col md:flex-row items-start justify-center gap-[40px] mb-20 md:mb-0 px-[40px]'>
-                <div>
+              <div key={id} className={`${collections.length > 1 && `snap-start snap-always`} w-full h-[calc(100vh-140px)] flex flex-col md:flex-row items-start justify-center gap-[40px] mb-20 md:mb-0 px-[40px]`}>
+                <div className='md:w-[calc(50vw-150px)]'>
                   <Link href={`/collections/${id}`}>
                     <a>
-                      <img src={public_url} alt='Cover Image' className='aspect-square bg-cover max-w-xs md:max-w-xl' />
+                      <img src={public_url} alt='Cover Image' className='aspect-square bg-cover shadow-2xl' />
                     </a>
                   </Link>
                 </div>
@@ -43,7 +43,7 @@ const Collections = ({ collections }) => {
                   <p>Launched: {created_at.slice(0, 10)}</p>
                   <p className='mb-4'>Owner: {shortenAddress(walletAddress)}</p>
                   <Link href={`/collections/${id}`}>
-                    <a className='button button-detail mx-auto mt-8 md:mx-0 uppercase'>View Collection</a>
+                    <a className='button button-cta mx-auto mt-8 md:mx-0 uppercase'>View Collection</a>
                   </Link>
                 </div>
               </div>
