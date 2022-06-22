@@ -5,13 +5,10 @@ import Link from 'next/link'
 
 const Nav = () => {
     const { currentUser } = useApp()
-
     const [isOpen, setIsOpen] = useState(false)
     const router = useRouter()
 
     const urls = [
-        // { name: 'Releases', href: '/releases', title: 'Releases' },
-        // { name: 'Live', href: '/live', title: 'Live' },
         { name: 'NFTs', href: '/nfts', title: 'nfts' },
         { name: 'Artists', href: '/artists', title: 'Artists' },
         { name: 'Collections', href: '/collections', title: 'Collections' },
@@ -64,11 +61,11 @@ const Nav = () => {
             {/* Mobile Hamburger Button */}
             <button className='mobile-menu-button md:hidden outline-none' onClick={() => setIsOpen(!isOpen)} aria-label='Open Mobile Navigation'>
                 {!isOpen ?
-                    <svg xmlns='http://www.w3.org/2000/svg' className='top-4 right-44 h-14 w-14 text-brand-dark dark:text-brand hover:text-cta dark:hover:text-cta hover:scale-105 transition-all duration-100' fill='none' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' viewBox='0 0 24 24' stroke='currentColor'>
+                    <svg xmlns='http://www.w3.org/2000/svg' className='mt-1 mr-4 h-14 w-14 text-brand-dark dark:text-brand hover:text-cta dark:hover:text-cta transition-colors duration-100' fill='none' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' viewBox='0 0 24 24' stroke='currentColor'>
                         <path d='M4 6h16M4 12h16M4 18h16'></path>
                     </svg>
                     :
-                    <svg xmlns='http://www.w3.org/2000/svg' className='absolute top-4 right-4 h-14 w-14 z-20 text-brand-dark dark:text-brand hover:text-cta dark:hover:text-cta transition-colors duration-100' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                    <svg xmlns='http://www.w3.org/2000/svg' className='absolute top-8 right-4 h-14 w-14 z-20 text-brand-dark dark:text-brand hover:text-cta dark:hover:text-cta transition-colors duration-100' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                         <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
                     </svg>
                 }
