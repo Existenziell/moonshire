@@ -2,7 +2,7 @@ import { supabase } from '../../lib/supabase'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
-import { shortenAddress } from '../../lib/shortenAddress'
+// import { shortenAddress } from '../../lib/shortenAddress'
 import useApp from "../../context/App"
 import Head from 'next/head'
 import Link from 'next/link'
@@ -11,7 +11,9 @@ import logWeb3 from '../../lib/logWeb3'
 import fetchMarketItemsMeta from '../../lib/contract/fetchMarketItemsMeta'
 
 const Nft = ({ nft }) => {
+  /* eslint-disable no-unused-vars */
   const { id, name, description, price, created_at, image_url, artists, tokenURI, tokenId } = nft
+  /* eslint-enable no-unused-vars */
   const { address, signer, notify } = useApp()
   const router = useRouter()
 
@@ -76,9 +78,9 @@ const Nft = ({ nft }) => {
             <div className='whitespace-nowrap flex flex-col gap-1'>
               <p>
                 <span className='text-sm'>Artist:{` `}</span>
-                <Link href={`/artists/${artists.id}`}><a className='link'>{artists.name}</a></Link>
+                <Link href={`/artists/${artists.id}`}><a className='link text-white'>{artists.name}</a></Link>
               </p>
-              <p>Created: {created_at?.slice(0, 10)}</p>
+              {/* <p>Created: {created_at?.slice(0, 10)}</p>
               {nft.owner && nft.seller &&
                 <>
                   <p>Owner: {shortenAddress(nft.owner)}</p>
@@ -90,7 +92,7 @@ const Nft = ({ nft }) => {
                 <a href={tokenURI} target='_blank' rel='noopener noreferrer nofollow' className='link inline-block'>
                   {tokenURI.substring(0, 30)}&#8230;{tokenURI.slice(tokenURI.length - 4)}
                 </a>
-              </div>
+              </div> */}
             </div>
             <p className='mt-8'>Price: {price} ETH</p>
 
@@ -105,7 +107,7 @@ const Nft = ({ nft }) => {
                 <div className='flex items-center mt-8 gap-8'>
                   <Link href={`/profile`}>
                     <a className='button button-detail inline-block'>
-                      View in Profile
+                      Sell
                     </a>
                   </Link>
                   <span className='text-tiny inline-block'>You own this asset</span>

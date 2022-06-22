@@ -31,9 +31,9 @@ const MapNfts = ({ nfts }) => {
                 </Link>
               </div>
               <div>
-                in{` `}
+                In{` `}
                 <Link href={`/collections/${nft.collections.id}`}>
-                  <a className='link'>
+                  <a className='link text-white'>
                     {nft.collections?.title ? nft.collections.title : nft.collection}
                   </a>
                 </Link>
