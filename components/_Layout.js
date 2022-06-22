@@ -18,21 +18,11 @@ const Layout = ({ children }) => {
         options={{ showSpinner: false }}
       />
 
-      <div className='pt-[20px] px-[40px] hidden md:flex justify-between items-start z-20 bg-brand dark:bg-brand-dark text-black dark:text-white' >
+      <div className='pt-[20px] px-[40px] flex justify-between items-start z-20 bg-brand dark:bg-brand-dark text-black dark:text-white' >
         <Logo />
         <div className='flex items-center'>
           <Nav />
           <Wallet />
-        </div>
-      </div>
-
-      <div className='pt-[20px] px-[40px] flex md:hidden justify-between items-start z-20 bg-brand dark:bg-brand-dark text-black dark:text-white' >
-        <div>
-          <Logo />
-        </div>
-        <div className='flex items-center gap-2'>
-          <Wallet />
-          <Nav />
         </div>
       </div>
 
