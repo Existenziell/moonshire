@@ -1,21 +1,9 @@
-import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
-import { PulseLoader } from 'react-spinners'
 import { getPublicUrl } from '../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 
 const Home = ({ artists, collections, nfts }) => {
-  const [fetchedCollections, setFetchedCollections] = useState()
-  const [fetchedArtists, setFetchedArtists] = useState()
-
-  useEffect(() => {
-    setFetchedArtists(artists)
-    setFetchedCollections(collections)
-  }, [artists, collections])
-
-  if (!fetchedCollections) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
-
   return (
     <>
       <Head>
@@ -26,11 +14,11 @@ const Home = ({ artists, collections, nfts }) => {
       <div className='flex flex-col items-center justify-center w-full px-[40px]'>
         <h1 className='mb-20'>Project Moonshire</h1>
 
-        {fetchedCollections?.length > 0 &&
+        {collections?.length > 0 &&
           <>
             <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Collections</h2>
 
-            {fetchedCollections.map(collection => {
+            {collections.map(collection => {
               const { id, title, headline, description, image_url } = collection
 
               return (
@@ -60,11 +48,11 @@ const Home = ({ artists, collections, nfts }) => {
           </>
         }
 
-        {fetchedArtists?.length > 0 &&
+        {artists?.length > 0 &&
           <>
             <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Artists</h2>
             <div className='grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full'>
-              {fetchedArtists.map(artist => {
+              {artists.map(artist => {
                 const { id, avatar_url } = artist
                 return (
                   <Link href={`/artists/${id}`} key={id} >
