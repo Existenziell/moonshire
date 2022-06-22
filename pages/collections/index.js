@@ -18,8 +18,8 @@ const Collections = ({ collections }) => {
             const { id, title, headline, description, public_url, created_at, numberOfNfts, walletAddress, floorPrice, highestPrice, artists } = collection
 
             return (
-              <div key={id} className={`${collections.length > 1 && `snap-start snap-always`} w-full h-[calc(100vh-140px)] flex flex-col md:flex-row items-start justify-center gap-[40px] mb-20 md:mb-0 px-[40px]`}>
-                <div className='md:w-[calc(50vw-150px)]'>
+              <div key={id} className={`${collections.length > 1 && `snap-start snap-always`} w-full h-[calc(100vh-140px)] flex flex-col md:flex-row items-center justify-center gap-[40px] mb-20 md:mb-0 px-[40px]`}>
+                <div className='md:w-[calc(50vw-100px)]'>
                   <Link href={`/collections/${id}`}>
                     <a>
                       <img src={public_url} alt='Cover Image' className='aspect-square bg-cover shadow-2xl' />

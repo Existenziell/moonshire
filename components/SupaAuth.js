@@ -22,7 +22,7 @@ const SupaAuth = () => {
               socialButtonSize="xlarge"
               socialColors={false}
               magicLink
-              redirectTo={router.pathname}
+              redirectTo={process.env.NEXT_PUBLIC_APP_BASE_URL + router.pathname}
               providers={['google', 'facebook', 'github']}
             />
           </Auth.UserContextProvider>

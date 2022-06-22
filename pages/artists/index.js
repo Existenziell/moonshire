@@ -11,21 +11,21 @@ const Artists = ({ artists }) => {
       </Head>
 
       {artists.length ?
-        <div className='flex flex-col items-center justify-center px-[40px] h-[calc(100vh-260px)]'>
+        <div className='flex flex-col items-center justify-start px-[40px]'>
           <div className='flex flex-col items-start justify-center gap-20 w-full'>
 
             {artists.map(artist => {
               const { id, name, headline, description, origin, avatar_url, created_at, numberOfNfts } = artist
 
               return (
-                <div key={id} className='w-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-[40px] '>
+                <div key={id} className='w-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-[40px] h-[calc(100vh-160px)]'>
 
                   <Link href={`/artists/${id}`}>
-                    <a className='w-[calc(50vw-150px)]'>
-                      <img src={avatar_url} alt='Artist Image' className='aspect-square bg-cover shadow-2xl' />
+                    <a className='aspect-square bg-cover shadow-2xl md:w-[calc(50vw-100px)] flex-shrink-0'>
+                      <img src={avatar_url} alt='Artist Image' className='' />
                     </a>
                   </Link>
-                  <div className='max-w-md flex-grow'>
+                  <div className='flex-grow'>
                     <h1>{name}</h1>
                     <p className='mt-4'>{headline}</p>
                     <hr className='my-8' />

@@ -64,6 +64,7 @@ hr {
   @apply hover:cursor-pointer hover:text-cta transition-all duration-100;
 }
 
+
 /* ==========================================================================
 	Navigation
 	========================================================================== */
@@ -157,15 +158,9 @@ hr {
 }
 
 .button-admin {
-  @apply h-8 px-6 rounded-sm shadow text-tiny font-serif flex items-center justify-center
-    hover:shadow-sm hover:cursor-pointer transition-all uppercase
+  @apply h-8 px-6 rounded-sm text-tiny font-serif flex items-center justify-center uppercase
     text-black bg-detail dark:bg-detail-dark dark:text-white; 
 }
-
-.button-admin:hover {
-  @apply text-cta transition-all duration-200; 
-}
-
 
 
 /* ==========================================================================
@@ -205,12 +200,10 @@ input[type="radio"]:checked::before {
   transform: scale(1);
 }
 
-
 input[type="radio"]:checked:disabled::before {
   box-shadow: inset 1em 1em var(  --color-detail);
   color: red;
   transform: scale(1);
-
 }
 
 

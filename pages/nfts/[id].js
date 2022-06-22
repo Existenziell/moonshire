@@ -67,9 +67,9 @@ const Nft = ({ nft }) => {
 
       <div className='flex flex-col items-center h-[calc(100vh-260px)] px-[40px]'>
 
-        <div key={id} className='flex flex-col md:flex-row items-center justify-between gap-[40px]'>
+        <div key={id} className='flex flex-col md:flex-row items-center justify-between gap-[40px] w-full'>
           <img src={image_url} alt='NFT Image' className='md:w-[calc(50vw-100px)] shadow-2xl' />
-          <div className='w-full flex-grow'>
+          <div className='flex-grow'>
             <h1 className='mb-0'>{name}</h1>
             <hr className='my-6' />
             <p className='mb-4'>{description}</p>
