@@ -1,6 +1,5 @@
 import { supabase } from '../../lib/supabase'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
-import { shortenAddress } from '../../lib/shortenAddress'
 import Head from 'next/head'
 import Link from 'next/link'
 
@@ -15,7 +14,7 @@ const Collections = ({ collections }) => {
       {collections.length > 0 ?
         <div className={`w-full`}>
           {collections.map(collection => {
-            const { id, title, headline, description, public_url, created_at, numberOfNfts, walletAddress, floorPrice, highestPrice, artists } = collection
+            const { id, title, headline, description, public_url, numberOfNfts, floorPrice, highestPrice, artists } = collection
 
             return (
               <div key={id} className={`w-full h-[calc(100vh-160px)] flex flex-col md:flex-row items-center justify-center gap-[40px] mb-20 md:mb-0 px-[40px]`}>
@@ -40,8 +39,6 @@ const Collections = ({ collections }) => {
                   {highestPrice &&
                     <p className='mb-8'><span className='w-36 whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
                   }
-                  <p>Launched: {created_at.slice(0, 10)}</p>
-                  <p className='mb-4'>Owner: {shortenAddress(walletAddress)}</p>
                   <Link href={`/collections/${id}`}>
                     <a className='button button-cta mx-auto mt-8 md:mx-0 uppercase'>View Collection</a>
                   </Link>
@@ -62,8 +59,8 @@ const Collections = ({ collections }) => {
 }
 
 export async function getServerSideProps() {
-  const { data: collections } = await supabase.from('collections').select(`*`).order('id', { ascending: true })
-  const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('id', { ascending: true })
+  const { data: collections } = await supabase.from('collections').select(`*`).order('created_at', { ascending: false })
+  const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`)
 
   // Enrich each collection with numberOfNfts, public_url, floorPrice, highestPrice, artists
   for (let collection of collections) {
