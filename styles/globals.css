@@ -265,3 +265,25 @@ input[type="radio"]:checked:disabled::before {
   right:-2.5vmin;
   top:-2.5vmin;
 }
+
+
+
+/* ==========================================================================
+	Sticky Footer
+	========================================================================== */
+
+  .sticky-footer {
+    @apply fixed bottom-0 left-0 right-0;
+  }
+
+  .scroll-down .sticky-footer {
+    @apply opacity-0 transition-all duration-300;
+  }
+
+  .bottom .sticky-footer {
+    @apply opacity-100 transition-all duration-300; 
+  }
+  
+  .scroll-up .sticky-footer {
+    @apply opacity-0 transition-all duration-300;
+  }

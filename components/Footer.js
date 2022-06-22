@@ -1,31 +1,50 @@
 import Link from 'next/link'
-import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react'
-import { useAnimation } from 'framer-motion'
 import { useRouter } from 'next/router'
 import DarkModeToggle from './DarkModeToggle'
 
 const Footer = () => {
-  const { ref, inView } = useInView({})
-  const fadeIn = useAnimation()
   const router = useRouter()
 
   useEffect(() => {
-    inView ?
-      fadeIn.start({
-        opacity: 1,
-        transition: {
-          duration: 1.5,
-        },
-      })
-      :
-      fadeIn.start({
-        opacity: 0,
-      })
-  }, [inView, fadeIn])
+    const body = document.body
+    const scrollUp = "scroll-up"
+    const scrollDown = "scroll-down"
+    const bottom = "bottom"
+
+    let lastScroll = 0
+
+    window.addEventListener("scroll", () => {
+      const currentScroll = window.pageYOffset
+
+      if (currentScroll > lastScroll && !body.classList.contains(scrollDown)) {
+        // console.log("down");
+        body.classList.remove(scrollUp)
+        body.classList.add(scrollDown)
+      } else if (currentScroll < lastScroll && body.classList.contains(scrollDown)) {
+        // console.log('up');
+        body.classList.remove(scrollDown)
+        body.classList.remove(bottom)
+        body.classList.add(scrollUp)
+      }
+
+      if (currentScroll <= 0) {
+        // console.log("top");
+        body.classList.remove(scrollUp)
+        return
+      }
+
+      if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+        // console.log("bottom");
+        body.classList.add(bottom)
+      }
+
+      lastScroll = currentScroll
+    })
+  }, [])
 
   return (
-    <footer ref={ref} className='static bottom-0 flex items-center justify-between px-[40px] h-20 text-xs text-black bg-brand dark:text-white dark:bg-brand-dark'>
+    <footer className='sticky-footer flex items-center justify-between px-[40px] h-20 text-xs text-black bg-brand dark:text-white dark:bg-brand-dark'>
       <div className='flex items-center justify-between w-full'>
         <DarkModeToggle />
         <div>

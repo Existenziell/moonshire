@@ -14,11 +14,11 @@ const Artist = ({ artist, artistNfts }) => {
         <meta name='description' content={`${name} | Artist | Project Moonshire`} />
       </Head>
 
-      <div className='flex flex-col items-center px-[40px] h-[calc(100vh-260px)]'>
+      <div className='flex flex-col items-center px-[40px] h-[calc(100vh-200px)]'>
 
-        <div key={id} className='flex flex-col md:flex-row items-center justify-center gap-10'>
-          <img src={avatar_url} alt='Artist Image' className='md:w-[calc(50vw-150px)] shadow-2xl' />
-          <div>
+        <div key={id} className='flex flex-col md:flex-row items-center justify-center gap-[40px] w-full'>
+          <img src={avatar_url} alt='Artist Image' className='md:w-[calc(50vw-100px)] shadow-2xl' />
+          <div className='w-1/2'>
             <h1 className='mx-auto'>{name}</h1>
             <p className='mt-4 text-xl'>{headline}</p>
             <hr className='my-8' />

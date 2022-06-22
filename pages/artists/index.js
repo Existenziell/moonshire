@@ -11,7 +11,7 @@ const Artists = ({ artists }) => {
       </Head>
 
       {artists.length ?
-        <div className='flex flex-col items-center justify-start px-[40px]'>
+        <div className='flex flex-col items-center justify-center px-[40px]'>
           <div className='flex flex-col items-start justify-center gap-20 w-full'>
 
             {artists.map(artist => {
@@ -21,7 +21,7 @@ const Artists = ({ artists }) => {
                 <div key={id} className='w-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-[40px] h-[calc(100vh-160px)]'>
 
                   <Link href={`/artists/${id}`}>
-                    <a className='aspect-square bg-cover shadow-2xl md:w-[calc(50vw-100px)] flex-shrink-0'>
+                    <a className='aspect-square bg-cover shadow-2xl md:w-1/2 flex-shrink-0'>
                       <img src={avatar_url} alt='Artist Image' className='' />
                     </a>
                   </Link>
