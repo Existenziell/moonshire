@@ -1,20 +1,24 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
+import { PlusIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import useApp from "../../context/App"
-import { PlusIcon } from '@heroicons/react/solid'
+import Search from './Search'
 
 const Collections = ({ collections }) => {
   const { notify } = useApp()
 
   const [fetchedCollections, setFetchedCollections] = useState()
+  const [filteredCollections, setFilteredCollections] = useState()
   const [formData, setFormData] = useState({})
   const [showDelete, setShowDelete] = useState(false)
   const [collectionToDelete, setCollectionToDelete] = useState()
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     setFetchedCollections(collections)
+    setFilteredCollections(collections)
   }, [collections])
 
   const setData = (e) => {
@@ -92,11 +96,33 @@ const Collections = ({ collections }) => {
     }
   }
 
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    if (fetchedCollections) {
+      if (search === '') resetSearch()
+      let collections = fetchedCollections.filter(c => (
+        c.title.toLowerCase().includes(search.toLowerCase()) ||
+        c.description.toLowerCase().includes(search.toLowerCase()) ||
+        c.headline.toLowerCase().includes(search.toLowerCase())
+      ))
+      setFilteredCollections(collections)
+    }
+  }, [search])
+  /* eslint-enable react-hooks/exhaustive-deps */
+
+  const resetSearch = () => {
+    setFilteredCollections(fetchedCollections)
+    setSearch('')
+  }
+
   if (!fetchedCollections) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
     <div className='mb-20 w-full'>
-      <h2 className='mb-6'>Collections</h2>
+      <div className='flex justify-between items-center'>
+        <h2 className='mb-6'>Collections:</h2>
+        <Search search={search} setSearch={setSearch} resetSearch={resetSearch} />
+      </div>
 
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>
@@ -127,7 +153,7 @@ const Collections = ({ collections }) => {
             </tr>
           }
 
-          {fetchedCollections?.map((collection) => (
+          {filteredCollections?.map((collection) => (
             <tr key={collection.id + collection.title} className='relative'>
               <td>
                 <Link href={`/collections/${collection.id}`}>

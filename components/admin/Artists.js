@@ -1,21 +1,26 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
+import { PlusIcon, XIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import useApp from "../../context/App"
 import AddArtist from './AddArtist'
-import { PlusIcon, XIcon } from '@heroicons/react/solid'
+import Search from './Search'
 
 const Artists = ({ artists }) => {
   const { notify } = useApp()
 
   const [fetchedArtists, setFetchedArtists] = useState()
+  const [filteredArtists, setFilteredArtists] = useState()
   const [formData, setFormData] = useState(null)
   const [showDelete, setShowDelete] = useState(false)
   const [ArtistToDelete, setArtistToDelete] = useState()
   const [showAdd, setShowAdd] = useState(false)
+  const [search, setSearch] = useState('')
+
   useEffect(() => {
     setFetchedArtists(artists)
+    setFilteredArtists(artists)
   }, [artists])
 
   const setData = (e) => {
@@ -93,11 +98,33 @@ const Artists = ({ artists }) => {
     }
   }
 
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    if (fetchedArtists) {
+      if (search === '') resetSearch()
+      let artists = fetchedArtists.filter(c => (
+        c.name.toLowerCase().includes(search.toLowerCase()) ||
+        c.description.toLowerCase().includes(search.toLowerCase()) ||
+        c.headline.toLowerCase().includes(search.toLowerCase())
+      ))
+      setFilteredArtists(artists)
+    }
+  }, [search])
+  /* eslint-enable react-hooks/exhaustive-deps */
+
+  const resetSearch = () => {
+    setFilteredArtists(fetchedArtists)
+    setSearch('')
+  }
+
   if (!fetchedArtists) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
     <div className='mb-20 w-full'>
-      <h2 className='mb-6'>Artists</h2>
+      <div className='flex justify-between items-center'>
+        <h2 className='mb-6'>Artists:</h2>
+        <Search search={search} setSearch={setSearch} resetSearch={resetSearch} />
+      </div>
 
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>
@@ -121,7 +148,7 @@ const Artists = ({ artists }) => {
             </tr>
           }
 
-          {fetchedArtists?.map((artist) => (
+          {filteredArtists?.map((artist) => (
             <tr key={artist.id + artist.name} className='relative'>
               <td>
                 <Link href={`/artists/${artist.id}`}>

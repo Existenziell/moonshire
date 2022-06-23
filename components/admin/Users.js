@@ -4,18 +4,22 @@ import { PulseLoader } from 'react-spinners'
 import { shortenAddress } from '../../lib/shortenAddress'
 import Select from 'react-select'
 import useApp from "../../context/App"
+import Search from './Search'
 
 const Users = ({ users, roles }) => {
   const { notify } = useApp()
 
   const [fetchedUsers, setFetchedUsers] = useState()
+  const [filteredUsers, setFilteredUsers] = useState()
   const [formData, setFormData] = useState({})
   const [showEdit, setShowEdit] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
   const [userToDelete, setUserToDelete] = useState()
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     setFetchedUsers(users)
+    setFilteredUsers(users)
   }, [users])
 
   const setData = (e) => {
@@ -102,6 +106,25 @@ const Users = ({ users, roles }) => {
     }
   }
 
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    if (fetchedUsers) {
+      if (search === '') resetSearch()
+      // console.log(fetchedUsers);
+      let users = fetchedUsers.filter(u => (
+        u.username.toLowerCase().includes(search.toLowerCase()) ||
+        u.email?.toLowerCase().includes(search.toLowerCase())
+      ))
+      setFilteredUsers(users)
+    }
+  }, [search])
+  /* eslint-enable react-hooks/exhaustive-deps */
+
+  const resetSearch = () => {
+    setFilteredUsers(fetchedUsers)
+    setSearch('')
+  }
+
   let roleOptions = []
   roles.forEach(r => {
     roleOptions.push({ value: r.id, label: r.name })
@@ -111,7 +134,10 @@ const Users = ({ users, roles }) => {
 
   return (
     <div className='mb-20 w-full'>
-      <h2 className='mb-6'>Users</h2>
+      <div className='flex justify-between items-center'>
+        <h2 className='mb-6'>Users</h2>
+        <Search search={search} setSearch={setSearch} resetSearch={resetSearch} />
+      </div>
 
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>
@@ -133,7 +159,7 @@ const Users = ({ users, roles }) => {
             <tr className='p-4 dark:text-brand'><td>No users found.</td></tr>
           }
 
-          {fetchedUsers?.map((user) => (
+          {filteredUsers?.map((user) => (
             <tr key={user.id + user.username} className='relative'>
 
               <td>

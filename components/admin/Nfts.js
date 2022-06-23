@@ -2,22 +2,26 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
 import { shortenAddress } from '../../lib/shortenAddress'
-import { PlusIcon } from '@heroicons/react/solid'
+import { PlusIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 import useApp from "../../context/App"
+import Search from './Search'
 
 const Nfts = ({ nfts }) => {
   const { notify } = useApp()
 
-  const [fetchedNfts, setFetchedNfts] = useState([])
+  const [fetchedNfts, setFetchedNfts] = useState()
+  const [filteredNfts, setFilteredNfts] = useState()
   const [showDelete, setShowDelete] = useState(false)
   const [nftToDelete, setNftToDelete] = useState()
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     if (!nfts) {
       return
     }
     setFetchedNfts(nfts)
+    setFilteredNfts(nfts)
   }, [nfts])
 
   const truncate = (input) => input.length > 30 ? `${input.substring(0, 30)}...` : input
@@ -41,11 +45,34 @@ const Nfts = ({ nfts }) => {
     }
   }
 
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    if (fetchedNfts) {
+      // if (search === '') resetSearch()
+      console.log("search", search, fetchedNfts);
+      let nfts = fetchedNfts.filter(n => (
+        n.name.toLowerCase().includes(search.toLowerCase()) ||
+        n.description.toLowerCase().includes(search.toLowerCase())
+      ))
+      setFilteredNfts(nfts)
+    }
+  }, [search])
+  /* eslint-enable react-hooks/exhaustive-deps */
+
+  const resetSearch = () => {
+    setFilteredNfts(fetchedNfts)
+    setSearch('')
+  }
+
   if (!fetchedNfts) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
     <div className='mb-20 w-full'>
-      <h2 className='mb-6'>NFTs</h2>
+
+      <div className='flex justify-between items-center'>
+        <h2 className='mb-6'>NFTs</h2>
+        <Search search={search} setSearch={setSearch} resetSearch={resetSearch} />
+      </div>
 
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>
@@ -76,7 +103,7 @@ const Nfts = ({ nfts }) => {
             </tr>
           }
 
-          {fetchedNfts?.map((nft) => (
+          {filteredNfts?.map((nft) => (
             <tr key={nft.id + nft.name} className='relative'>
               <td>
                 <Link href={`/nfts/${nft.id}`}>
