@@ -133,6 +133,13 @@ hr {
   @apply bg-brand-dark !important; 
 }
 
+.sbui-checkbox:hover {
+  @apply border-cta cursor-pointer !important; 
+}
+
+.sbui-input:focus {
+  @apply border-cta !important;
+}
 
 /* ==========================================================================
 	Admin
