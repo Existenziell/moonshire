@@ -10,11 +10,14 @@ import Artists from '../components/admin/Artists'
 import Users from '../components/admin/Users'
 import SupaAuth from '../components/SupaAuth'
 import useApp from "../context/App"
+import { useRouter } from 'next/router'
+import { PulseLoader } from 'react-spinners'
 
 const Admin = ({ nfts, collections, artists, users, roles }) => {
   const { currentUser } = useApp()
-  const [isAdmin, setIsAdmin] = useState(false)
   const [session, setSession] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -24,10 +27,17 @@ const Admin = ({ nfts, collections, artists, users, roles }) => {
   }, [])
 
   useEffect(() => {
-    currentUser?.roles?.name === 'Admin' && setIsAdmin(true)
+    if (currentUser) {
+      if (currentUser?.roles?.name === 'Admin') {
+        setLoading(false)
+      } else {
+        router.push('/')
+      }
+    }
   }, [currentUser?.roles?.name])
 
-  if (!session || !isAdmin) return <SupaAuth />
+  if (loading) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (!session) return <SupaAuth />
 
   return (
     <>
