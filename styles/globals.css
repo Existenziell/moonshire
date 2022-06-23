@@ -137,9 +137,18 @@ hr {
   @apply border-cta cursor-pointer !important; 
 }
 
+.sbui-input {
+  @apply pl-14 !important ;
+}
+
 .sbui-input:focus {
   @apply border-cta !important;
 }
+
+.sbui-divider span {
+  @apply text-detail-dark dark:text-detail !important;
+}
+
 
 /* ==========================================================================
 	Admin
