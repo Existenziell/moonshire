@@ -47,10 +47,12 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     const web3modal = new Web3Modal()
     if (web3modal.cachedProvider) connectWallet()
-    ethereum.on("accountsChanged", connectWallet)
-    ethereum.on("chainChanged", (chainId) => {
-      if (checkChain(chainId)) setChainId(parseInt(chainId))
-    })
+    if (hasMetamask) {
+      ethereum.on("accountsChanged", connectWallet)
+      ethereum.on("chainChanged", (chainId) => {
+        if (checkChain(chainId)) setChainId(parseInt(chainId))
+      })
+    }
   }, [])
 
   useEffect(() => {
