@@ -110,7 +110,6 @@ const Users = ({ users, roles }) => {
   useEffect(() => {
     if (fetchedUsers) {
       if (search === '') resetSearch()
-      // console.log(fetchedUsers);
       let users = fetchedUsers.filter(u => (
         u.username.toLowerCase().includes(search.toLowerCase()) ||
         u.email?.toLowerCase().includes(search.toLowerCase())

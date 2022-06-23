@@ -49,7 +49,6 @@ const Nfts = ({ nfts }) => {
   useEffect(() => {
     if (fetchedNfts) {
       // if (search === '') resetSearch()
-      console.log("search", search, fetchedNfts);
       let nfts = fetchedNfts.filter(n => (
         n.name.toLowerCase().includes(search.toLowerCase()) ||
         n.description.toLowerCase().includes(search.toLowerCase())
