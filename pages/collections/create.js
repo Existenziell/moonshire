@@ -25,11 +25,6 @@ const CreateCollection = () => {
     e.preventDefault()
     setLoading(true)
 
-    if (!imageUrl) {
-      notify("Please choose an image for the collection")
-      return
-    }
-
     if (!signer || !address) {
       notify("Please connect your wallet to proceed")
       return
@@ -62,12 +57,12 @@ const CreateCollection = () => {
       <form onSubmit={saveCollection} className='create-collection flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
         <h1 className='mx-auto'>Create Collection</h1>
 
-        <h1 className='mb-2'>Cover Image</h1>
+        <h2 className='mb-2'>Cover Image</h2>
         <p className='text-tiny mb-4'>File types supported: JPG, PNG, GIF, SVG. Max size: 50 MB</p>
         <UploadImage
           bucket='collections'
           url={imageUrl}
-          size={250}
+          size={200}
           onUpload={(url) => {
             setFormData({ ...formData, image_url: url })
             setImageUrl(url)
@@ -75,7 +70,7 @@ const CreateCollection = () => {
         />
 
         <label htmlFor='title' className='mt-12 w-full'>
-          <h1 className='mb-2'>Title</h1>
+          <h2 className='mb-2'>Title</h2>
           <input
             type='text' name='title' id='title'
             onChange={setData} required
@@ -86,7 +81,7 @@ const CreateCollection = () => {
         </label>
 
         <label htmlFor='headline' className='mt-12 w-full'>
-          <h1 className='mb-2'>Headline</h1>
+          <h2 className='mb-2'>Headline</h2>
           <input
             type='text' name='headline' id='headline'
             onChange={setData} required
@@ -97,7 +92,7 @@ const CreateCollection = () => {
         </label>
 
         <label htmlFor='description' className='mt-12 w-full'>
-          <h1 className='mb-2'>Description</h1>
+          <h2 className='mb-2'>Description</h2>
           <span className='block text-tiny mt-1'>The description will be included on the collection&apos;s detail page.</span>
           <textarea
             name='description' id='description' rows={10}
@@ -109,7 +104,7 @@ const CreateCollection = () => {
         </label>
 
         <label htmlFor='year' className='mt-12 w-full'>
-          <h1 className='mb-2'>Year</h1>
+          <h2 className='mb-2'>Year</h2>
           <input
             type='text' name='year' id='year'
             onChange={setData} required

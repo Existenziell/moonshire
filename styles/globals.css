@@ -230,7 +230,9 @@ input[type="radio"]:checked:disabled::before {
 .create-nft input[type='text'], 
 .create-nft textarea,
 .create-collection input[type='text'], 
-.create-collection textarea 
+.create-collection textarea,
+.create-artist input[type='text'], 
+.create-artist textarea
 {
   @apply px-5 py-4 rounded-lg
   bg-brand dark:bg-brand-dark border border-detail dark:border-detail-dark 

@@ -1,4 +1,3 @@
-import { XCircleIcon } from "@heroicons/react/outline"
 import { XIcon } from "@heroicons/react/solid"
 
 const Search = ({ search, setSearch, resetSearch }) => {

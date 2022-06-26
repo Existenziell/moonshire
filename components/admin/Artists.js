@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
-import { PlusIcon, XIcon, CheckIcon } from '@heroicons/react/solid'
+import { PlusIcon, CheckIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import useApp from "../../context/App"
-import AddArtist from './AddArtist'
 import Search from './Search'
 
 const Artists = ({ artists }) => {
@@ -15,7 +14,6 @@ const Artists = ({ artists }) => {
   const [formData, setFormData] = useState(null)
   const [showDelete, setShowDelete] = useState(false)
   const [ArtistToDelete, setArtistToDelete] = useState()
-  const [showAdd, setShowAdd] = useState(false)
   const [search, setSearch] = useState('')
 
   useEffect(() => {
@@ -79,8 +77,8 @@ const Artists = ({ artists }) => {
     }
   }
 
-  const toggleDeleteModal = (id) => {
-    setArtistToDelete(id)
+  const toggleDeleteModal = (artist) => {
+    setArtistToDelete(artist)
     setShowDelete(true)
   }
 
@@ -88,13 +86,14 @@ const Artists = ({ artists }) => {
     const { error } = await supabase
       .from('artists')
       .delete()
-      .eq('id', ArtistToDelete)
+      .eq('id', ArtistToDelete.id)
 
     if (!error) {
       notify("Artist deleted successfully!")
       setShowDelete(false)
-      const filteredArtists = fetchedArtists.filter(c => { return c.id !== ArtistToDelete })
-      setFetchedArtists(filteredArtists)
+      const filtered = fetchedArtists.filter(c => { return c.id !== ArtistToDelete.id })
+      setFetchedArtists(filtered)
+      setFilteredArtists(filtered)
     }
   }
 
@@ -154,7 +153,7 @@ const Artists = ({ artists }) => {
                 <Link href={`/artists/${artist.id}`}>
                   <a>
                     {artist.avatar_url ?
-                      <img src={artist.avatar_url} alt='Artist Image' className='w-12 shadow' />
+                      <img src={artist.avatar_url} alt='Artist Image' className='w-12 shadow aspect-square bg-cover' />
                       :
                       "n/a"
                     }
@@ -221,7 +220,7 @@ const Artists = ({ artists }) => {
               </td>
 
               <td className='text-right align-middle pr-0'>
-                <button onClick={() => toggleDeleteModal(artist.id)} aria-label='Toggle Delete Modal' className='button-admin'>
+                <button onClick={() => toggleDeleteModal(artist)} aria-label='Toggle Delete Modal' className='button-admin'>
                   Delete
                 </button>
               </td>
@@ -230,8 +229,12 @@ const Artists = ({ artists }) => {
         </tbody>
       </table>
 
-
-
+      {/* Add artist */}
+      <Link href='/admin/artists/create'>
+        <a className='my-4 link flex items-center gap-1 text-xs'>
+          <PlusIcon className='w-4' />Add artist
+        </a>
+      </Link>
 
       {/* Delete artist */}
       {showDelete &&
@@ -245,7 +248,7 @@ const Artists = ({ artists }) => {
               >
                 &times;
               </button>
-              <p className='text-sm'>Deleting artist with ID {ArtistToDelete}</p>
+              <p className='text-sm'>Deleting artist {ArtistToDelete.name}</p>
               <h1>Are you sure?</h1>
               <div className='flex items-center gap-4'>
                 <button onClick={() => setShowDelete(false)} className='button button-detail' aria-label='Cancel'>Cancel</button>
