@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
-import { PlusIcon, XIcon } from '@heroicons/react/solid'
+import { PlusIcon, XIcon, CheckIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import useApp from "../../context/App"
 import AddArtist from './AddArtist'
@@ -135,7 +135,7 @@ const Artists = ({ artists }) => {
             <th>Description</th>
             <th>Origin</th>
             <th className='whitespace-nowrap'># NFTs</th>
-            <th>Created</th>
+            <th>Featured</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
@@ -198,7 +198,13 @@ const Artists = ({ artists }) => {
                 {artist.numberOfNfts}
               </td>
 
-              <td className='whitespace-nowrap'>{artist.created_at.slice(0, 10)}</td>
+              <td className='whitespace-nowrap'>
+                {artist.featured ?
+                  <CheckIcon className='w-6' />
+                  :
+                  `No`
+                }
+              </td>
 
               <td className='text-center align-middle'>
                 <div id={`${artist.id}-closeBtnArtist`} className='hidden items-center justify-between gap-2'>

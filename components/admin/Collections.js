@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
-import { PlusIcon } from '@heroicons/react/solid'
+import { PlusIcon, CheckIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import useApp from "../../context/App"
 import Search from './Search'
@@ -134,6 +134,7 @@ const Collections = ({ collections }) => {
             <th>Year</th>
             <th className='whitespace-nowrap'># NFTs</th>
             <th>Created</th>
+            <th>Featured</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
@@ -202,7 +203,13 @@ const Collections = ({ collections }) => {
               <td>{collection.numberOfNfts}</td>
 
               <td className='whitespace-nowrap'>{collection.created_at.slice(0, 10)}</td>
-
+              <td className='whitespace-nowrap'>
+                {collection.featured ?
+                  <CheckIcon className='w-6' />
+                  :
+                  `No`
+                }
+              </td>
               <td className='text-center align-middle'>
                 <div id={`${collection.id}-closeBtnCollection`} className='hidden items-center justify-between gap-2'>
                   <button onClick={() => editCollection(collection.id)} aria-label='Edit Collection' className='button-admin'>

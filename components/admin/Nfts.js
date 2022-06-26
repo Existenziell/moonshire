@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
 import { shortenAddress } from '../../lib/shortenAddress'
-import { PlusIcon } from '@heroicons/react/outline'
+import { PlusIcon, CheckIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 import useApp from "../../context/App"
 import Search from './Search'
@@ -83,7 +83,7 @@ const Nfts = ({ nfts }) => {
             <th>Collection</th>
             <th>Price</th>
             <th>Wallet</th>
-            <th>Created</th>
+            <th>Featured</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -127,7 +127,13 @@ const Nfts = ({ nfts }) => {
                   `n/a`
                 }
               </td>
-              <td className='whitespace-nowrap'>{nft.created_at?.slice(0, 10)}</td>
+              <td className='whitespace-nowrap'>
+                {nft.featured ?
+                  <CheckIcon className='w-6' />
+                  :
+                  `No`
+                }
+              </td>
               <td className='text-center align-middle'>
                 <button onClick={() => toggleDeleteModal(nft)} aria-label='Toggle Delete Modal' className='button-admin'>
                   Delete
