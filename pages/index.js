@@ -11,12 +11,10 @@ const Home = ({ artists, collections, nfts }) => {
         <meta name='description' content="It is gonna be epic | Project Moonshire" />
       </Head>
 
-      <div className='flex flex-col items-center justify-center w-full px-[40px]'>
-        <h1 className='mb-20'>Project Moonshire</h1>
-
+      <div className='flex flex-col items-center justify-center w-full px-[40px] pb-24'>
         {collections?.length > 0 &&
           <>
-            <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Collections</h2>
+            <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Collections</h2>
 
             {collections.map(collection => {
               const { id, title, headline, description, image_url } = collection
@@ -51,14 +49,14 @@ const Home = ({ artists, collections, nfts }) => {
         {artists?.length > 0 &&
           <>
             <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Artists</h2>
-            <div className='grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full'>
+            <div className='flex justify-center md:justify-start flex-wrap gap-[40px] w-full'>
               {artists.map(artist => {
                 const { id, avatar_url } = artist
                 return (
                   <Link href={`/artists/${id}`} key={id} >
-                    <a className='flex max-w-sm hover:cursor-pointer relative'>
+                    <a>
                       {avatar_url &&
-                        <img src={avatar_url} alt='Artist Image' className='rounded shadow-2xl' />
+                        <img src={avatar_url} alt='Artist Image' className='aspect-square bg-cover max-w-md rounded-sm shadow-2xl' />
                       }
                     </a>
                   </Link>
@@ -71,14 +69,14 @@ const Home = ({ artists, collections, nfts }) => {
         {nfts?.length > 0 &&
           <div className='mt-24'>
             <h2 className='border-b border-detail dark:border-detail-dark mb-8'>Featured NFTs</h2>
-            <div className='grid grid-cols-2 md:grid-cols-8 gap-6'>
+            <div className='flex justify-center md:justify-start flex-wrap gap-[40px] w-full'>
               {nfts.map(nft => {
                 const { id, image_url } = nft
                 return (
-                  <div key={id} className='bg-detail dark:bg-detail-dark p-4 shadow-md rounded hover:cursor-pointer transition-all relative' >
+                  <div key={id} className='relative' >
                     <Link href={`/nfts/${id}`}>
                       <a className='w-full'>
-                        <img src={image_url} alt='NFT Image' className='w-full block aspect-square bg-cover' />
+                        <img src={image_url} alt='NFT Image' className='aspect-square bg-cover max-w-md rounded-sm shadow-2xl' />
                       </a>
                     </Link>
                   </div>
