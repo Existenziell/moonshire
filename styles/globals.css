@@ -174,8 +174,8 @@ hr {
 }
 
 .button-admin {
-  @apply h-8 px-6 rounded-sm text-tiny font-serif flex items-center justify-center uppercase
-    text-black bg-detail dark:bg-detail-dark dark:text-white; 
+  @apply h-12 px-6 rounded-sm text-tiny font-serif uppercase
+    text-black bg-detail dark:bg-detail-dark dark:text-white hover:text-cta transition-all duration-100;  
 }
 
 

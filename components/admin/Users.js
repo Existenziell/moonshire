@@ -148,8 +148,8 @@ const Users = ({ users, roles }) => {
             <th>Premium?</th>
             <th>Role</th>
             <th>Created</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th className='text-right'>Edit</th>
+            <th className='text-right'>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -227,7 +227,7 @@ const Users = ({ users, roles }) => {
 
               <td className='whitespace-nowrap'>{user.created_at.slice(0, 10)}</td>
 
-              <td className='text-center align-middle'>
+              <td className='text-right align-middle pr-0'>
                 <div id={`${user.id}-closeBtn`} className='hidden items-center justify-between gap-2'>
                   <button onClick={() => editUser(user.id)} aria-label='Edit User' className='button-admin'>
                     Save
@@ -241,7 +241,7 @@ const Users = ({ users, roles }) => {
                 </button>
               </td>
 
-              <td className='text-center align-middle'>
+              <td className='text-right align-middle pr-0'>
                 <button onClick={() => toggleDeleteModal(user)} aria-label='Toggle Delete Modal' className='button-admin'>
                   Delete
                 </button>

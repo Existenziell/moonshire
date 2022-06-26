@@ -84,7 +84,7 @@ const Nfts = ({ nfts }) => {
             <th>Price</th>
             <th>Wallet</th>
             <th>Featured</th>
-            <th>Delete</th>
+            <th className='text-right'>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -134,10 +134,12 @@ const Nfts = ({ nfts }) => {
                   `No`
                 }
               </td>
-              <td className='text-center align-middle'>
-                <button onClick={() => toggleDeleteModal(nft)} aria-label='Toggle Delete Modal' className='button-admin'>
-                  Delete
-                </button>
+              <td className='text-right pr-0'>
+                <div>
+                  <button onClick={() => toggleDeleteModal(nft)} aria-label='Toggle Delete Modal' className='button-admin'>
+                    Delete
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

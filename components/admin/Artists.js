@@ -136,8 +136,8 @@ const Artists = ({ artists }) => {
             <th>Origin</th>
             <th className='whitespace-nowrap'># NFTs</th>
             <th>Featured</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th className='text-right'>Edit</th>
+            <th className='text-right'>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -206,7 +206,7 @@ const Artists = ({ artists }) => {
                 }
               </td>
 
-              <td className='text-center align-middle'>
+              <td className='text-right align-middle pr-0'>
                 <div id={`${artist.id}-closeBtnArtist`} className='hidden items-center justify-between gap-2'>
                   <button onClick={() => editArtist(artist.id)} aria-label='Edit Artist' className='button-admin'>
                     Save
@@ -220,7 +220,7 @@ const Artists = ({ artists }) => {
                 </button>
               </td>
 
-              <td className='text-center align-middle'>
+              <td className='text-right align-middle pr-0'>
                 <button onClick={() => toggleDeleteModal(artist.id)} aria-label='Toggle Delete Modal' className='button-admin'>
                   Delete
                 </button>

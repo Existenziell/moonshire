@@ -135,8 +135,8 @@ const Collections = ({ collections }) => {
             <th className='whitespace-nowrap'># NFTs</th>
             <th>Created</th>
             <th>Featured</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th className='text-right'>Edit</th>
+            <th className='text-right'>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -210,7 +210,7 @@ const Collections = ({ collections }) => {
                   `No`
                 }
               </td>
-              <td className='text-center align-middle'>
+              <td className='text-right align-middle pr-0'>
                 <div id={`${collection.id}-closeBtnCollection`} className='hidden items-center justify-between gap-2'>
                   <button onClick={() => editCollection(collection.id)} aria-label='Edit Collection' className='button-admin'>
                     Save
@@ -224,7 +224,7 @@ const Collections = ({ collections }) => {
                 </button>
               </td>
 
-              <td className='text-center align-middle'>
+              <td className='text-right align-middle pr-0'>
                 <button onClick={() => toggleDeleteModal(collection)} aria-label='Toggle Delete Modal' className='button-admin'>
                   Delete
                 </button>
