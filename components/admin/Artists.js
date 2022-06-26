@@ -122,7 +122,7 @@ const Artists = ({ artists }) => {
   return (
     <div className='mb-20 w-full'>
       <div className='flex justify-between items-center'>
-        <h2 className='mb-6'>Artists:</h2>
+        <h2 className='mb-6'>Artists</h2>
         <Search search={search} setSearch={setSearch} resetSearch={resetSearch} />
       </div>
 
@@ -231,17 +231,7 @@ const Artists = ({ artists }) => {
       </table>
 
 
-      {/* Add artist */}
-      <button onClick={() => setShowAdd(!showAdd)} className='my-4 link flex items-center gap-1 text-xs' aria-label='Open Add Artist Form'>
-        {showAdd ?
-          <><XIcon className='w-4' />Close</>
-          :
-          <><PlusIcon className='w-4' />Add artist</>
-        }
-      </button>
-      {showAdd &&
-        <AddArtist showAdd={showAdd} setShowAdd={setShowAdd} fetchedArtists={fetchedArtists} setFetchedArtists={setFetchedArtists} />
-      }
+
 
       {/* Delete artist */}
       {showDelete &&

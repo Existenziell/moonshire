@@ -108,7 +108,7 @@ const Nfts = ({ nfts }) => {
                 <Link href={`/nfts/${nft.id}`}>
                   <a>
                     {nft.image_url ?
-                      <img src={nft.image_url} alt='NFT Image' className='w-12 shadow' />
+                      <img src={nft.image_url} alt='NFT Image' className='w-12 shadow aspect-square bg-cover' />
                       :
                       "n/a"
                     }

@@ -120,7 +120,7 @@ const Collections = ({ collections }) => {
   return (
     <div className='mb-20 w-full'>
       <div className='flex justify-between items-center'>
-        <h2 className='mb-6'>Collections:</h2>
+        <h2 className='mb-6'>Collections</h2>
         <Search search={search} setSearch={setSearch} resetSearch={resetSearch} />
       </div>
 
