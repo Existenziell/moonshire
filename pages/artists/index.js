@@ -27,8 +27,8 @@ const Artists = ({ artists }) => {
                   </Link>
                   <div className='flex-grow'>
                     <h1>{name}</h1>
-                    <p className='mt-4'>{headline}</p>
-                    <hr className='my-8' />
+                    <hr className='mt-8 mb-12' />
+                    <p>{headline}</p>
                     <p className='mt-4'>{description}</p>
                     <p className='mt-4'>Origin: {origin}</p>
                     <p>{numberOfNfts} artworks by <span className='text-white'>{name}</span></p>
