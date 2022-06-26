@@ -146,8 +146,8 @@ const Users = ({ users, roles }) => {
             <th>Username</th>
             <th>Email</th>
             <th>Premium?</th>
-            <th>Role</th>
             <th>Created</th>
+            <th>Role</th>
             <th className='text-right'>Edit</th>
             <th className='text-right'>Delete</th>
           </tr>
@@ -214,6 +214,8 @@ const Users = ({ users, roles }) => {
                 </div>
               </td>
 
+              <td className='whitespace-nowrap'>{user.created_at.slice(0, 10)}</td>
+
               <td>
                 <Select
                   options={roleOptions}
@@ -224,8 +226,6 @@ const Users = ({ users, roles }) => {
                   className='dark:text-brand-dark'
                 />
               </td>
-
-              <td className='whitespace-nowrap'>{user.created_at.slice(0, 10)}</td>
 
               <td className='text-right align-middle pr-0'>
                 <div id={`${user.id}-closeBtn`} className='hidden items-center justify-between gap-2'>

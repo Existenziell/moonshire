@@ -133,7 +133,6 @@ const Collections = ({ collections }) => {
             <th>Description</th>
             <th>Year</th>
             <th className='whitespace-nowrap'># NFTs</th>
-            <th>Created</th>
             <th>Featured</th>
             <th className='text-right'>Edit</th>
             <th className='text-right'>Delete</th>
@@ -202,7 +201,6 @@ const Collections = ({ collections }) => {
 
               <td>{collection.numberOfNfts}</td>
 
-              <td className='whitespace-nowrap'>{collection.created_at.slice(0, 10)}</td>
               <td className='whitespace-nowrap'>
                 {collection.featured ?
                   <CheckIcon className='w-6' />
