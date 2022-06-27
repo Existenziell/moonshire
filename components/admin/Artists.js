@@ -121,7 +121,7 @@ const Artists = ({ artists }) => {
 
               <td className='text-right align-middle pr-0'>
                 <Link href={`/admin/artists/${artist.id}`}>
-                  <a className=''>
+                  <a>
                     <button className='button-admin'>
                       Edit
                     </button>
@@ -169,7 +169,7 @@ const Artists = ({ artists }) => {
         </div>
       }
 
-    </div >
+    </div>
   )
 }
 

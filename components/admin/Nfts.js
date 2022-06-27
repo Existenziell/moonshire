@@ -178,7 +178,7 @@ const Nfts = ({ nfts }) => {
         </div>
       }
 
-    </div >
+    </div>
   )
 }
 

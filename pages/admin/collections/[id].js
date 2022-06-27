@@ -120,11 +120,11 @@ const Collection = ({ collection }) => {
             <input id="featured" type="checkbox" defaultChecked={featured} onChange={() => setIsFeatured(!featured)} className="w-4 h-4 text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600" disabled={loading} />
             <label htmlFor="featured" className="ml-2">Featured on Startpage</label>
           </div>
-        </label >
+        </label>
 
         <input type='submit' className='button button-cta mt-12' value='Save' disabled={loading} />
-      </form >
-    </div >
+      </form>
+    </div>
   )
 }
 
@@ -138,13 +138,12 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/collections",
+        destination: "/admin",
       },
       props: {}
     }
   }
 
-  // Set public IPFS url for collection cover image
   if (collection.image_url) {
     const url = await getPublicUrl('collections', collection.image_url)
     collection.public_url = url

@@ -42,7 +42,7 @@ const Create = () => {
   }
 
   return (
-    <form onSubmit={addArtist} className='create-artist flex flex-col items-start max-w-2xl mx-auto px-[40px]' id='addArtistForm' >
+    <form onSubmit={addArtist} className='create-artist flex flex-col items-start max-w-2xl mx-auto px-[40px]' id='addArtistForm'>
       <h1 className='mx-auto'>Create Artist</h1>
 
       <h2 className='mb-2'>Artist Picture</h2>

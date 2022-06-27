@@ -123,9 +123,10 @@ const Collections = ({ collections }) => {
                   `No`
                 }
               </td>
+
               <td className='text-right align-middle pr-0'>
                 <Link href={`/admin/collections/${collection.id}`}>
-                  <a className=''>
+                  <a>
                     <button className='button-admin'>
                       Edit
                     </button>
@@ -142,6 +143,7 @@ const Collections = ({ collections }) => {
           ))}
         </tbody>
       </table>
+
       {fetchedCollections.length > 0 &&
         <div className='mt-8 w-max'>
           <Link href='/collections/create/'>
@@ -174,7 +176,7 @@ const Collections = ({ collections }) => {
           </div>
         </div>
       }
-    </div >
+    </div>
   )
 }
 

@@ -19,7 +19,6 @@ module.exports = {
       colors: {
         'brand': '#DBDBDB',
         'brand-dark': '#242424',
-        // 'cta': '#FF0040',
         'cta': '#D6A269',
         'detail': '#CFCFCF',
         'detail-dark': '#323232',

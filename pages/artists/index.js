@@ -23,7 +23,7 @@ const Artists = ({ artists }) => {
 
                   <Link href={`/artists/${id}`}>
                     <a className='aspect-square bg-cover shadow-2xl md:w-1/2 flex-shrink-0'>
-                      <img src={public_url} alt='Artist Image' className='' />
+                      <img src={public_url} alt='Artist Image' />
                     </a>
                   </Link>
                   <div className='flex-grow'>
