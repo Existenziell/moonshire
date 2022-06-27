@@ -105,7 +105,7 @@ const Nft = ({ nft }) => {
               :
               sellerIsOwner ?
                 <div className='flex items-center mt-8 gap-8'>
-                  <Link href={`/profile`}>
+                  <Link href={`/nfts/resell?id=${tokenId}&tokenURI=${tokenURI}`}>
                     <a className='button button-detail inline-block'>
                       Sell
                     </a>
