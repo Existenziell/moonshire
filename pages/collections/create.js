@@ -39,9 +39,7 @@ const CreateCollection = () => {
       notify("Collection created successfully!")
       setFormData(null)
       setLoading(false)
-      setTimeout(() => {
-        router.push('/profile')
-      }, 2000)
+      router.push('/profile')
     }
   }
 

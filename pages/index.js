@@ -51,12 +51,12 @@ const Home = ({ artists, collections, nfts }) => {
             <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Artists</h2>
             <div className='flex justify-center md:justify-start flex-wrap gap-[40px] w-full'>
               {artists.map(artist => {
-                const { id, avatar_url } = artist
+                const { id, public_url } = artist
                 return (
                   <Link href={`/artists/${id}`} key={id} >
                     <a>
-                      {avatar_url &&
-                        <img src={avatar_url} alt='Artist Image' className='aspect-square bg-cover max-w-md rounded-sm shadow-2xl' />
+                      {public_url &&
+                        <img src={public_url} alt='Artist Image' className='aspect-square bg-cover max-w-md rounded-sm shadow-2xl' />
                       }
                     </a>
                   </Link>
@@ -67,9 +67,9 @@ const Home = ({ artists, collections, nfts }) => {
         }
 
         {nfts?.length > 0 &&
-          <div className='mt-24'>
+          <div className='mt-24 w-full'>
             <h2 className='border-b border-detail dark:border-detail-dark mb-8'>Featured NFTs</h2>
-            <div className='flex justify-center md:justify-start flex-wrap gap-[40px] w-full'>
+            <div className='flex justify-start md:justify-start flex-wrap gap-[40px] w-full'>
               {nfts.map(nft => {
                 const { id, image_url } = nft
                 return (
@@ -99,6 +99,8 @@ export async function getServerSideProps() {
   for (let artist of artists) {
     const artistNfts = nfts.filter((n => n.artist === artist.id))
     artist.numberOfNfts = artistNfts.length
+    const url = await getPublicUrl('artists', artist.avatar_url)
+    artist.public_url = url
   }
 
   for (let collection of collections) {

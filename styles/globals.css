@@ -175,7 +175,7 @@ hr {
 
 .button-admin {
   @apply h-12 px-6 rounded-sm text-tiny font-serif uppercase
-    text-black bg-detail dark:bg-detail-dark dark:text-white hover:text-cta transition-all duration-100;  
+    text-black bg-detail dark:bg-detail-dark dark:text-white hover:text-cta dark:hover:text-cta transition-all duration-100;  
 }
 
 
@@ -234,7 +234,9 @@ input[type="radio"]:checked:disabled::before {
 .create-artist input[type='text'], 
 .create-artist textarea,
 .edit-collection input[type='text'], 
-.edit-collection textarea
+.edit-collection textarea,
+.edit-artist input[type='text'], 
+.edit-artist textarea
 {
   @apply px-5 py-4 rounded-lg
   bg-brand dark:bg-brand-dark border border-detail dark:border-detail-dark 
@@ -251,7 +253,7 @@ input[type="radio"]:checked:disabled::before {
 }
 
 /* ==========================================================================
-	Create NFT, Create Collection
+	Picture Frame
 	========================================================================== */
 
 .frame {

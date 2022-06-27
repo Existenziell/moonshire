@@ -11,7 +11,6 @@ const Artists = ({ artists }) => {
 
   const [fetchedArtists, setFetchedArtists] = useState()
   const [filteredArtists, setFilteredArtists] = useState()
-  const [formData, setFormData] = useState(null)
   const [showDelete, setShowDelete] = useState(false)
   const [ArtistToDelete, setArtistToDelete] = useState()
   const [search, setSearch] = useState('')
@@ -20,62 +19,6 @@ const Artists = ({ artists }) => {
     setFetchedArtists(artists)
     setFilteredArtists(artists)
   }, [artists])
-
-  const setData = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, ...{ [name]: value } })
-  }
-
-  const openEdit = (id) => {
-    const openBtn = document.getElementById(`${id}-openBtnArtist`)
-    const closeBtn = document.getElementById(`${id}-closeBtnArtist`)
-    const inputs = document.getElementsByClassName(`${id}-inputArtist`)
-    const openEditBtns = document.getElementsByClassName('openBtnArtist')
-    openBtn.style.display = "none"
-    closeBtn.style.display = "flex"
-    Array.from(openEditBtns).forEach(el => (el.disabled = true))
-    Array.from(inputs).forEach(el => (el.disabled = false))
-  }
-
-  const closeEdit = (artist) => {
-    const openBtn = document.getElementById(`${artist.id}-openBtnArtist`)
-    const closeBtn = document.getElementById(`${artist.id}-closeBtnArtist`)
-    const inputs = document.getElementsByClassName(`${artist.id}-inputArtist`)
-    const openEditBtns = document.getElementsByClassName('openBtnArtist')
-
-    openBtn.style.display = "block"
-    closeBtn.style.display = "none"
-    Array.from(openEditBtns).forEach(el => (el.disabled = false))
-    Array.from(inputs).forEach(el => (el.disabled = true))
-    setFormData({})
-  }
-
-  const editArtist = async (id) => {
-    const artist = fetchedArtists.filter(c => c.id === id)[0]
-    const { error } = await supabase
-      .from('artists')
-      .update({
-        name: formData.name ? formData.name : artist.name,
-        headline: formData.headline ? formData.headline : artist.headline,
-        description: formData.description ? formData.description : artist.description,
-        origin: formData.origin ? formData.origin : artist.origin,
-      })
-      .eq('id', id)
-
-    if (!error) {
-      notify("Artist updated successfully!")
-      const openBtn = document.getElementById(`${id}-openBtnArtist`)
-      const closeBtn = document.getElementById(`${id}-closeBtnArtist`)
-      const inputs = document.getElementsByClassName(`${id}-inputArtist`)
-      const openEditBtns = document.getElementsByClassName('openBtnArtist')
-
-      openBtn.style.display = "block"
-      closeBtn.style.display = "none"
-      Array.from(openEditBtns).forEach(el => (el.disabled = false))
-      Array.from(inputs).forEach(el => (el.disabled = true))
-      setFormData({})
-    }
-  }
 
   const toggleDeleteModal = (artist) => {
     setArtistToDelete(artist)
@@ -116,6 +59,8 @@ const Artists = ({ artists }) => {
     setSearch('')
   }
 
+  const truncate = (input) => input.length > 30 ? `${input.substring(0, 30)}...` : input
+
   if (!fetchedArtists) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
@@ -153,49 +98,18 @@ const Artists = ({ artists }) => {
                 <Link href={`/artists/${artist.id}`}>
                   <a>
                     {artist.avatar_url ?
-                      <img src={artist.avatar_url} alt='Artist Image' className='w-12 shadow aspect-square bg-cover' />
+                      <img src={artist.public_url} alt='Artist Image' className='w-12 shadow aspect-square bg-cover' />
                       :
                       "n/a"
                     }
                   </a>
                 </Link>
               </td>
-              <td>
-                <input
-                  type='text' name='name' id='name'
-                  onChange={setData} disabled required
-                  defaultValue={artist.name}
-                  className={`${artist.id}-inputArtist`}
-                />
-              </td>
-              <td>
-                <input
-                  type='text' name='headline' id='headline'
-                  onChange={setData} disabled
-                  defaultValue={artist.headline}
-                  className={`${artist.id}-inputArtist`}
-                />
-              </td>
-              <td>
-                <input
-                  type='text' name='description' id='description'
-                  onChange={setData} disabled required
-                  defaultValue={artist.description}
-                  className={`${artist.id}-inputArtist`}
-                />
-              </td>
-              <td>
-                <input
-                  type='text' name='origin' id='origin'
-                  onChange={setData} disabled required
-                  defaultValue={artist.origin}
-                  className={`${artist.id}-inputArtist`}
-                />
-              </td>
-
-              <td>
-                {artist.numberOfNfts}
-              </td>
+              <td>{artist.name}</td>
+              <td>{truncate(artist.headline)}</td>
+              <td>{truncate(artist.description)}</td>
+              <td>{artist.origin}</td>
+              <td>{artist.numberOfNfts}</td>
 
               <td className='whitespace-nowrap'>
                 {artist.featured ?
@@ -206,17 +120,13 @@ const Artists = ({ artists }) => {
               </td>
 
               <td className='text-right align-middle pr-0'>
-                <div id={`${artist.id}-closeBtnArtist`} className='hidden items-center justify-between gap-2'>
-                  <button onClick={() => editArtist(artist.id)} aria-label='Edit Artist' className='button-admin'>
-                    Save
-                  </button>
-                  <button onClick={() => closeEdit(artist)} aria-label='Close Edit Dialog' className='button-admin'>
-                    Cancel
-                  </button>
-                </div>
-                <button onClick={() => openEdit(artist.id)} id={`${artist.id}-openBtnArtist`} className='openBtn button-admin' aria-label='OpenEdit Dialog'>
-                  Edit
-                </button>
+                <Link href={`/admin/artists/${artist.id}`}>
+                  <a className=''>
+                    <button className='button-admin'>
+                      Edit
+                    </button>
+                  </a>
+                </Link>
               </td>
 
               <td className='text-right align-middle pr-0'>
@@ -231,7 +141,7 @@ const Artists = ({ artists }) => {
 
       {/* Add artist */}
       <Link href='/admin/artists/create'>
-        <a className='my-4 link flex items-center gap-1 text-xs'>
+        <a className='mt-6 link flex items-center gap-1 text-xs'>
           <PlusIcon className='w-4' />Add artist
         </a>
       </Link>

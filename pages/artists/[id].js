@@ -1,11 +1,12 @@
 import { supabase } from '../../lib/supabase'
 import Head from 'next/head'
+import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 
 /* eslint-disable no-unused-vars */
 const Artist = ({ artist, artistNfts }) => {
   /* eslint-enable no-unused-vars */
 
-  const { id, name, headline, description, origin, avatar_url, created_at, numberOfNfts } = artist
+  const { id, name, headline, description, origin, public_url, created_at, numberOfNfts } = artist
 
   return (
     <>
@@ -17,7 +18,7 @@ const Artist = ({ artist, artistNfts }) => {
       <div className='flex flex-col items-center px-[40px] h-[calc(100vh-200px)]'>
 
         <div key={id} className='flex flex-col md:flex-row items-center justify-center gap-[40px] w-full'>
-          <img src={avatar_url} alt='Artist Image' className='md:w-1/2 shadow-2xl' />
+          <img src={public_url} alt='Artist Image' className='md:w-1/2 shadow-2xl' />
           <div className='w-1/2'>
             <h1 className='mx-auto'>{name}</h1>
             <hr className='mt-8 mb-12' />
@@ -28,29 +29,6 @@ const Artist = ({ artist, artistNfts }) => {
             <p className='mt-8 text-xs'>On Moonshire since: {created_at.slice(0, 10)}</p>
           </div>
         </div>
-
-        {/* <h2 className='mt-28 mb-8 self-start text-3xl'>NFTs made by {name}:</h2>
-        <div className='flex flex-wrap items-center gap-4 w-full'>
-          {artistNfts.map(nft => {
-            const { id, name, price, artists, image_url } = nft
-            return (
-              <Link href={`/nfts/${id}`} key={id}>
-                <a>
-                  <div className='max-w-lg w-full px-6 py-4 mb-6 rounded border border-detail dark:border-detail-dark shadow-md hover:cursor-pointer transition-all'>
-                    <div className='flex flex-col gap-4 items-start justify-center'>
-                      <img src={image_url} alt='NFT Image' className='max-w-[200px] aspect-square' />
-                      <div className='w-full'>
-                        <h2 className='mt-0'>{name}</h2>
-                        <p className='text-tiny'>by {artists.name}</p>
-                        <p className='mt-4'>{price} ETH</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </Link>
-            )
-          })}
-        </div> */}
       </div>
     </>
   )
@@ -61,6 +39,7 @@ export async function getServerSideProps(context) {
 
   let { data: nfts } = await supabase.from('nfts').select(`*, artists(*)`).order('id', { ascending: true })
   let { data: artist } = await supabase.from('artists').select(`*`).eq('id', id).single()
+
   if (!artist) {
     return {
       redirect: {
@@ -70,8 +49,12 @@ export async function getServerSideProps(context) {
       props: {}
     }
   }
+
   const artistNfts = nfts.filter((n => n.artist === artist.id))
   artist.numberOfNfts = artistNfts.length
+
+  const url = await getPublicUrl('artists', artist.avatar_url)
+  artist.public_url = url
 
   return {
     props: { artist, artistNfts },

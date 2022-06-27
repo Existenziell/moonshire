@@ -1,9 +1,8 @@
 import { supabase } from '../../../lib/supabase'
 import { useState } from 'react'
-import FilePicker from '../../../components/market/FilePicker'
 import useApp from "../../../context/App"
-import uploadFileToIpfs from '../../../lib/uploadFileToIpfs'
 import { useRouter } from 'next/router'
+import UploadImage from '../../../components/UploadImage'
 
 const Create = () => {
 
@@ -20,15 +19,9 @@ const Create = () => {
     if (fileUrl && formData.name && formData.headline && formData.description) setFormIsReady(true)
   }
 
-  const handleUpload = async (e) => {
-    const url = await uploadFileToIpfs(e)
-    setFileUrl(url)
-  }
-
   const addArtist = async (e) => {
     e.preventDefault()
     setLoading(true)
-
 
     const { error } = await supabase
       .from('artists')
@@ -44,9 +37,7 @@ const Create = () => {
       notify("Artist added successfully!")
       setFormData(null)
       setLoading(false)
-      setTimeout(() => {
-        router.push('/artists')
-      }, 2000)
+      router.push('/artists')
     }
   }
 
@@ -55,8 +46,15 @@ const Create = () => {
       <h1 className='mx-auto'>Create Artist</h1>
 
       <h2 className='mb-2'>Artist Picture</h2>
-      <FilePicker onChange={(e) => handleUpload(e)} size={200} url={fileUrl} />
-
+      <UploadImage
+        bucket='artists'
+        url={fileUrl}
+        size={200}
+        onUpload={(url) => {
+          setFormData({ ...formData, image_url: url })
+          setFileUrl(url)
+        }}
+      />
       <label htmlFor='name' className='mt-12 w-full'>
         <h2 className='mb-2'>Name</h2>
         <input

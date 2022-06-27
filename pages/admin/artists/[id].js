@@ -6,42 +6,42 @@ import UploadImage from '../../../components/UploadImage'
 import { useRouter } from 'next/router'
 import BackBtn from '../../../components/admin/BackBtn'
 
-const Collection = ({ collection }) => {
-  const { id, title, headline, description, year, featured, image_url } = collection
+const Artist = ({ artist }) => {
+  const { id, name, headline, description, origin, featured, avatar_url } = artist
   const { notify } = useApp()
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
-  const [imageUrl, setImageUrl] = useState()
+  const [avatarUrl, setAvatarUrl] = useState()
   const [isFeatured, setIsFeatured] = useState()
   const router = useRouter()
 
   useEffect(() => {
-    setImageUrl(image_url)
+    setAvatarUrl(avatar_url)
     setIsFeatured(featured)
-  }, [image_url])
+  }, [avatar_url])
 
   const setData = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, ...{ [name]: value } })
   }
 
-  const saveCollection = async (e) => {
+  const saveArtist = async (e) => {
     e.preventDefault()
     setLoading(true)
     const { error } = await supabase
-      .from('collections')
+      .from('artists')
       .update({
-        image_url: imageUrl,
-        title: formData.title ? formData.title : title,
+        avatar_url: avatarUrl,
+        name: formData.name ? formData.name : name,
         headline: formData.headline ? formData.headline : headline,
         description: formData.description ? formData.description : description,
-        year: formData.year ? formData.year : year,
+        origin: formData.origin ? formData.origin : origin,
         featured: isFeatured,
       })
       .eq('id', id)
 
     if (!error) {
-      notify("Collection updated successfully!")
+      notify("Artist updated successfully!")
       setLoading(false)
       setFormData(null)
       router.push('/admin')
@@ -52,27 +52,27 @@ const Collection = ({ collection }) => {
     <div className='mb-20 w-full relative'>
       <BackBtn href='/admin' />
 
-      <form onSubmit={saveCollection} className='edit-collection flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
-        <h1 className='mb-10'>Edit Collection</h1>
+      <form onSubmit={saveArtist} className='edit-artist flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
+        <h1 className='mb-10'>Edit Artist</h1>
 
-        <h2 className='mb-2'>Cover</h2>
+        <h2 className='mb-2'>Picture</h2>
         <UploadImage
-          bucket='collections'
-          url={imageUrl}
+          bucket='artists'
+          url={avatarUrl}
           size={200}
           onUpload={(url) => {
-            setFormData({ ...formData, image_url: url })
-            setImageUrl(url)
+            setFormData({ ...formData, avatar_url: url })
+            setAvatarUrl(url)
           }}
         />
 
-        <label htmlFor='title' className='mt-12 w-full'>
-          <h2 className='mb-2'>Title</h2>
+        <label htmlFor='name' className='mt-12 w-full'>
+          <h2 className='mb-2'>Name</h2>
           <input
-            type='text' name='title' id='title'
+            type='text' name='name' id='name'
             onChange={setData} required
-            defaultValue={title}
-            placeholder='Collection Title'
+            defaultValue={name}
+            placeholder='Artist name'
             className='block mt-2 w-full'
             disabled={loading}
           />
@@ -84,7 +84,7 @@ const Collection = ({ collection }) => {
             type='text' name='headline' id='headline'
             onChange={setData} required
             defaultValue={headline}
-            placeholder='Collection Headline'
+            placeholder='Artist headline'
             className='block mt-2 w-full'
             disabled={loading}
           />
@@ -96,19 +96,19 @@ const Collection = ({ collection }) => {
             name='description' id='description' rows={10}
             onChange={setData} required
             defaultValue={description}
-            placeholder="Provide a detailed description of your collection."
+            placeholder="Description"
             className='block mt-2 w-full'
             disabled={loading}
           />
         </label>
 
-        <label htmlFor='year' className='mt-12 w-full'>
-          <h2 className='mb-2'>Year</h2>
+        <label htmlFor='origin' className='mt-12 w-full'>
+          <h2 className='mb-2'>Origin</h2>
           <input
-            type='text' name='year' id='year'
+            type='text' name='origin' id='origin'
             onChange={setData} required
-            defaultValue={year}
-            placeholder='Year of Appearance'
+            defaultValue={origin}
+            placeholder='Artist origin'
             className='block mt-2 w-full'
             disabled={loading}
           />
@@ -130,62 +130,16 @@ const Collection = ({ collection }) => {
 
 export async function getServerSideProps(context) {
   const id = context.params.id
+  const { data: artist } = await supabase.from('artists').select(`*`).eq('id', id).single()
+  const { data: artistNfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).eq('artist', id).order('created_at', { ascending: false })
 
-  let { data: collection } = await supabase.from('collections').select(`*`).eq('id', id).single()
-  let { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('id', { ascending: true })
-
-  if (!collection) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/collections",
-      },
-      props: {}
-    }
-  }
-
-  // Set public IPFS url for collection cover image
-  if (collection.image_url) {
-    const url = await getPublicUrl('collections', collection.image_url)
-    collection.public_url = url
-  }
-
-  // Set Number of NFTs in collection
-  const collectionNfts = nfts.filter((n => n.collection === collection.id))
-  collection.numberOfNfts = collectionNfts.length
-
-  if (collectionNfts.length > 0) {
-
-    // Collect artists that have NFTs in this collection
-    let collectionArtists = []
-    for (let nft of collectionNfts) {
-      collectionArtists.push(nft.artists.name)
-    }
-
-    /* eslint-disable no-undef */
-    const uniqueCollectionArtists = [...new Set(collectionArtists)]
-    /* eslint-enable no-undef */
-    collection.artists = uniqueCollectionArtists
-
-    // Set floor and highest price
-    let floorPrice = 1000000
-    let highestPrice = 0
-
-    for (let nft of collectionNfts) {
-      if (highestPrice < nft.price) {
-        highestPrice = nft.price
-      }
-      if (floorPrice > nft.price) {
-        floorPrice = nft.price
-      }
-    }
-    collection.floorPrice = floorPrice
-    collection.highestPrice = highestPrice
-  }
+  artist.numberOfNfts = artistNfts.length
+  const url = await getPublicUrl('artists', artist.avatar_url)
+  artist.public_url = url
 
   return {
-    props: { collection, collectionNfts },
+    props: { artist },
   }
 }
 
-export default Collection
+export default Artist

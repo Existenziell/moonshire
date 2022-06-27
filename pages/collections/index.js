@@ -65,7 +65,6 @@ export async function getServerSideProps() {
   // Enrich each collection with numberOfNfts, public_url, floorPrice, highestPrice, artists
   for (let collection of collections) {
 
-    // Get the public_url (IPFS) of the cover image for each collection
     const url = await getPublicUrl('collections', collection.image_url)
     collection.public_url = url
 

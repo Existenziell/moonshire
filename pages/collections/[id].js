@@ -171,7 +171,6 @@ export async function getServerSideProps(context) {
     }
   }
 
-  // Set public IPFS url for collection cover image
   if (collection.image_url) {
     const url = await getPublicUrl('collections', collection.image_url)
     collection.public_url = url
