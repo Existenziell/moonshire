@@ -8,10 +8,8 @@ import Search from './Search'
 
 const Collections = ({ collections }) => {
   const { notify } = useApp()
-
   const [fetchedCollections, setFetchedCollections] = useState()
   const [filteredCollections, setFilteredCollections] = useState()
-  const [formData, setFormData] = useState({})
   const [showDelete, setShowDelete] = useState(false)
   const [collectionToDelete, setCollectionToDelete] = useState()
   const [search, setSearch] = useState('')
@@ -20,62 +18,6 @@ const Collections = ({ collections }) => {
     setFetchedCollections(collections)
     setFilteredCollections(collections)
   }, [collections])
-
-  const setData = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, ...{ [name]: value } })
-  }
-
-  const openEdit = (id) => {
-    const openBtn = document.getElementById(`${id}-openBtnCollection`)
-    const closeBtn = document.getElementById(`${id}-closeBtnCollection`)
-    const inputs = document.getElementsByClassName(`${id}-inputCollection`)
-    const openEditBtns = document.getElementsByClassName('openBtnCollection')
-    openBtn.style.display = "none"
-    closeBtn.style.display = "flex"
-    Array.from(openEditBtns).forEach(el => (el.disabled = true))
-    Array.from(inputs).forEach(el => (el.disabled = false))
-  }
-
-  const closeEdit = (collection) => {
-    const openBtn = document.getElementById(`${collection.id}-openBtnCollection`)
-    const closeBtn = document.getElementById(`${collection.id}-closeBtnCollection`)
-    const inputs = document.getElementsByClassName(`${collection.id}-inputCollection`)
-    const openEditBtns = document.getElementsByClassName('openBtnCollection')
-
-    openBtn.style.display = "block"
-    closeBtn.style.display = "none"
-    Array.from(openEditBtns).forEach(el => (el.disabled = false))
-    Array.from(inputs).forEach(el => (el.disabled = true))
-    setFormData({})
-  }
-
-  const editCollection = async (id) => {
-    const collection = fetchedCollections.filter(c => c.id === id)[0]
-    const { error } = await supabase
-      .from('collections')
-      .update({
-        title: formData.title ? formData.title : collection.title,
-        headline: formData.headline ? formData.headline : collection.headline,
-        description: formData.description ? formData.description : collection.description,
-        year: formData.year ? formData.year : collection.year,
-      })
-      .eq('id', id)
-
-    if (!error) {
-      notify("Collection updated successfully!")
-      const openBtn = document.getElementById(`${id}-openBtnCollection`)
-      const closeBtn = document.getElementById(`${id}-closeBtnCollection`)
-      const inputs = document.getElementsByClassName(`${id}-inputCollection`)
-      const openEditBtns = document.getElementsByClassName('openBtnCollection')
-
-      openBtn.style.display = "block"
-      closeBtn.style.display = "none"
-      Array.from(openEditBtns).forEach(el => (el.disabled = false))
-      Array.from(inputs).forEach(el => (el.disabled = true))
-      setFormData({})
-    }
-  }
 
   const toggleDeleteModal = (collection) => {
     setCollectionToDelete(collection)
@@ -114,6 +56,8 @@ const Collections = ({ collections }) => {
     setFilteredCollections(fetchedCollections)
     setSearch('')
   }
+
+  const truncate = (input) => input.length > 30 ? `${input.substring(0, 30)}...` : input
 
   if (!fetchedCollections) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
@@ -159,46 +103,17 @@ const Collections = ({ collections }) => {
                 <Link href={`/collections/${collection.id}`}>
                   <a>
                     {collection.public_url ?
-                      <img src={collection.public_url} alt='Collection Image' className='w-12 shadow' />
+                      <img src={collection.public_url} alt='Collection Image' className='w-12 shadow aspect-square bg-cover' />
                       :
                       "n/a"
                     }
                   </a>
                 </Link>
               </td>
-              <td>
-                <input
-                  type='text' name='title' id='title'
-                  onChange={setData} disabled required
-                  defaultValue={collection.title}
-                  className={`${collection.id}-inputCollection`}
-                />
-              </td>
-              <td>
-                <input
-                  type='text' name='headline' id='headline'
-                  onChange={setData} disabled
-                  defaultValue={collection.headline}
-                  className={`${collection.id}-inputCollection`}
-                />
-              </td>
-              <td>
-                <input
-                  type='text' name='description' id='description'
-                  onChange={setData} disabled required
-                  defaultValue={collection.description}
-                  className={`${collection.id}-inputCollection`}
-                />
-              </td>
-              <td>
-                <input
-                  type='text' name='year' id='year'
-                  onChange={setData} disabled required
-                  defaultValue={collection.year}
-                  className={`${collection.id}-inputCollection`}
-                />
-              </td>
-
+              <td className='whitespace-nowrap'>{collection.title}</td>
+              <td>{truncate(collection.headline)}</td>
+              <td>{truncate(collection.description)}</td>
+              <td>{collection.year}</td>
               <td>{collection.numberOfNfts}</td>
 
               <td className='whitespace-nowrap'>
@@ -209,17 +124,13 @@ const Collections = ({ collections }) => {
                 }
               </td>
               <td className='text-right align-middle pr-0'>
-                <div id={`${collection.id}-closeBtnCollection`} className='hidden items-center justify-between gap-2'>
-                  <button onClick={() => editCollection(collection.id)} aria-label='Edit Collection' className='button-admin'>
-                    Save
-                  </button>
-                  <button onClick={() => closeEdit(collection)} aria-label='Close Edit Dialog' className='button-admin'>
-                    Cancel
-                  </button>
-                </div>
-                <button onClick={() => openEdit(collection.id)} id={`${collection.id}-openBtnCollection`} className='openBtn button-admin' aria-label='OpenEdit Dialog'>
-                  Edit
-                </button>
+                <Link href={`/admin/collections/${collection.id}`}>
+                  <a className=''>
+                    <button className='button-admin'>
+                      Edit
+                    </button>
+                  </a>
+                </Link>
               </td>
 
               <td className='text-right align-middle pr-0'>
@@ -263,7 +174,6 @@ const Collections = ({ collections }) => {
           </div>
         </div>
       }
-
     </div >
   )
 }

@@ -7,12 +7,10 @@ import useApp from "../../context/App"
 
 const CreateCollection = () => {
   const { address, signer, currentUser, notify } = useApp()
-
   const [imageUrl, setImageUrl] = useState(null)
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
   const [formIsReady, setFormIsReady] = useState(false)
-
   const router = useRouter()
 
   const setData = (e) => {

@@ -113,7 +113,7 @@ hr {
 .profile input[type='email'], 
 .profile input[type='website'] {
   @apply bg-brand dark:bg-brand-dark text-center rounded py-2
-    focus:border-none focus:outline-none focus:scale-105 transition-all;
+    focus:border-none focus:outline-none focus:scale-105 transition-all focus:ring-cta;
 }
 
 
@@ -232,11 +232,13 @@ input[type="radio"]:checked:disabled::before {
 .create-collection input[type='text'], 
 .create-collection textarea,
 .create-artist input[type='text'], 
-.create-artist textarea
+.create-artist textarea,
+.edit-collection input[type='text'], 
+.edit-collection textarea
 {
   @apply px-5 py-4 rounded-lg
   bg-brand dark:bg-brand-dark border border-detail dark:border-detail-dark 
-    focus:outline-none focus:shadow-2xl;
+    focus:outline-none focus:shadow-2xl focus:ring-cta;
 }
 
 /* Override react-select input */
@@ -244,6 +246,9 @@ input[type="radio"]:checked:disabled::before {
   @apply text-brand-dark dark:text-brand;
 }
 
+#react-select-true-input {
+  @apply focus:ring-0;
+}
 
 /* ==========================================================================
 	Create NFT, Create Collection

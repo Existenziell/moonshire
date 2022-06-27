@@ -107,7 +107,7 @@ const Profile = () => {
                   value={username || ''}
                   onChange={(e) => setUser(e)}
                   placeholder='Username'
-                  className='text-4xl md:text-6xl font-serif w-full'
+                  className='text-4xl md:text-6xl font-serif w-full ring-0 border-0'
                 />
               </label>
               {modified &&
