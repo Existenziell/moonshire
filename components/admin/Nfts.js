@@ -40,8 +40,9 @@ const Nfts = ({ nfts }) => {
     if (!error) {
       notify("NFT deleted successfully!")
       setShowDelete(false)
-      const filteredNfts = fetchedNfts.filter(c => { return c.id !== nftToDelete.id })
-      setFetchedNfts(filteredNfts)
+      const filtered = fetchedNfts.filter(c => { return c.id !== nftToDelete.id })
+      setFetchedNfts(filtered)
+      setFilteredNfts(filtered)
     }
   }
 
@@ -84,6 +85,7 @@ const Nfts = ({ nfts }) => {
             <th>Price</th>
             <th>Wallet</th>
             <th>Featured</th>
+            <th className='text-right'>Edit</th>
             <th className='text-right'>Delete</th>
           </tr>
         </thead>
@@ -134,6 +136,17 @@ const Nfts = ({ nfts }) => {
                   `No`
                 }
               </td>
+
+              <td className='text-right align-middle pr-0'>
+                <Link href={`/admin/nfts/${nft.id}`}>
+                  <a>
+                    <button className='button-admin'>
+                      Edit
+                    </button>
+                  </a>
+                </Link>
+              </td>
+
               <td className='text-right pr-0'>
                 <div>
                   <button onClick={() => toggleDeleteModal(nft)} aria-label='Toggle Delete Modal' className='button-admin'>
