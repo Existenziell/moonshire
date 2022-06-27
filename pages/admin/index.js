@@ -13,7 +13,7 @@ import useApp from "../../context/App"
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
 
-const Admin = ({ nfts, collections, artists, users, roles }) => {
+const Admin = ({ nfts, collections, artists, users }) => {
   const { currentUser } = useApp()
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -50,7 +50,7 @@ const Admin = ({ nfts, collections, artists, users, roles }) => {
         <Nfts nfts={nfts} />
         <Collections collections={collections} />
         <Artists artists={artists} collections={collections} />
-        <Users users={users} roles={roles} />
+        <Users users={users} />
         <p className='text-xs mb-8 text-center mx-auto'>
           Contract Address: <a href={`https://rinkeby.etherscan.io/address/${marketplaceAddress}#code`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{marketplaceAddress}</a>
         </p>
@@ -64,7 +64,6 @@ export async function getServerSideProps() {
   const { data: collections } = await supabase.from('collections').select(`*`).order('created_at', { ascending: false })
   const { data: artists } = await supabase.from('artists').select(`*`).order('created_at', { ascending: false })
   const { data: users } = await supabase.from('users').select(`*, roles(*)`).order('username', { ascending: true })
-  const { data: roles } = await supabase.from('roles').select(`id, name`)
 
   for (let artist of artists) {
     const artistNfts = nfts.filter((n => n.artist === artist.id))
@@ -93,7 +92,7 @@ export async function getServerSideProps() {
   }
 
   return {
-    props: { nfts, collections, artists, users, roles }
+    props: { nfts, collections, artists, users }
   }
 }
 

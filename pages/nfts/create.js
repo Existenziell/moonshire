@@ -7,6 +7,7 @@ import useApp from "../../context/App"
 import Head from 'next/head'
 import Link from 'next/link'
 import Select from 'react-select'
+import selectStyles from '../../lib/selectStyles'
 import logWeb3 from '../../lib/logWeb3'
 import FilePicker from '../../components/market/FilePicker'
 import uploadFileToIpfs from '../../lib/uploadFileToIpfs'
@@ -28,6 +29,7 @@ const CreateNft = ({ artists }) => {
   const [artistName, setArtistName] = useState('')
   const [collectionName, setCollectionName] = useState('')
   const [formIsReady, setFormIsReady] = useState(false)
+  const [styles, setStyles] = useState()
 
   const router = useRouter()
   const ipfsUrl = 'https://ipfs.infura.io/ipfs/'
@@ -183,29 +185,10 @@ const CreateNft = ({ artists }) => {
     })
   }
 
-  const selectStyles = {
-    control: styles => ({
-      ...styles,
-      backgroundColor: darkmode === 'dark' ? 'var(--color-brand-dark)' : 'var(--color-brand)',
-      color: darkmode === 'dark' ? 'var(--color-brand) !important' : 'var(--color-brand-dark) !important',
-      border: `1px solid ${darkmode === 'dark' ? 'var(--color-detail-dark)' : 'var(--color-detail)'} !important`,
-      // This line disable the blue border
-      boxShadow: '0 !important'
-    }),
-    menuList: styles => ({
-      ...styles,
-      paddingTop: 0,
-      paddingBottom: 0,
-    }),
-    option: (styles, { isFocused }) => {
-      return {
-        ...styles,
-        backgroundColor: darkmode === 'dark' ? 'var(--color-brand-dark)' : 'var(--color-brand)',
-        color: isFocused && 'var(--color-cta)',
-        cursor: 'pointer',
-      }
-    }
-  }
+  useEffect(() => {
+    let tempStyles = selectStyles(darkmode)
+    setStyles(tempStyles)
+  }, [darkmode])
 
   if (!hasMetamask) {
     return (
@@ -305,7 +288,7 @@ const CreateNft = ({ artists }) => {
               isReq={true}
               instanceId // Needed to prevent errors being thrown
               className='focus:outline-none focus:shadow-2xl dark:text-white'
-              styles={selectStyles}
+              styles={styles}
               disabled={loading}
             />
           </label>
@@ -317,7 +300,7 @@ const CreateNft = ({ artists }) => {
               options={collectionOptions}
               onChange={setCollection}
               instanceId // Needed to prevent errors being thrown
-              styles={selectStyles}
+              styles={styles}
               disabled={loading}
             />
           </label>

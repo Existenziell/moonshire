@@ -2,17 +2,14 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
 import { shortenAddress } from '../../lib/shortenAddress'
-import Select from 'react-select'
 import useApp from "../../context/App"
 import Search from './Search'
+import Link from 'next/link'
 
-const Users = ({ users, roles }) => {
+const Users = ({ users }) => {
   const { notify } = useApp()
-
   const [fetchedUsers, setFetchedUsers] = useState()
   const [filteredUsers, setFilteredUsers] = useState()
-  const [formData, setFormData] = useState({})
-  const [showEdit, setShowEdit] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
   const [userToDelete, setUserToDelete] = useState()
   const [search, setSearch] = useState('')
@@ -21,69 +18,6 @@ const Users = ({ users, roles }) => {
     setFetchedUsers(users)
     setFilteredUsers(users)
   }, [users])
-
-  const setData = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, ...{ [name]: value } })
-  }
-
-  const setSelectData = (e) => {
-    setFormData({ ...formData, ...{ role: e.value } })
-  }
-
-  const openEdit = (id) => {
-    setShowEdit(true)
-    const openBtn = document.getElementById(`${id}-openBtn`)
-    const closeBtn = document.getElementById(`${id}-closeBtn`)
-    const inputs = document.getElementsByClassName(`${id}-input`)
-    const openEditBtns = document.getElementsByClassName('openBtn')
-    openBtn.style.display = "none"
-    closeBtn.style.display = "flex"
-    Array.from(openEditBtns).forEach(el => (el.disabled = true))
-    Array.from(inputs).forEach(el => (el.disabled = false))
-  }
-
-  const closeEdit = (user) => {
-    const openBtn = document.getElementById(`${user.id}-openBtn`)
-    const closeBtn = document.getElementById(`${user.id}-closeBtn`)
-    const inputs = document.getElementsByClassName(`${user.id}-input`)
-    const openEditBtns = document.getElementsByClassName('openBtn')
-
-    openBtn.style.display = "block"
-    closeBtn.style.display = "none"
-    Array.from(openEditBtns).forEach(el => (el.disabled = false))
-    Array.from(inputs).forEach(el => (el.disabled = true))
-    setFormData({})
-  }
-
-  const editUser = async (id) => {
-    const user = fetchedUsers.filter(c => c.id === id)[0]
-    const { username, email, role } = formData
-
-    const { error } = await supabase
-      .from('users')
-      .update({
-        username: username ? username : user.username,
-        email: email ? email : user.email,
-        is_premium: formData[`${id}-is_premium`] ? formData[`${id}-is_premium`] : user.is_premium,
-        role: formData.role ? role : user.role,
-      })
-      .eq('id', id)
-
-    if (!error) {
-      notify("User updated successfully!")
-      const openBtn = document.getElementById(`${id}-openBtn`)
-      const closeBtn = document.getElementById(`${id}-closeBtn`)
-      const inputs = document.getElementsByClassName(`${id}-input`)
-      const openEditBtns = document.getElementsByClassName('openBtn')
-
-      openBtn.style.display = "block"
-      closeBtn.style.display = "none"
-      Array.from(openEditBtns).forEach(el => (el.disabled = false))
-      Array.from(inputs).forEach(el => (el.disabled = true))
-      setFormData({})
-    }
-  }
 
   const toggleDeleteModal = (user) => {
     setUserToDelete(user)
@@ -124,11 +58,6 @@ const Users = ({ users, roles }) => {
     setSearch('')
   }
 
-  let roleOptions = []
-  roles.forEach(r => {
-    roleOptions.push({ value: r.id, label: r.name })
-  })
-
   if (!fetchedUsers) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
@@ -145,8 +74,8 @@ const Users = ({ users, roles }) => {
             <th>Wallet</th>
             <th>Username</th>
             <th>Email</th>
-            <th>Premium?</th>
             <th>Created</th>
+            <th>Membership</th>
             <th>Role</th>
             <th className='text-right'>Edit</th>
             <th className='text-right'>Delete</th>
@@ -169,76 +98,21 @@ const Users = ({ users, roles }) => {
                 }
               </td>
 
-              <td className='whitespace-nowrap px-6'>
-                {shortenAddress(user.walletAddress)}
-              </td>
-
-              <td>
-                <input
-                  type='text' name='username' id='username'
-                  onChange={setData} disabled required
-                  defaultValue={user.username}
-                  className={`mr-2 ${user.id}-input`}
-                />
-              </td>
-
-              <td>
-                <input
-                  type='text' name='email' id='email'
-                  onChange={setData} disabled required
-                  defaultValue={user.email}
-                  className={`mr-2 ${user.id}-input`}
-                />
-              </td>
-
-              <td>
-                <div onChange={setData} className='block'>
-                  <label htmlFor={`${user.id}-isPremiumNo`} className='cursor-pointer flex items-center gap-2'>
-                    <input
-                      type="radio" value="false" disabled required
-                      name={`${user.id}-is_premium`}
-                      id={`${user.id}-isPremiumNo`}
-                      defaultChecked={!user.is_premium}
-                      className={`${user.id}-input bg-white`}
-                    /> No
-                  </label>
-                  <label htmlFor={`${user.id}-isPremiumYes`} className='cursor-pointer flex items-center gap-2'>
-                    <input
-                      type="radio" value="true" disabled
-                      name={`${user.id}-is_premium`}
-                      id={`${user.id}-isPremiumYes`}
-                      defaultChecked={user.is_premium}
-                      className={`${user.id}-input`}
-                    /> Yes
-                  </label>
-                </div>
-              </td>
-
+              <td className='whitespace-nowrap px-6'>{shortenAddress(user.walletAddress)}</td>
+              <td>{user.username}</td>
+              <td>{user.email}</td>
               <td className='whitespace-nowrap'>{user.created_at.slice(0, 10)}</td>
-
-              <td>
-                <Select
-                  options={roleOptions}
-                  onChange={setSelectData}
-                  instanceId // Needed to prevent errors being thrown
-                  defaultValue={roleOptions.filter(o => o.value === user.role)}
-                  isDisabled={!showEdit}
-                  className='dark:text-brand-dark'
-                />
-              </td>
+              <td>{user.is_premium ? `Premium` : `Free`}</td>
+              <td>{user.roles.name}</td>
 
               <td className='text-right align-middle pr-0'>
-                <div id={`${user.id}-closeBtn`} className='hidden items-center justify-between gap-2'>
-                  <button onClick={() => editUser(user.id)} aria-label='Edit User' className='button-admin'>
-                    Save
-                  </button>
-                  <button onClick={() => closeEdit(user)} aria-label='Close Edit Dialog' className='button-admin'>
-                    Cancel
-                  </button>
-                </div>
-                <button onClick={() => openEdit(user.id)} id={`${user.id}-openBtn`} className='openBtn button-admin' aria-label='Open Edit Dialog'>
-                  Edit
-                </button>
+                <Link href={`/admin/users/${user.id}`}>
+                  <a>
+                    <button className='button-admin'>
+                      Edit
+                    </button>
+                  </a>
+                </Link>
               </td>
 
               <td className='text-right align-middle pr-0'>

@@ -9,7 +9,6 @@ email: bauer.christof@gmail.com
 :root {
   --color-brand: #DBDBDB;
   --color-brand-dark: #242424;
-  /* --color-cta: #FF0040; */
   --color-cta: #D6A269;
   --color-detail: #CFCFCF;
   --color-detail-dark: #323232;
@@ -180,63 +179,15 @@ hr {
 
 
 /* ==========================================================================
-	Radio Buttons
+	Create/Edit NFT/Collection/User
 	========================================================================== */
 
-input[type="radio"] {
-  appearance: none;
-  background-color: #fff;
-  margin: 0;
-  font: inherit;
-  color: var(--color-brand);
-  width: 1.15em;
-  height: 1.15em;
-  border: 0.15em solid var(--color-lines);
-  border-radius: 50%;
-  transform: translateY(0.125em);
-}
-
-input[type="radio"] {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-input[type="radio"]::before {
-  content: "";
-  width: 0.65em;
-  height: 0.65em;
-  border-radius: 50%;
-  transform: scale(0);
-  transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em var(--color-admin-green);
-}
-
-input[type="radio"]:checked::before {
-  transform: scale(1);
-}
-
-input[type="radio"]:checked:disabled::before {
-  box-shadow: inset 1em 1em var(  --color-detail);
-  color: red;
-  transform: scale(1);
-}
-
-
-/* ==========================================================================
-	Create NFT, Create Collection
-	========================================================================== */
-
-.create-nft input[type='text'], 
-.create-nft textarea,
-.create-collection input[type='text'], 
-.create-collection textarea,
-.create-artist input[type='text'], 
-.create-artist textarea,
-.edit-collection input[type='text'], 
-.edit-collection textarea,
-.edit-artist input[type='text'], 
-.edit-artist textarea
+.create-nft input[type='text'], .create-nft textarea,
+.create-collection input[type='text'], .create-collection textarea,
+.create-artist input[type='text'], .create-artist textarea,
+.edit-collection input[type='text'], .edit-collection textarea,
+.edit-artist input[type='text'], .edit-artist textarea,
+.edit-user input[type='text'], .edit-user textarea
 {
   @apply px-5 py-4 rounded-lg
   bg-brand dark:bg-brand-dark border border-detail dark:border-detail-dark 
