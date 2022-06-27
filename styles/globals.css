@@ -187,7 +187,8 @@ hr {
 .create-artist input[type='text'], .create-artist textarea,
 .edit-collection input[type='text'], .edit-collection textarea,
 .edit-artist input[type='text'], .edit-artist textarea,
-.edit-user input[type='text'], .edit-user textarea
+.edit-user input[type='text'], .edit-user textarea,
+.list-nft input[type='text'], .list-nft textarea
 {
   @apply px-5 py-4 rounded-lg
   bg-brand dark:bg-brand-dark border border-detail dark:border-detail-dark 

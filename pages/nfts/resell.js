@@ -36,7 +36,7 @@ export default function ResellNft() {
       return
     }
     if (!price) {
-      notify("Are you sure you want to sell it for that price...?")
+      notify("Please enter a price first")
       return
     }
 
@@ -59,31 +59,31 @@ export default function ResellNft() {
   return (
     <div>
       <div className="flex justify-center px-[40px]">
-        <form className="shadow-md rounded flex flex-col items-center max-w-xs p-6">
-          <p className='text-xs'>Price in ETH</p>
+        <form className="list-nft flex flex-col items-center">
+          <h1>Enter price in ETH:</h1>
           <input
-            placeholder="0.25"
-            className="text-4xl bg-brand dark:bg-brand-dark text-center rounded py-2 w-full
-            focus:border-none focus:outline-none focus:scale-105 transition-all"
+            type='text' required
+            placeholder="e.g. 0.25"
             onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
-            required
+            className='text-center'
             disabled={loading}
           />
-          {image && <img className="rounded mt-4" src={image} alt='NFT Image' />}
           {loading ?
             <div className='mt-8'>
               <PulseLoader color={'var(--color-cta)'} size={10} />
               <p className='text-xs'>Waiting for blockchain confirmation...</p>
             </div>
             :
-            <button onClick={initiateResell} className="mt-4 button button-cta">
-              List NFT
+            <button onClick={initiateResell} className="mt-10 button button-cta">
+              Sell NFT
             </button>
           }
         </form>
 
       </div>
-      <div className='flex flex-col justify-center items-center mt-12 text-sm'>
+      <div className='flex flex-col justify-center items-center mt-20 text-sm'>
+        {image && <img className="rounded-sm shadow-xl max-w-xs mb-8" src={image} alt='NFT Image' />}
+
         <p>TokenURI</p>
         <a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link'>{tokenURI}</a>
       </div>
