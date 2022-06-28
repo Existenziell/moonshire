@@ -94,7 +94,7 @@ const Nft = ({ nft }) => {
                 </a>
               </div> */}
             </div>
-            <p className='mt-8'>Price: {price} ETH</p>
+            <p className='mt-10'>Price: {price} ETH</p>
 
             {loading ?
               <div className='flex flex-col items-start justify-center mt-8'>
@@ -104,14 +104,7 @@ const Nft = ({ nft }) => {
               </div>
               :
               sellerIsOwner ?
-                <div className='flex items-center mt-8 gap-8'>
-                  <Link href={`/nfts/resell?id=${tokenId}&tokenURI=${tokenURI}`}>
-                    <a className='button button-detail inline-block'>
-                      Sell
-                    </a>
-                  </Link>
-                  <span className='text-tiny inline-block'>You own this asset</span>
-                </div>
+                <p className='mt-4'>You own this asset</p>
                 :
                 <button onClick={() => initiateBuy(nft)} className='button button-cta mt-8'>Buy Asset</button>
             }
