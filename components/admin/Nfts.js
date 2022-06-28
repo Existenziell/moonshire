@@ -105,6 +105,14 @@ const Nfts = ({ nfts }) => {
             </tr>
           }
 
+          {!filteredNfts?.length &&
+            <tr className='p-4 dark:text-brand'>
+              <td colSpan={9}>
+                No results
+              </td>
+            </tr>
+          }
+
           {filteredNfts?.map((nft) => (
             <tr key={nft.id + nft.name} className='relative'>
               <td>

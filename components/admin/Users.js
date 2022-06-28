@@ -87,6 +87,14 @@ const Users = ({ users }) => {
             <tr className='p-4 dark:text-brand'><td>No users found.</td></tr>
           }
 
+          {!filteredUsers?.length &&
+            <tr className='p-4 dark:text-brand'>
+              <td colSpan={9}>
+                No results
+              </td>
+            </tr>
+          }
+
           {filteredUsers?.map((user) => (
             <tr key={user.id + user.username} className='relative'>
 

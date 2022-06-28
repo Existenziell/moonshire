@@ -97,6 +97,14 @@ const Collections = ({ collections }) => {
             </tr>
           }
 
+          {!filteredCollections?.length &&
+            <tr className='p-4 dark:text-brand'>
+              <td colSpan={9}>
+                No results
+              </td>
+            </tr>
+          }
+
           {filteredCollections?.map((collection) => (
             <tr key={collection.id + collection.title} className='relative'>
               <td>

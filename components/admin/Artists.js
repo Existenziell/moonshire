@@ -92,6 +92,14 @@ const Artists = ({ artists }) => {
             </tr>
           }
 
+          {!filteredArtists?.length &&
+            <tr className='p-4 dark:text-brand'>
+              <td colSpan={9}>
+                No results
+              </td>
+            </tr>
+          }
+
           {filteredArtists?.map((artist) => (
             <tr key={artist.id + artist.name} className='relative'>
               <td>
