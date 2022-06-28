@@ -84,6 +84,7 @@ const Nfts = ({ nfts }) => {
             <th>Collection</th>
             <th>Price</th>
             <th>Wallet</th>
+            <th>Listed</th>
             <th>Featured</th>
             <th className='text-right'>Edit</th>
             <th className='text-right'>Delete</th>
@@ -127,6 +128,13 @@ const Nfts = ({ nfts }) => {
                   shortenAddress(nft.walletAddress)
                   :
                   `n/a`
+                }
+              </td>
+              <td className='whitespace-nowrap'>
+                {nft.listed ?
+                  <CheckIcon className='w-6' />
+                  :
+                  `No`
                 }
               </td>
               <td className='whitespace-nowrap'>
