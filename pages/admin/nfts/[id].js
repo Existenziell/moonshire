@@ -4,10 +4,11 @@ import { useRouter } from 'next/router'
 import { shortenAddress } from '../../../lib/shortenAddress'
 import useApp from "../../../context/App"
 import BackBtn from '../../../components/admin/BackBtn'
+import getProfile from '../../../lib/supabase/getProfile'
 
 const NFT = ({ nft }) => {
 
-  const { id, name, description, walletAddress, price, tokenId, tokenURI, image_url, users, artists, collections, listed, featured } = nft
+  const { id, name, description, walletAddress, owner, price, tokenId, tokenURI, image_url, users, artists, collections, listed, featured } = nft
   const { notify } = useApp()
   const [loading, setLoading] = useState(false)
   const [isFeatured, setIsFeatured] = useState(false)
@@ -30,6 +31,8 @@ const NFT = ({ nft }) => {
     }
   }
 
+  const truncate = (input) => `${input.substring(0, 22)}...${input.substring(input.length - 12, input.length)}`
+
   return (
     <div className='mb-20 w-full relative'>
       <BackBtn href='/admin' />
@@ -37,66 +40,33 @@ const NFT = ({ nft }) => {
       <form onSubmit={saveNft} className='edit-user flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
         <h1 className='mb-10'>Edit NFT</h1>
 
-        <div className='flex flex-col md:flex-row gap-10 items-start justify-start'>
+        <div className='flex flex-col md:flex-row gap-10 items-start justify-start mb-10'>
           <img src={image_url} alt='NFT Image' className='max-w-xs shadow-2xl rounded-sm' />
 
           <div>
-            <div>
-              <h2 className='mb-0'>Name</h2>
-              {name}
-            </div>
-            <div>
-              <h2 className='mb-0 mt-8'>Description</h2>
-              {description}
-            </div>
-
+            <h2 className='mb-0'>Name</h2>
+            {name}
+            <label htmlFor="featured" className="cursor-pointer flex items-center justify-center whitespace-nowrap mt-10">
+              <input id="featured" type="checkbox" defaultChecked={featured} onChange={() => setIsFeatured(!featured)} className="w-8 h-8 text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600" disabled={loading} />
+              <span className='relative bottom-1 ml-4 text-[30px]'>Featured on Startpage</span>
+            </label>
           </div>
         </div>
 
-        <div>
-          <h2 className='mb-0 mt-8'>Artist</h2>
-          {artists.name}
-        </div>
-        <div>
-          <h2 className='mb-0 mt-8'>Collection</h2>
-          {collections.title}
-        </div>
-        <div>
-          <h2 className='mb-0 mt-8'>Created by</h2>
-          {users.username}
-        </div>
-        <div>
-          <h2 className='mb-0 mt-8'>Current Owner</h2>
-          {shortenAddress(walletAddress)}
-        </div>
+        <p className='mb-2'>Artist: {artists.name}</p>
+        <p className='mb-2'>Collection: {collections.title}</p>
+        <p className='mb-2'>Created by: {users.username}</p>
+        <p className='mb-8'>Description: {description}</p>
 
-        <div>
-          <h2 className='mb-0 mt-8'>TokenID</h2>
-          {tokenId}
-        </div>
-        <div>
-          <h2 className='mb-0 mt-8'>TokenURI</h2>
-          <a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link'>{tokenURI}</a>
-        </div>
-        <div>
-          <h2 className='mb-0 mt-8'>Currently listed</h2>
-          {listed ? `Yes` : `No`}
-        </div>
-        <div>
-          <h2 className='mb-0 mt-8'>Last price</h2>
-          {price} ETH
-        </div>
-        <div>
-          <h2 className='mb-0 mt-8'>Featured on Startpage</h2>
-          <div className="flex items-center mr-4">
-            <input id="featured" type="checkbox" defaultChecked={featured} onChange={() => setIsFeatured(!featured)} className="w-4 h-4 text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600" disabled={loading} />
-            <label htmlFor="featured" className="ml-2 cursor-pointer">Featured on Startpage</label>
-          </div>
-        </div>
+        <p className='mb-2'>TokenID: {tokenId}</p>
+        <p className='mb-2'>Currently listed: {listed ? `Yes` : `No`}</p>
+        <p className='mb-2'>Current owner: {shortenAddress(walletAddress)} ({owner})</p>
+        <p className='mb-2'>{listed ? `Current price:` : `Last price:`} {price} ETH</p>
+        <p className='mb-2 whitespace-nowrap'>TokenURI: <a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link'>{truncate(tokenURI)}</a></p>
 
         <input type='submit' className='button button-cta mt-12' value='Save' disabled={loading} />
-      </form>
-    </div>
+      </form >
+    </div >
   )
 }
 
@@ -119,6 +89,9 @@ export async function getServerSideProps(context) {
       props: {}
     }
   }
+
+  const owner = await getProfile(nft.walletAddress)
+  nft.owner = owner.username
 
   return {
     props: { nft },
