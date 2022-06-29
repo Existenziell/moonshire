@@ -12,36 +12,43 @@ const Collections = ({ collections }) => {
       </Head>
 
       {collections.length > 0 ?
-        <div className={`w-full`}>
+        <div className='md:snap-y md:snap-mandatory md:h-[calc(100vh-200px)] md:overflow-y-scroll'>
           {collections.map(collection => {
             const { id, title, headline, description, public_url, numberOfNfts, floorPrice, highestPrice, artists } = collection
 
             return (
-              <div key={id} className={`w-full h-[calc(100vh-160px)] flex flex-col md:flex-row items-center justify-center gap-[40px] mb-20 md:mb-0 px-[40px]`}>
-                <div className='md:w-[calc(50vw-100px)]'>
-                  <Link href={`/collections/${id}`}>
-                    <a>
-                      <img src={public_url} alt='Cover Image' className='aspect-square bg-cover shadow-2xl' />
-                    </a>
-                  </Link>
-                </div>
-                <div className='md:w-1/2'>
-                  <h1>{title}</h1>
-                  <p className='mb-4'>{headline}</p>
-                  <hr className='my-8' />
-                  <p className='my-4'>{description}</p>
-                  <p className='mb-4'>
-                    {numberOfNfts} NFTs available by {artists.length > 1 ? `artists` : `artist`} {artists ? artists.join(', ') : `None`}.
-                  </p>
-                  {floorPrice &&
-                    <p><span className='w-36 whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
-                  }
-                  {highestPrice &&
-                    <p className='mb-8'><span className='w-36 whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
-                  }
-                  <Link href={`/collections/${id}`}>
-                    <a className='button button-cta mx-auto mt-8 md:mx-0 uppercase'>View Collection</a>
-                  </Link>
+              <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-200px)] w-full mb-40'>
+                <div className={`flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]`}>
+                  <div className='md:w-1/2 '>
+                    <Link href={`/collections/${id}`}>
+                      <a>
+                        <img src={public_url} alt='Cover Image' className='aspect-square shadow-2xl max-h-[calc(100vh-260px)]' />
+                      </a>
+                    </Link>
+                  </div>
+                  <div className='md:w-1/2'>
+                    <h1 className='mb-0'>{title}</h1>
+                    <hr className='my-8' />
+                    <p className='mb-4'>{headline}</p>
+                    <p className='my-4'>{description}</p>
+                    <p className='mb-4'>
+                      A selection of {numberOfNfts} exclusive artworks by <span className='text-white'>{artists.join(', ')}</span>
+                    </p>
+                    <hr className='my-8' />
+                    <div className='flex items-center gap-10'>
+                      <div>
+                        {floorPrice &&
+                          <p><span className='w-36 whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
+                        }
+                        {highestPrice &&
+                          <p><span className='w-36 whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
+                        }
+                      </div>
+                      <Link href={`/collections/${id}`}>
+                        <a className='button button-cta mx-auto md:mx-0 uppercase'>View Collection</a>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             )
