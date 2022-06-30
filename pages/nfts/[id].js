@@ -68,14 +68,14 @@ const Nft = ({ nft }) => {
         <meta name='description' content={`${name} | NFT | Project Moonshire`} />
       </Head>
 
-      <div className='flex flex-col items-center md:h-[calc(100vh-200px)] px-[40px]'>
+      <div className='px-[40px] md:h-[calc(100vh-200px)]'>
 
-        <div className='flex flex-col md:flex-row items-center justify-between gap-[40px] w-full'>
+        <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] w-full'>
           <div className='md:w-1/2'>
-            <img src={image_url} alt='NFT Image' className='aspect-square bg-cover max-h-[calc(100vh-260px)] shadow-2xl' />
+            <img src={image_url} alt='Artist Image' className='aspect-square bg-cover max-h-[calc(100vh-260px)] shadow-2xl' />
           </div>
 
-          <div className='flex-grow'>
+          <div className='md:w-1/2'>
             <h1 className='mb-0'>{name}</h1>
             <hr className='my-6' />
             <p className='mb-4'>{description}</p>
@@ -97,8 +97,12 @@ const Nft = ({ nft }) => {
                   {tokenURI.substring(0, 30)}&#8230;{tokenURI.slice(tokenURI.length - 4)}
                 </a>
               </div> */}
+
+              {/* <div className='mt-10'>
+                <h1 className='mb-0'>Assets</h1>
+                <hr className='my-8' />
+              </div> */}
             </div>
-            <p className='mt-10'>Price: {fromExponential(price)} ETH</p>
 
             {loading ?
               <div className='flex flex-col items-start justify-center mt-8'>
@@ -108,11 +112,13 @@ const Nft = ({ nft }) => {
               </div>
               :
               sellerIsOwner ?
-                <p className='mt-4'>You own this asset</p>
+                <p className='mt-10'>You own this asset</p>
                 :
-                <button onClick={() => initiateBuy(nft)} className='button button-cta mt-8'>Buy Asset</button>
+                <div className='flex items-center gap-10 mt-10'>
+                  <p className='my-0 text-[30px] leading-none h-full'>{fromExponential(price)} ETH</p>
+                  <button onClick={() => initiateBuy(nft)} className='button button-cta my-0 p-0 h-full'>Buy</button>
+                </div>
             }
-
           </div>
         </div>
       </div>

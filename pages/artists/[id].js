@@ -22,7 +22,7 @@ const Artist = ({ artist }) => {
           <div className='md:w-1/2'>
             <img src={public_url} alt='Artist Image' className='aspect-square bg-cover max-h-[calc(100vh-260px)] shadow-2xl' />
           </div>
-          <div className='w-1/2'>
+          <div className='md:w-1/2'>
             <h1 className='mx-auto'>{name}</h1>
             <hr className='mt-8 mb-12' />
             <p>{headline}</p>
