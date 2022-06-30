@@ -19,12 +19,8 @@ const Collections = ({ collections }) => {
             return (
               <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-200px)] w-full mb-40'>
                 <div className={`flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]`}>
-                  <div className='md:w-1/2 '>
-                    <Link href={`/collections/${id}`}>
-                      <a>
-                        <img src={public_url} alt='Cover Image' className='aspect-square shadow-2xl max-h-[calc(100vh-260px)]' />
-                      </a>
-                    </Link>
+                  <div className='md:w-1/2'>
+                    <img src={public_url} alt='Cover Image' className='aspect-square shadow-2xl max-h-[calc(100vh-260px)]' />
                   </div>
                   <div className='md:w-1/2'>
                     <h1 className='mb-0'>{title}</h1>
