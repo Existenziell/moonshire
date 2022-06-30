@@ -12,7 +12,6 @@ import Artists from '../../components/admin/Artists'
 import Users from '../../components/admin/Users'
 import SupaAuth from '../../components/SupaAuth'
 import useApp from "../../context/App"
-import fromExponential from 'from-exponential'
 
 const Admin = ({ nfts, collections, artists, users }) => {
   const { currentUser } = useApp()
