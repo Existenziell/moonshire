@@ -61,6 +61,10 @@ const Nft = ({ nft }) => {
     }
   }
 
+  const listNFT = (nft) => {
+    router.push(`/nfts/resell?id=${nft.tokenId}&tokenURI=${nft.tokenURI}`)
+  }
+
   return (
     <>
       <Head>
@@ -111,13 +115,14 @@ const Nft = ({ nft }) => {
                 <div id='mintingInfo' className='text-xs'></div>
               </div>
               :
-              sellerIsOwner ?
-                <p className='mt-10'>You own this asset</p>
-                :
-                <div className='flex items-center gap-10 mt-10'>
-                  <p className='my-0 text-[30px] leading-none h-full'>{fromExponential(price)} ETH</p>
+              <div className='flex items-center gap-10 mt-10'>
+                <p className='my-0 text-[30px] leading-none h-full'>{fromExponential(price)} ETH</p>
+                {sellerIsOwner ?
+                  <button onClick={() => listNFT(nft)} className='button button-cta my-0 p-0 h-full'>Sell</button>
+                  :
                   <button onClick={() => initiateBuy(nft)} className='button button-cta my-0 p-0 h-full'>Buy</button>
-                </div>
+                }
+              </div>
             }
           </div>
         </div>

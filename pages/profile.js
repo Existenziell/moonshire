@@ -11,16 +11,18 @@ import MyNfts from '../components/market/MyNfts'
 import MyListedNfts from '../components/market/MyListedNfts'
 import Link from 'next/link'
 import getUserCollections from '../lib/supabase/getUserCollections'
+import getUserNfts from '../lib/supabase/getUserNfts'
 
 const Profile = () => {
-  const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify } = useApp()
-
+  const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify, signer } = useApp()
   const [username, setUsername] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
   const [createdAt, setCreatedAt] = useState(null)
   const [is_premium, setIsPremium] = useState(null)
   const [modified, setModified] = useState(false)
-  const [collections, setCollections] = useState([])
+  const [collections, setCollections] = useState(null)
+  const [nftsOwned, setNftsOwned] = useState(null)
+  const [nftsListed, setNftsListed] = useState(null)
 
   useEffect(() => {
     if (currentUser) {
@@ -30,12 +32,27 @@ const Profile = () => {
       setCreatedAt(created_at)
       setIsPremium(is_premium)
       fetchUserCollections(id)
+      fetchUserNfts(id)
     }
   }, [currentUser])
 
   const fetchUserCollections = async (id) => {
     let collections = await getUserCollections(id)
     setCollections(collections)
+  }
+
+  const fetchUserNfts = async (id) => {
+    let nfts = await getUserNfts(id)
+    let listed = []
+    let owned = []
+    for (let nft of nfts) {
+      nft.listed ?
+        listed.push(nft)
+        :
+        owned.push(nft)
+    }
+    setNftsListed(listed)
+    setNftsOwned(owned)
   }
 
   const setUser = (e) => {
@@ -91,14 +108,14 @@ const Profile = () => {
 
       <div className='profile flex flex-col items-center md:items-start md:justify-start px-[40px]'>
 
-        <div className='flex flex-col md:flex-row gap-[40px] md:h-[calc(100vh-200px)] w-full'>
-          <div className='md:w-1/2 mx-auto flex-shrink-0 md:max-h-[calc(100vh-260px)]'>
+        <div className='flex flex-col md:flex-row gap-[40px] md:h-[calc(100vh-260px)] w-full'>
+          <div className='flex-shrink-0 flex-grow md:w-1/2'>
             <Avatar
               url={avatar_url}
               onUpload={(url) => handleUpload(url)}
             />
           </div>
-          <div className='flex flex-col md:items-start w-full'>
+          <div className='flex flex-col md:items-start w-full md:w-1/2'>
             <div className='flex flex-col md:items-start md:justify-start'>
               <label htmlFor="username">
                 <input
@@ -117,6 +134,29 @@ const Profile = () => {
                 </div>
               }
               <hr className='mb-8 mt-6 w-full' />
+
+              <div className='mt-16'>
+                <h1 className='mb-0'>Assets</h1>
+                <hr className='my-8' />
+                <p className='mb-4'>{collections?.length} {collections?.length === 1 ? `Collection` : `Collections`}</p>
+                <div>
+                  {collections?.map(c => (
+                    <Link key={c.id} href={`/collections/${c.id}`}><a className='link-white block'>{c.title}</a></Link>
+                  ))}
+                </div>
+                <p className='mb-4 mt-8'>{nftsListed?.length} {nftsListed?.length === 1 ? `Listed NFT` : `Listed NFTs`}</p>
+                <div>
+                  {nftsListed?.map(n => (
+                    <Link key={n.id} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
+                  ))}
+                </div>
+                <p className='mb-4 mt-8'>{nftsOwned?.length} {nftsOwned?.length === 1 ? `Owned NFT` : `Owned NFTs`}</p>
+                <div>
+                  {nftsOwned?.map(n => (
+                    <Link key={n.id} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* <div className='text-xs flex flex-col md:items-start gap-2 text-center rounded'>
