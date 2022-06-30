@@ -118,13 +118,13 @@ const Profile = () => {
               <hr className='mb-8 mt-6 w-full' />
             </div>
 
-            <div className='text-xs flex flex-col md:items-start gap-2 text-center rounded'>
+            {/* <div className='text-xs flex flex-col md:items-start gap-2 text-center rounded'>
               <p>Membership: {is_premium ? `Premium` : `Free`}</p>
               <p>Joined: {createdAt?.slice(0, 10)}</p>
               <p>Wallet {shortenAddress(address)}</p>
-            </div>
+            </div> */}
 
-            <div className='flex flex-col md:flex-row justify-center items-center gap-2 my-8'>
+            {/* <div className='flex flex-col md:flex-row justify-center items-center gap-2 mt-4'>
               <Link href='/collections/create'>
                 <a className='button button-detail'>
                   Create Collection
@@ -135,12 +135,12 @@ const Profile = () => {
                   Create Asset
                 </a>
               </Link>
-            </div>
-            <p className='text-tiny text-center md:text-left'>By creating an asset it will be minted and put on sale on the marketplace.<br />Listing costs are 0.000001 ETH</p>
+            </div> */}
+            {/* <p className='text-tiny text-center md:text-left'>By creating an asset it will be minted and put on sale on the marketplace.<br />Listing costs are 0.000001 ETH</p> */}
           </div>
         </div>
 
-        <div className='flex flex-col items-start w-full mb-20'>
+        {/* <div className='flex flex-col items-start w-full mb-20'>
           <h2 className='mt-12 mb-4 py-2 border-b-2 border-detail dark:border-detail-dark w-full'>
             Collections
           </h2>
@@ -158,25 +158,25 @@ const Profile = () => {
             :
             <div className='flex flex-col items-center'>
               <p className='text-sm'>You haven&apos;t created any collections yet.</p>
-              {/* <Link href='/collections/create'>
+              <Link href='/collections/create'>
                 <a className='button button-detail'>
                   Create Collection
                 </a>
-              </Link> */}
+              </Link>
             </div>
           }
-        </div>
+        </div> */}
 
-        <div className='w-full'>
+        {/* <div className='w-full'>
           <MyListedNfts />
           <MyNfts />
-        </div>
+        </div> */}
 
-        <button className='button button-cta mt-24' onClick={addToMetamask}>Add to MetaMask</button>
+        {/* <button className='button button-cta mt-24' onClick={addToMetamask}>Add to MetaMask</button>
         <p className='text-xs max-w-xs text-center md:text-left mt-4'>This allows you to see the token from the Moonshire smart contract (called MOON) in your Metamask wallet.</p>
 
         <AddToHomeScreen />
-        <button onClick={disconnect} className='button button-detail my-16'>Disconnect Wallet</button>
+        <button onClick={disconnect} className='button button-detail my-16'>Disconnect Wallet</button> */}
 
       </div>
     </>

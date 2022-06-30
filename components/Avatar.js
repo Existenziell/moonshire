@@ -23,7 +23,7 @@ export default function Avatar({ url, size, onUpload }) {
       ) : (
         <div className="avatar no-image" style={{ height: size, width: size }} />
       )}
-      <div className='my-8'>
+      {/* <div className='my-8'>
         <label className="text-sm" htmlFor="single">
           {uploading ?
             <span className='button button-detail mx-auto'>Uploading ...</span>
@@ -39,7 +39,7 @@ export default function Avatar({ url, size, onUpload }) {
           disabled={uploading}
           className='hidden'
         />
-      </div>
+      </div> */}
     </div>
   )
 }
