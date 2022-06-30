@@ -32,7 +32,7 @@ export default function MyNfts() {
   return (
     <>
       <div className='mb-20 flex flex-col items-start justify-start'>
-        <h2 className='py-2 border-b-2 border-detail dark:border-detail-dark'>
+        <h2 className='py-2 border-b-2 border-detail dark:border-detail-dark w-full'>
           Owned Assets
         </h2>
         {nfts.length > 0 ?

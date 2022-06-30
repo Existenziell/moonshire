@@ -88,17 +88,17 @@ const Profile = () => {
         <meta name='description' content='Profile | Project Moonshire' />
       </Head>
 
-      <div className='profile flex flex-col items-center justify-center px-[40px]'>
+      <div className='profile flex flex-col items-center md:items-start md:justify-start px-[40px]'>
 
-        <div className='flex flex-col md:flex-row md:gap-12'>
-          <div className='w-80 mx-auto flex-shrink-0'>
+        <div className='flex flex-col md:flex-row gap-[40px] md:h-[calc(100vh-200px)]'>
+          <div className='md:w-1/2 mx-auto flex-shrink-0 md:max-h-[calc(100vh-260px)]'>
             <Avatar
               url={avatar_url}
               onUpload={(url) => handleUpload(url)}
             />
           </div>
-          <div>
-            <div className='flex flex-col items-center gap-2 mb-10'>
+          <div className='flex flex-col md:items-start w-full'>
+            <div className='flex flex-col md:items-start md:justify-start'>
               <label htmlFor="username">
                 <input
                   id="username"
@@ -106,18 +106,19 @@ const Profile = () => {
                   value={username || ''}
                   onChange={(e) => setUser(e)}
                   placeholder='Username'
-                  className='text-4xl md:text-6xl font-serif w-full ring-0 border-0'
+                  className='text-4xl md:text-6xl text-left font-serif w-full ring-0 border-0 pl-0'
                 />
               </label>
               {modified &&
-                <div className='flex flex-row gap-2'>
-                  <button onClick={updateUser} className='link text-xs block'>Save</button>
-                  <button onClick={resetInput} className='link text-xs block ml-1'>Cancel</button>
+                <div className='flex flex-row items-center gap-2 mt-2'>
+                  <button onClick={updateUser} className='link text-xs'>Save</button>
+                  <button onClick={resetInput} className='link text-xs ml-1'>Cancel</button>
                 </div>
               }
+              <hr className='mb-8 mt-6 w-full' />
             </div>
 
-            <div className='mb-10 text-xs flex flex-col gap-2 text-center rounded'>
+            <div className='text-xs flex flex-col md:items-start gap-2 text-center rounded'>
               <p>Membership: {is_premium ? `Premium` : `Free`}</p>
               <p>Joined: {createdAt?.slice(0, 10)}</p>
               <p>Wallet {shortenAddress(address)}</p>
@@ -135,12 +136,12 @@ const Profile = () => {
                 </a>
               </Link>
             </div>
-            <p className='text-tiny text-center'>By creating an asset it will be minted and put on sale on the marketplace.<br />Listing costs are 0.000001 ETH</p>
+            <p className='text-tiny text-center md:text-left'>By creating an asset it will be minted and put on sale on the marketplace.<br />Listing costs are 0.000001 ETH</p>
           </div>
         </div>
 
         <div className='flex flex-col items-start w-full mb-20'>
-          <h2 className='mt-12 mb-4 py-2 border-b-2 border-detail dark:border-detail-dark'>
+          <h2 className='mt-12 mb-4 py-2 border-b-2 border-detail dark:border-detail-dark w-full'>
             Collections
           </h2>
           {collections ?
@@ -156,26 +157,26 @@ const Profile = () => {
             </div>
             :
             <div className='flex flex-col items-center'>
-              <p className='text-sm mb-6'>You haven&apos;t created any collections yet.</p>
-              <Link href='/collections/create'>
+              <p className='text-sm'>You haven&apos;t created any collections yet.</p>
+              {/* <Link href='/collections/create'>
                 <a className='button button-detail'>
                   Create Collection
                 </a>
-              </Link>
+              </Link> */}
             </div>
           }
         </div>
 
         <div className='w-full'>
-          <MyNfts />
           <MyListedNfts />
+          <MyNfts />
         </div>
 
         <button className='button button-cta mt-24' onClick={addToMetamask}>Add to MetaMask</button>
-        <p className='text-xs max-w-xs text-center mt-4'>This allows you to see the token from the Moonshire smart contract (called MOON) in your Metamask wallet.</p>
+        <p className='text-xs max-w-xs text-center md:text-left mt-4'>This allows you to see the token from the Moonshire smart contract (called MOON) in your Metamask wallet.</p>
 
         <AddToHomeScreen />
-        <button onClick={disconnect} className='button button-detail mt-16'>Disconnect Wallet</button>
+        <button onClick={disconnect} className='button button-detail my-16'>Disconnect Wallet</button>
 
       </div>
     </>

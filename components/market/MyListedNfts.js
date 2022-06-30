@@ -33,7 +33,7 @@ export default function MyListedNfts() {
   return (
     <>
       <div className='mt-8 mb-24 flex flex-col items-start justify-start'>
-        <h2 className='py-2 border-b-2 border-detail dark:border-detail-dark'>
+        <h2 className='py-2 border-b-2 border-detail dark:border-detail-dark w-full'>
           Listed Assets
         </h2>
         {nfts.length > 0 ?
