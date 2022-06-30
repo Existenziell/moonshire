@@ -18,7 +18,7 @@ export default function Avatar({ url, size, onUpload }) {
         <img
           src={avatarUrl}
           alt="Avatar"
-          className="rounded-sm shadow-2xl max-h-[calc(100vh-220px)]"
+          className="rounded-sm shadow-2xl max-h-[calc(100vh-260px)]"
           style={{ height: size, width: size }}
         />
       ) : (
