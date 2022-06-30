@@ -13,12 +13,12 @@ export default function Avatar({ url, size, onUpload }) {
   }, [url])
 
   return (
-    <div>
+    <div className='w-full flex-shrink-0 flex-grow md:w-1/2 mb-20 md:mb-0'>
       {avatarUrl ? (
         <img
           src={avatarUrl}
           alt="Avatar"
-          className="shadow-2xl aspect-square bg-cover w-full"
+          className="shadow-2xl w-full md:w-[80%] aspect-square bg-cover"
           style={{ height: size, width: size }}
         />
       ) : (

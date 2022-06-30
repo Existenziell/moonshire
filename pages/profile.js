@@ -106,15 +106,13 @@ const Profile = () => {
         <meta name='description' content='Profile | Project Moonshire' />
       </Head>
 
-      <div className='profile flex flex-col items-center md:items-start md:justify-start px-[40px]'>
+      <div className='profile flex flex-col items-center px-[40px]'>
 
-        <div className='flex flex-col md:flex-row gap-[40px] md:h-[calc(100vh-260px)] w-full'>
-          <div className='flex-shrink-0 flex-grow md:w-1/2'>
-            <Avatar
-              url={avatar_url}
-              onUpload={(url) => handleUpload(url)}
-            />
-          </div>
+        <div className='flex flex-col items-center md:flex-row gap-[40px] md:h-[calc(100vh-260px)] w-full'>
+          <Avatar
+            url={avatar_url}
+            onUpload={(url) => handleUpload(url)}
+          />
           <div className='flex flex-col md:items-start w-full md:w-1/2'>
             <div className='flex flex-col md:items-start md:justify-start'>
               <label htmlFor="username">
