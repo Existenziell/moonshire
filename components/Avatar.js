@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 import downloadImage from '../lib/supabase/downloadImage'
 import uploadImage from '../lib/supabase/uploadImage'

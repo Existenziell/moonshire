@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 import { addToMetamask } from '../lib/addToMetamask'
 import { shortenAddress } from '../lib/shortenAddress'
