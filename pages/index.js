@@ -92,9 +92,9 @@ const Home = ({ artists, collections, nfts }) => {
 }
 
 export async function getServerSideProps() {
-  const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).eq('featured', true).order('id', { ascending: true })
-  const { data: collections } = await supabase.from('collections').select(`*`).eq('featured', true).order('id', { ascending: true })
-  const { data: artists } = await supabase.from('artists').select(`*`).eq('featured', true).order('id', { ascending: true })
+  const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).eq('featured', true).order('created_at', { ascending: false })
+  const { data: collections } = await supabase.from('collections').select(`*`).eq('featured', true).order('created_at', { ascending: false })
+  const { data: artists } = await supabase.from('artists').select(`*`).eq('featured', true).order('created_at', { ascending: false })
 
   for (let artist of artists) {
     const artistNfts = nfts.filter((n => n.artist === artist.id))
