@@ -7,7 +7,7 @@ import Link from 'next/link'
 import fromExponential from 'from-exponential'
 
 const Collection = ({ collection, collectionNfts }) => {
-  const { id, title, headline, description, year, public_url, numberOfNfts, floorPrice, highestPrice, artists } = collection
+  const { id, title, headline, description, year, public_url, numberOfNfts, price, floorPrice, highestPrice, artists } = collection
   const { currentUser } = useApp()
   const [userOwnsCollection, setUserOwnsCollection] = useState(false)
 
@@ -25,62 +25,17 @@ const Collection = ({ collection, collectionNfts }) => {
         <meta name='description' content={`${title} | Collection | Project Moonshire`} />
       </Head>
 
-      <div className="snap-y snap-mandatory w-full h-[calc(100vh-140px)] overflow-y-scroll">
+      <div className="md:snap-y md:snap-mandatory w-full md:h-[calc(100vh-200px)] overflow-y-scroll">
 
-        <div className='snap-start snap-always w-full h-screen flex items-start justify-center px-[40px]'>
+        {/* <div className='md:snap-start md:snap-always w-full h-screen flex items-start justify-center px-[40px]'>
           <div className='flex items-center justify-center h-[calc(100vh-220px)]'>
             <div className="frame max-w-xl bg-brand">
               <img src={public_url} alt='Cover Image' className='aspect-square bg-cover' />
             </div>
           </div>
-        </div>
+        </div> */}
 
-        <div className="snap-start snap-always w-full h-[calc(100vh-140px)] px-[40px] flex items-start justify-between">
-          <div className='w-full'>
-
-            <table className='w-full'>
-              <thead className='text-left mb-8'>
-                <tr className='font-bold text-xs border-b border-lines dark:border-lines-dark whitespace-nowrap'>
-                  <th className='pb-6'>Name</th>
-                  <th className='pb-6 pl-8'>NFTs</th>
-                  <th className='pb-6 pl-8'>Price &darr;</th>
-                  <th className='pb-6 pl-8'>Price &uarr;</th>
-                  <th className='pb-6 pl-8'>Year</th>
-                  <th className='pb-6'>Artists</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className='whitespace-nowrap align-middle'>
-                  <td className='whitespace-normal text-[30px] p-0'>{title}</td>
-                  <td className='pl-8 py-0'>{numberOfNfts}</td>
-                  <td className='pl-8 py-0'>{fromExponential(floorPrice)} ETH</td>
-                  <td className='pl-8 py-0'>{fromExponential(highestPrice)} ETH</td>
-                  <td className='pl-8 py-0'>{year}</td>
-                  <td className='p-0'>{artists ? artists.join(', ') : `None`}</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-[40px] mt-20'>
-              <img src={public_url} alt='Cover Image' className='md:w-1/2 md:max-w-md' />
-              <div>
-                <p>{headline}</p>
-                <hr className='my-8' />
-                <p className='mb-8'>{description}</p>
-                {floorPrice &&
-                  <p><span className='whitespace-nowrap inline-block'>Floor Price:</span> {fromExponential(floorPrice)} ETH</p>
-                }
-                {highestPrice &&
-                  <p className='mb-8'><span className='whitespace-nowrap inline-block'>Highest Price:</span> {fromExponential(highestPrice)} ETH</p>
-                }
-                <p>Launched: {year}</p>
-                <p className='mb-4'>{numberOfNfts} NFTs available</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="snap-start snap-always w-full h-[calc(100vh-140px)] px-[40px] flex items-start">
+        <div className="md:snap-start md:snap-always w-full md:h-[calc(100vh-140px)] px-[40px] flex items-start">
           {collectionNfts.length ?
             <table className='w-full'>
               <thead className='text-left mb-44'>
@@ -151,6 +106,54 @@ const Collection = ({ collection, collectionNfts }) => {
             </div>
           }
         </div>
+
+        <div className="md:snap-start md:snap-always w-full h-[calc(100vh-140px)] px-[40px] flex items-start justify-between">
+          <div className='w-full'>
+
+            <table className='w-full'>
+              <thead className='text-left mb-8'>
+                <tr className='font-bold text-xs border-b border-lines dark:border-lines-dark whitespace-nowrap'>
+                  <th className='pb-6'>Name</th>
+                  <th className='pb-6 pl-8'>NFTs</th>
+                  <th className='pb-6 pl-8'>Price</th>
+                  {/* <th className='pb-6 pl-8'>Price &darr;</th>
+                  <th className='pb-6 pl-8'>Price &uarr;</th> */}
+                  <th className='pb-6 pl-8'>Year</th>
+                  <th className='pb-6'>Artists</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className='whitespace-nowrap align-middle'>
+                  <td className='whitespace-normal text-[30px] p-0'>{title}</td>
+                  <td className='pl-8 py-0'>{numberOfNfts}</td>
+                  <td className='pl-8 py-0'>{fromExponential(price)} ETH</td>
+                  {/* <td className='pl-8 py-0'>{fromExponential(floorPrice)} ETH</td>
+                  <td className='pl-8 py-0'>{fromExponential(highestPrice)} ETH</td> */}
+                  <td className='pl-8 py-0'>{year}</td>
+                  <td className='p-0'>{artists ? artists.join(', ') : `None`}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-[40px] mt-20'>
+              <img src={public_url} alt='Cover Image' className='md:w-1/2 md:max-w-md' />
+              <div>
+                <p>{headline}</p>
+                <hr className='my-8' />
+                <p className='mb-8'>{description}</p>
+                {floorPrice &&
+                  <p><span className='whitespace-nowrap inline-block'>Floor Price:</span> {fromExponential(floorPrice)} ETH</p>
+                }
+                {highestPrice &&
+                  <p className='mb-8'><span className='whitespace-nowrap inline-block'>Highest Price:</span> {fromExponential(highestPrice)} ETH</p>
+                }
+                {/* <p>Launched: {year}</p>
+                <p className='mb-4'>{numberOfNfts} NFTs available</p> */}
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </>
   )
@@ -181,13 +184,17 @@ export async function getServerSideProps(context) {
   const collectionNfts = nfts.filter((n => n.collection === collection.id))
   collection.numberOfNfts = collectionNfts.length
 
-  if (collectionNfts.length > 0) {
+  let collectionPrice = '0.0'
+  if (collectionNfts) {
 
     // Collect artists that have NFTs in this collection
     let collectionArtists = []
     for (let nft of collectionNfts) {
       collectionArtists.push(nft.artists.name)
+      let price = fromExponential(nft.price)
+      collectionPrice = parseFloat(collectionPrice) + parseFloat(price)
     }
+    collection.price = collectionPrice
 
     /* eslint-disable no-undef */
     const uniqueCollectionArtists = [...new Set(collectionArtists)]
@@ -195,19 +202,19 @@ export async function getServerSideProps(context) {
     collection.artists = uniqueCollectionArtists
 
     // Set floor and highest price
-    let floorPrice = 1000000
-    let highestPrice = 0
+    // let floorPrice = 1000000
+    // let highestPrice = 0
 
-    for (let nft of collectionNfts) {
-      if (highestPrice < nft.price) {
-        highestPrice = nft.price
-      }
-      if (floorPrice > nft.price) {
-        floorPrice = nft.price
-      }
-    }
-    collection.floorPrice = floorPrice
-    collection.highestPrice = highestPrice
+    // for (let nft of collectionNfts) {
+    //   if (highestPrice < nft.price) {
+    //     highestPrice = nft.price
+    //   }
+    //   if (floorPrice > nft.price) {
+    //     floorPrice = nft.price
+    //   }
+    // }
+    // collection.floorPrice = floorPrice
+    // collection.highestPrice = highestPrice
   }
 
   return {
