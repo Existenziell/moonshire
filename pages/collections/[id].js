@@ -107,7 +107,7 @@ const Collection = ({ collection, collectionNfts }) => {
           }
         </div>
 
-        <div className="md:snap-start md:snap-always w-full h-[calc(100vh-140px)] px-[40px] flex items-start justify-between">
+        <div className="md:snap-start md:snap-always w-full md:h-[calc(100vh-140px)] px-[40px] flex items-start justify-between">
           <div className='w-full'>
 
             <table className='w-full'>
@@ -136,7 +136,7 @@ const Collection = ({ collection, collectionNfts }) => {
             </table>
 
             <div key={id} className='flex flex-col md:flex-row items-start justify-start gap-[40px] mt-20'>
-              <img src={public_url} alt='Cover Image' className='md:w-1/2 md:max-w-md' />
+              <img src={public_url} alt='Cover Image' className='md:w-1/2 md:max-w-xl' />
               <div>
                 <p>{headline}</p>
                 <hr className='my-8' />
