@@ -64,11 +64,8 @@ const Artists = ({ artists }) => {
   if (!fetchedArtists) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
-    <div className='mb-20 w-full'>
-      <div className='flex justify-between items-center'>
-        <h2 className='mb-6'>Artists</h2>
-        <Search search={search} setSearch={setSearch} resetSearch={resetSearch} />
-      </div>
+    <div className='mb-20 w-full relative'>
+      <Search search={search} setSearch={setSearch} resetSearch={resetSearch} />
 
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>

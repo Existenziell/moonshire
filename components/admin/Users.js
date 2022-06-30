@@ -61,11 +61,8 @@ const Users = ({ users }) => {
   if (!fetchedUsers) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
-    <div className='mb-20 w-full'>
-      <div className='flex justify-between items-center'>
-        <h2 className='mb-6'>Users</h2>
-        <Search search={search} setSearch={setSearch} resetSearch={resetSearch} />
-      </div>
+    <div className='mb-20 w-full relative'>
+      <Search search={search} setSearch={setSearch} resetSearch={resetSearch} />
 
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>
@@ -75,6 +72,8 @@ const Users = ({ users }) => {
             <th>Username</th>
             <th>Email</th>
             <th>Created</th>
+            <th>Collections</th>
+            <th>NFTs</th>
             <th className='text-right w-28'>Membership</th>
             <th className='text-right w-28'>Role</th>
             <th className='text-right w-28'>Edit</th>
@@ -110,6 +109,8 @@ const Users = ({ users }) => {
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td className='whitespace-nowrap'>{user.created_at.slice(0, 10)}</td>
+              <td>{user.numberOfCollections}</td>
+              <td>{user.numberOfNfts}</td>
               <td className='text-right w-28'>{user.is_premium ? `Premium` : `Free`}</td>
               <td className='text-right w-28'>{user.roles.name}</td>
 
