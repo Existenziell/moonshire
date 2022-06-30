@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
         </div>
       </div>
 
-      <main className='w-full text-black bg-brand dark:text-[#cccccc] dark:bg-brand-dark min-h-[calc(100vh-140px)] py-[60px]'>
+      <main className='w-full text-black bg-brand dark:text-white dark:bg-brand-dark min-h-[calc(100vh-140px)] py-[60px]'>
         {children}
       </main>
 
