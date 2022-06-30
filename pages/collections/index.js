@@ -14,6 +14,7 @@ const Collections = ({ collections }) => {
 
       {collections.length > 0 ?
         <div className='md:snap-y md:snap-mandatory md:h-[calc(100vh-200px)] md:overflow-y-scroll'>
+
           {collections.map(collection => {
             const { id, title, headline, description, public_url, numberOfNfts, price, uniqueArtists } = collection
             return (

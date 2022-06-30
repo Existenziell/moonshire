@@ -12,39 +12,34 @@ const Artists = ({ artists }) => {
       </Head>
 
       {artists.length ?
-        <div className='flex flex-col items-center justify-center px-[40px]'>
-          <div className='flex flex-col items-start justify-center gap-20 w-full'>
+        <div className='md:snap-y md:snap-mandatory md:h-[calc(100vh-200px)] md:overflow-y-scroll'>
 
-            {artists.map(artist => {
-              const { id, name, headline, description, origin, public_url, created_at, numberOfNfts } = artist
-
-              return (
-                <div key={id} className='w-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-[40px] h-[calc(100vh-160px)]'>
-
-                  <Link href={`/artists/${id}`}>
-                    <a className='aspect-square bg-cover shadow-2xl md:w-1/2 flex-shrink-0'>
-                      <img src={public_url} alt='Artist Image' />
-                    </a>
-                  </Link>
-                  <div className='flex-grow'>
+          {artists.map(artist => {
+            const { id, name, headline, description, origin, public_url } = artist
+            return (
+              <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-200px)] w-full mb-40'>
+                <div className={`flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]`}>
+                  <div className='md:w-1/2'>
+                    <img src={public_url} alt='Artist Image' className='aspect-square shadow-2xl max-h-[calc(100vh-260px)]' />
+                  </div>
+                  <div className='md:w-1/2'>
                     <h1>{name}</h1>
                     <hr className='mt-8 mb-12' />
                     <p>{headline}</p>
                     <p className='mt-4'>{description}</p>
                     <p className='mt-4'>Origin: {origin}</p>
-                    <p>{numberOfNfts} artworks by <span className='text-white'>{name}</span></p>
-                    <p className='mt-8 text-xs'>On Moonshire since: {created_at.slice(0, 10)}</p>
+                    {/* <p>{numberOfNfts} artworks by <span className='text-white'>{name}</span></p> */}
+                    {/* <p className='mt-8 text-xs'>On Moonshire since: {created_at.slice(0, 10)}</p> */}
                     <Link href={`/artists/${id}`}>
                       <a className='button button-cta mt-8 mx-auto md:mr-auto md:ml-0 uppercase'>
-                        View Artworks
+                        Show Profile
                       </a>
                     </Link>
                   </div>
-
                 </div>
-              )
-            })}
-          </div>
+              </div>
+            )
+          })}
         </div>
         :
         <div>
