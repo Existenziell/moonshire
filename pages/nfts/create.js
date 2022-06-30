@@ -287,7 +287,6 @@ const CreateNft = ({ artists }) => {
               onChange={setArtist}
               isReq={true}
               instanceId // Needed to prevent errors being thrown
-              className='focus:outline-none focus:shadow-2xl dark:text-white'
               styles={styles}
               disabled={loading}
             />

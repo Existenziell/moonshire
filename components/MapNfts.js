@@ -26,7 +26,7 @@ const MapNfts = ({ nfts }) => {
               <div className='mt-4 mb-1'>
                 Created by{` `}
                 <Link href={`/artists/${nft.artists.id}`}>
-                  <a className='link text-white dark:text-cta'>
+                  <a className='link-white'>
                     {nft.artists?.name ? nft.artists.name : nft.artist}
                   </a>
                 </Link>
@@ -34,7 +34,7 @@ const MapNfts = ({ nfts }) => {
               <div>
                 In{` `}
                 <Link href={`/collections/${nft.collections.id}`}>
-                  <a className='link text-white'>
+                  <a className='link-white'>
                     {nft.collections?.title ? nft.collections.title : nft.collection}
                   </a>
                 </Link>

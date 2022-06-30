@@ -63,6 +63,10 @@ hr {
   @apply hover:cursor-pointer hover:text-cta transition-all duration-100;
 }
 
+.link-white {
+  @apply text-white hover:cursor-pointer hover:text-cta transition-all duration-100;
+}
+
 
 /* ==========================================================================
 	Navigation

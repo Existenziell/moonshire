@@ -70,7 +70,7 @@ const Nft = ({ nft }) => {
 
       <div className='flex flex-col items-center md:h-[calc(100vh-200px)] px-[40px]'>
 
-        <div key={id} className='flex flex-col md:flex-row items-center justify-between gap-[40px] w-full'>
+        <div className='flex flex-col md:flex-row items-center justify-between gap-[40px] w-full'>
           <div className='md:w-1/2'>
             <img src={image_url} alt='NFT Image' className='aspect-square bg-cover max-h-[calc(100vh-260px)] shadow-2xl' />
           </div>
@@ -82,7 +82,7 @@ const Nft = ({ nft }) => {
             <div className='whitespace-nowrap flex flex-col gap-1'>
               <p>
                 <span className='text-sm'>Artist:{` `}</span>
-                <Link href={`/artists/${artists.id}`}><a className='link text-white'>{artists.name}</a></Link>
+                <Link href={`/artists/${artists.id}`}><a className='link-white'>{artists.name}</a></Link>
               </p>
               {/* <p>Created: {created_at?.slice(0, 10)}</p>
               {nft.owner && nft.seller &&

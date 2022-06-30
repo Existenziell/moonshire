@@ -28,7 +28,7 @@ const Collections = ({ collections }) => {
                     <p className='mb-4'>{headline}</p>
                     <p className='my-4'>{description}</p>
                     <p className='mb-4'>
-                      A selection of {numberOfNfts} exclusive artworks by <span className='text-white'>{uniqueArtists.join(', ')}</span>
+                      A selection of {numberOfNfts} exclusive artworks by <span className='link-white'>{uniqueArtists.join(', ')}</span>
                     </p>
                     <hr className='my-8' />
                     <div className='flex items-center gap-10'>
