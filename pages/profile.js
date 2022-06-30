@@ -91,7 +91,7 @@ const Profile = () => {
 
       <div className='profile flex flex-col items-center md:items-start md:justify-start px-[40px]'>
 
-        <div className='flex flex-col md:flex-row gap-[40px] md:h-[calc(100vh-200px)]'>
+        <div className='flex flex-col md:flex-row gap-[40px] md:h-[calc(100vh-200px)] w-full'>
           <div className='md:w-1/2 mx-auto flex-shrink-0 md:max-h-[calc(100vh-260px)]'>
             <Avatar
               url={avatar_url}
@@ -107,7 +107,7 @@ const Profile = () => {
                   value={username || ''}
                   onChange={(e) => setUser(e)}
                   placeholder='Username'
-                  className='text-4xl md:text-6xl text-left font-serif w-full ring-0 border-0 pl-0'
+                  className='text-4xl md:text-6xl text-left font-serif w-full ring-0 border-0'
                 />
               </label>
               {modified &&
