@@ -75,9 +75,9 @@ const Users = ({ users }) => {
             <th>Username</th>
             <th>Email</th>
             <th>Created</th>
-            <th>Membership</th>
-            <th>Role</th>
-            <th className='text-right'>Edit</th>
+            <th className='text-right w-28'>Membership</th>
+            <th className='text-right w-28'>Role</th>
+            <th className='text-right w-28'>Edit</th>
             <th className='text-right'>Delete</th>
           </tr>
         </thead>
@@ -110,10 +110,10 @@ const Users = ({ users }) => {
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td className='whitespace-nowrap'>{user.created_at.slice(0, 10)}</td>
-              <td>{user.is_premium ? `Premium` : `Free`}</td>
-              <td>{user.roles.name}</td>
+              <td className='text-right w-28'>{user.is_premium ? `Premium` : `Free`}</td>
+              <td className='text-right w-28'>{user.roles.name}</td>
 
-              <td className='text-right align-middle pr-0'>
+              <td className='text-right w-28 align-middle pr-0'>
                 <Link href={`/admin/users/${user.id}`}>
                   <a>
                     <button className='button-admin'>
@@ -123,7 +123,7 @@ const Users = ({ users }) => {
                 </Link>
               </td>
 
-              <td className='text-right align-middle pr-0'>
+              <td className='text-right w-28 align-middle pr-0'>
                 <button onClick={() => toggleDeleteModal(user)} aria-label='Toggle Delete Modal' className='button-admin'>
                   Delete
                 </button>

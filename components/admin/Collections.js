@@ -76,10 +76,10 @@ const Collections = ({ collections }) => {
             <th>Headline</th>
             <th>Description</th>
             <th>Year</th>
-            <th className='whitespace-nowrap'># NFTs</th>
-            <th>Featured</th>
-            <th className='text-right'>Edit</th>
-            <th className='text-right'>Delete</th>
+            <th className='text-right w-28'># NFTs</th>
+            <th className='text-right w-28'>Featured</th>
+            <th className='text-right w-28'>Edit</th>
+            <th className='text-right w-28'>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -122,11 +122,11 @@ const Collections = ({ collections }) => {
               <td>{truncate(collection.headline)}</td>
               <td>{truncate(collection.description)}</td>
               <td>{collection.year}</td>
-              <td>{collection.numberOfNfts}</td>
+              <td className='w-28 text-right'>{collection.numberOfNfts}</td>
 
-              <td className='whitespace-nowrap'>
+              <td className='whitespace-nowrap text-right'>
                 {collection.featured ?
-                  <CheckIcon className='w-6' />
+                  <CheckIcon className='w-6 ml-auto' />
                   :
                   `No`
                 }

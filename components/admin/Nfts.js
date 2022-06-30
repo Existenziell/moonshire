@@ -85,10 +85,10 @@ const Nfts = ({ nfts }) => {
             <th>Collection</th>
             <th>Price</th>
             <th>Wallet</th>
-            <th>Listed</th>
-            <th>Featured</th>
-            <th className='text-right'>Edit</th>
-            <th className='text-right'>Delete</th>
+            <th className='text-right w-28'>Listed</th>
+            <th className='text-right w-28'>Featured</th>
+            <th className='text-right w-28'>Edit</th>
+            <th className='text-right w-28'>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -139,16 +139,16 @@ const Nfts = ({ nfts }) => {
                   `n/a`
                 }
               </td>
-              <td className='whitespace-nowrap'>
+              <td className='whitespace-nowrap text-right w-28'>
                 {nft.listed ?
-                  <CheckIcon className='w-6' />
+                  <CheckIcon className='w-6 ml-auto' />
                   :
                   `No`
                 }
               </td>
-              <td className='whitespace-nowrap'>
+              <td className='whitespace-nowrap text-right w-28'>
                 {nft.featured ?
-                  <CheckIcon className='w-6' />
+                  <CheckIcon className='w-6 ml-auto' />
                   :
                   `No`
                 }

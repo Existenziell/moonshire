@@ -78,10 +78,10 @@ const Artists = ({ artists }) => {
             <th>Headline</th>
             <th>Description</th>
             <th>Origin</th>
-            <th className='whitespace-nowrap'># NFTs</th>
-            <th>Featured</th>
-            <th className='text-right'>Edit</th>
-            <th className='text-right'>Delete</th>
+            <th className='text-right w-28'># NFTs</th>
+            <th className='text-right w-28'>Featured</th>
+            <th className='text-right w-28'>Edit</th>
+            <th className='text-right w-28'>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -117,27 +117,27 @@ const Artists = ({ artists }) => {
               <td>{truncate(artist.headline)}</td>
               <td>{truncate(artist.description)}</td>
               <td>{artist.origin}</td>
-              <td>{artist.numberOfNfts}</td>
+              <td className='text-right w-28'>{artist.numberOfNfts}</td>
 
               <td className='whitespace-nowrap'>
                 {artist.featured ?
-                  <CheckIcon className='w-6' />
+                  <CheckIcon className='w-6 ml-auto' />
                   :
                   `No`
                 }
               </td>
 
-              <td className='text-right align-middle pr-0'>
+              <td className='text-right align-middle pr-0 w-28'>
                 <Link href={`/admin/artists/${artist.id}`}>
                   <a>
-                    <button className='button-admin'>
+                    <button className='button-admin ml-auto'>
                       Edit
                     </button>
                   </a>
                 </Link>
               </td>
 
-              <td className='text-right align-middle pr-0'>
+              <td className='text-right align-middle pr-0 w-28'>
                 <button onClick={() => toggleDeleteModal(artist)} aria-label='Toggle Delete Modal' className='button-admin'>
                   Delete
                 </button>
