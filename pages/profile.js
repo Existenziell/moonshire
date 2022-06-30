@@ -91,10 +91,9 @@ const Profile = () => {
       <div className='profile flex flex-col items-center justify-center px-[40px]'>
 
         <div className='flex flex-col md:flex-row md:gap-12'>
-          <div className='max-w-xs mx-auto flex-shrink-0'>
+          <div className='w-80 mx-auto flex-shrink-0'>
             <Avatar
               url={avatar_url}
-              // size={150}
               onUpload={(url) => handleUpload(url)}
             />
           </div>
