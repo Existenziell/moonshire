@@ -4,6 +4,7 @@ import Link from 'next/link'
 import fetchListedItems from '../../lib/contract/fetchListedItems'
 import getDbIdForTokenURI from '../../lib/supabase/getDbIdForTokenURI'
 import useApp from "../../context/App"
+import fromExponential from 'from-exponential'
 
 export default function MyListedNfts() {
   const [nfts, setNfts] = useState([])
@@ -48,7 +49,7 @@ export default function MyListedNfts() {
                       <p>by: {nft.artist}</p>
                       <p>in: {nft.collection}</p>
                     </div>
-                    <p className="text-xl">{nft.price} Eth</p>
+                    <p className="text-xl">{fromExponential(nft.price)} Eth</p>
                     <Link href={`/nfts/${nft.dbId}`}><a className='mt-4 button button-cta'>Details</a></Link>
                   </div>
                 </div>

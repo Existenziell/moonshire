@@ -5,6 +5,7 @@ import { shortenAddress } from '../../../lib/shortenAddress'
 import useApp from "../../../context/App"
 import BackBtn from '../../../components/admin/BackBtn'
 import getProfile from '../../../lib/supabase/getProfile'
+import fromExponential from 'from-exponential'
 
 const NFT = ({ nft }) => {
 
@@ -61,7 +62,7 @@ const NFT = ({ nft }) => {
         <p className='mb-2'>TokenID: {tokenId}</p>
         <p className='mb-2'>Currently listed: {listed ? `Yes` : `No`}</p>
         <p className='mb-2'>Current owner: {shortenAddress(walletAddress)} ({owner})</p>
-        <p className='mb-2'>{listed ? `Current price:` : `Last price:`} {price} ETH</p>
+        <p className='mb-2'>{listed ? `Current price:` : `Last price:`} {fromExponential(price)} ETH</p>
         <p className='mb-2 whitespace-nowrap'>TokenURI: <a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link'>{truncate(tokenURI)}</a></p>
 
         <input type='submit' className='button button-cta mt-12' value='Save' disabled={loading} />

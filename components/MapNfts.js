@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { shortenAddress } from '../lib/shortenAddress'
+import fromExponential from 'from-exponential'
 
 const MapNfts = ({ nfts }) => {
 
@@ -47,7 +48,7 @@ const MapNfts = ({ nfts }) => {
               }
             </div>
             <div className="flex justify-between items-end">
-              <h1 className="mt-4 mb-0">{nft.price} ETH</h1>
+              <h1 className="mt-4 mb-0">{fromExponential(nft.price)} ETH</h1>
               <Link href={`/nfts/${nft.id}`}>
                 <a className='button button-cta uppercase'>
                   View

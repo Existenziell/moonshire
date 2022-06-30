@@ -4,6 +4,7 @@ import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import useApp from "../../context/App"
 import Head from 'next/head'
 import Link from 'next/link'
+import fromExponential from 'from-exponential'
 
 const Collection = ({ collection, collectionNfts }) => {
   const { id, title, headline, description, year, public_url, numberOfNfts, floorPrice, highestPrice, artists } = collection
@@ -52,8 +53,8 @@ const Collection = ({ collection, collectionNfts }) => {
                 <tr className='whitespace-nowrap align-middle'>
                   <td className='whitespace-normal text-[30px] p-0'>{title}</td>
                   <td className='pl-8 py-0'>{numberOfNfts}</td>
-                  <td className='pl-8 py-0'>{floorPrice} ETH</td>
-                  <td className='pl-8 py-0'>{highestPrice} ETH</td>
+                  <td className='pl-8 py-0'>{fromExponential(floorPrice)} ETH</td>
+                  <td className='pl-8 py-0'>{fromExponential(highestPrice)} ETH</td>
                   <td className='pl-8 py-0'>{year}</td>
                   <td className='p-0'>{artists ? artists.join(', ') : `None`}</td>
                 </tr>
@@ -67,10 +68,10 @@ const Collection = ({ collection, collectionNfts }) => {
                 <hr className='my-8' />
                 <p className='mb-8'>{description}</p>
                 {floorPrice &&
-                  <p><span className='whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
+                  <p><span className='whitespace-nowrap inline-block'>Floor Price:</span> {fromExponential(floorPrice)} ETH</p>
                 }
                 {highestPrice &&
-                  <p className='mb-8'><span className='whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
+                  <p className='mb-8'><span className='whitespace-nowrap inline-block'>Highest Price:</span> {fromExponential(highestPrice)} ETH</p>
                 }
                 <p>Launched: {year}</p>
                 <p className='mb-4'>{numberOfNfts} NFTs available</p>
@@ -111,7 +112,7 @@ const Collection = ({ collection, collectionNfts }) => {
                     <td className='pt-6 pl-8'>{nft.artists?.name}</td>
                     <td className='pt-6 pl-8'>{idx + 1}/{numberOfNfts}</td>
                     <td className='pt-6 pl-8'>{nft.format ? nft.format : `Digital`} </td>
-                    <td className='pt-6 pl-8'>{nft.price} ETH</td>
+                    <td className='pt-6 pl-8'>{fromExponential(nft.price)} ETH</td>
                     <td>
                       <div className='flex items-end justify-end'>
                         <Link href={`/nfts/${nft.id}`}>

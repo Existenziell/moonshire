@@ -9,6 +9,7 @@ import Link from 'next/link'
 import buyNft from '../../lib/contract/buyNft'
 import logWeb3 from '../../lib/logWeb3'
 import fetchMarketItemsMeta from '../../lib/contract/fetchMarketItemsMeta'
+import fromExponential from 'from-exponential'
 
 const Nft = ({ nft }) => {
   /* eslint-disable no-unused-vars */
@@ -94,7 +95,7 @@ const Nft = ({ nft }) => {
                 </a>
               </div> */}
             </div>
-            <p className='mt-10'>Price: {price} ETH</p>
+            <p className='mt-10'>Price: {fromExponential(price)} ETH</p>
 
             {loading ?
               <div className='flex flex-col items-start justify-center mt-8'>
