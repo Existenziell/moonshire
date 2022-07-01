@@ -13,6 +13,11 @@ const settings = {
   devIndicators: {
     autoPrerender: false,
   },
+  experimental: {
+    images: {
+      allowFutureImage: true,
+    },
+  },
   images: {
     domains: ['bpwdpdrdsuhpgevetixn.supabase.co'],
   },
