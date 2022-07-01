@@ -16,12 +16,12 @@ const Home = ({ artists, collections, nfts }) => {
           <>
             <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Collections</h2>
 
-            {collections.map(collection => {
+            {collections.map((collection, idx) => {
               const { id, title, headline, description, image_url } = collection
 
               return (
                 <div key={id} className='w-full flex flex-col md:flex-row items-center justify-between gap-[40px] mb-20'>
-                  <div>
+                  <div className={idx % 2 !== 0 ? `order-2` : ``}>
                     <Link href={`/collections/${id}`}>
                       <a>
                         <img src={image_url} alt='Cover Image' className='aspect-square bg-cover max-w-md rounded-sm shadow-2xl' />
@@ -29,15 +29,15 @@ const Home = ({ artists, collections, nfts }) => {
                     </Link>
                   </div>
 
-                  <div className='h-full flex flex-col flex-grow justify-between'>
-                    <div>
-                      <h1>{title}</h1>
+                  <div className='flex flex-col flex-grow justify-between'>
+                    <div className={idx % 2 !== 0 ? `text-right` : ``}>
+                      <h1 className='mb-0'>{title}</h1>
+                      <hr className='my-8' />
                       <p>{headline}</p>
-                      <hr className='my-4' />
                       <p>{description}</p>
                     </div>
                     <Link href={`/collections/${id}`}>
-                      <a className='button button-cta mt-6'>View Collection</a>
+                      <a className={`${idx % 2 !== 0 ? `self-end` : ``} button button-cta mt-10`}>View Collection</a>
                     </Link>
                   </div>
                 </div>
@@ -48,18 +48,33 @@ const Home = ({ artists, collections, nfts }) => {
 
         {artists?.length > 0 &&
           <>
-            <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Artists</h2>
+            <h2 className='border-b border-detail dark:border-detail-dark my-8 self-start'>Featured Artists</h2>
             <div className='flex justify-center md:justify-start flex-wrap gap-[40px] w-full'>
-              {artists.map(artist => {
-                const { id, public_url } = artist
+              {artists.map((artist, idx) => {
+                const { id, name, headline, description, public_url } = artist
                 return (
-                  <Link href={`/artists/${id}`} key={id} >
-                    <a>
-                      {public_url &&
-                        <img src={public_url} alt='Artist Image' className='aspect-square bg-cover max-w-md rounded-sm shadow-2xl' />
-                      }
-                    </a>
-                  </Link>
+                  <div key={id} className='w-full flex flex-col md:flex-row items-center justify-between gap-[40px] mb-20'>
+                    <div className={idx % 2 !== 0 ? `order-2` : ``}>
+                      <Link href={`/artists/${id}`} >
+                        <a>
+                          {public_url &&
+                            <img src={public_url} alt='Artist Image' className='aspect-square bg-cover max-w-md rounded-sm shadow-2xl' />
+                          }
+                        </a>
+                      </Link>
+                    </div>
+                    <div className='flex flex-col flex-grow justify-between'>
+                      <div className={idx % 2 !== 0 ? `text-right` : ``}>
+                        <h1 className='mb-0'>{name}</h1>
+                        <hr className='my-8' />
+                        <p>{headline}</p>
+                        <p>{description}</p>
+                      </div>
+                      <Link href={`/collections/${id}`}>
+                        <a className={`${idx % 2 !== 0 ? `self-end` : ``} button button-cta mt-10`}>View Collection</a>
+                      </Link>
+                    </div>
+                  </div>
                 )
               })}
             </div>
@@ -68,7 +83,7 @@ const Home = ({ artists, collections, nfts }) => {
 
         {nfts?.length > 0 &&
           <div className='mt-24 w-full'>
-            <h2 className='border-b border-detail dark:border-detail-dark mb-8'>Featured NFTs</h2>
+            <h2 className='border-b border-detail dark:border-detail-dark my-8'>Featured NFTs</h2>
             <div className='flex justify-start md:justify-start flex-wrap gap-[40px] w-full'>
               {nfts.map(nft => {
                 const { id, image_url } = nft
