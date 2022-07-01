@@ -64,7 +64,7 @@ hr {
 }
 
 .link-white {
-  @apply text-white dark:text-cta hover:cursor-pointer hover:text-cta transition-all duration-100;
+  @apply text-white dark:text-cta hover:cursor-pointer hover:text-cta hover:dark:text-white transition-all duration-100;
 }
 
 
