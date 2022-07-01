@@ -75,10 +75,10 @@ const Users = ({ users }) => {
             <th>Created</th>
             <th>Collections</th>
             <th>NFTs</th>
-            <th className='text-right w-28'>Membership</th>
-            <th className='text-right w-28'>Role</th>
-            <th className='text-right w-28'>Edit</th>
-            <th className='text-right'>Delete</th>
+            <th className='text-right'>Membership</th>
+            <th className='text-right'>Role</th>
+            <th className='text-right'>Edit</th>
+            <th className='text-right w-28'>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -112,10 +112,10 @@ const Users = ({ users }) => {
               <td className='whitespace-nowrap'>{user.created_at.slice(0, 10)}</td>
               <td>{user.numberOfCollections}</td>
               <td>{user.numberOfNfts}</td>
-              <td className='text-right w-28'>{user.is_premium ? `Premium` : `Free`}</td>
-              <td className='text-right w-28'>{user.roles.name}</td>
+              <td className='text-right'>{user.is_premium ? `Premium` : `Free`}</td>
+              <td className='text-right'>{user.roles.name}</td>
 
-              <td className='text-right w-28 align-middle pr-0'>
+              <td className='text-right align-middle pr-0'>
                 <Link href={`/admin/users/${user.id}`}>
                   <a>
                     <button className='button-admin'>
@@ -125,7 +125,7 @@ const Users = ({ users }) => {
                 </Link>
               </td>
 
-              <td className='text-right w-28 align-middle pr-0'>
+              <td className='text-right align-middle w-28 pr-0'>
                 <button onClick={() => toggleDeleteModal(user)} aria-label='Toggle Delete Modal' className='button-admin'>
                   Delete
                 </button>

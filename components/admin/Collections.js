@@ -73,9 +73,9 @@ const Collections = ({ collections }) => {
             <th>Headline</th>
             <th>Description</th>
             <th>Year</th>
-            <th className='text-right w-28'># NFTs</th>
-            <th className='text-right w-28'>Featured</th>
-            <th className='text-right w-28'>Edit</th>
+            <th className='text-right'># NFTs</th>
+            <th className='text-right'>Featured</th>
+            <th className='text-right'>Edit</th>
             <th className='text-right w-28'>Delete</th>
           </tr>
         </thead>
@@ -115,11 +115,12 @@ const Collections = ({ collections }) => {
                   </a>
                 </Link>
               </td>
+
               <td className='whitespace-nowrap'>{collection.title}</td>
               <td>{truncate(collection.headline)}</td>
               <td>{truncate(collection.description)}</td>
               <td>{collection.year}</td>
-              <td className='w-28 text-right'>{collection.numberOfNfts}</td>
+              <td className='text-right'>{collection.numberOfNfts}</td>
 
               <td className='whitespace-nowrap text-right'>
                 {collection.featured ?
@@ -139,7 +140,7 @@ const Collections = ({ collections }) => {
                 </Link>
               </td>
 
-              <td className='text-right align-middle pr-0'>
+              <td className='text-right align-middle w-28 pr-0'>
                 <button onClick={() => toggleDeleteModal(collection)} aria-label='Toggle Delete Modal' className='button-admin'>
                   Delete
                 </button>

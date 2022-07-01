@@ -85,16 +85,6 @@ const Admin = ({ nfts, collections, artists, users }) => {
           </div>
 
           <div className='flex flex-col items-start'>
-            {view === 'nfts' &&
-              <motion.div
-                key={'nfts'}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className='w-full'>
-                <Nfts nfts={nfts} />
-              </motion.div>
-            }
             {view === 'collections' &&
               <motion.div
                 key={'collections'}
@@ -113,6 +103,16 @@ const Admin = ({ nfts, collections, artists, users }) => {
                 exit={{ opacity: 0 }}
                 className='w-full'>
                 <Artists artists={artists} collections={collections} />
+              </motion.div>
+            }
+            {view === 'nfts' &&
+              <motion.div
+                key={'nfts'}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className='w-full'>
+                <Nfts nfts={nfts} />
               </motion.div>
             }
             {view === 'users' &&

@@ -16,6 +16,7 @@ const Nfts = ({ nfts }) => {
   const [showDelete, setShowDelete] = useState(false)
   const [nftToDelete, setNftToDelete] = useState()
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (!nfts) {
@@ -66,6 +67,21 @@ const Nfts = ({ nfts }) => {
     setSearch('')
   }
 
+  const saveState = async (id, value) => {
+    setLoading(true)
+    const { error } = await supabase
+      .from('nfts')
+      .update({
+        featured: value
+      })
+      .eq('id', id)
+
+    if (!error) {
+      notify("NFT updated successfully!")
+      setLoading(false)
+    }
+  }
+
   if (!fetchedNfts) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
@@ -82,9 +98,9 @@ const Nfts = ({ nfts }) => {
             <th>Collection</th>
             <th>Price</th>
             <th>Wallet</th>
-            <th className='text-right w-28'>Listed</th>
-            <th className='text-right w-28'>Featured</th>
-            <th className='text-right w-28'>Edit</th>
+            <th className='text-right'>Listed</th>
+            <th className='text-right'>Featured</th>
+            {/* <th className='text-right'>Edit</th> */}
             <th className='text-right w-28'>Delete</th>
           </tr>
         </thead>
@@ -136,22 +152,27 @@ const Nfts = ({ nfts }) => {
                   `n/a`
                 }
               </td>
-              <td className='whitespace-nowrap text-right w-28'>
+              <td className='whitespace-nowrap text-right'>
                 {nft.listed ?
                   <CheckIcon className='w-6 ml-auto' />
                   :
                   `No`
                 }
               </td>
-              <td className='whitespace-nowrap text-right w-28'>
-                {nft.featured ?
-                  <CheckIcon className='w-6 ml-auto' />
-                  :
-                  `No`
-                }
+              <td className='whitespace-nowrap text-right'>
+                <label htmlFor="featured" className="cursor-pointer flex items-center justify-end">
+                  <input
+                    type="checkbox"
+                    id="featured"
+                    defaultChecked={nft.featured}
+                    onChange={(e) => saveState(nft.id, e.target.checked)}
+                    disabled={loading}
+                    className="text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600"
+                  />
+                </label>
               </td>
 
-              <td className='text-right align-middle pr-0'>
+              {/* <td className='text-right align-middle pr-0'>
                 <Link href={`/admin/nfts/${nft.id}`}>
                   <a>
                     <button className='button-admin'>
@@ -159,9 +180,9 @@ const Nfts = ({ nfts }) => {
                     </button>
                   </a>
                 </Link>
-              </td>
+              </td> */}
 
-              <td className='text-right pr-0'>
+              <td className='text-right w-28 pr-0'>
                 <div>
                   <button onClick={() => toggleDeleteModal(nft)} aria-label='Toggle Delete Modal' className='button-admin'>
                     Delete
