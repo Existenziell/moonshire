@@ -35,7 +35,7 @@ const Collection = ({ collection, collectionNfts }) => {
           </div>
         </div> */}
 
-        <div className="hidden md:flex md:snap-start md:snap-always w-full md:h-[calc(100vh-140px)] px-[40px] items-start">
+        <div className="hidden md:flex md:snap-start md:snap-always w-full md:h-[calc(100vh-140px)] px-[20px] md:px-[40px] items-start">
           {collectionNfts.length ?
             <table className='w-full'>
               <thead className='text-left mb-44'>

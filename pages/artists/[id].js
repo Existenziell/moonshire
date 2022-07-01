@@ -16,7 +16,7 @@ const Artist = ({ artist }) => {
         <meta name='description' content={`${name} | Artist | Project Moonshire`} />
       </Head>
 
-      <div className='px-[40px] md:h-[calc(100vh-200px)]'>
+      <div className='px-[20px] md:px-[40px] md:h-[calc(100vh-200px)]'>
 
         <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] w-full'>
           <div className='md:w-1/2'>
