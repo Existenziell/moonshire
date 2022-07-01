@@ -73,7 +73,7 @@ const Collections = ({ collections }) => {
             <th>Headline</th>
             <th>Description</th>
             <th>Year</th>
-            <th className='text-right'># NFTs</th>
+            <th className='text-right'>NFTs</th>
             <th className='text-right'>Featured</th>
             <th className='text-right'>Edit</th>
             <th className='text-right w-28'>Delete</th>

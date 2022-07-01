@@ -42,7 +42,7 @@ const Admin = ({ nfts, collections, artists, users }) => {
     setView(e.target.name)
   }
 
-  if (loading) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (loading) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
   if (!session) return <SupaAuth />
 
   return (
