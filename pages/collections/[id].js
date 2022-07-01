@@ -56,7 +56,7 @@ const Collection = ({ collection, collectionNfts }) => {
                       <Link href={`/nfts/${nft.id}`}>
                         <a>
                           {nft.image_url ?
-                            <img src={nft.image_url} alt='NFT Image' className='w-14 rounded' />
+                            <img src={nft.image_url} alt='NFT Image' className='rounded-sm shadow-2xl w-24' />
                             :
                             "n/a"
                           }
@@ -107,12 +107,28 @@ const Collection = ({ collection, collectionNfts }) => {
           }
         </div>
 
-        <div className="flex md:hidden w-full px-[40px]">
+        {/* Mobile */}
+        <div className="flex md:hidden w-full px-10 ">
           {collectionNfts.length &&
-            <div className='flex flex-wrap justify-evenly items-center w-full'>
+            <div className='flex flex-wrap justify-evenly items-center w-full gap-4'>
               {collectionNfts.map((nft, idx) => (
-                <div key={idx}>
-                  <img src={nft.image_url} alt='Cover Image' className='aspect-square bg-cover max-w-[100px] shadow-2xl' />
+                <div key={idx} className="flex flex-col justify-between w-1/3 h-full">
+                  <Link href={`/nfts/${nft.id}`}>
+                    <a>
+                      <img
+                        src={nft.image_url ? nft.image_url : nft.image}
+                        alt='NFT Image'
+                        className='w-full aspect-square object-cover shadow-2xl mb-6' />
+                    </a>
+                  </Link>
+
+                  <div className="flex flex-col justify-between h-full">
+                    <p className="mb-6 h-full">{nft.name}</p>
+                    <hr />
+                    <div className="flex justify-between items-end">
+                      <p className="mt-4">{fromExponential(nft.price)} ETH</p>
+                    </div>
+                  </div>
                 </div>
               ))
               }
