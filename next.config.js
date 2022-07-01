@@ -12,7 +12,10 @@ const settings = {
   },
   devIndicators: {
     autoPrerender: false,
-  }
+  },
+  images: {
+    domains: ['bpwdpdrdsuhpgevetixn.supabase.co'],
+  },
 }
 
 module.exports = process.env.NODE_ENV === 'development' ? settings : withPWA(settings)
