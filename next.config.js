@@ -13,14 +13,14 @@ const settings = {
   devIndicators: {
     autoPrerender: false,
   },
-  experimental: {
-    images: {
-      allowFutureImage: true,
-    },
-  },
-  images: {
-    domains: ['bpwdpdrdsuhpgevetixn.supabase.co'],
-  },
+  // experimental: {
+  //   images: {
+  //     allowFutureImage: true,
+  //   },
+  // },
+  // images: {
+  //   domains: ['bpwdpdrdsuhpgevetixn.supabase.co'],
+  // },
 }
 
 module.exports = process.env.NODE_ENV === 'development' ? settings : withPWA(settings)
