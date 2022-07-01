@@ -3,7 +3,7 @@ import Link from "next/link"
 const Logo = () => {
   return (
     <Link href='/'>
-      <a className="">
+      <a role="link" aria-label="Navigate to Home">
         <svg className="h-[60px] w-[76px] text-black dark:text-white hover:text-cta dark:hover:text-cta transition-colors" viewBox="0 0 758.000000 600.000000" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(0.000000,600.000000) scale(0.100000,-0.100000)" fill="currentColor">
             <path d="M6965 5826 l-600 -172 -3 -87 c-2 -57 1 -87 8 -87 6 0 231 63 500 140 269 77 494 140 500 140 7 0 10 -455 10 -1410 0 -775 3 -1410 8 -1410 4 0 48 13 97 29 l90 28 3 1501 c1 826 -1 1502 -5 1501 -5 0 -278 -78 -608 -173z" />
