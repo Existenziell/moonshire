@@ -35,7 +35,7 @@ const Collection = ({ collection, collectionNfts }) => {
           </div>
         </div> */}
 
-        <div className="md:snap-start md:snap-always w-full md:h-[calc(100vh-140px)] px-[40px] flex items-start">
+        <div className="hidden md:flex md:snap-start md:snap-always w-full md:h-[calc(100vh-140px)] px-[40px] items-start">
           {collectionNfts.length ?
             <table className='w-full'>
               <thead className='text-left mb-44'>
@@ -107,7 +107,20 @@ const Collection = ({ collection, collectionNfts }) => {
           }
         </div>
 
-        <div className="md:snap-start md:snap-always w-full md:h-[calc(100vh-140px)] px-[40px] flex items-start justify-between">
+        <div className="flex md:hidden w-full px-[40px]">
+          {collectionNfts.length &&
+            <div className='flex flex-wrap justify-evenly items-center w-full'>
+              {collectionNfts.map((nft, idx) => (
+                <div key={idx}>
+                  <img src={nft.image_url} alt='Cover Image' className='aspect-square bg-cover max-w-[100px] shadow-2xl' />
+                </div>
+              ))
+              }
+            </div>
+          }
+        </div>
+
+        <div className="md:snap-start md:snap-always w-full md:h-[calc(100vh-140px)] px-[40px] flex items-start justify-between mt-40 md:mt-0 ">
           <div className='w-full'>
 
             <table className='w-full'>
@@ -118,19 +131,19 @@ const Collection = ({ collection, collectionNfts }) => {
                   <th className='pb-6 pl-8'>Price</th>
                   {/* <th className='pb-6 pl-8'>Price &darr;</th>
                   <th className='pb-6 pl-8'>Price &uarr;</th> */}
-                  <th className='pb-6 pl-8'>Year</th>
-                  <th className='pb-6'>Artists</th>
+                  <th className='pb-6 pl-8 hidden md:table-cell'>Year</th>
+                  <th className='pb-6 hidden md:table-cell'>Artists</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className='whitespace-nowrap align-middle'>
-                  <td className='whitespace-normal text-[30px] p-0'>{title}</td>
+                  <td className='whitespace-normal p-0'><h1 className='mb-0'>{title}</h1></td>
                   <td className='pl-8 py-0'>{numberOfNfts}</td>
                   <td className='pl-8 py-0'>{fromExponential(price)} ETH</td>
                   {/* <td className='pl-8 py-0'>{fromExponential(floorPrice)} ETH</td>
                   <td className='pl-8 py-0'>{fromExponential(highestPrice)} ETH</td> */}
-                  <td className='pl-8 py-0'>{year}</td>
-                  <td className='p-0'>{artists ? artists.join(', ') : `None`}</td>
+                  <td className='pl-8 py-0 hidden md:table-cell'>{year}</td>
+                  <td className='p-0 hidden md:table-cell'>{artists ? artists.join(', ') : `None`}</td>
                 </tr>
               </tbody>
             </table>
