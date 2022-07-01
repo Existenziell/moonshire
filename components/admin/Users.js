@@ -43,10 +43,11 @@ const Users = ({ users }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (fetchedUsers) {
-      if (search === '') resetSearch()
       let users = fetchedUsers.filter(u => (
-        u.username.toLowerCase().includes(search.toLowerCase()) ||
-        u.email?.toLowerCase().includes(search.toLowerCase())
+        u.username?.toLowerCase().includes(search.toLowerCase()) ||
+        u.email?.toLowerCase().includes(search.toLowerCase()) ||
+        u.roles.name.toLowerCase().includes(search.toLowerCase()) ||
+        u.walletAddress?.toLowerCase().includes(search.toLowerCase())
       ))
       setFilteredUsers(users)
     }

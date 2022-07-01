@@ -50,10 +50,11 @@ const Nfts = ({ nfts }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (fetchedNfts) {
-      // if (search === '') resetSearch()
       let nfts = fetchedNfts.filter(n => (
         n.name.toLowerCase().includes(search.toLowerCase()) ||
-        n.description.toLowerCase().includes(search.toLowerCase())
+        n.description.toLowerCase().includes(search.toLowerCase()) ||
+        n.artists.name.toLowerCase().includes(search.toLowerCase()) ||
+        n.collections.title.toLowerCase().includes(search.toLowerCase())
       ))
       setFilteredNfts(nfts)
     }
