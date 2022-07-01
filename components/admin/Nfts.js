@@ -40,7 +40,7 @@ const Nfts = ({ nfts }) => {
       .eq('id', nftToDelete.id)
 
     if (!error) {
-      notify("NFT deleted successfully!")
+      notify("NFT deleted successfully!", 1500)
       setShowDelete(false)
       const filtered = fetchedNfts.filter(c => { return c.id !== nftToDelete.id })
       setFetchedNfts(filtered)
@@ -77,7 +77,7 @@ const Nfts = ({ nfts }) => {
       .eq('id', id)
 
     if (!error) {
-      notify("NFT updated successfully!")
+      notify("NFT updated successfully!", 1500)
       setLoading(false)
     }
   }

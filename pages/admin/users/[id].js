@@ -7,8 +7,9 @@ import useApp from "../../../context/App"
 import Select from 'react-select'
 import selectStyles from '../../../lib/selectStyles'
 import BackBtn from '../../../components/admin/BackBtn'
+import roleOptions from '../../../lib/roleOptions'
 
-const User = ({ user, roles }) => {
+const User = ({ user }) => {
   const { id, username, walletAddress, email, is_premium, signed_url } = user
   const { notify, darkmode } = useApp()
   const [loading, setLoading] = useState(false)
@@ -34,11 +35,6 @@ const User = ({ user, roles }) => {
       router.push('/admin')
     }
   }
-
-  let roleOptions = []
-  roles.forEach(r => {
-    roleOptions.push({ value: r.id, label: r.name })
-  })
 
   useEffect(() => {
     let tempStyles = selectStyles(darkmode)
@@ -111,7 +107,6 @@ const User = ({ user, roles }) => {
 export async function getServerSideProps(context) {
   const id = context.params.id
   const { data: user } = await supabase.from('users').select(`*, roles(*)`).eq('id', id).single()
-  const { data: roles } = await supabase.from('roles').select(`id, name`)
 
   if (!user) {
     return {
@@ -128,7 +123,7 @@ export async function getServerSideProps(context) {
     user.signed_url = url
   }
   return {
-    props: { user, roles }
+    props: { user }
   }
 }
 

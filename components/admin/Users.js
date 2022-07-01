@@ -4,15 +4,20 @@ import { PulseLoader } from 'react-spinners'
 import { shortenAddress } from '../../lib/shortenAddress'
 import useApp from "../../context/App"
 import Search from './Search'
-import Link from 'next/link'
+// import Link from 'next/link'
+import Select from 'react-select'
+import selectStyles from '../../lib/selectStyles'
+import roleOptions from '../../lib/roleOptions'
 
 const Users = ({ users }) => {
-  const { notify } = useApp()
+  const { notify, darkmode } = useApp()
   const [fetchedUsers, setFetchedUsers] = useState()
   const [filteredUsers, setFilteredUsers] = useState()
   const [showDelete, setShowDelete] = useState(false)
   const [userToDelete, setUserToDelete] = useState()
   const [search, setSearch] = useState('')
+  const [styles, setStyles] = useState()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setFetchedUsers(users)
@@ -59,6 +64,26 @@ const Users = ({ users }) => {
     setSearch('')
   }
 
+  useEffect(() => {
+    let tempStyles = selectStyles(darkmode)
+    setStyles(tempStyles)
+  }, [darkmode])
+
+  const saveUser = async (id, value) => {
+    setLoading(true)
+    const { error } = await supabase
+      .from('users')
+      .update({
+        role: value,
+      })
+      .eq('id', id)
+
+    if (!error) {
+      notify("User updated successfully!", 1500)
+      setLoading(false)
+    }
+  }
+
   if (!fetchedUsers) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
@@ -75,9 +100,9 @@ const Users = ({ users }) => {
             <th>Created</th>
             <th>Collections</th>
             <th>NFTs</th>
-            <th className='text-right'>Membership</th>
+            {/* <th className='text-right'>Membership</th> */}
             <th className='text-right'>Role</th>
-            <th className='text-right'>Edit</th>
+            {/* <th className='text-right'>Edit</th> */}
             <th className='text-right w-28'>Delete</th>
           </tr>
         </thead>
@@ -112,18 +137,29 @@ const Users = ({ users }) => {
               <td className='whitespace-nowrap'>{user.created_at.slice(0, 10)}</td>
               <td>{user.numberOfCollections}</td>
               <td>{user.numberOfNfts}</td>
-              <td className='text-right'>{user.is_premium ? `Premium` : `Free`}</td>
-              <td className='text-right'>{user.roles.name}</td>
+              {/* <td className='text-right'>{user.is_premium ? `Premium` : `Free`}</td> */}
 
-              <td className='text-right align-middle pr-0'>
-                <Link href={`/admin/users/${user.id}`}>
+              <td className='text-right'>
+                <Select
+                  options={roleOptions}
+                  onChange={(e) => saveUser(user.id, e.value)}
+                  instanceId // Needed to prevent errors being thrown
+                  defaultValue={roleOptions.filter(o => o.value === user.role)}
+                  styles={styles}
+                  disabled={loading}
+                />
+                {/* {user.roles.name} */}
+              </td>
+
+              {/* <td className='text-right align-middle pr-0'>
+                // <Link href={`/admin/users/${user.id}`}>
                   <a>
                     <button className='button-admin'>
                       Edit
                     </button>
                   </a>
-                </Link>
-              </td>
+                // </Link>
+              </td> */}
 
               <td className='text-right align-middle w-28 pr-0'>
                 <button onClick={() => toggleDeleteModal(user)} aria-label='Toggle Delete Modal' className='button-admin'>

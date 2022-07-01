@@ -91,13 +91,13 @@ export const AppProvider = ({ children }) => {
   }
 
   // System wide notification service
-  const notify = (msg) => {
+  const notify = (msg, time = 3000) => {
     const notification = document.querySelector('.notification')
     notification.classList.remove('-translate-y-20')
     setNotificationMsg(msg)
     setTimeout(() => {
       notification.classList.add('-translate-y-20')
-    }, 3500)
+    }, time)
   }
 
   // Check if a user exists for this Wallet
