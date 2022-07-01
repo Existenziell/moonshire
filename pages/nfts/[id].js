@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { supabase } from '../../lib/supabase'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
-// import { shortenAddress } from '../../lib/shortenAddress'
+import { shortenAddress } from '../../lib/shortenAddress'
 import useApp from "../../context/App"
 import Head from 'next/head'
 import Link from 'next/link'
@@ -12,14 +13,23 @@ import fetchMarketItemsMeta from '../../lib/contract/fetchMarketItemsMeta'
 import fromExponential from 'from-exponential'
 
 const Nft = ({ nft }) => {
-  /* eslint-disable no-unused-vars */
-  const { id, name, description, price, created_at, image_url, artists, tokenURI, tokenId } = nft
-  /* eslint-enable no-unused-vars */
+  const { id, name, description, price, created_at, image_url, artists, tokenURI, tokenId, gallery } = nft
   const { address, signer, notify } = useApp()
   const router = useRouter()
 
   const [loading, setLoading] = useState(false)
   const [sellerIsOwner, setSellerIsOwner] = useState(false)
+
+  let physicalAssets = []
+  let digitalAssets = []
+  if (gallery) {
+    for (let el of gallery) {
+      el.type === 'digital' ?
+        digitalAssets.push(el)
+        :
+        physicalAssets.push(el)
+    }
+  }
 
   useEffect(() => {
     if (address) fetchMeta()
@@ -82,13 +92,42 @@ const Nft = ({ nft }) => {
           <div className='md:w-1/2'>
             <h1 className='mb-0'>{name}</h1>
             <hr className='my-6' />
-            <p className='mb-4'>{description}</p>
-            <div className='whitespace-nowrap flex flex-col gap-1'>
-              <p>
-                <span className='text-sm'>Artist:{` `}</span>
+            <p className='mb-4'>
+              {description}
+              {` `}Created by {` `}
+              <Link href={`/artists/${artists.id}`}><a className='link-white'>{artists.name}</a></Link>
+            </p>
+
+            <div className='mt-16'>
+              <h1 className='mb-0'>Assets</h1>
+              <hr className='my-8' />
+              <p className='mb-4'>Physical <span className='text-gray-400'>(free shipping worldwide)</span></p>
+              <ul>
+                {physicalAssets.map(asset => (
+                  <li key={asset.name}>&#8212;	{asset.name}</li>
+                ))}
+              </ul>
+              <p className='mb-4 mt-8'>Digital</p>
+              <ul>
+                {digitalAssets.map(asset => (
+                  <li key={asset.name}>
+                    &#8212; {asset.name}{` `}
+                    <Link href={`/download/${asset.link}`}>
+                      <a className='link-white'>Download</a>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <hr className='my-8' />
+
+            {/* <div className='whitespace-nowrap flex flex-col gap-1'>
+             <p>
+                <span className='text-sm'>Created by:{` `}</span>
                 <Link href={`/artists/${artists.id}`}><a className='link-white'>{artists.name}</a></Link>
               </p>
-              {/* <p>Created: {created_at?.slice(0, 10)}</p>
+              <p>Created: {created_at?.slice(0, 10)}</p>
               {nft.owner && nft.seller &&
                 <>
                   <p>Owner: {shortenAddress(nft.owner)}</p>
@@ -100,13 +139,13 @@ const Nft = ({ nft }) => {
                 <a href={tokenURI} target='_blank' rel='noopener noreferrer nofollow' className='link inline-block'>
                   {tokenURI.substring(0, 30)}&#8230;{tokenURI.slice(tokenURI.length - 4)}
                 </a>
-              </div> */}
+              </div>
 
-              {/* <div className='mt-10'>
+               <div className='mt-10'>
                 <h1 className='mb-0'>Assets</h1>
                 <hr className='my-8' />
-              </div> */}
-            </div>
+              </div>
+            </div> */}
 
             {loading ?
               <div className='flex flex-col items-start justify-center mt-8'>
