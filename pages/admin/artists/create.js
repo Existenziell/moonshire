@@ -1,5 +1,5 @@
 import { supabase } from '../../../lib/supabase'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useApp from "../../../context/App"
 import { useRouter } from 'next/router'
 import UploadImage from '../../../components/UploadImage'
@@ -16,8 +16,20 @@ const Create = () => {
   const setData = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, ...{ [name]: value } })
+  }
+
+  const handleUpload = async (url) => {
+    setFormData({ ...formData, image_url: url })
+    setFileUrl(url)
+  }
+
+  const checkForm = () => {
     if (fileUrl && formData.name && formData.headline && formData.description) setFormIsReady(true)
   }
+
+  useEffect(() => {
+    checkForm()
+  }, [formData, fileUrl])
 
   const addArtist = async (e) => {
     e.preventDefault()
@@ -48,10 +60,7 @@ const Create = () => {
           bucket='artists'
           url={fileUrl}
           // size={200}
-          onUpload={(url) => {
-            setFormData({ ...formData, image_url: url })
-            setFileUrl(url)
-          }}
+          onUpload={(url) => handleUpload(url)}
         />
       </div>
 
@@ -61,10 +70,11 @@ const Create = () => {
             type='text' name='name' id='name'
             onChange={setData} required
             placeholder='Name'
-            className='block mt-2 w-full'
+            className='block mt-2 w-full text-[20px] md:text-[30px]'
             disabled={loading}
           />
         </label>
+        <hr className='my-8' />
 
         <label htmlFor='headline' className='mt-12 w-full'>
           <input
@@ -96,9 +106,7 @@ const Create = () => {
           />
         </label>
 
-        <div className='flex items-center gap-2 mt-8'>
-          <input type='submit' className='button button-admin' value='Create' disabled={!formIsReady || loading} />
-        </div>
+        <input type='submit' className='button button-cta mt-10' value='Create' disabled={!formIsReady || loading} />
       </div>
     </form>
   )

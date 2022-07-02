@@ -118,6 +118,14 @@ const CreateNft = ({ artists }) => {
     setFileUrl(url)
   }
 
+  const checkForm = () => {
+    if (fileUrl && formData.name && formData.description && formData.price && artistName != '' && collectionName != '') setFormIsReady(true)
+  }
+
+  useEffect(() => {
+    checkForm()
+  }, [formData, fileUrl, collectionName, artistName])
+
   const saveNftToDb = async (tokenId, url) => {
     if (!tokenId || !url) return
 
@@ -142,14 +150,11 @@ const CreateNft = ({ artists }) => {
   const setCollection = (e) => {
     setCollectionName(e.label)
     setFormData({ ...formData, ...{ collection: e.value } })
-    if (artistName != '' && fileUrl) setFormIsReady(true)
-
   }
 
   const setArtist = (e) => {
     setArtistName(e.label)
     setFormData({ ...formData, ...{ artist: e.value } })
-    if (collectionName != '' && fileUrl) setFormIsReady(true)
   }
 
   const saveNft = async (tokenId, url) => {
@@ -245,7 +250,7 @@ const CreateNft = ({ artists }) => {
                 type='text' name='name' id='name'
                 onChange={setData} required
                 placeholder='Name'
-                className='block mt-2 w-full text-[30px]'
+                className='block mt-2 w-full text-[20px] md:text-[30px]'
                 disabled={loading}
               />
             </label>
@@ -306,7 +311,7 @@ const CreateNft = ({ artists }) => {
                 <div id='mintingInfo' className='text-xs'></div>
               </div>
               :
-              <input type='submit' disabled={!formIsReady} className='button button-cta mt-10' value='Create' />
+              <input type='submit' disabled={!formIsReady} className='button button-cta mt-10 ml-4' value='Create' />
             }
           </div>
         </form>

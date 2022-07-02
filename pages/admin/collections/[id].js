@@ -71,10 +71,11 @@ const Collection = ({ collection }) => {
               onChange={setData} required
               defaultValue={title}
               placeholder='Title'
-              className='block mt-2 w-full'
+              className='block mt-2 w-full text-[20px] md:text-[30px]'
               disabled={loading}
             />
           </label>
+          <hr className='my-8' />
 
           <label htmlFor='headline' className='mt-12 w-full'>
             <input
@@ -109,12 +110,12 @@ const Collection = ({ collection }) => {
             />
           </label>
 
-          <label htmlFor='featured' className='mt-12 w-full flex items-center mr-4'>
+          <label htmlFor='featured' className='mt-12 w-full flex items-center ml-4'>
             <input id="featured" type="checkbox" defaultChecked={featured} onChange={() => setIsFeatured(!featured)} className="w-4 h-4 text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600" disabled={loading} />
             <label htmlFor="featured" className="ml-2">Featured</label>
           </label>
 
-          <input type='submit' className='button button-cta mt-12' value='Save' disabled={loading} />
+          <input type='submit' className='button button-cta mt-12 ml-4' value='Save' disabled={loading} />
         </div>
       </form>
     </div>

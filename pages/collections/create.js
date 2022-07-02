@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
@@ -16,8 +16,24 @@ const CreateCollection = () => {
   const setData = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, ...{ [name]: value } })
-    if (imageUrl && formData.title && formData.headline && formData.description && formData.year) setFormIsReady(true)
   }
+
+  const checkForm = () => {
+    (imageUrl && formData.title && formData.headline && formData.description && formData.year)
+      ?
+      setFormIsReady(true)
+      :
+      setFormIsReady(false)
+  }
+
+  const handleUpload = async (url) => {
+    setFormData({ ...formData, image_url: url })
+    setImageUrl(url)
+  }
+
+  useEffect(() => {
+    checkForm()
+  }, [formData, imageUrl])
 
   const saveCollection = async (e) => {
     e.preventDefault()
@@ -56,10 +72,7 @@ const CreateCollection = () => {
             bucket='collections'
             url={imageUrl}
             // size={200}
-            onUpload={(url) => {
-              setFormData({ ...formData, image_url: url })
-              setImageUrl(url)
-            }}
+            onUpload={(url) => handleUpload(url)}
           />
           {/* <img src={public_url} alt='Cover Image' className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)]' /> */}
         </div>
@@ -70,7 +83,7 @@ const CreateCollection = () => {
               type='text' name='title' id='title'
               onChange={setData} required
               placeholder='Title'
-              className='block mt-2 w-full'
+              className='block mt-2 w-full text-[20px] md:text-[30px]'
               disabled={loading}
             />
           </label>
@@ -98,7 +111,7 @@ const CreateCollection = () => {
 
           <label htmlFor='year' className='mt-12 w-full'>
             <input
-              type='text' name='year' id='year'
+              type='number' name='year' id='year'
               onChange={setData} required
               placeholder='Year of Appearance'
               className='block mt-2 w-full'
@@ -106,7 +119,7 @@ const CreateCollection = () => {
             />
           </label>
 
-          <input type='submit' className='button button-cta mt-12' value='Create' disabled={!formIsReady || loading} />
+          <input type='submit' className='button button-cta mt-12 ml-4' value='Create' disabled={!formIsReady || loading} />
         </div>
       </form>
     </>
