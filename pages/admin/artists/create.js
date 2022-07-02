@@ -37,7 +37,7 @@ const Create = () => {
       notify("Artist added successfully!")
       setFormData(null)
       setLoading(false)
-      router.push('/artists')
+      router.push('/admin')
     }
   }
 
