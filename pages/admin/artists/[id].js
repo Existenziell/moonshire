@@ -66,58 +66,59 @@ const Artist = ({ artist }) => {
         </div>
 
         <div className='md:w-1/2'>
-          <label htmlFor='name' className='mt-12 w-full'>
+          <label htmlFor='name' className='mt-4 w-full block'>
             <input
               type='text' name='name' id='name'
               onChange={setData} required
               defaultValue={name}
               placeholder='Name'
-              className='block mt-2 w-full'
+              className='w-full text-[20px] md:text-[30px]'
               disabled={loading}
             />
           </label>
+          <hr className='my-8' />
 
-          <label htmlFor='headline' className='mt-12 w-full'>
+          <label htmlFor='headline' className='mt-4 w-full block'>
             <input
               type='text' name='headline' id='headline'
               onChange={setData} required
               defaultValue={headline}
               placeholder='Headline'
-              className='block mt-2 w-full'
+              className='w-full'
               disabled={loading}
             />
           </label>
 
-          <label htmlFor='description' className='mt-12 w-full'>
+          <label htmlFor='description' className='mt-4 w-full block'>
             <textarea
               name='description' id='description' rows={10}
               onChange={setData} required
               defaultValue={description}
               placeholder="Description"
-              className='block mt-2 w-full'
+              className='w-full'
               disabled={loading}
             />
           </label>
 
-          <label htmlFor='origin' className='mt-12 w-full'>
+          <label htmlFor='origin' className='mt-4 w-full block'>
             <input
               type='text' name='origin' id='origin'
               onChange={setData} required
               defaultValue={origin}
               placeholder='Origin'
-              className='block mt-2 w-full'
+              className='w-full'
               disabled={loading}
             />
           </label>
 
-          <label htmlFor='featured' className='mt-20 w-full'>
-            <div className="flex items-center mr-4">
+          <label htmlFor='featured' className='mt-4 w-full block'>
+            <div className="flex items-center ml-4">
               <input id="featured" type="checkbox" defaultChecked={featured} onChange={() => setIsFeatured(!featured)} className="w-4 h-4 text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600" disabled={loading} />
               <label htmlFor="featured" className="ml-2">Featured on Startpage</label>
             </div>
           </label>
 
-          <input type='submit' className='button button-cta mt-12' value='Save' disabled={loading} />
+          <input type='submit' className='button button-cta mt-12 ml-4' value='Save' disabled={loading} />
         </div>
       </form>
     </div>
