@@ -12,11 +12,12 @@ export default function FilePicker({ onChange, size, url }) {
   return (
     <div>
       {imageUrl ? (
-        <div className='relative border-2 border-dashed border-detail-dark/60 dark:border-detail rounded-xl p-2'>
+        <div className='relative max-w-max'>
           <img
             src={imageUrl}
             alt="Upload Image"
-            style={{ height: size, width: size }}
+            // style={{ height: size, width: size }}
+            className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)]'
           />
           <button
             className='absolute top-0 right-0 px-2 pb-1 rounded-sm text-detail-dark/80 dark:text-detail hover:text-cta text-3xl dark:hover:text-cta hover:cursor-pointer hover:scale-110 transition-all'
@@ -28,12 +29,12 @@ export default function FilePicker({ onChange, size, url }) {
         </div>
       ) : (
         <div
-          className='border-2 border-dashed border-detail-dark/60 dark:border-detail rounded-xl p-2 hover:border-cta dark:hover:border-cta transition-all'
+          className='hover:border-cta dark:hover:border-cta transition-all'
         >
           <label
             htmlFor="single"
             style={{ width: size, height: size }}
-            className='block bg-detail bg-upload-bg bg-no-repeat bg-contain rounded-xl hover:cursor-pointer'
+            className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)] block bg-detail bg-upload-bg bg-no-repeat bg-contain rounded-xl hover:cursor-pointer'
           >
             <input
               type="file"

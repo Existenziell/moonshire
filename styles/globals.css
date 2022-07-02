@@ -189,12 +189,12 @@ hr {
 .create-collection input[type='text'], .create-collection input[type='number'], .create-collection textarea,
 .edit-collection input[type='text'], .edit-collection input[type='number'], .edit-collection textarea,
 .create-artist input[type='text'], .create-artist input[type='number'], .create-artist textarea,
-.edit-artist input[type='text'], .edit-artist textarea
+.edit-artist input[type='text'], .edit-artist textarea,
+.create-nft input[type='text'], .create-nft textarea
 {
   @apply px-5 py-4 rounded border-none bg-brand dark:bg-brand-dark focus:outline-none focus:ring-cta;
 }
 
-.create-nft input[type='text'], .create-nft textarea,
 .edit-user input[type='text'], .edit-user textarea,
 .list-nft input[type='text'], .list-nft textarea
 {

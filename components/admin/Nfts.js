@@ -100,7 +100,7 @@ const Nfts = ({ nfts }) => {
             <th>Wallet</th>
             <th className='text-right'>Listed</th>
             <th className='text-right'>Featured</th>
-            {/* <th className='text-right'>Edit</th> */}
+            <th className='text-right'>Edit</th>
             <th className='text-right w-28'>Delete</th>
           </tr>
         </thead>
@@ -172,7 +172,7 @@ const Nfts = ({ nfts }) => {
                 </label>
               </td>
 
-              {/* <td className='text-right align-middle pr-0'>
+              <td className='text-right align-middle pr-0'>
                 <Link href={`/admin/nfts/${nft.id}`}>
                   <a>
                     <button className='button-admin'>
@@ -180,7 +180,7 @@ const Nfts = ({ nfts }) => {
                     </button>
                   </a>
                 </Link>
-              </td> */}
+              </td>
 
               <td className='text-right w-28 pr-0'>
                 <div>

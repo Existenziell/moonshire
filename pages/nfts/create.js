@@ -234,85 +234,81 @@ const CreateNft = ({ artists }) => {
           </Link>
         </div>
         :
-        <form onSubmit={createNft} className='create-nft flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
-          <h1 className='mx-auto'>Create NFT</h1>
+        <form onSubmit={createNft} className='create-nft flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
+          <div className='md:w-1/2 h-full'>
+            <FilePicker onChange={(e) => handleUpload(e)} url={fileUrl} />
+          </div>
 
-          <h2 className='mb-2'>Media</h2>
-          <p className='text-tiny mb-4'>
-            Image, Video, Audio, or 3D Model<br />
-            File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB
-          </p>
+          <div className='md:w-1/2'>
+            <label htmlFor='name' className='mt-12 w-full'>
+              <input
+                type='text' name='name' id='name'
+                onChange={setData} required
+                placeholder='Name'
+                className='block mt-2 w-full text-[30px]'
+                disabled={loading}
+              />
+            </label>
+            <hr className='my-8' />
 
-          <FilePicker onChange={(e) => handleUpload(e)} size={200} url={fileUrl} />
-          <label htmlFor='name' className='mt-12 w-full'>
-            <h2 className='mb-2'>Name</h2>
-            <input
-              type='text' name='name' id='name'
-              onChange={setData} required
-              placeholder='NFT name'
-              className='block mt-2 w-full'
-              disabled={loading}
-            />
-          </label>
+            <label htmlFor='description' className='mt-12 w-full'>
+              <textarea
+                name='description' id='description' rows={8}
+                onChange={setData} required
+                placeholder="Description"
+                className='block mt-2 w-full'
+                disabled={loading}
+              />
+            </label>
 
-          <label htmlFor='description' className='mt-12 w-full'>
-            <h2 className='mb-2'>Description</h2>
-            <span className='block text-tiny mt-1'>The description will be included on the item&apos;s detail page</span>
-            <textarea
-              name='description' id='description' rows={10}
-              onChange={setData} required
-              placeholder="Provide a detailed description of your item."
-              className='block mt-2 w-full'
-              disabled={loading}
-            />
-          </label>
-
-          <label htmlFor='price' className='mt-12 w-full'>
-            <h2 className='mb-2'>Price</h2>
-            <span className='block text-tiny mt-1'>The initial price, which can be adapted later for specific auctions.</span>
-            <input
-              type='text' name='price' id='price'
-              onChange={setData} required
-              placeholder='0.02 ETH'
-              className='block mt-2 w-full'
-              disabled={loading}
-            />
-          </label>
-
-          <label htmlFor='artist' className='mt-12 w-full'>
-            <h2 className='mb-2'>Artist</h2>
-            <span className='block text-tiny mt-1 mb-2'>The artist who will be credited for this NFT.</span>
-            <Select
-              options={artistOptions}
-              onChange={setArtist}
-              isReq={true}
-              instanceId // Needed to prevent errors being thrown
-              styles={styles}
-              disabled={loading}
-            />
-          </label>
-
-          <label htmlFor='collection' className='mt-12 w-full'>
-            <h2 className='mb-2'>Collection</h2>
-            <span className='block text-tiny mt-1 mb-2'>The collection in which this NFT will appear.</span>
-            <Select
-              options={collectionOptions}
-              onChange={setCollection}
-              instanceId // Needed to prevent errors being thrown
-              styles={styles}
-              disabled={loading}
-            />
-          </label>
-
-          {loading ?
-            <div className='flex flex-col items-start justify-center mt-10'>
-              <PulseLoader color={'var(--color-cta)'} size={20} />
-              <p className='text-xs my-4'>Please follow MetaMask prompt...</p>
-              <div id='mintingInfo' className='text-xs'></div>
+            <div className='flex items-center justify-between gap-8 mt-12'>
+              <div className='w-1/2'>
+                <p className='mb-2 ml-5'>Artist</p>
+                <label htmlFor='artist' className='w-full'>
+                  <Select
+                    options={artistOptions}
+                    onChange={setArtist}
+                    isReq={true}
+                    instanceId // Needed to prevent errors being thrown
+                    styles={styles}
+                    disabled={loading}
+                  />
+                </label>
+              </div>
+              <div className='w-1/2'>
+                <p className='mb-2 ml-5'>Collection</p>
+                <label htmlFor='collection' className='w-full'>
+                  <Select
+                    options={collectionOptions}
+                    onChange={setCollection}
+                    instanceId // Needed to prevent errors being thrown
+                    styles={styles}
+                    disabled={loading}
+                  />
+                </label>
+              </div>
             </div>
-            :
-            <input type='submit' disabled={!formIsReady} className='button button-cta mt-10' value='Create' />
-          }
+
+            <label htmlFor='price' className='mt-12 w-full flex items-center gap-8'>
+              <input
+                type='text' name='price' id='price'
+                onChange={setData} required
+                placeholder='Price'
+                className='block mt-2 w-1/3'
+                disabled={loading}
+              />ETH
+            </label>
+
+            {loading ?
+              <div className='flex flex-col items-start justify-center mt-10'>
+                <PulseLoader color={'var(--color-cta)'} size={20} />
+                <p className='text-xs my-4'>Please follow MetaMask prompt...</p>
+                <div id='mintingInfo' className='text-xs'></div>
+              </div>
+              :
+              <input type='submit' disabled={!formIsReady} className='button button-cta mt-10' value='Create' />
+            }
+          </div>
         </form>
       }
     </>

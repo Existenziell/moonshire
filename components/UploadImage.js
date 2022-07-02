@@ -15,7 +15,7 @@ export default function UploadImage({ bucket, url, size, onUpload }) {
   return (
     <div>
       {imageUrl ? (
-        <div className='relative border w-max'>
+        <div className='relative max-w-max'>
           <img
             src={imageUrl}
             alt="Upload Image"
