@@ -14,6 +14,7 @@ import getUserCollections from '../lib/supabase/getUserCollections'
 import fetchMyNfts from '../lib/contract/fetchMyNfts'
 import fetchListedItems from '../lib/contract/fetchListedItems'
 import getDbIdForTokenURI from '../lib/supabase/getDbIdForTokenURI'
+import { PulseLoader } from 'react-spinners'
 
 const Profile = () => {
   const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify, signer } = useApp()
@@ -25,6 +26,7 @@ const Profile = () => {
   const [collections, setCollections] = useState(null)
   const [nftsOwned, setNftsOwned] = useState(null)
   const [nftsListed, setNftsListed] = useState(null)
+  const [fetching, setFetching] = useState(true)
 
   useEffect(() => {
     if (currentUser) {
@@ -61,6 +63,7 @@ const Profile = () => {
       }
       setNftsOwned(owned)
     }
+    setFetching(false)
   }
 
   const setUser = (e) => {
@@ -141,28 +144,32 @@ const Profile = () => {
               }
               <hr className='mb-8 mt-6 w-full' />
 
-              <div className='mt-16'>
-                <h1 className='mb-0'>Assets</h1>
-                <hr className='my-8' />
-                <p className='mb-4'>{collections?.length} {collections?.length === 1 ? `Collection` : `Collections`}</p>
-                <div>
-                  {collections?.map(c => (
-                    <Link key={c.id} href={`/collections/${c.id}`}><a className='link-white block'>{c.title}</a></Link>
-                  ))}
+              {fetching ?
+                <PulseLoader color={'var(--color-cta)'} size={10} />
+                :
+                <div className='mt-16'>
+                  <h1 className='mb-0'>Assets</h1>
+                  <hr className='my-8' />
+                  <p className='mb-4'>{collections?.length} {collections?.length === 1 ? `Collection` : `Collections`}</p>
+                  <div>
+                    {collections?.map(c => (
+                      <Link key={c.id} href={`/collections/${c.id}`}><a className='link-white block'>{c.title}</a></Link>
+                    ))}
+                  </div>
+                  <p className='mb-4 mt-8'>{nftsListed?.length} {nftsListed?.length === 1 ? `Listed NFT` : `Listed NFTs`}</p>
+                  <div>
+                    {nftsListed?.map(n => (
+                      <Link key={n.name} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
+                    ))}
+                  </div>
+                  <p className='mb-4 mt-8'>{nftsOwned?.length} {nftsOwned?.length === 1 ? `Owned NFT` : `Owned NFTs`}</p>
+                  <div>
+                    {nftsOwned?.map(n => (
+                      <Link key={n.name} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
+                    ))}
+                  </div>
                 </div>
-                <p className='mb-4 mt-8'>{nftsListed?.length} {nftsListed?.length === 1 ? `Listed NFT` : `Listed NFTs`}</p>
-                <div>
-                  {nftsListed?.map(n => (
-                    <Link key={n.name} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
-                  ))}
-                </div>
-                <p className='mb-4 mt-8'>{nftsOwned?.length} {nftsOwned?.length === 1 ? `Owned NFT` : `Owned NFTs`}</p>
-                <div>
-                  {nftsOwned?.map(n => (
-                    <Link key={n.name} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
-                  ))}
-                </div>
-              </div>
+              }
             </div>
 
             {/* <div className='text-xs flex flex-col md:items-start gap-2 text-center rounded'>
