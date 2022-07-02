@@ -106,7 +106,7 @@ const Profile = () => {
         <meta name='description' content='Profile | Project Moonshire' />
       </Head>
 
-      <div className='profile flex flex-col items-center px-[40px]'>
+      <div className='profile flex flex-col items-center px-[40px] w-full'>
 
         <div className='flex flex-col items-center md:flex-row gap-[40px] md:h-[calc(100vh-260px)] w-full'>
           <Avatar
@@ -122,7 +122,7 @@ const Profile = () => {
                   value={username || ''}
                   onChange={(e) => setUser(e)}
                   placeholder='Username'
-                  className='text-4xl md:text-6xl text-left font-serif w-full ring-0 border-0'
+                  className='text-4xl md:text-6xl text-left font-serif w-full ring-0 border-0 relative -left-4'
                 />
               </label>
               {modified &&

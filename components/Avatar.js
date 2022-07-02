@@ -13,34 +13,28 @@ export default function Avatar({ url, size, onUpload }) {
   }, [url])
 
   return (
-    <div className='w-full flex-shrink-0 flex-grow md:w-1/2 mb-20 md:mb-0'>
+    <div className='md:w-1/2'>
       {avatarUrl ? (
-        <img
-          src={avatarUrl}
-          alt="Avatar"
-          className="shadow-2xl w-full md:w-[80%] aspect-square bg-cover"
-          style={{ height: size, width: size }}
-        />
+        <div className='relative'>
+          <img
+            src={avatarUrl}
+            alt="Avatar"
+            className="shadow-2xl max-h-[calc(100vh-260px)] aspect-square bg-cover"
+          />
+          <label className="absolute top-0 right-0 bottom-0 left-0 w-full h-full" htmlFor="single">
+            <input
+              type="file"
+              id="single"
+              accept="image/*"
+              onChange={(e) => uploadImage(e, bucket, setUploading, onUpload)}
+              disabled={uploading}
+              className='hidden z-20'
+            />
+          </label>
+        </div>
       ) : (
         <div className="avatar no-image" style={{ height: size, width: size }} />
       )}
-      {/* <div className='my-8'>
-        <label className="text-sm" htmlFor="single">
-          {uploading ?
-            <span className='button button-detail mx-auto'>Uploading ...</span>
-            :
-            <span className='button button-detail mx-auto'>Change Avatar</span>
-          }
-        </label>
-        <input
-          type="file"
-          id="single"
-          accept="image/*"
-          onChange={(e) => uploadImage(e, bucket, setUploading, onUpload)}
-          disabled={uploading}
-          className='hidden'
-        />
-      </div> */}
     </div>
   )
 }

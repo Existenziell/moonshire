@@ -116,7 +116,7 @@ hr {
 .profile input[type='email'], 
 .profile input[type='website'] {
   @apply bg-brand dark:bg-brand-dark text-center md:text-left rounded py-2
-    focus:border-none focus:outline-none focus:scale-105 transition-all focus:ring-cta;
+    focus:border-none focus:outline-none transition-all focus:ring-cta;
 }
 
 
