@@ -17,6 +17,7 @@ const Nft = ({ nft }) => {
   const { address, signer, notify } = useApp()
   const router = useRouter()
 
+  const [fetching, setFetching] = useState(true)
   const [loading, setLoading] = useState(false)
   const [sellerIsOwner, setSellerIsOwner] = useState(false)
 
@@ -43,6 +44,7 @@ const Nft = ({ nft }) => {
     }
     // If seller is current owner, don't offer 'Buy' option
     if (nft.seller === address) setSellerIsOwner(true)
+    setFetching(false)
   }
 
   const initiateBuy = async (nft) => {
@@ -103,14 +105,14 @@ const Nft = ({ nft }) => {
               <hr className='my-8' />
               <p className='mb-4'>Physical <span className='text-gray-400'>(free shipping worldwide)</span></p>
               <ul>
-                {physicalAssets.map(asset => (
-                  <li key={asset.name}>&#8212;	{asset.name}</li>
+                {physicalAssets.map((asset, idx) => (
+                  <li key={asset.name + idx}>&#8212;	{asset.name}</li>
                 ))}
               </ul>
               <p className='mb-4 mt-8'>Digital</p>
               <ul>
-                {digitalAssets.map(asset => (
-                  <li key={asset.name}>
+                {digitalAssets.map((asset, idx) => (
+                  <li key={asset.name + idx}>
                     &#8212; {asset.name}{` `}
                     <Link href={`/download/${asset.link}`}>
                       <a className='link-white'>Download</a>
@@ -156,10 +158,14 @@ const Nft = ({ nft }) => {
               :
               <div className='flex items-center gap-10 mt-10'>
                 <p className='my-0 text-[30px] leading-none h-full'>{fromExponential(price)} ETH</p>
-                {sellerIsOwner ?
-                  <button onClick={() => listNFT(nft)} className='button button-cta my-0 p-0 h-full'>Sell</button>
+                {fetching ?
+                  ``
                   :
-                  <button onClick={() => initiateBuy(nft)} className='button button-cta my-0 p-0 h-full'>Buy</button>
+                  sellerIsOwner ?
+                    // <button onClick={() => listNFT(nft)} className='button button-cta my-0 p-0 h-full'>List</button>
+                    `You listed this NFT`
+                    :
+                    <button onClick={() => initiateBuy(nft)} className='button button-cta my-0 p-0 h-full'>Buy</button>
                 }
               </div>
             }

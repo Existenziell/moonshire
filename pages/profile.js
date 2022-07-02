@@ -11,7 +11,9 @@ import MyNfts from '../components/market/MyNfts'
 import MyListedNfts from '../components/market/MyListedNfts'
 import Link from 'next/link'
 import getUserCollections from '../lib/supabase/getUserCollections'
-import getUserNfts from '../lib/supabase/getUserNfts'
+import fetchMyNfts from '../lib/contract/fetchMyNfts'
+import fetchListedItems from '../lib/contract/fetchListedItems'
+import getDbIdForTokenURI from '../lib/supabase/getDbIdForTokenURI'
 
 const Profile = () => {
   const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify, signer } = useApp()
@@ -42,17 +44,23 @@ const Profile = () => {
   }
 
   const fetchUserNfts = async (id) => {
-    let nfts = await getUserNfts(id)
-    let listed = []
-    let owned = []
-    for (let nft of nfts) {
-      nft.listed ?
-        listed.push(nft)
-        :
-        owned.push(nft)
+    let listed = await fetchListedItems(signer)
+    if (listed) {
+      for (let nft of listed) {
+        const dbId = await getDbIdForTokenURI(nft.tokenURI)
+        nft.id = dbId
+      }
+      setNftsListed(listed)
     }
-    setNftsListed(listed)
-    setNftsOwned(owned)
+
+    let owned = await fetchMyNfts(signer)
+    if (owned) {
+      for (let nft of owned) {
+        const dbId = await getDbIdForTokenURI(nft.tokenURI)
+        nft.id = dbId
+      }
+      setNftsOwned(owned)
+    }
   }
 
   const setUser = (e) => {
@@ -145,13 +153,13 @@ const Profile = () => {
                 <p className='mb-4 mt-8'>{nftsListed?.length} {nftsListed?.length === 1 ? `Listed NFT` : `Listed NFTs`}</p>
                 <div>
                   {nftsListed?.map(n => (
-                    <Link key={n.id} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
+                    <Link key={n.name} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
                   ))}
                 </div>
                 <p className='mb-4 mt-8'>{nftsOwned?.length} {nftsOwned?.length === 1 ? `Owned NFT` : `Owned NFTs`}</p>
                 <div>
                   {nftsOwned?.map(n => (
-                    <Link key={n.id} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
+                    <Link key={n.name} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
                   ))}
                 </div>
               </div>

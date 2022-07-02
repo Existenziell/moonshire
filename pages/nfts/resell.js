@@ -69,13 +69,13 @@ export default function ResellNft() {
             disabled={loading}
           />
           {loading ?
-            <div className='mt-8'>
+            <div className='mt-8 text-center'>
               <PulseLoader color={'var(--color-cta)'} size={10} />
               <p className='text-xs'>Waiting for blockchain confirmation...</p>
             </div>
             :
             <button onClick={initiateResell} className="mt-10 button button-cta">
-              Sell NFT
+              List NFT
             </button>
           }
         </form>
