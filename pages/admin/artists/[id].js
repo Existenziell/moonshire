@@ -52,77 +52,73 @@ const Artist = ({ artist }) => {
     <div className='mb-20 w-full relative'>
       <BackBtn href='/admin' />
 
-      <form onSubmit={saveArtist} className='edit-artist flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
-        <h1 className='mb-10'>Edit Artist</h1>
-
-        <h2 className='mb-2'>Picture</h2>
-        <UploadImage
-          bucket='artists'
-          url={avatarUrl}
-          size={200}
-          onUpload={(url) => {
-            setFormData({ ...formData, avatar_url: url })
-            setAvatarUrl(url)
-          }}
-        />
-
-        <label htmlFor='name' className='mt-12 w-full'>
-          <h2 className='mb-2'>Name</h2>
-          <input
-            type='text' name='name' id='name'
-            onChange={setData} required
-            defaultValue={name}
-            placeholder='Artist name'
-            className='block mt-2 w-full'
-            disabled={loading}
+      <form onSubmit={saveArtist} className='edit-artist flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
+        <div className='md:w-1/2 h-full'>
+          <UploadImage
+            bucket='artists'
+            url={avatarUrl}
+            // size={200}
+            onUpload={(url) => {
+              setFormData({ ...formData, avatar_url: url })
+              setAvatarUrl(url)
+            }}
           />
-        </label>
+        </div>
 
-        <label htmlFor='headline' className='mt-12 w-full'>
-          <h2 className='mb-2'>Headline</h2>
-          <input
-            type='text' name='headline' id='headline'
-            onChange={setData} required
-            defaultValue={headline}
-            placeholder='Artist headline'
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+        <div className='md:w-1/2'>
+          <label htmlFor='name' className='mt-12 w-full'>
+            <input
+              type='text' name='name' id='name'
+              onChange={setData} required
+              defaultValue={name}
+              placeholder='Name'
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <label htmlFor='description' className='mt-12 w-full'>
-          <h2 className='mb-2'>Description</h2>
-          <textarea
-            name='description' id='description' rows={10}
-            onChange={setData} required
-            defaultValue={description}
-            placeholder="Description"
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+          <label htmlFor='headline' className='mt-12 w-full'>
+            <input
+              type='text' name='headline' id='headline'
+              onChange={setData} required
+              defaultValue={headline}
+              placeholder='Headline'
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <label htmlFor='origin' className='mt-12 w-full'>
-          <h2 className='mb-2'>Origin</h2>
-          <input
-            type='text' name='origin' id='origin'
-            onChange={setData} required
-            defaultValue={origin}
-            placeholder='Artist origin'
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+          <label htmlFor='description' className='mt-12 w-full'>
+            <textarea
+              name='description' id='description' rows={10}
+              onChange={setData} required
+              defaultValue={description}
+              placeholder="Description"
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <label htmlFor='featured' className='mt-12 w-full'>
-          <h2 className='mb-2'>Featured</h2>
-          <div className="flex items-center mr-4">
-            <input id="featured" type="checkbox" defaultChecked={featured} onChange={() => setIsFeatured(!featured)} className="w-4 h-4 text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600" disabled={loading} />
-            <label htmlFor="featured" className="ml-2">Featured on Startpage</label>
-          </div>
-        </label>
+          <label htmlFor='origin' className='mt-12 w-full'>
+            <input
+              type='text' name='origin' id='origin'
+              onChange={setData} required
+              defaultValue={origin}
+              placeholder='Origin'
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <input type='submit' className='button button-cta mt-12' value='Save' disabled={loading} />
+          <label htmlFor='featured' className='mt-20 w-full'>
+            <div className="flex items-center mr-4">
+              <input id="featured" type="checkbox" defaultChecked={featured} onChange={() => setIsFeatured(!featured)} className="w-4 h-4 text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600" disabled={loading} />
+              <label htmlFor="featured" className="ml-2">Featured on Startpage</label>
+            </div>
+          </label>
+
+          <input type='submit' className='button button-cta mt-12' value='Save' disabled={loading} />
+        </div>
       </form>
     </div>
   )

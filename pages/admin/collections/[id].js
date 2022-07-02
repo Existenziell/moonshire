@@ -57,7 +57,7 @@ const Collection = ({ collection }) => {
           <UploadImage
             bucket='collections'
             url={imageUrl}
-            size={200}
+            // size={200}
             onUpload={(url) => {
               setFormData({ ...formData, image_url: url })
               setImageUrl(url)
