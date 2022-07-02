@@ -119,7 +119,11 @@ const CreateNft = ({ artists }) => {
   }
 
   const checkForm = () => {
-    if (fileUrl && formData.name && formData.description && formData.price && artistName != '' && collectionName != '') setFormIsReady(true)
+    (fileUrl && formData?.name && formData?.description && formData?.price && artistName != '' && collectionName != '')
+      ?
+      setFormIsReady(true)
+      :
+      setFormIsReady(false)
   }
 
   useEffect(() => {

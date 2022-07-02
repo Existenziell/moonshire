@@ -24,7 +24,11 @@ const Create = () => {
   }
 
   const checkForm = () => {
-    if (fileUrl && formData.name && formData.headline && formData.description) setFormIsReady(true)
+    (fileUrl && formData?.name && formData?.headline && formData?.description)
+      ?
+      setFormIsReady(true)
+      :
+      setFormIsReady(false)
   }
 
   useEffect(() => {

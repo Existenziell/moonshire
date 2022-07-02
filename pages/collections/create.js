@@ -19,7 +19,7 @@ const CreateCollection = () => {
   }
 
   const checkForm = () => {
-    (imageUrl && formData.title && formData.headline && formData.description && formData.year)
+    (imageUrl && formData?.title && formData?.headline && formData?.description && formData?.year)
       ?
       setFormIsReady(true)
       :
