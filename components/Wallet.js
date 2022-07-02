@@ -1,14 +1,20 @@
 import { useState, useEffect } from 'react'
+import { PulseLoader } from 'react-spinners'
 import useApp from "../context/App"
 import Link from 'next/link'
 
 const Wallet = () => {
   const { address, notify, currentUser, hasMetamask, connectWallet } = useApp()
   const [walletAddress, setWalletAddress] = useState()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setWalletAddress(address)
   }, [address])
+
+  useEffect(() => {
+    if (currentUser) setLoading(false)
+  }, [currentUser])
 
   const syncWallet = async () => {
     hasMetamask ?
@@ -16,6 +22,8 @@ const Wallet = () => {
       :
       notify("Please install Metamask to proceed")
   }
+
+  if (loading) return <div className='h-12 w-32 flex items-center'><PulseLoader color={'var(--color-cta)'} size={6} /></div>
 
   if (walletAddress) {
     return (
