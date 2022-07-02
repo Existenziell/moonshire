@@ -13,7 +13,7 @@ import fetchMarketItemsMeta from '../../lib/contract/fetchMarketItemsMeta'
 import fromExponential from 'from-exponential'
 
 const Nft = ({ nft }) => {
-  const { id, name, description, price, created_at, image_url, artists, tokenURI, tokenId, gallery } = nft
+  const { id, name, description, price, created_at, image_url, artists, listed, tokenURI, tokenId, gallery } = nft
   const { address, signer, notify } = useApp()
   const router = useRouter()
 
@@ -37,13 +37,15 @@ const Nft = ({ nft }) => {
   }, [address])
 
   const fetchMeta = async () => {
-    const meta = await fetchMarketItemsMeta(tokenId, signer)
-    if (meta) {
-      nft.owner = meta.owner
-      nft.seller = meta.seller
+    if (tokenId) {
+      const meta = await fetchMarketItemsMeta(tokenId, signer)
+      if (meta) {
+        nft.owner = meta.owner
+        nft.seller = meta.seller
+        // If seller is current owner, don't offer 'Buy' option
+        if (nft.seller === address) setSellerIsOwner(true)
+      }
     }
-    // If seller is current owner, don't offer 'Buy' option
-    if (nft.seller === address) setSellerIsOwner(true)
     setFetching(false)
   }
 
@@ -161,11 +163,14 @@ const Nft = ({ nft }) => {
                 {fetching ?
                   ``
                   :
-                  sellerIsOwner ?
-                    // <button onClick={() => listNFT(nft)} className='button button-cta my-0 p-0 h-full'>List</button>
-                    `You listed this NFT`
+                  listed ?
+                    sellerIsOwner ?
+                      // <button onClick={() => listNFT(nft)} className='button button-cta my-0 p-0 h-full'>List</button>
+                      <p className='text-tiny'>You listed this NFT</p>
+                      :
+                      <button onClick={() => initiateBuy(nft)} className='button button-cta my-0 p-0 h-full'>Buy</button>
                     :
-                    <button onClick={() => initiateBuy(nft)} className='button button-cta my-0 p-0 h-full'>Buy</button>
+                    <p className='text-tiny'>NFT not listed</p>
                 }
               </div>
             }

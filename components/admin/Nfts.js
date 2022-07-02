@@ -166,7 +166,7 @@ const Nfts = ({ nfts }) => {
                     id="featured"
                     defaultChecked={nft.featured}
                     onChange={(e) => saveState(nft.id, e.target.checked)}
-                    disabled={loading}
+                    disabled={loading || !nft.listed}
                     className="text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600"
                   />
                 </label>
