@@ -18,24 +18,24 @@ const Footer = () => {
       const currentScroll = window.pageYOffset
 
       if (currentScroll > lastScroll && !body.classList.contains(scrollDown)) {
-        // console.log("down")
+        // down
         body.classList.remove(scrollUp)
         body.classList.add(scrollDown)
       } else if (currentScroll < lastScroll && body.classList.contains(scrollDown)) {
-        // console.log('up')
+        // up
         body.classList.remove(scrollDown)
         body.classList.remove(bottom)
         body.classList.add(scrollUp)
       }
 
       if (currentScroll <= 0) {
-        // console.log("top")
+        // top
         body.classList.remove(scrollUp)
         return
       }
 
       if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
-        // console.log("bottom")
+        // bottom
         body.classList.add(bottom)
       }
 
