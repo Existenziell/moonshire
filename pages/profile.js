@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { addToMetamask } from '../lib/addToMetamask'
 import { shortenAddress } from '../lib/shortenAddress'
+import { PulseLoader } from 'react-spinners'
 import useApp from "../context/App"
 import Head from 'next/head'
 import Avatar from '../components/Avatar'
@@ -14,7 +15,6 @@ import getUserCollections from '../lib/supabase/getUserCollections'
 import fetchMyNfts from '../lib/contract/fetchMyNfts'
 import fetchListedItems from '../lib/contract/fetchListedItems'
 import getDbIdForTokenURI from '../lib/supabase/getDbIdForTokenURI'
-import { PulseLoader } from 'react-spinners'
 
 const Profile = () => {
   const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify, signer } = useApp()

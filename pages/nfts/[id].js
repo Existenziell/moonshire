@@ -10,6 +10,7 @@ import Link from 'next/link'
 import buyNft from '../../lib/contract/buyNft'
 import logWeb3 from '../../lib/logWeb3'
 import fetchMarketItemsMeta from '../../lib/contract/fetchMarketItemsMeta'
+import fetchMyNfts from '../../lib/contract/fetchMyNfts'
 import fromExponential from 'from-exponential'
 
 const Nft = ({ nft }) => {
@@ -42,8 +43,15 @@ const Nft = ({ nft }) => {
       if (meta) {
         nft.owner = meta.owner
         nft.seller = meta.seller
-        // If seller is current owner, don't offer 'Buy' option
+        // Item is listed and seller is owner
         if (nft.seller === address) setSellerIsOwner(true)
+      } else {
+        // If we get no meta, item is not listed
+        let myNfts = await fetchMyNfts(signer)
+        if (myNfts.length) {
+          let filtered = myNfts.filter(nft => (nft.tokenId === tokenId && nft.tokenURI === tokenURI))
+          if (filtered.length) setSellerIsOwner(true)
+        }
       }
     }
     setFetching(false)
@@ -165,12 +173,14 @@ const Nft = ({ nft }) => {
                   :
                   listed ?
                     sellerIsOwner ?
-                      // <button onClick={() => listNFT(nft)} className='button button-cta my-0 p-0 h-full'>List</button>
                       <p className='text-tiny'>You listed this NFT</p>
                       :
                       <button onClick={() => initiateBuy(nft)} className='button button-cta my-0 p-0 h-full'>Buy</button>
                     :
-                    <p className='text-tiny'>NFT not listed</p>
+                    sellerIsOwner ?
+                      <button onClick={() => listNFT(nft)} className='button button-cta my-0 p-0 h-full'>List</button>
+                      :
+                      <p className='text-tiny'>NFT not listed</p>
                 }
               </div>
             }
