@@ -58,9 +58,16 @@ const NFT = ({ nft }) => {
           {/* <p className='mb-2 whitespace-nowrap'>TokenURI: <a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link'>{truncate(tokenURI)}</a></p> */}
 
           <label htmlFor="featured" className="cursor-pointer flex items-center whitespace-nowrap mt-10">
-            <input id="featured" type="checkbox" defaultChecked={featured} onChange={() => setIsFeatured(!featured)} className="text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600" disabled={loading} />
+            <input
+              id="featured"
+              type="checkbox"
+              defaultChecked={featured}
+              onChange={() => setIsFeatured(!featured)}
+              className="text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600"
+              disabled={loading || !listed} />
             <span className=' relative bottom-[1px] ml-2'>Featured</span>
           </label>
+          {!listed && <span className='text-tiny'>This NFT is currently not listed and therefore can not be set as featured.</span>}
 
           <div className='mt-16'>
             <h1 className='mb-0'>Assets</h1>
