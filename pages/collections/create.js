@@ -50,67 +50,64 @@ const CreateCollection = () => {
         <meta name='description' content="Create Collection | Project Moonshire" />
       </Head>
 
-      <form onSubmit={saveCollection} className='create-collection flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
-        <h1 className='mx-auto'>Create Collection</h1>
-
-        <h2 className='mb-2'>Cover Image</h2>
-        <p className='text-tiny mb-4'>File types supported: JPG, PNG, GIF, SVG. Max size: 50 MB</p>
-        <UploadImage
-          bucket='collections'
-          url={imageUrl}
-          size={200}
-          onUpload={(url) => {
-            setFormData({ ...formData, image_url: url })
-            setImageUrl(url)
-          }}
-        />
-
-        <label htmlFor='title' className='mt-12 w-full'>
-          <h2 className='mb-2'>Title</h2>
-          <input
-            type='text' name='title' id='title'
-            onChange={setData} required
-            placeholder='Collection Title'
-            className='block mt-2 w-full'
-            disabled={loading}
+      <form onSubmit={saveCollection} className='create-collection flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
+        <div className='md:w-1/2 h-full'>
+          <UploadImage
+            bucket='collections'
+            url={imageUrl}
+            // size={200}
+            onUpload={(url) => {
+              setFormData({ ...formData, image_url: url })
+              setImageUrl(url)
+            }}
           />
-        </label>
+          {/* <img src={public_url} alt='Cover Image' className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)]' /> */}
+        </div>
 
-        <label htmlFor='headline' className='mt-12 w-full'>
-          <h2 className='mb-2'>Headline</h2>
-          <input
-            type='text' name='headline' id='headline'
-            onChange={setData} required
-            placeholder='Collection Headline'
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+        <div className='md:w-1/2'>
+          <label htmlFor='title' className='mt-12 w-full'>
+            <input
+              type='text' name='title' id='title'
+              onChange={setData} required
+              placeholder='Title'
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
+          <hr className='my-8' />
 
-        <label htmlFor='description' className='mt-12 w-full'>
-          <h2 className='mb-2'>Description</h2>
-          <span className='block text-tiny mt-1'>The description will be included on the collection&apos;s detail page.</span>
-          <textarea
-            name='description' id='description' rows={10}
-            onChange={setData} required
-            placeholder="Provide a detailed description of your collection."
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+          <label htmlFor='headline' className='mt-12 w-full'>
+            <input
+              type='text' name='headline' id='headline'
+              onChange={setData} required
+              placeholder='Headline'
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <label htmlFor='year' className='mt-12 w-full'>
-          <h2 className='mb-2'>Year</h2>
-          <input
-            type='text' name='year' id='year'
-            onChange={setData} required
-            placeholder='Year of Appearance'
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+          <label htmlFor='description' className='mt-12 w-full'>
+            <textarea
+              name='description' id='description' rows={10}
+              onChange={setData} required
+              placeholder="Description"
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <input type='submit' className='button button-cta mt-12' value='Create' disabled={!formIsReady || loading} />
+          <label htmlFor='year' className='mt-12 w-full'>
+            <input
+              type='text' name='year' id='year'
+              onChange={setData} required
+              placeholder='Year of Appearance'
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
+
+          <input type='submit' className='button button-cta mt-12' value='Create' disabled={!formIsReady || loading} />
+        </div>
       </form>
     </>
   )

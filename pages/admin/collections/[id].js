@@ -52,77 +52,70 @@ const Collection = ({ collection }) => {
     <div className='mb-20 w-full relative'>
       <BackBtn href='/admin' />
 
-      <form onSubmit={saveCollection} className='edit-collection flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
-        <h1 className='mb-10'>Edit Collection</h1>
-
-        <h2 className='mb-2'>Cover</h2>
-        <UploadImage
-          bucket='collections'
-          url={imageUrl}
-          size={200}
-          onUpload={(url) => {
-            setFormData({ ...formData, image_url: url })
-            setImageUrl(url)
-          }}
-        />
-
-        <label htmlFor='title' className='mt-12 w-full'>
-          <h2 className='mb-2'>Title</h2>
-          <input
-            type='text' name='title' id='title'
-            onChange={setData} required
-            defaultValue={title}
-            placeholder='Collection Title'
-            className='block mt-2 w-full'
-            disabled={loading}
+      <form onSubmit={saveCollection} className='edit-collection flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
+        <div className='md:w-1/2 h-full'>
+          <UploadImage
+            bucket='collections'
+            url={imageUrl}
+            size={200}
+            onUpload={(url) => {
+              setFormData({ ...formData, image_url: url })
+              setImageUrl(url)
+            }}
           />
-        </label>
+        </div>
+        <div className='md:w-1/2'>
+          <label htmlFor='title' className='mt-12 w-full'>
+            <input
+              type='text' name='title' id='title'
+              onChange={setData} required
+              defaultValue={title}
+              placeholder='Title'
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <label htmlFor='headline' className='mt-12 w-full'>
-          <h2 className='mb-2'>Headline</h2>
-          <input
-            type='text' name='headline' id='headline'
-            onChange={setData} required
-            defaultValue={headline}
-            placeholder='Collection Headline'
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+          <label htmlFor='headline' className='mt-12 w-full'>
+            <input
+              type='text' name='headline' id='headline'
+              onChange={setData} required
+              defaultValue={headline}
+              placeholder='Headline'
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <label htmlFor='description' className='mt-12 w-full'>
-          <h2 className='mb-2'>Description</h2>
-          <textarea
-            name='description' id='description' rows={10}
-            onChange={setData} required
-            defaultValue={description}
-            placeholder="Provide a detailed description of your collection."
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+          <label htmlFor='description' className='mt-12 w-full'>
+            <textarea
+              name='description' id='description' rows={10}
+              onChange={setData} required
+              defaultValue={description}
+              placeholder="Description"
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <label htmlFor='year' className='mt-12 w-full'>
-          <h2 className='mb-2'>Year</h2>
-          <input
-            type='text' name='year' id='year'
-            onChange={setData} required
-            defaultValue={year}
-            placeholder='Year of Appearance'
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+          <label htmlFor='year' className='mt-12 w-full'>
+            <input
+              type='number' name='year' id='year'
+              onChange={setData} required
+              defaultValue={year}
+              placeholder='Year of Appearance'
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <label htmlFor='featured' className='mt-12 w-full'>
-          <h2 className='mb-2'>Featured</h2>
-          <div className="flex items-center mr-4">
+          <label htmlFor='featured' className='mt-12 w-full flex items-center mr-4'>
             <input id="featured" type="checkbox" defaultChecked={featured} onChange={() => setIsFeatured(!featured)} className="w-4 h-4 text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600" disabled={loading} />
-            <label htmlFor="featured" className="ml-2">Featured on Startpage</label>
-          </div>
-        </label>
+            <label htmlFor="featured" className="ml-2">Featured</label>
+          </label>
 
-        <input type='submit' className='button button-cta mt-12' value='Save' disabled={loading} />
+          <input type='submit' className='button button-cta mt-12' value='Save' disabled={loading} />
+        </div>
       </form>
     </div>
   )

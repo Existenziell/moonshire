@@ -186,10 +186,14 @@ hr {
 	Create/Edit NFT/Collection/User
 	========================================================================== */
 
+.create-collection input[type='text'], .create-collection input[type='number'], .create-collection textarea,
+.edit-collection input[type='text'], .edit-collection input[type='number'], .edit-collection textarea
+{
+  @apply px-5 py-4 rounded border-none bg-brand dark:bg-brand-dark focus:outline-none focus:ring-cta;
+}
+
 .create-nft input[type='text'], .create-nft textarea,
-.create-collection input[type='text'], .create-collection textarea,
 .create-artist input[type='text'], .create-artist textarea,
-.edit-collection input[type='text'], .edit-collection textarea,
 .edit-artist input[type='text'], .edit-artist textarea,
 .edit-user input[type='text'], .edit-user textarea,
 .list-nft input[type='text'], .list-nft textarea
@@ -198,6 +202,7 @@ hr {
   bg-brand dark:bg-brand-dark border border-detail dark:border-detail-dark 
     focus:outline-none focus:shadow-2xl focus:ring-cta;
 }
+
 
 /* Override react-select input */
 .nfts *[class$="singleValue"] {
