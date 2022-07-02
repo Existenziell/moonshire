@@ -56,7 +56,6 @@ export async function getServerSideProps(context) {
   const id = context.params.id
 
   let { data: artist } = await supabase.from('artists').select(`*`).eq('id', id).single()
-  let { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).eq('artist', artist.id).order('created_at', { ascending: false })
 
   if (!artist) {
     return {
@@ -67,6 +66,8 @@ export async function getServerSideProps(context) {
       props: {}
     }
   }
+
+  let { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).eq('artist', artist.id).order('created_at', { ascending: false })
 
   const url = await getPublicUrl('artists', artist.avatar_url)
   artist.public_url = url
