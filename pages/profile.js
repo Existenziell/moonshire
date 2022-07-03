@@ -52,7 +52,8 @@ const Profile = () => {
         const dbId = await getDbIdForTokenURI(nft.tokenURI)
         nft.id = dbId
       }
-      setNftsListed(listed)
+      const activeListed = listed.filter(l => (l.id !== false))
+      setNftsListed(activeListed)
     }
 
     let owned = await fetchMyNfts(signer)
@@ -61,7 +62,8 @@ const Profile = () => {
         const dbId = await getDbIdForTokenURI(nft.tokenURI)
         nft.id = dbId
       }
-      setNftsOwned(owned)
+      const activeOwned = owned.filter(o => (o.id !== false))
+      setNftsOwned(activeOwned)
     }
     setFetching(false)
   }
