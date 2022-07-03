@@ -44,7 +44,7 @@ const Collection = ({ collection }) => {
       notify("Collection updated successfully!")
       setLoading(false)
       setFormData(null)
-      router.push('/admin')
+      router.push('/admin?view=collections')
     }
   }
 

@@ -44,7 +44,7 @@ const Artist = ({ artist }) => {
       notify("Artist updated successfully!")
       setLoading(false)
       setFormData(null)
-      router.push('/admin')
+      router.push('/admin?view=artists')
     }
   }
 

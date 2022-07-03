@@ -32,7 +32,7 @@ const User = ({ user }) => {
     if (!error) {
       notify("User updated successfully!")
       setLoading(false)
-      router.push('/admin')
+      router.push('/admin?view=users')
     }
   }
 

@@ -97,7 +97,7 @@ const NFT = ({ nft }) => {
     if (!error) {
       notify("NFT updated successfully!")
       setLoading(false)
-      router.push('/admin')
+      router.push('/admin?view=nfts')
     }
   }
 
