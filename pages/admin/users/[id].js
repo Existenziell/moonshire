@@ -43,7 +43,7 @@ const User = ({ user }) => {
 
   return (
     <div className='mb-20 w-full relative'>
-      <BackBtn href='/admin' />
+      <BackBtn href='/admin?view=users' />
 
       <form onSubmit={saveUser} className='edit-user flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
         <h1 className='mb-10'>Edit User</h1>

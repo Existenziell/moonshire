@@ -105,7 +105,7 @@ const NFT = ({ nft }) => {
 
   return (
     <div className='mb-20 w-full relative'>
-      <BackBtn href='/admin' />
+      <BackBtn href='/admin?view=nfts' />
 
       <form onSubmit={saveNft} className='edit-user flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
 

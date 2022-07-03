@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
         height={3}
         startPosition={0.3}
         stopDelayMs={100}
-        showOnShallow={true}
+        showOnShallow={false}
         color='var(--color-cta)'
         options={{ showSpinner: false }}
       />

@@ -50,7 +50,7 @@ const Artist = ({ artist }) => {
 
   return (
     <div className='mb-20 w-full relative'>
-      <BackBtn href='/admin' />
+      <BackBtn href='/admin?view=artists' />
 
       <form onSubmit={saveArtist} className='edit-artist flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
         <div className='md:w-1/2 h-full'>

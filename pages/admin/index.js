@@ -18,8 +18,9 @@ const Admin = ({ nfts, collections, artists, users }) => {
   const { currentUser } = useApp()
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
-  const router = useRouter()
   const [view, setView] = useState('collections')
+  const router = useRouter()
+  const { view: selectedView } = router.query
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -38,8 +39,15 @@ const Admin = ({ nfts, collections, artists, users }) => {
     }
   }, [currentUser?.roles?.name])
 
+  useEffect(() => {
+    if (selectedView) setView(selectedView)
+  }, [selectedView])
+
   const navigate = (e) => {
-    setView(e.target.name)
+    router.push({
+      pathname: '/admin',
+      query: { view: e.target.name },
+    }, undefined, { shallow: true })
   }
 
   if (loading) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
