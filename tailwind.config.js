@@ -26,7 +26,8 @@ module.exports = {
         'lines-dark': '#363636',
       },
       backgroundImage: {
-        'upload-bg': 'url(/upload-bg.svg)',
+        'upload': 'url(/upload.png)',
+        'upload-dark': 'url(/upload-dark.png)',
       },
       animation: {},
       keyframes: {},
