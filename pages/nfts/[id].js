@@ -72,8 +72,8 @@ const Nft = ({ nft }) => {
         logWeb3(`Transaction hash: ${hash}`)
 
         setTimeout(() => {
-          router.push('/profile')
-        }, 2000)
+          router.push(`/success?hash=${hash}&id=${nft.id}&name=${nft.name}&image_url=${image_url}`)
+        }, 1500)
       } else {
         notify("Something went horribly wrong...")
       }
