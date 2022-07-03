@@ -116,7 +116,7 @@ const Artists = ({ artists }) => {
               <td>{artist.origin}</td>
               <td className='text-right'>{artist.numberOfNfts}</td>
 
-              <td className='whitespace-nowrap'>
+              <td className='whitespace-nowrap text-right'>
                 {artist.featured ?
                   <CheckIcon className='w-6 ml-auto' />
                   :

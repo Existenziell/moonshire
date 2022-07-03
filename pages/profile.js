@@ -145,7 +145,10 @@ const Profile = () => {
               <hr className='mb-8 mt-6 w-full' />
 
               {fetching ?
-                <PulseLoader color={'var(--color-cta)'} size={10} />
+                <div className='flex gap-4 items-center'>
+                  <PulseLoader color={'var(--color-cta)'} size={10} />
+                  <p className='text-tiny'>Fetching assets from Blockchain...</p>
+                </div>
                 :
                 <div className='mt-16'>
                   <h1 className='mb-0'>Assets</h1>
