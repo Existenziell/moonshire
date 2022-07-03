@@ -4,20 +4,22 @@ import NextNprogress from 'nextjs-progressbar'
 import Notification from './Notification'
 import Logo from './Logo'
 import Wallet from './Wallet'
-
+import { useRouter } from 'next/router'
 const Layout = ({ children }) => {
+  const router = useRouter()
   return (
     <>
       <Notification />
-      <NextNprogress
-        height={3}
-        startPosition={0.3}
-        stopDelayMs={100}
-        showOnShallow={false}
-        color='var(--color-cta)'
-        options={{ showSpinner: false }}
-      />
-
+      {!router.pathname.startsWith('/admin') &&
+        <NextNprogress
+          height={3}
+          startPosition={0.3}
+          stopDelayMs={100}
+          showOnShallow={false}
+          color='var(--color-cta)'
+          options={{ showSpinner: false }}
+        />
+      }
       <div className='pt-[20px] px-[40px] flex justify-between items-start z-20 bg-brand dark:bg-brand-dark text-black dark:text-white'>
         <Logo />
         <div className='flex items-center'>
