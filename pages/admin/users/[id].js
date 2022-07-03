@@ -8,15 +8,37 @@ import Select from 'react-select'
 import selectStyles from '../../../lib/selectStyles'
 import BackBtn from '../../../components/admin/BackBtn'
 import roleOptions from '../../../lib/roleOptions'
+import SupaAuth from '../../../components/SupaAuth'
+import { PulseLoader } from 'react-spinners'
 
 const User = ({ user }) => {
   const { id, username, walletAddress, email, is_premium, signed_url } = user
-  const { notify, darkmode } = useApp()
+  const { notify, darkmode, currentUser } = useApp()
+
   const [loading, setLoading] = useState(false)
   const [selectedRole, setSelectedRole] = useState(null)
   const [premium, setPremium] = useState(false)
   const [styles, setStyles] = useState()
+  const [session, setSession] = useState(null)
+  const [initializing, setInitializing] = useState(true)
   const router = useRouter()
+
+  useEffect(() => {
+    setSession(supabase.auth.session())
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (currentUser) {
+      if (currentUser?.roles?.name === 'Admin') {
+        setInitializing(false)
+      } else {
+        router.push('/')
+      }
+    }
+  }, [currentUser?.roles?.name])
 
   const saveUser = async (e) => {
     e.preventDefault()
@@ -40,6 +62,9 @@ const User = ({ user }) => {
     let tempStyles = selectStyles(darkmode)
     setStyles(tempStyles)
   }, [darkmode])
+
+  if (initializing) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (!session) return <SupaAuth />
 
   return (
     <div className='mb-20 w-full relative'>

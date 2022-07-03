@@ -1,19 +1,41 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../../lib/supabase'
-import { getPublicUrl } from '../../../lib/supabase/getPublicUrl'
-import useApp from "../../../context/App"
-import UploadImage from '../../../components/UploadImage'
 import { useRouter } from 'next/router'
+import { getPublicUrl } from '../../../lib/supabase/getPublicUrl'
+import { PulseLoader } from 'react-spinners'
+import useApp from "../../../context/App"
+import SupaAuth from '../../../components/SupaAuth'
+import UploadImage from '../../../components/UploadImage'
 import BackBtn from '../../../components/admin/BackBtn'
 
 const Collection = ({ collection }) => {
   const { id, title, headline, description, year, featured, image_url } = collection
-  const { notify } = useApp()
+  const { notify, currentUser } = useApp()
+
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState()
   const [isFeatured, setIsFeatured] = useState()
+  const [session, setSession] = useState(null)
+  const [initializing, setInitializing] = useState(true)
   const router = useRouter()
+
+  useEffect(() => {
+    setSession(supabase.auth.session())
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (currentUser) {
+      if (currentUser?.roles?.name === 'Admin') {
+        setInitializing(false)
+      } else {
+        router.push('/')
+      }
+    }
+  }, [currentUser?.roles?.name])
 
   useEffect(() => {
     setImageUrl(image_url)
@@ -47,6 +69,9 @@ const Collection = ({ collection }) => {
       router.push('/admin?view=collections')
     }
   }
+
+  if (initializing) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (!session) return <SupaAuth />
 
   return (
     <div className='mb-20 w-full relative'>

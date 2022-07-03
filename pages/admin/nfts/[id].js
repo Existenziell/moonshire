@@ -1,21 +1,43 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '../../../lib/supabase'
 import { useRouter } from 'next/router'
 import { shortenAddress } from '../../../lib/shortenAddress'
+import { PlusIcon, XIcon } from '@heroicons/react/solid'
 import useApp from "../../../context/App"
 import BackBtn from '../../../components/admin/BackBtn'
 import getProfile from '../../../lib/supabase/getProfile'
 import fromExponential from 'from-exponential'
-import { PlusIcon, XIcon } from '@heroicons/react/solid'
+import SupaAuth from '../../../components/SupaAuth'
+import { PulseLoader } from 'react-spinners'
 
 const NFT = ({ nft }) => {
   const { id, name, description, walletAddress, owner, price, tokenId, tokenURI, image_url, users, artists, collections, listed, featured, assets: initialAssets } = nft
 
-  const { notify } = useApp()
+  const { notify, currentUser } = useApp()
   const [loading, setLoading] = useState(false)
   const [isFeatured, setIsFeatured] = useState(false)
   const router = useRouter()
+  const [session, setSession] = useState(null)
+  const [initializing, setInitializing] = useState(true)
+
+  useEffect(() => {
+    setSession(supabase.auth.session())
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (currentUser) {
+      console.log(currentUser);
+      if (currentUser?.roles?.name === 'Admin') {
+        setInitializing(false)
+      } else {
+        router.push('/')
+      }
+    }
+  }, [currentUser?.roles?.name])
 
   let initialPhysicalAssets = []
   let initialDigitalAssets = []
@@ -102,6 +124,9 @@ const NFT = ({ nft }) => {
   }
 
   const truncate = (input) => `${input.substring(0, 22)}...${input.substring(input.length - 12, input.length)}`
+
+  if (initializing) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (!session) return <SupaAuth />
 
   return (
     <div className='mb-20 w-full relative'>
