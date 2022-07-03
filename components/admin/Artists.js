@@ -31,7 +31,9 @@ const Artists = ({ artists }) => {
       .delete()
       .eq('id', ArtistToDelete.id)
 
-    if (!error) {
+    if (error) {
+      notify(error.message)
+    } else {
       notify("Artist deleted successfully!", 1500)
       setShowDelete(false)
       const filtered = fetchedArtists.filter(c => { return c.id !== ArtistToDelete.id })

@@ -30,11 +30,14 @@ const Collections = ({ collections }) => {
       .delete()
       .eq('id', collectionToDelete.id)
 
-    if (!error) {
+    if (error) {
+      notify(error.message)
+    } else {
       notify("Collection deleted successfully!", 1500)
       setShowDelete(false)
-      const filteredCollections = fetchedCollections.filter(c => { return c.id !== collectionToDelete.id })
-      setFetchedCollections(filteredCollections)
+      const filtered = fetchedCollections.filter(c => { return c.id !== collectionToDelete.id })
+      setFetchedCollections(filtered)
+      setFilteredCollections(filtered)
     }
   }
 

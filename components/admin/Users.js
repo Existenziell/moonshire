@@ -38,8 +38,9 @@ const Users = ({ users }) => {
     if (!error) {
       notify("User deleted successfully!")
       setShowDelete(false)
-      const filteredUsers = fetchedUsers.filter(c => { return c.id !== userToDelete.id })
-      setFetchedUsers(filteredUsers)
+      const filtered = fetchedUsers.filter(c => { return c.id !== userToDelete.id })
+      setFetchedUsers(filtered)
+      setFilteredUsers(filtered)
     } else {
       notify("Error...")
     }
