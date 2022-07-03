@@ -30,7 +30,6 @@ const NFT = ({ nft }) => {
 
   useEffect(() => {
     if (currentUser) {
-      console.log(currentUser);
       if (currentUser?.roles?.name === 'Admin') {
         setInitializing(false)
       } else {
