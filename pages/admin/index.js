@@ -84,11 +84,11 @@ const Admin = ({ nfts, collections, artists, users, tokenId }) => {
                   Users
                 </button>
               </li>
-              <li className={view === 'market' ? `pb-4 transition-colors border-b border-white` : `hover:text-cta`} >
+              {/* <li className={view === 'market' ? `pb-4 transition-colors border-b border-white` : `hover:text-cta`} >
                 <button onClick={navigate} name='market'>
                   Market
                 </button>
-              </li>
+              </li> */}
             </ul>
           </div>
 
