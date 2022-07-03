@@ -86,7 +86,7 @@ const Collection = ({ collection, collectionNfts }) => {
               <h1 className='mb-0'>No NFTs have been created in this collection.</h1>
               {userOwnsCollection ?
                 <Link href='/nfts/create'>
-                  <a className='button button-detail'>
+                  <a className='button button-detail mt-8'>
                     Create NFT
                   </a>
                 </Link>

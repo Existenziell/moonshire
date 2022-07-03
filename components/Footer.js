@@ -44,7 +44,7 @@ const Footer = () => {
   }, [])
 
   return (
-    <footer className='sticky-footer flex items-center justify-between px-[40px] h-20 text-xs text-black bg-brand dark:text-white dark:bg-brand-dark'>
+    <footer className={`${router.pathname === ('/') ? `fixed bottom-0 w-full bg-transparent` : `sticky-footer bg-brand dark:bg-brand-dark`} flex items-center justify-between px-[40px] h-20 text-xs text-black dark:text-white`}>
       <div className='flex items-center justify-between w-full'>
         <DarkModeToggle />
         <div>
