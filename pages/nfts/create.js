@@ -167,7 +167,7 @@ const CreateNft = ({ artists }) => {
       setLoading(false)
       setFormData(null)
       setTimeout(() => {
-        router.push(`/profile`)
+        router.push(`/success-nft?tokenURI=${url}&name=${formData.name}&image_url=${fileUrl}`)
       }, 2000)
     } else {
       notify("Something went wrong...")

@@ -82,8 +82,8 @@ const Collection = ({ collection, collectionNfts }) => {
               </tbody>
             </table>
             :
-            <div className='w-full'>
-              <p className='text-sm mb-6'>No NFTs found in this collection.</p>
+            <div className='w-full flex flex-col items-center justify-center'>
+              <h1 className='mb-0'>No NFTs have been created in this collection.</h1>
               {userOwnsCollection ?
                 <Link href='/nfts/create'>
                   <a className='button button-detail'>
@@ -91,14 +91,15 @@ const Collection = ({ collection, collectionNfts }) => {
                   </a>
                 </Link>
                 :
-                <div className='mt-12'>
-                  <p className='text-xs max-w-xs'>
+                <div className='mt-4 flex flex-col items-center'>
+                  <p className=''>
                     Unfortunately, you are not able to add NFTs to this collection,
-                    since you&apos;re not the owner. But you can:
+                    since you&apos;re not the owner.
                   </p>
+                  <p className=''> Instead you can:</p>
                   <Link href='/collections/create'>
-                    <a className='button button-detail mt-4'>
-                      Create your own
+                    <a className='button button-detail mt-8 uppercase'>
+                      Create collection
                     </a>
                   </Link>
                 </div>

@@ -44,7 +44,7 @@ const CreateCollection = () => {
       return
     }
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('collections')
       .insert([{
         ...formData,
@@ -52,10 +52,11 @@ const CreateCollection = () => {
       }])
 
     if (!error) {
+      const id = data.at(0).id
       notify("Collection created successfully!")
       setFormData(null)
       setLoading(false)
-      router.push('/profile')
+      router.push(`/success-collection?id=${id}&title=${formData.title}&image_url=${imageUrl}`)
     }
   }
 
