@@ -38,17 +38,23 @@ const Artists = ({ artists }) => {
                     <div className='mt-16'>
                       <h1 className='mb-0'>Assets</h1>
                       <hr className='my-8' />
-                      <p className='mb-4'>{numberOfCollections} {numberOfCollections > 1 ? `Collections` : `Collection`}</p>
-                      <div>
-                        {collections.map(c => (
-                          <Link key={c.id} href={`/collections/${c.id}`}><a className='link-white block'>{c.title}</a></Link>
-                        ))}
-                      </div>
-                      <p className='mb-4 mt-8'>{numberOfNfts} {numberOfNfts > 1 ? `NFTs` : `NFT`}</p>
-                      <div>
-                        {nfts.map(n => (
-                          <Link key={n.id} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
-                        ))}
+                      <div className={numberOfNfts >= 10 ? `flex items-start justify-start gap-20` : ``}>
+                        <div>
+                          <p className='mb-4'>{numberOfCollections} {numberOfCollections > 1 ? `Collections` : `Collection`}</p>
+                          <div>
+                            {collections.map(c => (
+                              <Link key={c.id} href={`/collections/${c.id}`}><a className='link-white block'>{c.title}</a></Link>
+                            ))}
+                          </div>
+                        </div>
+                        <div className={numberOfNfts >= 10 ? `` : `mt-8`}>
+                          <p className='mb-4'>{numberOfNfts} {numberOfNfts > 1 ? `NFTs` : `NFT`}</p>
+                          <div>
+                            {nfts.map(n => (
+                              <Link key={n.id} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
