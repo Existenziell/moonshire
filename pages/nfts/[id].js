@@ -14,7 +14,7 @@ import fetchMyNfts from '../../lib/contract/fetchMyNfts'
 import fromExponential from 'from-exponential'
 
 const Nft = ({ nft }) => {
-  const { id, name, description, price, created_at, image_url, artists, listed, tokenURI, tokenId, gallery } = nft
+  const { id, name, description, price, created_at, image_url, artists, listed, tokenURI, tokenId, assets } = nft
   const { address, signer, notify } = useApp()
   const router = useRouter()
 
@@ -24,8 +24,8 @@ const Nft = ({ nft }) => {
 
   let physicalAssets = []
   let digitalAssets = []
-  if (gallery) {
-    for (let el of gallery) {
+  if (assets) {
+    for (let el of assets) {
       el.type === 'digital' ?
         digitalAssets.push(el)
         :

@@ -7,22 +7,90 @@ import useApp from "../../../context/App"
 import BackBtn from '../../../components/admin/BackBtn'
 import getProfile from '../../../lib/supabase/getProfile'
 import fromExponential from 'from-exponential'
+import { PlusIcon, XIcon } from '@heroicons/react/solid'
 
 const NFT = ({ nft }) => {
+  const { id, name, description, walletAddress, owner, price, tokenId, tokenURI, image_url, users, artists, collections, listed, featured, assets: initialAssets } = nft
 
-  const { id, name, description, walletAddress, owner, price, tokenId, tokenURI, image_url, users, artists, collections, listed, featured } = nft
   const { notify } = useApp()
   const [loading, setLoading] = useState(false)
   const [isFeatured, setIsFeatured] = useState(false)
   const router = useRouter()
 
+  let initialPhysicalAssets = []
+  let initialDigitalAssets = []
+  if (initialAssets) {
+    for (let el of initialAssets) {
+      el.type === 'digital' ?
+        initialDigitalAssets.push(el)
+        :
+        initialPhysicalAssets.push(el)
+    }
+  }
+
+  const addRowPhysical = () => {
+    const list = document.getElementById('assetsPhysical')
+    const row = document.getElementById('templatePhysical')
+    const newRow = row.cloneNode(true)
+    const btn = newRow.lastChild
+    newRow.id = Math.random()
+    newRow.style.display = 'flex'
+    newRow.style.marginTop = '5px'
+    btn.addEventListener('click', removeRow)
+    list.append(newRow)
+  }
+
+  const addRowDigital = () => {
+    const list = document.getElementById('assetsDigital')
+    const row = document.getElementById('templateDigital')
+    const newRow = row.cloneNode(true)
+    const btn = newRow.lastChild
+    newRow.id = Math.round(Math.random() * 100)
+    newRow.style.display = 'flex'
+    newRow.style.marginTop = '5px'
+    newRow.classList.add('digitalAsset')
+    btn.addEventListener('click', removeRow)
+    list.append(newRow)
+  }
+
+  const removeRow = (e) => {
+    e.target.parentNode.remove()
+  }
+
   const saveNft = async (e) => {
     e.preventDefault()
     setLoading(true)
+
+    // Create assets array
+    let assets = []
+    const physicalInputs = document.getElementsByClassName('inputPhysical')
+    const digitalInputs = document.getElementsByClassName('digitalAsset')
+
+    Array.from(physicalInputs).forEach(p => {
+      let physicalElement = {
+        type: "physical"
+      }
+      if (p.value === '') return
+      physicalElement.name = p.value
+      assets.push(physicalElement)
+    })
+
+    Array.from(digitalInputs).forEach(d => {
+      let digitalElement = {
+        type: "digital"
+      }
+      const elements = d.getElementsByTagName('input')
+      Array.from(elements).forEach(i => {
+        if (i.value !== '') digitalElement[i.name] = i.value
+      })
+      assets.push(digitalElement)
+    })
+
     const { error } = await supabase
       .from('nfts')
       .update({
-        featured: isFeatured
+        featured: isFeatured,
+        assets
       })
       .eq('id', id)
 
@@ -72,9 +140,54 @@ const NFT = ({ nft }) => {
           <div className='mt-16'>
             <h1 className='mb-0'>Assets</h1>
             <hr className='my-8' />
-            {/* <p className='mb-4'>Physical <span className='text-gray-400'>(free shipping worldwide)</span></p>
-            <p className='mb-4 mt-8'>Digital</p> */}
+
+            <div className='flex items-center gap-6 mb-4'>
+              <p>Physical</p>
+              <PlusIcon className='w-5 h-5 hover:cursor-pointer hover:text-cta' onClick={addRowPhysical} />
+            </div>
+            <ul id='assetsPhysical'>
+              <li id='templatePhysical' className='hidden'>
+                <input type="text" name='name' placeholder="Name" className='mr-4 inputPhysical' />
+                <button onClick={removeRow} className=''>
+                  <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
+                </button>
+              </li>
+              {initialPhysicalAssets.map((asset, idx) => (
+                <li key={asset.name + idx}>
+                  <input type="text" name='name' placeholder="Name" className='mr-4 inputPhysical' defaultValue={asset.name} />
+                  <button onClick={removeRow} className=''>
+                    <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
+                  </button>
+                </li>
+              ))}
+            </ul>
+
+            <div className='flex items-center gap-6 mt-10 mb-4'>
+              <p>Digital</p>
+              <PlusIcon className='w-5 h-5 hover:cursor-pointer hover:text-cta' onClick={addRowDigital} />
+            </div>
+            <ul id='assetsDigital'>
+              <li id='templateDigital' className='hidden gap-2'>
+                <input type="text" name='name' placeholder="Name" className='inputDigital' />
+                <input type="text" name='link' placeholder="Link" className='inputDigital' />
+                <input type="text" name='format' placeholder="Format" className='w-28 inputDigital' />
+                <button onClick={removeRow} className=''>
+                  <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
+                </button>
+              </li>
+              {initialDigitalAssets.map((asset, idx) => (
+                <li key={asset.name + idx} className='flex gap-2 digitalAsset'>
+                  <input type="text" name='name' placeholder="Name" className='inputDigital' defaultValue={asset.name} />
+                  <input type="text" name='link' placeholder="Link" className='inputDigital' defaultValue={asset.link} />
+                  <input type="text" name='format' placeholder="Format" className='w-28 inputDigital' defaultValue={asset.format} />
+                  <button onClick={removeRow} className=''>
+                    <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
+
           <div className='flex items-center gap-10 mt-10'>
             <p className='my-0 text-[30px] leading-none h-full'>{fromExponential(price)} ETH</p>
             <input type='submit' className='button button-cta' value='Save' disabled={loading} />

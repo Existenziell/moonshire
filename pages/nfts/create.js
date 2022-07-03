@@ -13,6 +13,7 @@ import FilePicker from '../../components/market/FilePicker'
 import uploadFileToIpfs from '../../lib/uploadFileToIpfs'
 import getUserCollections from '../../lib/supabase/getUserCollections'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
+import { PlusIcon, XIcon } from '@heroicons/react/solid'
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
 import NFTMarketplace from '../../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json'
@@ -47,6 +48,11 @@ const CreateNft = ({ artists }) => {
     setFetching(false)
   }
 
+  const handleUpload = async (e) => {
+    const url = await uploadFileToIpfs(e)
+    setFileUrl(url)
+  }
+
   const uploadMetadataToIpfs = async () => {
     const { name, description, price } = formData
     const data = JSON.stringify({
@@ -76,12 +82,12 @@ const CreateNft = ({ artists }) => {
       return
     }
 
-    setLoading(true)
     const { name, description, price, artist, collection } = formData
     if (!name || !description || !price || !fileUrl || !artist || !collection) {
       notify("Something is missing...")
       return
     }
+    setLoading(true)
 
     logWeb3(`Uploading Metadata to IPFS...`)
     const url = await uploadMetadataToIpfs()
@@ -101,7 +107,7 @@ const CreateNft = ({ artists }) => {
     try {
       let transaction = await contract.createToken(url, price, { value: listingPrice })
       await transaction.wait()
-      logWeb3("Looking good, waiting for Blockchain confirmation...  ")
+      logWeb3("Looking good, waiting for Blockchain confirmation")
       contract.on("MarketItemCreated", (tokenId) => {
         tokenId = parseInt(tokenId)
         logWeb3(`Item ${tokenId} successfully created!`)
@@ -113,9 +119,59 @@ const CreateNft = ({ artists }) => {
     }
   }
 
-  const handleUpload = async (e) => {
-    const url = await uploadFileToIpfs(e)
-    setFileUrl(url)
+  const saveNftToDb = async (tokenId, url) => {
+    if (!tokenId || !url) return
+
+    // Create assets array
+    let assets = []
+    const physicalInputs = document.getElementsByClassName('inputPhysical')
+    const digitalInputs = document.getElementsByClassName('digitalAsset')
+
+    Array.from(physicalInputs).forEach(p => {
+      let physicalElement = {
+        type: "physical"
+      }
+      if (p.value === '') return
+      physicalElement.name = p.value
+      assets.push(physicalElement)
+    })
+
+    Array.from(digitalInputs).forEach(d => {
+      let digitalElement = {
+        type: "digital"
+      }
+      const elements = d.getElementsByTagName('input')
+      Array.from(elements).forEach(i => {
+        if (i.value !== '') digitalElement[i.name] = i.value
+      })
+      assets.push(digitalElement)
+    })
+
+    // Save all to DB
+    const { error } = await supabase
+      .from('nfts')
+      .insert([{
+        ...formData,
+        image_url: fileUrl,
+        tokenId,
+        tokenURI: url,
+        walletAddress: address,
+        user: currentUser.id,
+        listed: true,
+        assets
+      }])
+
+    if (!error) {
+      logWeb3(`Successfully listed NFT for Sale!`)
+      notify("NFT created successfully!")
+      setLoading(false)
+      setFormData(null)
+      setTimeout(() => {
+        router.push(`/nfts`)
+      }, 2000)
+    } else {
+      notify("Something went wrong...")
+    }
   }
 
   const checkForm = () => {
@@ -130,22 +186,6 @@ const CreateNft = ({ artists }) => {
     checkForm()
   }, [formData, fileUrl, collectionName, artistName])
 
-  const saveNftToDb = async (tokenId, url) => {
-    if (!tokenId || !url) return
-
-    const result = await saveNft(tokenId, url)
-    if (result) {
-      logWeb3(`Successfully listed NFT for Sale!`)
-      notify("NFT created successfully!")
-      setLoading(false)
-      setTimeout(() => {
-        router.push(`/nfts`)
-      }, 2000)
-    } else {
-      notify("Something went wrong...")
-    }
-  }
-
   const setData = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, ...{ [name]: value } })
@@ -159,27 +199,6 @@ const CreateNft = ({ artists }) => {
   const setArtist = (e) => {
     setArtistName(e.label)
     setFormData({ ...formData, ...{ artist: e.value } })
-  }
-
-  const saveNft = async (tokenId, url) => {
-    const { data, error } = await supabase
-      .from('nfts')
-      .insert([{
-        ...formData,
-        image_url: fileUrl,
-        tokenId,
-        tokenURI: url,
-        walletAddress: address,
-        user: currentUser.id,
-        listed: true,
-      }])
-
-    if (!error) {
-      setFormData(null)
-      return data
-    } else {
-      return false
-    }
   }
 
   let artistOptions = []
@@ -198,6 +217,35 @@ const CreateNft = ({ artists }) => {
     let tempStyles = selectStyles(darkmode)
     setStyles(tempStyles)
   }, [darkmode])
+
+  const addRowPhysical = () => {
+    const list = document.getElementById('assetsPhysical')
+    const row = document.getElementById('templatePhysical')
+    const newRow = row.cloneNode(true)
+    const btn = newRow.lastChild
+    newRow.id = Math.random()
+    newRow.style.display = 'flex'
+    newRow.style.marginBottom = '5px'
+    btn.addEventListener('click', removeRow)
+    list.append(newRow)
+  }
+
+  const addRowDigital = () => {
+    const list = document.getElementById('assetsDigital')
+    const row = document.getElementById('templateDigital')
+    const newRow = row.cloneNode(true)
+    const btn = newRow.lastChild
+    newRow.id = Math.round(Math.random() * 100)
+    newRow.style.display = 'flex'
+    newRow.style.marginBottom = '5px'
+    newRow.classList.add('digitalAsset')
+    btn.addEventListener('click', removeRow)
+    list.append(newRow)
+  }
+
+  const removeRow = (e) => {
+    e.target.parentNode.remove()
+  }
 
   if (!hasMetamask) {
     return (
@@ -244,7 +292,7 @@ const CreateNft = ({ artists }) => {
         </div>
         :
         <form onSubmit={createNft} className='create-nft flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
-          <div className='md:w-1/2 h-full'>
+          <div className='w-full h-full md:w-1/2'>
             <FilePicker onChange={(e) => handleUpload(e)} url={fileUrl} />
           </div>
 
@@ -262,7 +310,7 @@ const CreateNft = ({ artists }) => {
 
             <label htmlFor='description' className='mt-12 w-full'>
               <textarea
-                name='description' id='description' rows={8}
+                name='description' id='description' rows={4}
                 onChange={setData} required
                 placeholder="Description"
                 className='block mt-2 w-full'
@@ -270,7 +318,7 @@ const CreateNft = ({ artists }) => {
               />
             </label>
 
-            <div className='flex items-center justify-between gap-8 mt-12'>
+            <div className='flex items-center justify-between gap-8 mt-4'>
               <div className='w-1/2'>
                 <p className='mb-2 ml-5'>Artist</p>
                 <label htmlFor='artist' className='w-full'>
@@ -298,15 +346,48 @@ const CreateNft = ({ artists }) => {
               </div>
             </div>
 
-            <label htmlFor='price' className='mt-12 w-full flex items-center gap-8'>
+            <label htmlFor='price' className='mt-4 w-full flex items-center gap-8'>
               <input
                 type='text' name='price' id='price'
                 onChange={setData} required
                 placeholder='Price'
-                className='block mt-2 w-1/3'
+                className='block w-1/4'
                 disabled={loading}
               />ETH
             </label>
+
+            <div className='mt-16 ml-4'>
+              <h1 className='mb-0'>Assets</h1>
+              <hr className='my-8' />
+
+              <div className='flex items-center gap-6 mb-4'>
+                <p>Physical</p>
+                <PlusIcon className='w-5 h-5 hover:cursor-pointer hover:text-cta' onClick={addRowPhysical} />
+              </div>
+              <ul id='assetsPhysical'>
+                <li id='templatePhysical' className='hidden'>
+                  <input type="text" name='name' placeholder="Name" className='mr-4 inputPhysical' />
+                  <button onClick={removeRow} className=''>
+                    <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
+                  </button>
+                </li>
+              </ul>
+
+              <div className='flex items-center gap-6 my-4'>
+                <p>Digital</p>
+                <PlusIcon className='w-5 h-5 hover:cursor-pointer hover:text-cta' onClick={addRowDigital} />
+              </div>
+              <ul id='assetsDigital'>
+                <li id='templateDigital' className='hidden gap-4'>
+                  <input type="text" name='name' placeholder="Name" className='inputDigital' />
+                  <input type="text" name='link' placeholder="Link" className='inputDigital' />
+                  <input type="text" name='format' placeholder="Format" className='w-28 inputDigital' />
+                  <button onClick={removeRow} className=''>
+                    <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
+                  </button>
+                </li>
+              </ul>
+            </div>
 
             {loading ?
               <div className='flex flex-col items-start justify-center mt-10'>
@@ -315,7 +396,7 @@ const CreateNft = ({ artists }) => {
                 <div id='mintingInfo' className='text-xs'></div>
               </div>
               :
-              <input type='submit' disabled={!formIsReady} className='button button-cta mt-10 ml-4' value='Create' />
+              <input type='submit' value='Create' disabled={!formIsReady} className='button button-cta my-12 ml-4' />
             }
           </div>
         </form>
