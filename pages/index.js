@@ -107,7 +107,8 @@ const Home = ({ artists, collections, nfts }) => {
 }
 
 export async function getServerSideProps() {
-  const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).eq('featured', true).order('created_at', { ascending: false })
+  const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('created_at', { ascending: false })
+  const { data: featuredNfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).eq('featured', true).order('created_at', { ascending: false })
   const { data: collections } = await supabase.from('collections').select(`*`).eq('featured', true).order('created_at', { ascending: false })
   const { data: artists } = await supabase.from('artists').select(`*`).eq('featured', true).order('created_at', { ascending: false })
 
@@ -124,12 +125,11 @@ export async function getServerSideProps() {
     collection.numberOfNfts = collectionNfts.length
     collection.image_url = url
   }
-
   // Filter to only get collections with more than 0 NFTs
   const notEmptyCollections = collections.filter(collection => collection.numberOfNfts !== 0)
 
   return {
-    props: { collections: notEmptyCollections, artists, nfts },
+    props: { collections: notEmptyCollections, artists, nfts: featuredNfts },
   }
 }
 
