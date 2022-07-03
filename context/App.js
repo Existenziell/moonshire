@@ -24,7 +24,6 @@ export const AppProvider = ({ children }) => {
   const [chainId, setChainId] = useState(null)
   const [darkmode, setDarkmode] = useState('')
   const [contractBalance, setContractBalance] = useState(null)
-
   const router = useRouter()
 
   const providerOptions = {

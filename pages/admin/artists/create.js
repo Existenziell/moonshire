@@ -1,17 +1,37 @@
 import { supabase } from '../../../lib/supabase'
 import { useEffect, useState } from 'react'
-import useApp from "../../../context/App"
 import { useRouter } from 'next/router'
+import { PulseLoader } from 'react-spinners'
+import useApp from "../../../context/App"
 import UploadImage from '../../../components/UploadImage'
+import SupaAuth from '../../../components/SupaAuth'
 
 const Create = () => {
-
-  const { notify } = useApp()
+  const { notify, currentUser } = useApp()
   const [formData, setFormData] = useState(null)
   const [fileUrl, setFileUrl] = useState(null)
   const [loading, setLoading] = useState(false)
   const [formIsReady, setFormIsReady] = useState(false)
+  const [session, setSession] = useState(null)
+  const [initializing, setInitializing] = useState(true)
   const router = useRouter()
+
+  useEffect(() => {
+    setSession(supabase.auth.session())
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (currentUser) {
+      if (currentUser?.roles?.name === 'Admin') {
+        setInitializing(false)
+      } else {
+        router.push('/')
+      }
+    }
+  }, [currentUser?.roles?.name])
 
   const setData = (e) => {
     const { name, value } = e.target
@@ -56,6 +76,9 @@ const Create = () => {
       router.push('/admin?view=artists')
     }
   }
+
+  if (initializing) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (!session) return <SupaAuth />
 
   return (
     <form onSubmit={addArtist} className='create-artist flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>

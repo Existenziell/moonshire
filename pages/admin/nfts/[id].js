@@ -17,9 +17,9 @@ const NFT = ({ nft }) => {
   const { notify, currentUser } = useApp()
   const [loading, setLoading] = useState(false)
   const [isFeatured, setIsFeatured] = useState(false)
-  const router = useRouter()
   const [session, setSession] = useState(null)
   const [initializing, setInitializing] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
     setSession(supabase.auth.session())

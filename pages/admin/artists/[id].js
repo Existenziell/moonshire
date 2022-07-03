@@ -17,6 +17,7 @@ const Artist = ({ artist }) => {
   const [isFeatured, setIsFeatured] = useState()
   const [session, setSession] = useState(null)
   const [initializing, setInitializing] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -27,7 +28,6 @@ const Artist = ({ artist }) => {
 
   useEffect(() => {
     if (currentUser) {
-      console.log(currentUser);
       if (currentUser?.roles?.name === 'Admin') {
         setInitializing(false)
       } else {
