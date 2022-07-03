@@ -15,7 +15,7 @@ import fromExponential from 'from-exponential'
 
 const Nft = ({ nft }) => {
   const { id, name, description, price, created_at, image_url, artists, listed, tokenURI, tokenId, assets } = nft
-  const { address, signer, notify } = useApp()
+  const { address, signer, notify, connectWallet } = useApp()
   const router = useRouter()
 
   const [fetching, setFetching] = useState(true)
@@ -169,7 +169,11 @@ const Nft = ({ nft }) => {
               <div className='flex items-center gap-10 mt-10'>
                 <p className='my-0 text-[30px] leading-none h-full'>{fromExponential(price)} ETH</p>
                 {fetching ?
-                  ``
+                  <button
+                    onClick={connectWallet}
+                    className='button button-connect uppercase font-serif'>
+                    Sync Wallet
+                  </button>
                   :
                   listed ?
                     sellerIsOwner ?
