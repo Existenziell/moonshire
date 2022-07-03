@@ -67,7 +67,7 @@ hr {
 }
 
 input::placeholder, textarea::placeholder  {
-  @apply text-[#AFAFAF] dark:text-[#CCCCCC];
+  @apply text-[#777777] dark:text-[#999999];
 }
 
 /* ==========================================================================
