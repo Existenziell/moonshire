@@ -142,15 +142,15 @@ const Profile = () => {
                   <button onClick={resetInput} className='link text-xs ml-1'>Cancel</button>
                 </div>
               }
-              <hr className='mb-8 mt-6 w-full' />
+              <hr className='mt-6 w-full' />
 
               {fetching ?
-                <div className='flex gap-4 items-center'>
+                <div className='flex gap-4 items-center mt-10'>
                   <PulseLoader color={'var(--color-cta)'} size={10} />
                   <p className='text-tiny'>Fetching assets from Blockchain...</p>
                 </div>
                 :
-                <div className='mt-16'>
+                <div className='mt-10'>
                   <h1 className='mb-0'>Assets</h1>
                   <hr className='my-8' />
                   <p className='mb-4'>{collections?.length} {collections?.length === 1 ? `Collection` : `Collections`}</p>
@@ -159,17 +159,23 @@ const Profile = () => {
                       <Link key={c.id} href={`/collections/${c.id}`}><a className='link-white block'>{c.title}</a></Link>
                     ))}
                   </div>
-                  <p className='mb-4 mt-8'>{nftsListed?.length} {nftsListed?.length === 1 ? `Listed NFT` : `Listed NFTs`}</p>
-                  <div>
-                    {nftsListed?.map(n => (
-                      <Link key={n.name} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
-                    ))}
-                  </div>
-                  <p className='mb-4 mt-8'>{nftsOwned?.length} {nftsOwned?.length === 1 ? `Owned NFT` : `Owned NFTs`}</p>
-                  <div>
-                    {nftsOwned?.map(n => (
-                      <Link key={n.name} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
-                    ))}
+                  <div className={nftsListed.length >= 15 ? `flex items-start justify-start gap-20 mt-10` : ``}>
+                    <div className={nftsListed.length >= 15 ? `` : `mt-8`}>
+                      <p className='mb-4'>{nftsListed?.length} {nftsListed?.length === 1 ? `Listed NFT` : `Listed NFTs`}</p>
+                      <div>
+                        {nftsListed?.map(n => (
+                          <Link key={n.name} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
+                        ))}
+                      </div>
+                    </div>
+                    <div className={nftsListed.length >= 15 ? `` : `mt-8`}>
+                      <p className='mb-4'>{nftsOwned?.length} {nftsOwned?.length === 1 ? `Owned NFT` : `Owned NFTs`}</p>
+                      <div>
+                        {nftsOwned?.map(n => (
+                          <Link key={n.name} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               }
