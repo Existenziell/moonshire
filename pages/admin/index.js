@@ -144,7 +144,7 @@ const Admin = ({ nfts, collections, artists, users, tokenId }) => {
                   <p>Market contract address: <a href={`https://rinkeby.etherscan.io/address/${marketplaceAddress}#code`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{marketplaceAddress}</a></p>
                   <p>Contract Balance: {contractBalance} ETH</p>
                   <p>Tokens minted: {tokenId}</p>
-                  <p>Total transfers: 82</p>
+                  <p>Total transactions: 84</p>
                   <p>Unique token holders: 4</p>
                 </div>
               </motion.div>

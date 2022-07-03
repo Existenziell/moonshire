@@ -8,7 +8,7 @@ const Nfts = ({ nfts }) => {
   return (
     <>
       <Head>
-        <title>NFTs DB | Project Moonshire</title>
+        <title>NFTs | Project Moonshire</title>
         <meta name='description' content="NFTs | Project Moonshire" />
       </Head>
 
