@@ -66,6 +66,9 @@ hr {
   @apply text-white dark:text-cta hover:cursor-pointer hover:text-cta hover:dark:text-white transition-all duration-100;
 }
 
+input::placeholder, textarea::placeholder  {
+  @apply text-[#AFAFAF] dark:text-[#CCCCCC];
+}
 
 /* ==========================================================================
 	Navigation
