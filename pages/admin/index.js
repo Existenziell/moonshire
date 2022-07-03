@@ -14,8 +14,8 @@ import SupaAuth from '../../components/SupaAuth'
 import useApp from "../../context/App"
 import { motion, AnimatePresence } from "framer-motion"
 
-const Admin = ({ nfts, collections, artists, users }) => {
-  const { currentUser } = useApp()
+const Admin = ({ nfts, collections, artists, users, tokenId }) => {
+  const { currentUser, contractBalance } = useApp()
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
   const [view, setView] = useState('collections')
@@ -142,9 +142,10 @@ const Admin = ({ nfts, collections, artists, users }) => {
                 className='w-full'>
                 <div className='flex flex-col gap-2'>
                   <p>Market contract address: <a href={`https://rinkeby.etherscan.io/address/${marketplaceAddress}#code`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{marketplaceAddress}</a></p>
-                  <p>Contract Balance: 0.000021 ETH</p>
-                  <p>Number of tokens minted: 21</p>
-                  <p>Distinct token owners: 4</p>
+                  <p>Contract Balance: {contractBalance} ETH</p>
+                  <p>Tokens minted: {tokenId}</p>
+                  <p>Total transfers: 82</p>
+                  <p>Unique token holders: 4</p>
                 </div>
               </motion.div>
             }
@@ -160,6 +161,8 @@ export async function getServerSideProps() {
   const { data: collections } = await supabase.from('collections').select(`*`).order('created_at', { ascending: false })
   const { data: artists } = await supabase.from('artists').select(`*`).order('created_at', { ascending: false })
   const { data: users } = await supabase.from('users').select(`*, roles(*)`).order('username', { ascending: true })
+  const { data: lastInserted } = await supabase.from('nfts').select(`*`).order('tokenId', { ascending: false }).limit(1).single()
+  const tokenId = lastInserted.tokenId
 
   for (let artist of artists) {
     const artistNfts = nfts.filter((n => n.artist === artist.id))
@@ -193,7 +196,7 @@ export async function getServerSideProps() {
   }
 
   return {
-    props: { nfts, collections, artists, users }
+    props: { nfts, collections, artists, users, tokenId }
   }
 }
 

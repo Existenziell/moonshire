@@ -1,3 +1,4 @@
+import { ethers } from 'ethers'
 import { supabase } from '../lib/supabase'
 import { JsonRpcSigner, Web3Provider } from "@ethersproject/providers"
 import { createContext, ReactNode, useContext, useEffect, useState, } from "react"
@@ -9,6 +10,7 @@ import Web3Modal from "web3modal"
 import getProfile from "../lib/supabase/getProfile"
 import detectEthereumProvider from '@metamask/detect-provider'
 import WalletConnectProvider from "@walletconnect/web3-provider"
+import { marketplaceAddress } from '../config'
 
 const AppContext = createContext()
 const useApp = () => useContext(AppContext)
@@ -22,6 +24,7 @@ export const AppProvider = ({ children }) => {
   const [notificationMsg, setNotificationMsg] = useState('')
   const [chainId, setChainId] = useState(null)
   const [darkmode, setDarkmode] = useState('')
+  const [contractBalance, setContractBalance] = useState(null)
 
   const router = useRouter()
 
@@ -68,10 +71,17 @@ export const AppProvider = ({ children }) => {
       const address = await signer.getAddress()
       const { chainId } = await provider.getNetwork()
       const isCorrectChain = await checkChain(chainId)
+
       if (!isCorrectChain) return
       setSigner(signer)
       setAddress(address)
       setChainId(parseInt(chainId))
+
+      provider.getBalance(marketplaceAddress).then((balance) => {
+        // convert a currency unit from wei to ether
+        const balanceInEth = ethers.utils.formatEther(balance)
+        setContractBalance(balanceInEth)
+      })
     } catch (e) {
       console.log(e)
     }
@@ -138,7 +148,7 @@ export const AppProvider = ({ children }) => {
   }
 
   const contextValue = {
-    signer, address, connectWallet, disconnect,
+    signer, address, connectWallet, disconnect, contractBalance,
     currentUser, setCurrentUser,
     hasMetamask, setHasMetamask, chainId, checkChain,
     notify, notificationMsg, setNotificationMsg, darkmode, setDarkmode,
