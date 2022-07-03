@@ -14,7 +14,6 @@ email: bauer.christof@gmail.com
   --color-detail-dark: #323232;
   --color-lines: #CCCCCC;
   --color-lines-dark: #363636;
-  --color-admin-green: #60CE4C;
 }
 
 @tailwind base;
