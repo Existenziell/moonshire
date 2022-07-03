@@ -17,8 +17,7 @@ const useApp = () => useContext(AppContext)
 
 export const AppProvider = ({ children }) => {
   const [signer, setSigner] = useState()
-  const [address, setAddress] = useState()
-
+  const [address, setAddress] = useState(null)
   const [currentUser, setCurrentUser] = useState(null)
   const [hasMetamask, setHasMetamask] = useState(false)
   const [notificationMsg, setNotificationMsg] = useState('')
