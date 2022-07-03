@@ -14,53 +14,41 @@ const Home = () => {
 
       <div className='h-full'>
 
-        <div className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home1 w-full shadow">
-          <Link href='/collections/ceccc272-5f26-4f8d-9e51-03e527bf3df6'>
-            <a className="w-full py-10 text-center bg-black/30 backdrop-blur-sm text-white">
-              <h1 className='mb-0'>Him &amp; Her (Interconnection)</h1>
-            </a>
-          </Link>
-        </div>
+        <Link href='/collections/ceccc272-5f26-4f8d-9e51-03e527bf3df6'>
+          <a className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home1 w-full shadow">
+            {/* <h1 className='mb-0'>Him &amp; Her (Interconnection)</h1> */}
+          </a>
+        </Link>
 
-        <div className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home2 w-full shadow">
-          <Link href='/collections/3b0cfe15-8865-4086-a7d2-4c25744913f9'>
-            <a className="w-full py-10 text-center bg-black/30 backdrop-blur-sm text-white">
-              <h1 className='mb-0'>Synthetic wave fields Collection</h1>
-            </a>
-          </Link>
-        </div>
+        <Link href='/collections/3b0cfe15-8865-4086-a7d2-4c25744913f9'>
+          <a className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home2 w-full shadow">
+            {/* <h1 className='mb-0'>Synthetic wave fields Collection</h1> */}
+          </a>
+        </Link>
 
-        {/* <div className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home3 w-full shadow">
-          <Link href='/collections/'>
-            <a className="w-full py-10 text-center bg-black/30 backdrop-blur-sm text-white">
-              <h1 className='mb-0'>Newtonian fluid stimulation</h1>
-            </a>
-          </Link>
-        </div> */}
+        <Link href='/collections/5c7e9370-d5f3-4887-9845-a8b046dc1471'>
+          <a className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home4 w-full shadow">
+            {/* <h1 className='mb-0'>Newtonian fluid stimulation</h1> */}
+          </a>
+        </Link>
 
-        <div className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home4 w-full shadow">
-          <Link href='/collections/5c7e9370-d5f3-4887-9845-a8b046dc1471'>
-            <a className="w-full py-10 text-center bg-black/30 backdrop-blur-sm text-white">
-              <h1 className='mb-0'>Newtonian fluid stimulation</h1>
-            </a>
-          </Link>
-        </div>
+        <Link href='/collections/36ee7dd8-8629-451c-a328-090e23074de7'>
+          <a className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home6 w-full shadow">
+            {/* <h1 className='mb-0'>Cuvée Sensorium Art Editions</h1> */}
+          </a>
+        </Link>
 
-        {/* <div className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home5 w-full shadow">
-          <Link href='/collections/'>
-            <a className="w-full py-10 text-center bg-black/30 backdrop-blur-sm text-white">
-              <h1 className='mb-0'>Collection</h1>
-            </a>
-          </Link>
-        </div> */}
+        {/* <Link href='/collections/'>
+          <a className="w-fuflex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home3 w-full shadow">
+            <h1 className='mb-0'>Newtonian fluid stimulation</h1>
+          </a>
+        </Link>
 
-        <div className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home6 w-full shadow">
-          <Link href='/collections/36ee7dd8-8629-451c-a328-090e23074de7'>
-            <a className="w-full py-10 text-center bg-black/30 backdrop-blur-sm text-white">
-              <h1 className='mb-0'>Cuvée Sensorium Art Editions</h1>
-            </a>
-          </Link>
-        </div>
+        <Link href='/collections/'>
+          <a className="w-fuflex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home5 w-full shadow">
+            <h1 className='mb-0'>Collection</h1>
+          </a>
+        </Link> */}
 
         {/* {collections?.length > 0 &&
           <>
