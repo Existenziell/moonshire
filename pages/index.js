@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 import { supabase } from '../lib/supabase'
 import { getPublicUrl } from '../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 
-const Home = ({ artists, collections, nfts }) => {
+const Home = () => {
   return (
     <>
       <Head>
@@ -11,8 +12,57 @@ const Home = ({ artists, collections, nfts }) => {
         <meta name='description' content="It is gonna be epic | Project Moonshire" />
       </Head>
 
-      <div className='flex flex-col items-center justify-center w-full px-[40px] pb-24'>
-        {collections?.length > 0 &&
+      <div className='h-full'>
+
+        <div className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home1 w-full shadow">
+          <Link href='/collections/'>
+            <a className="w-full py-10 text-center bg-black/30 backdrop-blur-sm text-white">
+              <h1 className='mb-0'>Him &amp; Her (Interconnection)</h1>
+            </a>
+          </Link>
+        </div>
+
+        <div className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home2 w-full shadow">
+          <Link href='/collections/'>
+            <a className="w-full py-10 text-center bg-black/30 backdrop-blur-sm text-white">
+              <h1 className='mb-0'>Synthetic wave fields Collection</h1>
+            </a>
+          </Link>
+        </div>
+
+        {/* <div className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home3 w-full shadow">
+          <Link href='/collections/'>
+            <a className="w-full py-10 text-center bg-black/30 backdrop-blur-sm text-white">
+              <h1 className='mb-0'>Newtonian fluid stimulation</h1>
+            </a>
+          </Link>
+        </div> */}
+
+        <div className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home4 w-full shadow">
+          <Link href='/collections/'>
+            <a className="w-full py-10 text-center bg-black/30 backdrop-blur-sm text-white">
+              <h1 className='mb-0'>Newtonian fluid stimulation</h1>
+            </a>
+          </Link>
+        </div>
+
+        {/* <div className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home5 w-full shadow">
+          <Link href='/collections/'>
+            <a className="w-full py-10 text-center bg-black/30 backdrop-blur-sm text-white">
+              <h1 className='mb-0'>Collection</h1>
+            </a>
+          </Link>
+        </div> */}
+
+        <div className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home6 w-full shadow">
+          <Link href='/collections/'>
+            <a className="w-full py-10 text-center bg-black/30 backdrop-blur-sm text-white">
+              <h1 className='mb-0'>Cuvée Sensorium Art Editions</h1>
+            </a>
+          </Link>
+        </div>
+
+        {/* {collections?.length > 0 &&
           <>
             <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Collections</h2>
 
@@ -44,9 +94,9 @@ const Home = ({ artists, collections, nfts }) => {
               )
             })}
           </>
-        }
+        } */}
 
-        {artists?.length > 0 &&
+        {/* {artists?.length > 0 &&
           <>
             <h2 className='border-b border-detail dark:border-detail-dark my-8 self-start'>Featured Artists</h2>
             <div className='flex justify-center md:justify-start flex-wrap gap-[40px] w-full'>
@@ -79,9 +129,9 @@ const Home = ({ artists, collections, nfts }) => {
               })}
             </div>
           </>
-        }
+        } */}
 
-        {nfts?.length > 0 &&
+        {/* {nfts?.length > 0 &&
           <div className='mt-24 w-full'>
             <h2 className='border-b border-detail dark:border-detail-dark my-8'>Featured NFTs</h2>
             <div className='flex justify-start md:justify-start flex-wrap gap-[40px] w-full'>
@@ -99,38 +149,38 @@ const Home = ({ artists, collections, nfts }) => {
               })}
             </div>
           </div>
-        }
+        } */}
 
       </div>
     </>
   )
 }
 
-export async function getServerSideProps() {
-  const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('created_at', { ascending: false })
-  const { data: featuredNfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).eq('featured', true).order('created_at', { ascending: false })
-  const { data: collections } = await supabase.from('collections').select(`*`).eq('featured', true).order('created_at', { ascending: false })
-  const { data: artists } = await supabase.from('artists').select(`*`).eq('featured', true).order('created_at', { ascending: false })
+// export async function getServerSideProps() {
+//   const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('created_at', { ascending: false })
+//   const { data: featuredNfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).eq('featured', true).order('created_at', { ascending: false })
+//   const { data: collections } = await supabase.from('collections').select(`*`).eq('featured', true).order('created_at', { ascending: false })
+//   const { data: artists } = await supabase.from('artists').select(`*`).eq('featured', true).order('created_at', { ascending: false })
 
-  for (let artist of artists) {
-    const artistNfts = nfts.filter((n => n.artist === artist.id))
-    artist.numberOfNfts = artistNfts.length
-    const url = await getPublicUrl('artists', artist.avatar_url)
-    artist.public_url = url
-  }
+//   for (let artist of artists) {
+//     const artistNfts = nfts.filter((n => n.artist === artist.id))
+//     artist.numberOfNfts = artistNfts.length
+//     const url = await getPublicUrl('artists', artist.avatar_url)
+//     artist.public_url = url
+//   }
 
-  for (let collection of collections) {
-    const collectionNfts = nfts.filter((n => n.collection === collection.id))
-    const url = await getPublicUrl('collections', collection.image_url)
-    collection.numberOfNfts = collectionNfts.length
-    collection.image_url = url
-  }
-  // Filter to only get collections with more than 0 NFTs
-  const notEmptyCollections = collections.filter(collection => collection.numberOfNfts !== 0)
+//   for (let collection of collections) {
+//     const collectionNfts = nfts.filter((n => n.collection === collection.id))
+//     const url = await getPublicUrl('collections', collection.image_url)
+//     collection.numberOfNfts = collectionNfts.length
+//     collection.image_url = url
+//   }
+//   // Filter to only get collections with more than 0 NFTs
+//   const notEmptyCollections = collections.filter(collection => collection.numberOfNfts !== 0)
 
-  return {
-    props: { collections: notEmptyCollections, artists, nfts: featuredNfts },
-  }
-}
+//   return {
+//     props: { collections: notEmptyCollections, artists, nfts: featuredNfts },
+//   }
+// }
 
 export default Home

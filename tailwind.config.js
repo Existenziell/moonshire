@@ -28,6 +28,12 @@ module.exports = {
       backgroundImage: {
         'upload': 'url(/upload.png)',
         'upload-dark': 'url(/upload-dark.png)',
+        'home1': 'url(/home/1.webp)',
+        'home2': 'url(/home/2.webp)',
+        'home3': 'url(/home/3.webp)',
+        'home4': 'url(/home/4.webp)',
+        'home5': 'url(/home/5.webp)',
+        'home6': 'url(/home/6.webp)',
       },
       animation: {},
       keyframes: {},
