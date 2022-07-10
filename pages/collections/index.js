@@ -1,10 +1,61 @@
-import { supabase } from '../../lib/supabase'
+
+import { useRealtime, useFilter } from 'react-supabase'
+import { useEffect, useState } from 'react'
+import { PulseLoader } from 'react-spinners'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 import fromExponential from 'from-exponential'
 
-const Collections = ({ collections }) => {
+const Collections = () => {
+  const [fetchedCollections, setFetchedCollections] = useState()
+
+  let [{ data: collections }] = useRealtime('collections', {
+    select: { filter: useFilter((query) => query.order('created_at', { ascending: false })) }
+  })
+  let [{ data: nfts }] = useRealtime('nfts', { select: { columns: '*, artists(*), collections(*)' } })
+  let [{ data: artists }] = useRealtime('artists')
+
+  // Enrich each collection with numberOfNfts, public_url, price, artists
+  const enrichCollections = async () => {
+    for (let collection of collections) {
+      const url = await getPublicUrl('collections', collection.image_url)
+      collection.public_url = url
+      let collectionPrice = '0.0'
+
+      if (nfts) {
+        const collectionNfts = nfts.filter((n => n.collection === collection.id))
+        if (collectionNfts.length > 0) {
+          collection.numberOfNfts = collectionNfts.length
+          let collectionArtists = []
+          for (let nft of collectionNfts) {
+            collectionArtists.push(nft.artists.name)
+            let price = fromExponential(nft.price)
+            collectionPrice = parseFloat(collectionPrice) + parseFloat(price)
+          }
+          /* eslint-disable no-undef */
+          const uniqueCollectionArtists = await [...new Set(collectionArtists)]
+          /* eslint-enable no-undef */
+          collection.uniqueArtists = uniqueCollectionArtists
+        } else {
+          collection.numberOfNfts = 0
+        }
+      } else {
+        collection.numberOfNfts = 0
+      }
+      collection.price = collectionPrice
+    }
+    // Filter to only get collections with more than 0 NFTs
+    collections = collections.filter(collection => collection.numberOfNfts > 0)
+    setFetchedCollections(collections)
+  }
+
+  useEffect(() => {
+    if (collections && artists && nfts) enrichCollections()
+  }, [collections, artists, nfts])
+
+  if (!fetchedCollections) return <div className='flex w-full justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+
   return (
     <>
       <Head>
@@ -12,11 +63,12 @@ const Collections = ({ collections }) => {
         <meta name='description' content="Collections | Project Moonshire" />
       </Head>
 
-      {collections.length > 0 ?
+      {fetchedCollections.length > 0 ?
         <div className='md:snap-y md:snap-mandatory md:h-[calc(100vh-200px)] md:overflow-y-scroll'>
 
-          {collections.map(collection => {
+          {fetchedCollections.map(collection => {
             const { id, title, headline, description, public_url, numberOfNfts, price, uniqueArtists } = collection
+
             return (
               <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-200px)] w-full mb-40'>
                 <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
@@ -29,19 +81,11 @@ const Collections = ({ collections }) => {
                     <p className='mb-4'>{headline}</p>
                     <p className='my-4'>{description}</p>
                     <p className='mb-4'>
-                      A selection of {numberOfNfts} exclusive artworks by <span className='link-white'>{uniqueArtists.join(', ')}</span>
+                      A selection of {numberOfNfts} exclusive artworks by <span className='link-white'>{uniqueArtists?.join(', ')}</span>
                     </p>
                     <hr className='my-8' />
                     <div className='flex items-center gap-10'>
                       <h1 className='mb-0'>{fromExponential(price)} ETH</h1>
-                      {/* <div>
-                        {floorPrice &&
-                          <p><span className='w-36 whitespace-nowrap inline-block'>Floor Price:</span> {floorPrice} ETH</p>
-                        }
-                        {highestPrice &&
-                          <p><span className='w-36 whitespace-nowrap inline-block'>Highest Price:</span> {highestPrice} ETH</p>
-                        } 
-                      </div> */}
                       <Link href={`/collections/${id}`}>
                         <a className='button button-cta mx-auto md:mx-0 uppercase'>View Collection</a>
                       </Link>
@@ -61,66 +105,6 @@ const Collections = ({ collections }) => {
       }
     </>
   )
-}
-
-export async function getServerSideProps() {
-  const { data: collections } = await supabase.from('collections').select(`*`).order('created_at', { ascending: false })
-  const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`)
-
-  // Enrich each collection with numberOfNfts, public_url, floorPrice, highestPrice, artists
-  for (let collection of collections) {
-
-    const url = await getPublicUrl('collections', collection.image_url)
-    collection.public_url = url
-    let collectionPrice = '0.0'
-
-    if (nfts) {
-      const collectionNfts = nfts.filter((n => n.collection === collection.id))
-
-      if (collectionNfts.length > 0) {
-        // Set the number of NFT in each collection
-        collection.numberOfNfts = collectionNfts.length
-
-        // Collect artists that have NFTs for each collection
-        let collectionArtists = []
-        for (let nft of collectionNfts) {
-          collectionArtists.push(nft.artists.name)
-          let price = fromExponential(nft.price)
-          collectionPrice = parseFloat(collectionPrice) + parseFloat(price)
-        }
-        /* eslint-disable no-undef */
-        const uniqueCollectionArtists = await [...new Set(collectionArtists)]
-        collection.uniqueArtists = uniqueCollectionArtists
-        /* eslint-enable no-undef */
-
-        // Calculate lowest and highest price of NFTs in each collection
-        // let floorPrice = 100000
-        // let highestPrice = 0
-        // for (let nft of collectionNfts) {
-        //   if (highestPrice < nft.price) {
-        //     highestPrice = nft.price
-        //   }
-        //   if (floorPrice > nft.price) {
-        //     floorPrice = nft.price
-        //   }
-        // }
-        // collection.floorPrice = floorPrice
-        // collection.highestPrice = highestPrice
-      } else {
-        collection.numberOfNfts = 0
-      }
-    } else {
-      collection.numberOfNfts = 0
-    }
-    collection.price = collectionPrice
-  }
-
-  // Filter to only get collections with more than 0 NFTs
-  const notEmptyCollections = collections.filter(collection => collection.numberOfNfts !== 0)
-
-  return {
-    props: { collections: notEmptyCollections },
-  }
 }
 
 export default Collections
