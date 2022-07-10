@@ -177,14 +177,16 @@ const Nft = ({ nft }) => {
                   :
                   listed ?
                     sellerIsOwner ?
-                      <p className='text-tiny'>You listed this NFT</p>
+                      // <p className='text-tiny'>You listed this NFT</p>
+                      <button className='button button-cta my-0 p-0 h-full'>Unlist</button>
                       :
                       <button onClick={() => initiateBuy(nft)} className='button button-cta my-0 p-0 h-full'>Buy</button>
                     :
                     sellerIsOwner ?
                       <button onClick={() => listNFT(nft)} className='button button-cta my-0 p-0 h-full'>List</button>
                       :
-                      <p className='text-tiny'>NFT not listed</p>
+                      // <p className='text-tiny'>NFT not listed</p>
+                      <button className='button button-cta my-0 p-0 h-full'>List</button>
                 }
               </div>
             }
