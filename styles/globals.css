@@ -89,7 +89,7 @@ input::placeholder, textarea::placeholder  {
 	========================================================================== */
 
 .button {
-  @apply w-max h-12 px-6 rounded-sm text-tiny flex items-center justify-center
+  @apply w-max h-[40px] px-6 rounded-sm text-tiny flex items-center justify-center
     hover:cursor-pointer transition-all duration-100 uppercase font-serif;
 }
 
@@ -106,7 +106,7 @@ input::placeholder, textarea::placeholder  {
 }
 
 .button-connect {
-  @apply h-12 w-max px-5 rounded-sm flex items-center justify-center bg-cta text-white hover:cursor-pointer transition-all;
+  @apply h-[40px] w-max px-5 rounded-sm flex items-center justify-center bg-cta text-white hover:cursor-pointer transition-all;
 }
 
 
@@ -233,6 +233,6 @@ input::placeholder, textarea::placeholder  {
 }
 
 .button-admin {
-  @apply h-12 px-6 rounded-sm text-tiny font-serif uppercase
+  @apply h-[40px] px-6 rounded-sm text-tiny font-serif uppercase
     text-black bg-detail dark:bg-detail-dark dark:text-white hover:text-cta dark:hover:text-cta transition-all duration-100;  
 }
