@@ -1,4 +1,3 @@
-import { ChevronLeftIcon } from "@heroicons/react/outline"
 import Link from "next/link"
 
 const BackBtn = ({ href }) => (
