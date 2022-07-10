@@ -168,25 +168,29 @@ const Nft = ({ nft }) => {
               :
               <div className='flex items-center gap-10 mt-10'>
                 <p className='my-0 text-[30px] leading-none h-full'>{fromExponential(price)} ETH</p>
-                {fetching ?
+
+                {!address ?
                   <button
                     onClick={connectWallet}
                     className='button button-connect uppercase font-serif'>
                     Sync Wallet
                   </button>
                   :
-                  listed ?
-                    sellerIsOwner ?
-                      // <p className='text-tiny'>You listed this NFT</p>
-                      <button className='button button-cta my-0 p-0 h-full'>Unlist</button>
-                      :
-                      <button onClick={() => initiateBuy(nft)} className='button button-cta my-0 p-0 h-full'>Buy</button>
+                  fetching ?
+                    <PulseLoader color={'white'} size={4} />
                     :
-                    sellerIsOwner ?
-                      <button onClick={() => listNFT(nft)} className='button button-cta my-0 p-0 h-full'>List</button>
+                    listed ?
+                      sellerIsOwner ?
+                        // <p className='text-tiny'>You listed this NFT</p>
+                        <button className='button button-cta my-0 p-0 h-full'>Unlist</button>
+                        :
+                        <button onClick={() => initiateBuy(nft)} className='button button-cta my-0 p-0 h-full'>Buy</button>
                       :
-                      // <p className='text-tiny'>NFT not listed</p>
-                      <button className='button button-cta my-0 p-0 h-full'>List</button>
+                      sellerIsOwner ?
+                        <button onClick={() => listNFT(nft)} className='button button-cta my-0 p-0 h-full'>List</button>
+                        :
+                        // <p className='text-tiny'>NFT not listed</p>
+                        <button className='button button-cta my-0 p-0 h-full'>List</button>
                 }
               </div>
             }
