@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
-import { PlusIcon, CheckIcon } from '@heroicons/react/solid'
+import { PlusIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import useApp from "../../context/App"
 import Search from './Search'
@@ -13,6 +13,7 @@ const Collections = ({ collections }) => {
   const [showDelete, setShowDelete] = useState(false)
   const [collectionToDelete, setCollectionToDelete] = useState()
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setFetchedCollections(collections)
@@ -58,6 +59,21 @@ const Collections = ({ collections }) => {
   const resetSearch = () => {
     setFilteredCollections(fetchedCollections)
     setSearch('')
+  }
+
+  const saveState = async (id, value) => {
+    setLoading(true)
+    const { error } = await supabase
+      .from('collections')
+      .update({
+        featured: value
+      })
+      .eq('id', id)
+
+    if (!error) {
+      notify("Collection updated successfully!", 1500)
+      setLoading(false)
+    }
   }
 
   const truncate = (input) => input.length > 30 ? `${input.substring(0, 30)}...` : input
@@ -126,11 +142,16 @@ const Collections = ({ collections }) => {
               <td className='text-right'>{collection.numberOfNfts}</td>
 
               <td className='whitespace-nowrap text-right'>
-                {collection.featured ?
-                  <CheckIcon className='w-6 ml-auto' />
-                  :
-                  `No`
-                }
+                <label htmlFor="featured" className="cursor-pointer flex items-center justify-end">
+                  <input
+                    type="checkbox"
+                    id="featured"
+                    defaultChecked={collection.featured}
+                    onChange={(e) => saveState(collection.id, e.target.checked)}
+                    disabled={loading}
+                    className="text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600"
+                  />
+                </label>
               </td>
 
               <td className='text-right align-middle pr-0'>

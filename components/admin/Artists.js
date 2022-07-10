@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
-import { PlusIcon, CheckIcon } from '@heroicons/react/solid'
+import { PlusIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import useApp from "../../context/App"
 import Search from './Search'
@@ -14,6 +14,7 @@ const Artists = ({ artists }) => {
   const [showDelete, setShowDelete] = useState(false)
   const [ArtistToDelete, setArtistToDelete] = useState()
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setFetchedArtists(artists)
@@ -61,6 +62,20 @@ const Artists = ({ artists }) => {
     setSearch('')
   }
 
+  const saveState = async (id, value) => {
+    setLoading(true)
+    const { error } = await supabase
+      .from('artists')
+      .update({
+        featured: value
+      })
+      .eq('id', id)
+
+    if (!error) {
+      notify("Artist updated successfully!", 1500)
+      setLoading(false)
+    }
+  }
   const truncate = (input) => input.length > 30 ? `${input.substring(0, 30)}...` : input
 
   if (!fetchedArtists) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
@@ -119,11 +134,16 @@ const Artists = ({ artists }) => {
               <td className='text-right'>{artist.numberOfNfts}</td>
 
               <td className='whitespace-nowrap text-right'>
-                {artist.featured ?
-                  <CheckIcon className='w-6 ml-auto' />
-                  :
-                  `No`
-                }
+                <label htmlFor="featured" className="cursor-pointer flex items-center justify-end">
+                  <input
+                    type="checkbox"
+                    id="featured"
+                    defaultChecked={artist.featured}
+                    onChange={(e) => saveState(artist.id, e.target.checked)}
+                    disabled={loading}
+                    className="text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600"
+                  />
+                </label>
               </td>
 
               <td className='text-right align-middle pr-0'>

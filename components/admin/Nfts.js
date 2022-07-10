@@ -26,7 +26,7 @@ const Nfts = ({ nfts }) => {
     setFilteredNfts(nfts)
   }, [nfts])
 
-  const truncate = (input) => input.length > 30 ? `${input.substring(0, 30)}...` : input
+  const truncate = (input) => input?.length > 30 ? `${input?.substring(0, 30)}...` : input
 
   const toggleDeleteModal = (nft) => {
     setNftToDelete(nft)

@@ -9,13 +9,12 @@ import UploadImage from '../../../components/UploadImage'
 import BackBtn from '../../../components/admin/BackBtn'
 
 const Collection = ({ collection }) => {
-  const { id, title, headline, description, year, featured, image_url } = collection
+  const { id, title, headline, description, year, image_url } = collection
   const { notify, currentUser } = useApp()
 
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState()
-  const [isFeatured, setIsFeatured] = useState()
   const [session, setSession] = useState(null)
   const [initializing, setInitializing] = useState(true)
   const router = useRouter()
@@ -39,7 +38,6 @@ const Collection = ({ collection }) => {
 
   useEffect(() => {
     setImageUrl(image_url)
-    setIsFeatured(featured)
   }, [image_url])
 
   const setData = (e) => {
@@ -58,7 +56,6 @@ const Collection = ({ collection }) => {
         headline: formData.headline ? formData.headline : headline,
         description: formData.description ? formData.description : description,
         year: formData.year ? formData.year : year,
-        featured: isFeatured,
       })
       .eq('id', id)
 
@@ -131,11 +128,6 @@ const Collection = ({ collection }) => {
               className='block mt-2 w-full'
               disabled={loading}
             />
-          </label>
-
-          <label htmlFor='featured' className='mt-12 w-full flex items-center ml-4'>
-            <input id="featured" type="checkbox" defaultChecked={featured} onChange={() => setIsFeatured(!featured)} className="w-4 h-4 text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600" disabled={loading} />
-            <label htmlFor="featured" className="ml-2">Featured</label>
           </label>
 
           <div className='flex items-center gap-2 mt-12'>

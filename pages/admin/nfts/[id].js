@@ -12,11 +12,10 @@ import SupaAuth from '../../../components/SupaAuth'
 import { PulseLoader } from 'react-spinners'
 
 const NFT = ({ nft }) => {
-  const { id, name, description, walletAddress, owner, price, tokenId, tokenURI, image_url, users, artists, collections, listed, featured, assets: initialAssets } = nft
+  const { id, name, description, walletAddress, owner, price, tokenId, tokenURI, image_url, users, artists, collections, listed, assets: initialAssets } = nft
 
   const { notify, currentUser } = useApp()
   const [loading, setLoading] = useState(false)
-  const [isFeatured, setIsFeatured] = useState(false)
   const [session, setSession] = useState(null)
   const [initializing, setInitializing] = useState(true)
   const router = useRouter()
@@ -110,7 +109,6 @@ const NFT = ({ nft }) => {
     const { error } = await supabase
       .from('nfts')
       .update({
-        featured: isFeatured,
         assets
       })
       .eq('id', id)
@@ -129,7 +127,7 @@ const NFT = ({ nft }) => {
 
   return (
     <div className='mb-20 w-full relative'>
-      <form onSubmit={saveNft} className='edit-user flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
+      <form onSubmit={saveNft} autoCorrect='false' autoCapitalize='false' className='edit-user flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
 
         <div className='md:w-1/2 h-full'>
           <img src={image_url} alt='NFT Image' className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)]' />
@@ -147,18 +145,6 @@ const NFT = ({ nft }) => {
           {/* <p className='mb-2'>Current owner: {shortenAddress(walletAddress)} ({owner})</p> */}
           {/* <p className='mb-2 whitespace-nowrap'>TokenURI: <a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link'>{truncate(tokenURI)}</a></p> */}
 
-          <label htmlFor="featured" className="cursor-pointer flex items-center whitespace-nowrap mt-10">
-            <input
-              id="featured"
-              type="checkbox"
-              defaultChecked={featured}
-              onChange={() => setIsFeatured(!featured)}
-              className="text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600"
-              disabled={loading || !listed} />
-            <span className=' relative bottom-[1px] ml-2'>Featured</span>
-          </label>
-          {!listed && <span className='text-tiny'>This NFT is currently not listed and therefore can not be set as featured.</span>}
-
           <div className='mt-16'>
             <h1 className='mb-0'>Assets</h1>
             <hr className='my-8' />
@@ -171,11 +157,11 @@ const NFT = ({ nft }) => {
               <li id='templatePhysical' className='hidden'>
                 <input type="text" name='name' placeholder="Name" className='mr-4 inputPhysical' />
                 <button onClick={removeRow} className=''>
-                  <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
+                  <XIcon className='w-5 h-5 hover:text-cta hover:bg-cta pointer-events-none' />
                 </button>
               </li>
               {initialPhysicalAssets.map((asset, idx) => (
-                <li key={asset.name + idx}>
+                <li key={asset.name + idx} className='mb-1'>
                   <input type="text" name='name' placeholder="Name" className='mr-4 inputPhysical' defaultValue={asset.name} />
                   <button onClick={removeRow} className=''>
                     <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
@@ -197,6 +183,7 @@ const NFT = ({ nft }) => {
                   <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
                 </button>
               </li>
+
               {initialDigitalAssets.map((asset, idx) => (
                 <li key={asset.name + idx} className='flex gap-2 digitalAsset'>
                   <input type="text" name='name' placeholder="Name" className='inputDigital' defaultValue={asset.name} />
