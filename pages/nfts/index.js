@@ -24,7 +24,7 @@ const Nfts = () => {
 
       <div className='px-[20px] md:px-[40px] w-full'>
         {nfts.length > 0 ?
-          <div className="flex flex-wrap justify-evenly gap-20 mx-16 mb-20">
+          <div className="flex flex-wrap justify-evenly gap-y-20 gap-x-60 mx-16">
             {nfts.map((nft, i) => (
               <div key={i} className="flex flex-col justify-between w-min mb-44">
                 <Link href={`/nfts/${nft.id}`}>
