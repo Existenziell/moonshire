@@ -167,8 +167,7 @@ const Nft = ({ nft }) => {
               </div>
               :
               <div className='flex items-center gap-10 mt-10'>
-                <p className='my-0 text-[30px] relative bottom-[1px] '>{fromExponential(price)} ETH</p>
-
+                <p className='my-0 text-[30px] relative bottom-1'>{fromExponential(price)} ETH</p>
                 {!address ?
                   <button
                     onClick={connectWallet}
@@ -182,15 +181,15 @@ const Nft = ({ nft }) => {
                     listed ?
                       sellerIsOwner ?
                         // <p className='text-tiny'>You listed this NFT</p>
-                        <button className='button button-cta my-0 p-0 h-full'>Unlist</button>
+                        <button className='button button-cta'>Unlist</button>
                         :
-                        <button onClick={() => initiateBuy(nft)} className='button button-cta my-0 p-0 h-full'>Buy</button>
+                        <button onClick={() => initiateBuy(nft)} className='button button-cta'>Buy</button>
                       :
                       sellerIsOwner ?
-                        <button onClick={() => listNFT(nft)} className='button button-cta my-0 p-0 h-full'>List</button>
+                        <button onClick={() => listNFT(nft)} className='button button-cta'>List</button>
                         :
                         // <p className='text-tiny'>NFT not listed</p>
-                        <button className='button button-cta my-0 p-0 h-full'>List</button>
+                        <button className='button button-cta'>List</button>
                 }
               </div>
             }
