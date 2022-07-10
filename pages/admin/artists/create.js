@@ -81,7 +81,7 @@ const Create = () => {
   if (!session) return <SupaAuth />
 
   return (
-    <form onSubmit={addArtist} className='create-artist flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
+    <form onSubmit={addArtist} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='create-artist flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
       <div className='md:w-1/2 h-full'>
         <UploadImage
           bucket='artists'

@@ -127,7 +127,7 @@ const NFT = ({ nft }) => {
 
   return (
     <div className='mb-20 w-full relative'>
-      <form onSubmit={saveNft} autoCorrect='false' autoCapitalize='false' className='edit-user flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
+      <form onSubmit={saveNft} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='edit-user flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
 
         <div className='md:w-1/2 h-full'>
           <img src={image_url} alt='NFT Image' className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)]' />

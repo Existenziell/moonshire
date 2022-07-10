@@ -71,7 +71,7 @@ const Artist = ({ artist }) => {
 
   return (
     <div className='mb-20 w-full relative'>
-      <form onSubmit={saveArtist} className='edit-artist flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
+      <form onSubmit={saveArtist} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='edit-artist flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
         <div className='md:w-1/2 h-full'>
           <UploadImage
             bucket='artists'

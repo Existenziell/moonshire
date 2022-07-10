@@ -70,7 +70,7 @@ const User = ({ user }) => {
     <div className='mb-20 w-full relative'>
       <BackBtn href='/admin?view=users' />
 
-      <form onSubmit={saveUser} className='edit-user flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
+      <form onSubmit={saveUser} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='edit-user flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
         <h1 className='mb-10'>Edit User</h1>
 
         <div className='flex flex-col md:flex-row gap-10 items-start justify-start'>

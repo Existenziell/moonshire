@@ -59,7 +59,7 @@ export default function ResellNft() {
   return (
     <div>
       <div className="flex justify-center px-[40px]">
-        <form className="list-nft flex flex-col items-center">
+        <form autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className="list-nft flex flex-col items-center">
           <h1>Enter price in ETH:</h1>
           <input
             type='text' required

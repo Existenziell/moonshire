@@ -72,7 +72,7 @@ const Collection = ({ collection }) => {
 
   return (
     <div className='mb-20 w-full relative'>
-      <form onSubmit={saveCollection} className='edit-collection flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
+      <form onSubmit={saveCollection} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='edit-collection flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
         <div className='md:w-1/2 h-full'>
           <UploadImage
             bucket='collections'

@@ -291,7 +291,7 @@ const CreateNft = ({ artists }) => {
           </Link>
         </div>
         :
-        <form onSubmit={createNft} className='create-nft flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
+        <form onSubmit={createNft} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='create-nft flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
           <div className='w-full h-full md:w-1/2'>
             <FilePicker onChange={(e) => handleUpload(e)} url={fileUrl} />
           </div>
