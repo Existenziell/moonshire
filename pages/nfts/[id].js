@@ -113,7 +113,7 @@ const Nft = ({ nft }) => {
             <div className='mt-16'>
               <h1 className='mb-0'>Assets</h1>
               <hr className='my-8' />
-              <p className='mb-4'>Physical <span className='text-gray-400'>(free shipping worldwide)</span></p>
+              <p className='mb-4'>Physical <span className='text-[#777777] dark:text-[#999999]'>(free shipping worldwide)</span></p>
               <ul>
                 {physicalAssets.map((asset, idx) => (
                   <li key={asset.name + idx}>&#8212;	{asset.name}</li>
