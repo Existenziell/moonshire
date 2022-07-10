@@ -15,31 +15,31 @@ const Home = () => {
       <div className='h-full'>
 
         <Link href='/collections/ceccc272-5f26-4f8d-9e51-03e527bf3df6'>
-          <a className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home1 w-full shadow"></a>
+          <a className="flex items-center justify-center h-screen bg-cover bg-center bg-home1 w-full shadow"></a>
         </Link>
 
         <Link href='/collections/3b0cfe15-8865-4086-a7d2-4c25744913f9'>
-          <a className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home2 w-full shadow"></a>
+          <a className="flex items-center justify-center h-screen bg-cover bg-center bg-home2 w-full shadow"></a>
         </Link>
 
         <Link href='/collections'>
-          <a className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home3 w-full shadow"></a>
+          <a className="flex items-center justify-center h-screen bg-cover bg-center bg-home3 w-full shadow"></a>
         </Link>
 
         <Link href='/collections/5c7e9370-d5f3-4887-9845-a8b046dc1471'>
-          <a className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home4 w-full shadow"></a>
+          <a className="flex items-center justify-center h-screen bg-cover bg-center bg-home4 w-full shadow"></a>
         </Link>
 
         <Link href='/collections'>
-          <a className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home5 w-full shadow"></a>
+          <a className="flex items-center justify-center h-screen bg-cover bg-center bg-home5 w-full shadow"></a>
         </Link>
 
         <Link href='/collections/36ee7dd8-8629-451c-a328-090e23074de7'>
-          <a className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home6 w-full shadow"></a>
+          <a className="flex items-center justify-center h-screen bg-cover bg-center bg-home6 w-full shadow"></a>
         </Link>
 
         <Link href='/collections/5c7e9370-d5f3-4887-9845-a8b046dc1471'>
-          <a className="flex items-center justify-center md:h-screen sm:bg-fixed sm:bg-center bg-contain sm:bg-cover bg-home7 w-full shadow"></a>
+          <a className="flex items-center justify-center h-screen bg-cover bg-center bg-home7 w-full shadow"></a>
         </Link>
 
 
