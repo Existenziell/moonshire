@@ -37,7 +37,7 @@ const Nfts = () => {
                 </Link>
 
                 <div className="flex flex-col justify-between h-full">
-                  <p className="mb-8 h-full mt-10">{nft.name}</p>
+                  <p className="mb-8 h-full mt-10 text-2xl leading-relaxed">{nft.name}</p>
                   <div className="text-detail-dark dark:text-detail">
                     {/* <p>{nft.description}</p> */}
                     <div className='mb-8'>
