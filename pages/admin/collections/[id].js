@@ -75,8 +75,6 @@ const Collection = ({ collection }) => {
 
   return (
     <div className='mb-20 w-full relative'>
-      <BackBtn href='/admin?view=collections' />
-
       <form onSubmit={saveCollection} className='edit-collection flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
         <div className='md:w-1/2 h-full'>
           <UploadImage
@@ -140,7 +138,11 @@ const Collection = ({ collection }) => {
             <label htmlFor="featured" className="ml-2">Featured</label>
           </label>
 
-          <input type='submit' className='button button-cta mt-12 ml-4' value='Save' disabled={loading} />
+          <div className='flex items-center gap-2 mt-12'>
+            <input type='submit' className='button button-cta ml-4' value='Save' disabled={loading} />
+            <BackBtn href='/admin?view=collections' />
+          </div>
+
         </div>
       </form>
     </div>

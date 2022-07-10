@@ -129,8 +129,6 @@ const NFT = ({ nft }) => {
 
   return (
     <div className='mb-20 w-full relative'>
-      <BackBtn href='/admin?view=nfts' />
-
       <form onSubmit={saveNft} className='edit-user flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
 
         <div className='md:w-1/2 h-full'>
@@ -214,7 +212,10 @@ const NFT = ({ nft }) => {
 
           <div className='flex items-center gap-10 mt-10'>
             <p className='my-0 text-[30px] leading-none h-full'>{fromExponential(price)} ETH</p>
-            <input type='submit' className='button button-cta' value='Save' disabled={loading} />
+            <div className='flex items-center gap-2'>
+              <input type='submit' className='button button-cta' value='Save' disabled={loading} />
+              <BackBtn href='/admin?view=nfts' />
+            </div>
           </div>
         </div>
       </form>

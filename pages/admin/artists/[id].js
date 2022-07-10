@@ -74,8 +74,6 @@ const Artist = ({ artist }) => {
 
   return (
     <div className='mb-20 w-full relative'>
-      <BackBtn href='/admin?view=artists' />
-
       <form onSubmit={saveArtist} className='edit-artist flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
         <div className='md:w-1/2 h-full'>
           <UploadImage
@@ -142,7 +140,11 @@ const Artist = ({ artist }) => {
             </div>
           </label>
 
-          <input type='submit' className='button button-cta mt-12 ml-4' value='Save' disabled={loading} />
+          <div className='flex items-center gap-2 mt-12'>
+            <input type='submit' className='button button-cta ml-4' value='Save' disabled={loading} />
+            <BackBtn href='/admin?view=artists' />
+          </div>
+
         </div>
       </form>
     </div>
