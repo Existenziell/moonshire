@@ -64,27 +64,27 @@ const Admin = ({ nfts, collections, artists, users, tokenId }) => {
         <div className='admin px-[20px] md:px-[40px]'>
           <div className='mb-10'>
             <ul className='text-[30px] flex gap-20 transition-colors border-b border-detail dark:border-detail-dark'>
-              <li className={view === 'collections' ? `pb-4 transition-colors border-b border-white` : `hover:text-cta`}>
+              <li className={view === 'collections' ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`}>
                 <button onClick={navigate} name='collections'>
                   Collections
                 </button>
               </li>
-              <li className={view === 'artists' ? `pb-4 transition-colors border-b border-white` : `hover:text-cta`}>
+              <li className={view === 'artists' ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`}>
                 <button onClick={navigate} name='artists'>
                   Artists
                 </button>
               </li>
-              <li className={view === 'nfts' ? `pb-4 transition-colors border-b border-white` : `hover:text-cta`}>
+              <li className={view === 'nfts' ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`}>
                 <button onClick={navigate} name='nfts'>
                   NFTs
                 </button>
               </li>
-              <li className={view === 'users' ? `pb-4 transition-colors border-b border-white` : `hover:text-cta`} >
+              <li className={view === 'users' ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`} >
                 <button onClick={navigate} name='users'>
                   Users
                 </button>
               </li>
-              {/* <li className={view === 'market' ? `pb-4 transition-colors border-b border-white` : `hover:text-cta`} >
+              {/* <li className={view === 'market' ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`} >
                 <button onClick={navigate} name='market'>
                   Market
                 </button>
