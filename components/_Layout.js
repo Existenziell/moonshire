@@ -20,9 +20,9 @@ const Layout = ({ children }) => {
           options={{ showSpinner: false }}
         />
       }
-      <div className={` ${router.pathname === '/' ? `fixed top-0 w-full bg-transparent` : `bg-brand dark:bg-brand-dark`} pt-[20px] px-[40px] flex justify-between items-start z-20 text-black dark:text-white`}>
+      <div className={` ${router.pathname === '/' ? `fixed top-0 w-full bg-transparent` : `bg-brand dark:bg-brand-dark`} pt-[20px] px-[40px] flex flex-col xs:flex-row justify-between items-start z-20 text-black dark:text-white`}>
         <Logo />
-        <div className='flex items-center'>
+        <div className='flex items-center justify-between w-full mt-8 xs:mt-0 '>
           <Nav />
           <Wallet />
         </div>

@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   mode: 'jit',
   content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
@@ -43,6 +45,11 @@ module.exports = {
       primary: '#DBDBDB',
       secondary: '#242424',
     }),
+    // used in Nav 
+    screens: {
+      'xs': '475px',
+      ...defaultTheme.screens,
+    },
   },
   variants: {
     extend: {},
