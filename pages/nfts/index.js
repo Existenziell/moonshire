@@ -16,9 +16,9 @@ const Nfts = () => {
   const [initialNfts, setInitialNfts] = useState()
 
   const router = useRouter()
-  const { view: initialView, display: initialDisplay, sortBy: initialSort, asc, search: initialSearch } = router.query
+  const { view: initialView, display: initialDisplay, sortBy: initialSort, asc } = router.query
 
-  const [search, setSearch] = useState(initialSearch ? initialSearch : ``)
+  const [search, setSearch] = useState('')
   const [filteredNfts, setFilteredNfts] = useState()
   const [view, setView] = useState(initialView ? initialView : 'all')
   const [display, setDisplay] = useState(initialDisplay ? initialDisplay : 'grid')
@@ -79,15 +79,16 @@ const Nfts = () => {
     switch (view) {
       case 'all':
         nfts = initialNfts
-        break;
+        break
       case 'available':
         nfts = initialNfts.filter(n => { return n.listed === true })
-        break;
+        break
       case 'sold':
         nfts = initialNfts.filter(n => { return n.listed === false })
-        break;
+        break
       default:
-        break;
+        nfts = filteredNfts
+        break
     }
     resetSearch()
     setSortBy('name')
@@ -129,10 +130,6 @@ const Nfts = () => {
         n.collections.title.toLowerCase().includes(search.toLowerCase())
       ))
       setFilteredNfts(nfts)
-      router.push({
-        pathname: '/nfts',
-        query: { ...router.query, search: search }
-      }, undefined, {})
     }
   }, [search])
   /* eslint-enable react-hooks/exhaustive-deps */

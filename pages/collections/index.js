@@ -54,6 +54,8 @@ const Collections = () => {
     if (collections && artists && nfts) enrichCollections()
   }, [collections, artists, nfts])
 
+  const truncate = (input) => input.length > 8 ? `${input.substring(0, 8)}` : input
+
   if (!fetchedCollections) return <div className='flex w-full justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
@@ -85,9 +87,9 @@ const Collections = () => {
                     </p>
                     <hr className='my-8' />
                     <div className='flex items-center gap-10'>
-                      <h1 className='mb-0'>{fromExponential(price)} ETH</h1>
+                      <h1 className='mb-0'>{truncate(fromExponential(price))} ETH</h1>
                       <Link href={`/collections/${id}`}>
-                        <a className='button button-cta mx-auto md:mx-0 uppercase'>View Collection</a>
+                        <a className='button button-cta mx-auto md:mx-0 uppercase whitespace-nowrap'>View Collection</a>
                       </Link>
                     </div>
                   </div>

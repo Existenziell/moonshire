@@ -77,7 +77,7 @@ export async function getServerSideProps(context) {
     collections.push(nft.collections)
   }
   /* eslint-disable no-undef */
-  let uniqueCollections = [...new Map(collections.map((item) => [item['id'], item])).values()];
+  let uniqueCollections = [...new Map(collections.map((item) => [item['id'], item])).values()]
   /* eslint-enable no-undef */
 
   artist.collections = uniqueCollections

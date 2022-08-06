@@ -118,7 +118,7 @@ const Admin = () => {
       </Head>
 
       <AnimatePresence>
-        <div className='admin px-[20px] md:px-[40px] min-h-[calc(100vh-200px)]'>
+        <div className='admin px-[20px] md:px-[40px] min-h-[calc(100vh-100px)]'>
           <div className='mb-10'>
             <ul className='text-[30px] flex gap-20 transition-colors border-b border-detail dark:border-detail-dark'>
               <li className={view === 'collections' ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`}>
