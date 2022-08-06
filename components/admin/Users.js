@@ -126,7 +126,7 @@ const Users = ({ users }) => {
 
               <td>
                 {user.signed_url ?
-                  <img src={user.signed_url} alt='User Image' className='w-12 shadow aspect-square bg-cover' />
+                  <img src={user.signed_url} alt='User Image' className='w-[60px] shadow aspect-square bg-cover' />
                   :
                   "n/a"
                 }

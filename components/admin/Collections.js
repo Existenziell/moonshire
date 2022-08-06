@@ -127,7 +127,7 @@ const Collections = ({ collections }) => {
                 <Link href={`/collections/${collection.id}`}>
                   <a>
                     {collection.public_url ?
-                      <img src={collection.public_url} alt='Collection Image' className='w-12 shadow aspect-square bg-cover' />
+                      <img src={collection.public_url} alt='Collection Image' className='w-[60px] shadow aspect-square bg-cover' />
                       :
                       "n/a"
                     }

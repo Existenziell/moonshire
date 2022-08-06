@@ -1,9 +1,47 @@
-import { supabase } from '../../lib/supabase'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
+import { useRealtime, useFilter } from 'react-supabase'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { PulseLoader } from 'react-spinners'
 
-const Artists = ({ artists }) => {
+const Artists = () => {
+  const [fetchedArtists, setFetchedArtists] = useState()
+
+  let [{ data: nfts }] = useRealtime('nfts', { select: { columns: '*, artists(*), collections(*)' } })
+  let [{ data: artists }] = useRealtime('artists', {
+    select: { filter: useFilter((query) => query.order('created_at', { ascending: false })) }
+  })
+
+  const enrichArtists = async () => {
+    for (let artist of artists) {
+      const url = await getPublicUrl('artists', artist.avatar_url)
+      artist.public_url = url
+
+      let collections = []
+      for (let nft of nfts) {
+        if (nft.artist === artist.id) collections.push(nft.collections)
+      }
+      /* eslint-disable no-undef */
+      let uniqueCollections = [...new Map(collections.map((item) => [item['id'], item])).values()];
+      /* eslint-enable no-undef */
+
+      artist.collections = uniqueCollections
+      artist.numberOfCollections = uniqueCollections.length
+
+      const filteredNfts = nfts.filter((n => n.artist === artist.id))
+      artist.nfts = filteredNfts
+      artist.numberOfNfts = filteredNfts.length
+    }
+    setFetchedArtists(artists)
+  }
+
+  useEffect(() => {
+    if (artists && nfts) enrichArtists()
+  }, [artists, nfts])
+
+  if (!fetchedArtists) return <div className='flex w-full justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+
   return (
     <>
       <Head>
@@ -11,10 +49,10 @@ const Artists = ({ artists }) => {
         <meta name='description' content="Artists | Project Moonshire" />
       </Head>
 
-      {artists.length ?
+      {fetchedArtists.length > 0 ?
         <div className='md:snap-y md:snap-mandatory md:h-[calc(100vh-200px)] md:overflow-y-scroll'>
 
-          {artists.map(artist => {
+          {fetchedArtists.map(artist => {
             const { id, name, headline, description, public_url, collections, numberOfCollections, nfts, numberOfNfts } = artist
             return (
               <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-200px)] w-full mb-40'>
@@ -70,35 +108,6 @@ const Artists = ({ artists }) => {
       }
     </>
   )
-}
-
-export async function getServerSideProps() {
-  const { data: artists } = await supabase.from('artists').select(`*`).order('created_at', { ascending: false })
-  const { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).order('created_at', { ascending: false })
-
-  for (let artist of artists) {
-    const url = await getPublicUrl('artists', artist.avatar_url)
-    artist.public_url = url
-
-    let collections = []
-    for (let nft of nfts) {
-      if (nft.artist === artist.id) collections.push(nft.collections)
-    }
-    /* eslint-disable no-undef */
-    let uniqueCollections = [...new Map(collections.map((item) => [item['id'], item])).values()];
-    /* eslint-enable no-undef */
-
-    artist.collections = uniqueCollections
-    artist.numberOfCollections = uniqueCollections.length
-
-    const filteredNfts = nfts.filter((n => n.artist === artist.id))
-    artist.nfts = filteredNfts
-    artist.numberOfNfts = filteredNfts.length
-  }
-
-  return {
-    props: { artists },
-  }
 }
 
 export default Artists

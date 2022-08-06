@@ -5,6 +5,7 @@ import { getSignedUrl } from '../../lib/supabase/getSignedUrl'
 import { marketplaceAddress } from '../../config'
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
+import { motion, AnimatePresence } from "framer-motion"
 import Head from 'next/head'
 import Nfts from '../../components/admin/Nfts'
 import Collections from '../../components/admin/Collections'
@@ -12,15 +13,71 @@ import Artists from '../../components/admin/Artists'
 import Users from '../../components/admin/Users'
 import SupaAuth from '../../components/SupaAuth'
 import useApp from "../../context/App"
-import { motion, AnimatePresence } from "framer-motion"
+import { useRealtime } from 'react-supabase'
 
-const Admin = ({ nfts, collections, artists, users, tokenId }) => {
+const Admin = () => {
   const { currentUser, contractBalance } = useApp()
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
   const [view, setView] = useState('collections')
+  const [lastTokenId, setLastTokenId] = useState()
   const router = useRouter()
   const { view: selectedView } = router.query
+
+  const [resultCollections] = useRealtime('collections')
+  const [resultArtists] = useRealtime('artists')
+  const [resultUsers] = useRealtime('users', { select: { columns: '*, roles(*)' } })
+  const [resultNfts] = useRealtime('nfts', { select: { columns: '*, artists(*), collections(*)' } })
+
+  const { data: collections } = resultCollections
+  const { data: nfts } = resultNfts
+  const { data: artists } = resultArtists
+  const { data: users } = resultUsers
+
+  useEffect(() => {
+    setLastTokenId(nfts?.at(length - 1).tokenId)
+  }, [nfts])
+
+  const enrichCollections = async () => {
+    for (let collection of collections) {
+      const url = await getPublicUrl('collections', collection.image_url)
+      collection.public_url = url
+
+      if (nfts) {
+        const collectionNfts = nfts.filter((n => n.collection === collection.id))
+        collection.numberOfNfts = collectionNfts.length
+      } else {
+        collection.numberOfNfts = 0
+      }
+    }
+  }
+
+  const enrichArtists = async () => {
+    for (let artist of artists) {
+      const artistNfts = nfts?.filter((n => n.artist === artist.id))
+      artist.numberOfNfts = artistNfts?.length
+      const url = await getPublicUrl('artists', artist.avatar_url)
+      artist.public_url = url
+    }
+  }
+
+  const enrichUsers = async () => {
+    for (let user of users) {
+      if (user.avatar_url) {
+        const url = await getSignedUrl('avatars', user.avatar_url)
+        user.signed_url = url
+      }
+
+      let userCollections = collections.filter(c => (c.user === user.id))
+      let userNfts = nfts.filter(nft => (nft.user === user.id))
+      user.numberOfCollections = userCollections.length
+      user.numberOfNfts = userNfts.length
+    }
+  }
+
+  if (collections && nfts) enrichCollections()
+  if (artists && nfts) enrichArtists()
+  if (users && nfts && collections) enrichUsers()
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -143,9 +200,9 @@ const Admin = ({ nfts, collections, artists, users, tokenId }) => {
                 <div className='flex flex-col gap-2'>
                   <p>Market contract address: <a href={`https://rinkeby.etherscan.io/address/${marketplaceAddress}#code`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{marketplaceAddress}</a></p>
                   <p>Contract Balance: {contractBalance} ETH</p>
-                  <p>Tokens minted: {tokenId}</p>
-                  <p>Total transactions: 84</p>
-                  <p>Unique token holders: 4</p>
+                  <p>Tokens minted: {lastTokenId}</p>
+                  <p>Total transactions: 94</p>
+                  <p>Unique token holders: 5</p>
                 </div>
               </motion.div>
             }
@@ -154,50 +211,6 @@ const Admin = ({ nfts, collections, artists, users, tokenId }) => {
       </AnimatePresence>
     </>
   )
-}
-
-export async function getServerSideProps() {
-  const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('created_at', { ascending: false })
-  const { data: collections } = await supabase.from('collections').select(`*`).order('created_at', { ascending: false })
-  const { data: artists } = await supabase.from('artists').select(`*`).order('created_at', { ascending: false })
-  const { data: users } = await supabase.from('users').select(`*, roles(*)`).order('username', { ascending: true })
-  const { data: lastInserted } = await supabase.from('nfts').select(`*`).order('tokenId', { ascending: false }).limit(1).single()
-  const tokenId = lastInserted.tokenId
-
-  for (let artist of artists) {
-    const artistNfts = nfts.filter((n => n.artist === artist.id))
-    artist.numberOfNfts = artistNfts.length
-    const url = await getPublicUrl('artists', artist.avatar_url)
-    artist.public_url = url
-  }
-
-  for (let collection of collections) {
-    const url = await getPublicUrl('collections', collection.image_url)
-    collection.public_url = url
-
-    if (nfts) {
-      const collectionNfts = nfts.filter((n => n.collection === collection.id))
-      collection.numberOfNfts = collectionNfts.length
-    } else {
-      collection.numberOfNfts = 0
-    }
-  }
-
-  for (let user of users) {
-    if (user.avatar_url) {
-      const url = await getSignedUrl('avatars', user.avatar_url)
-      user.signed_url = url
-    }
-
-    let userCollections = collections.filter(c => (c.user === user.id))
-    let userNfts = nfts.filter(nft => (nft.user === user.id))
-    user.numberOfCollections = userCollections.length
-    user.numberOfNfts = userNfts.length
-  }
-
-  return {
-    props: { nfts, collections, artists, users, tokenId }
-  }
 }
 
 export default Admin

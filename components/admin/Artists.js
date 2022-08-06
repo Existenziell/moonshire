@@ -120,7 +120,7 @@ const Artists = ({ artists }) => {
                 <Link href={`/artists/${artist.id}`}>
                   <a>
                     {artist.avatar_url ?
-                      <img src={artist.public_url} alt='Artist Image' className='w-12 shadow aspect-square bg-cover' />
+                      <img src={artist.public_url} alt='Artist Image' className='w-[60px] shadow aspect-square bg-cover' />
                       :
                       "n/a"
                     }

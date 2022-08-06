@@ -38,7 +38,6 @@ export default function SuccessCollection() {
 
   useEffect(() => {
     if (image_url) fetchImage()
-    console.log(image_url, imageUrl);
   }, [image_url])
 
   const fetchImage = async () => {

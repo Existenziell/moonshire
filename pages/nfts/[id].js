@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
-import { supabase } from '../../lib/supabase'
 import { useState, useEffect } from 'react'
+import { useRealtime, useFilter } from 'react-supabase'
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
-import { shortenAddress } from '../../lib/shortenAddress'
+// import { shortenAddress } from '../../lib/shortenAddress'
 import useApp from "../../context/App"
 import Head from 'next/head'
 import Link from 'next/link'
@@ -13,29 +12,44 @@ import fetchMarketItemsMeta from '../../lib/contract/fetchMarketItemsMeta'
 import fetchMyNfts from '../../lib/contract/fetchMyNfts'
 import fromExponential from 'from-exponential'
 
-const Nft = ({ nft }) => {
-  const { id, name, description, price, created_at, image_url, artists, listed, tokenURI, tokenId, assets } = nft
-  const { address, signer, notify, connectWallet } = useApp()
+const Nft = ({ propsId }) => {
   const router = useRouter()
+  const { address, signer, notify, connectWallet } = useApp()
+  const [physicalAssets, setPhysicalAssets] = useState()
+  const [digitalAssets, setDigitalAssets] = useState()
+
+  let [{ data: nft }] = useRealtime('nfts', {
+    select: {
+      columns: '*, artists(*), collections(*)',
+      filter: useFilter((query) => query.eq('id', router.query.id ? router.query.id : propsId))
+    }
+  })
 
   const [fetching, setFetching] = useState(true)
   const [loading, setLoading] = useState(false)
   const [sellerIsOwner, setSellerIsOwner] = useState(false)
 
-  let physicalAssets = []
-  let digitalAssets = []
-  if (assets) {
-    for (let el of assets) {
-      el.type === 'digital' ?
-        digitalAssets.push(el)
-        :
-        physicalAssets.push(el)
+  const setAssets = async () => {
+    let physicalAssets = []
+    let digitalAssets = []
+    if (nft[0].assets) {
+      for (let el of nft[0].assets) {
+        el.type === 'digital' ?
+          digitalAssets.push(el)
+          :
+          physicalAssets.push(el)
+      }
     }
+    setDigitalAssets(digitalAssets)
+    setPhysicalAssets(physicalAssets)
   }
 
   useEffect(() => {
-    if (address) fetchMeta()
-  }, [address])
+    if (address && nft) {
+      fetchMeta()
+      setAssets()
+    }
+  }, [address, nft])
 
   const fetchMeta = async () => {
     if (tokenId) {
@@ -66,13 +80,13 @@ const Nft = ({ nft }) => {
     logWeb3(`Initiating blockchain transfer...`)
 
     try {
-      const hash = await buyNft(nft, signer)
+      const hash = await buyNft(nft.at(0), signer)
       if (hash) {
         notify("Transfer to your wallet was successful!")
         logWeb3(`Transaction hash: ${hash}`)
 
         setTimeout(() => {
-          router.push(`/success?hash=${hash}&id=${nft.id}&name=${nft.name}&image_url=${image_url}`)
+          router.push(`/success?hash=${hash}&id=${nft.at(0).id}&name=${nft.at(0).name}&image_url=${image_url}`)
         }, 1500)
       } else {
         notify("Something went horribly wrong...")
@@ -86,6 +100,9 @@ const Nft = ({ nft }) => {
   const listNFT = (nft) => {
     router.push(`/nfts/resell?id=${nft.tokenId}&tokenURI=${nft.tokenURI}`)
   }
+
+  if (!nft) return <div className='flex w-full justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  const { name, description, price, image_url, artists, listed, tokenURI, tokenId } = nft[0]
 
   return (
     <>
@@ -115,13 +132,13 @@ const Nft = ({ nft }) => {
               <hr className='my-8' />
               <p className='mb-4'>Physical <span className='text-[#777777] dark:text-[#999999]'>(free shipping worldwide)</span></p>
               <ul>
-                {physicalAssets.map((asset, idx) => (
+                {physicalAssets?.map((asset, idx) => (
                   <li key={asset.name + idx}>&#8212;	{asset.name}</li>
                 ))}
               </ul>
               <p className='mb-4 mt-8'>Digital</p>
               <ul>
-                {digitalAssets.map((asset, idx) => (
+                {digitalAssets?.map((asset, idx) => (
                   <li key={asset.name + idx}>
                     &#8212; {asset.name}{` `}
                     <Link href={`/download/${asset.link}`}>
@@ -186,7 +203,7 @@ const Nft = ({ nft }) => {
                         <button onClick={() => initiateBuy(nft)} className='button button-cta'>Buy</button>
                       :
                       sellerIsOwner ?
-                        <button onClick={() => listNFT(nft)} className='button button-cta'>List</button>
+                        <button onClick={() => listNFT(nft.at(0))} className='button button-cta'>List</button>
                         :
                         // <p className='text-tiny'>NFT not listed</p>
                         <button className='button button-cta'>List</button>
@@ -202,26 +219,8 @@ const Nft = ({ nft }) => {
 
 export async function getServerSideProps(context) {
   const id = context.params.id
-
-  let { data: nft } = await supabase
-    .from('nfts')
-    .select(`*, artists(*), collections(*)`)
-    .eq('id', id)
-    .single()
-
-  if (!nft) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/nfts",
-      },
-      props: {}
-    }
-  }
-
   return {
-    props: { nft },
+    props: { propsId: id },
   }
 }
-
 export default Nft
