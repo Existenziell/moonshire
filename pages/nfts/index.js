@@ -155,17 +155,17 @@ const Nfts = () => {
 
         <div className='mb-10 flex justify-between w-full border-b-2 border-detail dark:border-detail-dark'>
           <ul className='text-[30px] flex gap-20 transition-colors'>
-            <li className={view === 'all' || view === undefined ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
+            <li className={view === 'all' || view === undefined ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`}>
               <button onClick={navigate} name='all'>
                 All
               </button>
             </li>
-            <li className={view === 'available' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
+            <li className={view === 'available' ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`}>
               <button onClick={navigate} name='available'>
                 Available
               </button>
             </li>
-            <li className={view === 'sold' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
+            <li className={view === 'sold' ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`}>
               <button onClick={navigate} name='sold'>
                 Sold
               </button>

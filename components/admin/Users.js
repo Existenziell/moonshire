@@ -93,7 +93,7 @@ const Users = ({ users }) => {
 
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>
-          <tr className='font-bold text-xs border-b border-lines dark:border-lines-dark'>
+          <tr className='font-bold text-xs border-b-2 border-lines dark:border-lines-dark'>
             <th>Avatar</th>
             <th>Wallet</th>
             <th>Username</th>

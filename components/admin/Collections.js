@@ -86,7 +86,7 @@ const Collections = ({ collections }) => {
 
       <table className='text-sm table-auto w-full'>
         <thead className='text-left'>
-          <tr className='font-bold text-xs border-b border-lines dark:border-lines-dark'>
+          <tr className='font-bold text-xs border-b-2 border-lines dark:border-lines-dark'>
             <th>Cover</th>
             <th>Title</th>
             <th>Headline</th>
