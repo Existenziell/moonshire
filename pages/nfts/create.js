@@ -367,7 +367,7 @@ const CreateNft = ({ artists }) => {
               <ul id='assetsPhysical'>
                 <li id='templatePhysical' className='hidden'>
                   <input type="text" name='name' placeholder="Name" className='mr-4 inputPhysical' />
-                  <button onClick={removeRow} className=''>
+                  <button onClick={removeRow}>
                     <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
                   </button>
                 </li>
@@ -382,7 +382,7 @@ const CreateNft = ({ artists }) => {
                   <input type="text" name='name' placeholder="Name" className='inputDigital' />
                   <input type="text" name='link' placeholder="Link" className='inputDigital' />
                   <input type="text" name='format' placeholder="Format" className='w-28 inputDigital' />
-                  <button onClick={removeRow} className=''>
+                  <button onClick={removeRow}>
                     <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
                   </button>
                 </li>

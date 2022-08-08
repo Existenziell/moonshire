@@ -156,14 +156,14 @@ const NFT = ({ nft }) => {
             <ul id='assetsPhysical'>
               <li id='templatePhysical' className='hidden'>
                 <input type="text" name='name' placeholder="Name" className='mr-4 inputPhysical' />
-                <button onClick={removeRow} className=''>
+                <button onClick={removeRow}>
                   <XIcon className='w-5 h-5 hover:text-cta hover:bg-cta pointer-events-none' />
                 </button>
               </li>
               {initialPhysicalAssets.map((asset, idx) => (
                 <li key={asset.name + idx} className='mb-1'>
                   <input type="text" name='name' placeholder="Name" className='mr-4 inputPhysical' defaultValue={asset.name} />
-                  <button onClick={removeRow} className=''>
+                  <button onClick={removeRow}>
                     <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
                   </button>
                 </li>
@@ -179,7 +179,7 @@ const NFT = ({ nft }) => {
                 <input type="text" name='name' placeholder="Name" className='inputDigital' />
                 <input type="text" name='link' placeholder="Link" className='inputDigital' />
                 <input type="text" name='format' placeholder="Format" className='w-28 inputDigital' />
-                <button onClick={removeRow} className=''>
+                <button onClick={removeRow}>
                   <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
                 </button>
               </li>
@@ -189,7 +189,7 @@ const NFT = ({ nft }) => {
                   <input type="text" name='name' placeholder="Name" className='inputDigital' defaultValue={asset.name} />
                   <input type="text" name='link' placeholder="Link" className='inputDigital' defaultValue={asset.link} />
                   <input type="text" name='format' placeholder="Format" className='w-28 inputDigital' defaultValue={asset.format} />
-                  <button onClick={removeRow} className=''>
+                  <button onClick={removeRow}>
                     <XIcon className='w-5 h-5 hover:text-cta pointer-events-none' />
                   </button>
                 </li>

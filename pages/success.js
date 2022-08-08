@@ -49,7 +49,7 @@ export default function Success() {
           <div className='md:w-1/2'>
             <h1 className='mb-0'>{name}</h1>
             <hr className='my-8' />
-            <h1 className="">Congratulations</h1>
+            <h1>Congratulations</h1>
             <p>Transaction was successfully exectuted on the Blockchain.<br />
               You are now the owner of this NFT.
             </p>

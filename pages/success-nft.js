@@ -49,7 +49,7 @@ export default function SuccessNft() {
           <div className='md:w-1/2'>
             <h1 className='mb-0'>{name}</h1>
             <hr className='my-8' />
-            <h1 className="">Congratulations</h1>
+            <h1>Congratulations</h1>
             <p>
               NFT was minted successfully.
             </p>

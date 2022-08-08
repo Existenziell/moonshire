@@ -10,7 +10,7 @@ const MapNfts = ({ nfts }) => {
         <div key={i} className="flex flex-col justify-between w-min">
 
           <Link href={`/nfts/${nft.id}`}>
-            <a className="">
+            <a>
               <img
                 src={nft.image_url ? nft.image_url : nft.image}
                 alt='NFT Image'

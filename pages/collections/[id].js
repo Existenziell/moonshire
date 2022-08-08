@@ -30,7 +30,7 @@ const Collection = ({ collection, collectionNfts: nfts }) => {
             {nfts.map((nft, i) => (
               <div key={i} className="flex flex-col justify-between w-min mb-44">
                 <Link href={`/nfts/${nft.id}`}>
-                  <a className="">
+                  <a>
                     <img
                       src={nft.image_url ? nft.image_url : nft.image}
                       alt='NFT Image'
@@ -88,11 +88,11 @@ const Collection = ({ collection, collectionNfts: nfts }) => {
               </Link>
               :
               <div className='mt-4 flex flex-col items-center'>
-                <p className=''>
+                <p>
                   Unfortunately, you are not able to add NFTs to this collection,
                   since you&apos;re not the owner.
                 </p>
-                <p className=''> Instead you can:</p>
+                <p> Instead you can:</p>
                 <Link href='/collections/create'>
                   <a className='button button-detail mt-8 uppercase'>
                     Create collection

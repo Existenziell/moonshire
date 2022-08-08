@@ -60,7 +60,7 @@ export default function SuccessCollection() {
           <div className='md:w-1/2'>
             <h1 className='mb-0'>{title}</h1>
             <hr className='my-8' />
-            <h1 className="">Congratulations</h1>
+            <h1>Congratulations</h1>
             <p>Collection was created successfully.</p>
             <hr className='my-8' />
             <div className="flex gap-8 items-center">
