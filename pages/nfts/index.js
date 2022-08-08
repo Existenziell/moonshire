@@ -209,7 +209,7 @@ const Nfts = () => {
           :
           display === 'grid' ?
             filteredNfts.length > 0 ?
-              <div className="flex flex-wrap justify-evenly gap-20">
+              <div className="flex flex-wrap justify-between gap-20">
                 {filteredNfts.map((nft, i) => (
                   <div key={i} className="flex flex-col justify-between w-min mb-44">
                     <Link href={`/nfts/${nft.id}`}>

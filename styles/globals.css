@@ -47,11 +47,11 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  @apply text-[20px] md:text-[30px] mb-10;
+  @apply text-[20px] mb-10;
 }
 
 h2, h3, h4 {
-  @apply text-[20px] md:text-[30px] mb-5;
+  @apply text-[20px] mb-5;
 }
 
 hr {
