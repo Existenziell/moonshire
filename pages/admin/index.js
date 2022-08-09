@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
+import { useRealtime } from 'react-supabase'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import { getSignedUrl } from '../../lib/supabase/getSignedUrl'
 import { marketplaceAddress } from '../../config'
@@ -13,7 +14,6 @@ import Artists from '../../components/admin/Artists'
 import Users from '../../components/admin/Users'
 import SupaAuth from '../../components/SupaAuth'
 import useApp from "../../context/App"
-import { useRealtime } from 'react-supabase'
 
 const Admin = () => {
   const { currentUser, contractBalance } = useApp()
@@ -121,27 +121,27 @@ const Admin = () => {
         <div className='admin px-[20px] md:px-[40px] min-h-[calc(100vh-100px)]'>
           <div className='mb-10 border-b-2 border-detail dark:border-detail-dark'>
             <ul className='text-[30px] flex gap-20 transition-colors '>
-              <li className={view === 'collections' ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`}>
+              <li className={view === 'collections' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
                 <button onClick={navigate} name='collections'>
                   Collections
                 </button>
               </li>
-              <li className={view === 'artists' ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`}>
+              <li className={view === 'artists' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
                 <button onClick={navigate} name='artists'>
                   Artists
                 </button>
               </li>
-              <li className={view === 'nfts' ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`}>
+              <li className={view === 'nfts' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
                 <button onClick={navigate} name='nfts'>
                   NFTs
                 </button>
               </li>
-              <li className={view === 'users' ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`} >
+              <li className={view === 'users' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`} >
                 <button onClick={navigate} name='users'>
                   Users
                 </button>
               </li>
-              {/* <li className={view === 'market' ? `pb-4 transition-colors border-b border-white text-cta` : `hover:text-cta`} >
+              {/* <li className={view === 'market' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`} >
                 <button onClick={navigate} name='market'>
                   Market
                 </button>
