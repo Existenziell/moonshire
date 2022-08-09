@@ -1,27 +1,22 @@
 import { supabase } from '../../lib/supabase'
 import { useRealtime, useFilter } from 'react-supabase'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 import { shortenAddress } from '../../lib/shortenAddress'
 import { PulseLoader } from 'react-spinners'
 import Head from 'next/head'
 import Link from 'next/link'
-import fromExponential from 'from-exponential'
 import Search from '../../components/Search'
+import fromExponential from 'from-exponential'
 
 const Nfts = () => {
   const [loading, setLoading] = useState(false)
   const [initialNfts, setInitialNfts] = useState()
-
-  const router = useRouter()
-  const { view: initialView, display: initialDisplay, sortBy: initialSort, asc } = router.query
-
-  const [search, setSearch] = useState('')
   const [filteredNfts, setFilteredNfts] = useState()
-  const [view, setView] = useState(initialView ? initialView : 'all')
-  const [display, setDisplay] = useState(initialDisplay ? initialDisplay : 'grid')
-  const [sortBy, setSortBy] = useState(initialSort ? initialSort : 'name')
-  const [sortAsc, setSortAsc] = useState(asc ? asc : true)
+  const [view, setView] = useState('all')
+  const [display, setDisplay] = useState('grid')
+  const [sortBy, setSortBy] = useState('name')
+  const [sortAsc, setSortAsc] = useState(true)
+  const [search, setSearch] = useState('')
 
   let [{ data: nfts }] = useRealtime('nfts', {
     select: {
@@ -51,24 +46,9 @@ const Nfts = () => {
     setFilteredNfts(nfts)
   }, [nfts])
 
-  useEffect(() => {
-    if (view && initialNfts) filterNfts(view)
-  }, [view, initialNfts])
-
-  useEffect(() => {
-    if (initialDisplay) setDisplay(initialDisplay)
-  }, [initialDisplay])
-
-  useEffect(() => {
-    if (initialView) setView(initialView)
-  }, [initialView])
-
   const navigate = (e) => {
     filterNfts(e.target.name)
-    router.push({
-      pathname: '/nfts',
-      query: { ...router.query, view: e.target.name }
-    }, undefined, {})
+    setView(e.target.name)
   }
 
   const filterNfts = (view) => {
@@ -102,20 +82,11 @@ const Nfts = () => {
       setSortBy(sort)
       fetchNfts(sort, sortAsc)
     }
-
     resetSearch()
-    router.push({
-      pathname: '/nfts',
-      query: { ...router.query, sortBy: sort, asc: sortAsc }
-    }, undefined, {})
   }
 
   const manageDisplay = (display) => {
     setDisplay(display)
-    router.push({
-      pathname: '/nfts',
-      query: { ...router.query, display: display }
-    }, undefined, {})
   }
 
   /* eslint-disable react-hooks/exhaustive-deps */

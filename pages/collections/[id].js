@@ -11,23 +11,18 @@ import { PulseLoader } from 'react-spinners'
 
 const Collection = ({ collection, collectionNfts: nfts }) => {
   const { currentUser } = useApp()
-  const [userOwnsCollection, setUserOwnsCollection] = useState(false)
   const [loading, setLoading] = useState(false)
   const [initialNfts, setInitialNfts] = useState()
-
-  const router = useRouter()
-  const { view: initialView, display: initialDisplay, sortBy: initialSort, asc } = router.query
-
-  const [search, setSearch] = useState('')
   const [filteredNfts, setFilteredNfts] = useState()
-  const [view, setView] = useState(initialView ? initialView : 'all')
-  const [display, setDisplay] = useState(initialDisplay ? initialDisplay : 'grid')
-  const [sortBy, setSortBy] = useState(initialSort ? initialSort : 'name')
-  const [sortAsc, setSortAsc] = useState(asc ? asc : true)
+  const [view, setView] = useState('all')
+  const [display, setDisplay] = useState('grid')
+  const [sortBy, setSortBy] = useState('name')
+  const [sortAsc, setSortAsc] = useState(true)
+  const [search, setSearch] = useState('')
+  const [userOwnsCollection, setUserOwnsCollection] = useState(false)
 
   useEffect(() => {
     if (currentUser) {
-      // Check if currentUser owns collection
       if (currentUser.id === collection.user) setUserOwnsCollection(true)
     }
   }, [currentUser])
@@ -54,18 +49,6 @@ const Collection = ({ collection, collectionNfts: nfts }) => {
     setInitialNfts(nfts)
     setFilteredNfts(nfts)
   }, [nfts])
-
-  useEffect(() => {
-    if (view && initialNfts) filterNfts(view)
-  }, [view, initialNfts])
-
-  useEffect(() => {
-    if (initialDisplay) setDisplay(initialDisplay)
-  }, [initialDisplay])
-
-  useEffect(() => {
-    if (initialView) setView(initialView)
-  }, [initialView])
 
   const navigate = (e) => {
     filterNfts(e.target.name)
