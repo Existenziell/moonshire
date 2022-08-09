@@ -19,6 +19,7 @@ import fetchListedItems from '../lib/contract/fetchListedItems'
 import getDbIdForTokenURI from '../lib/supabase/getDbIdForTokenURI'
 import Search from '../components/Search'
 import fromExponential from 'from-exponential'
+import TabBar from '../components/TabBarProfile'
 
 const Profile = () => {
   const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify, signer } = useApp()
@@ -143,10 +144,6 @@ const Profile = () => {
     // resetSearch()
   }
 
-  const manageDisplay = (display) => {
-    setDisplay(display)
-  }
-
   const resetSearch = () => {
     // setFilteredNfts(initialNfts)
     setSearch('')
@@ -162,78 +159,7 @@ const Profile = () => {
       </Head>
 
       <div className='profile flex flex-col items-center px-[40px] w-full'>
-
-        <div className='mb-10 flex justify-between w-full border-b-2 border-detail dark:border-detail-dark'>
-          <ul className='text-[20px] flex gap-12 transition-colors'>
-            <li className={view === 'all' || view === undefined ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
-              <button onClick={navigate} name='all'>
-                All
-              </button>
-            </li>
-            <li className={view === 'owned' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
-              <button onClick={navigate} name='owned'>
-                Owned
-              </button>
-            </li>
-            <li className={view === 'listed' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
-              <button onClick={navigate} name='listed'>
-                Listed
-              </button>
-            </li>
-            <li className='hover:text-cta'>
-              <Link href='/settings'>
-                <a>Settings</a>
-              </Link>
-            </li>
-          </ul>
-
-          <div className='flex items-center gap-8 relative bottom-2'>
-            {/* <span className='text-detail dark:text-detail-dark'>{filteredNfts.length} results</span> */}
-
-            <button onClick={() => manageDisplay('grid')}>
-              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"
-                className={`w-6 hover:text-cta dark:hover:text-cta ${display === 'grid' ? `text-cta` : `text-brand-dark/20 dark:text-white`}`}>
-                <g transform="matrix(7.14286,0,0,7.14286,-6936.59,-905.458)" fill="currentColor">
-                  <g transform="matrix(0.304236,0,0,1.51041,683.691,-64.222)"><rect x="944.767" y="126.447" width="19.722" height="3.972" /></g>
-                  <g transform="matrix(0.304236,0,0,1.51041,691.691,-64.222)"><rect x="944.767" y="126.447" width="19.722" height="3.972" /></g>
-                  <g transform="matrix(0.304236,0,0,1.51041,683.691,-56.222)"><rect x="944.767" y="126.447" width="19.722" height="3.972" /></g>
-                  <g transform="matrix(0.304236,0,0,1.51041,691.691,-56.222)"><rect x="944.767" y="126.447" width="19.722" height="3.972" /></g>
-                </g>
-              </svg>
-            </button>
-            <button onClick={() => manageDisplay('list')}>
-              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"
-                className={`w-6 hover:text-cta dark:hover:text-cta ${display === 'list' ? `text-cta` : `text-brand-dark/20 dark:text-white`}`} >
-                <g transform="matrix(5,0,0,7.14286,-4980.62,-905.458)" fill="currentColor">
-                  <g transform="matrix(1.01412,0,0,0.503469,38.0171,63.1021)"><rect x="944.767" y="126.447" width="19.722" height="3.972" /></g>
-                  <g transform="matrix(1.01412,0,0,0.503469,38.0171,67.1021)"><rect x="944.767" y="126.447" width="19.722" height="3.972" /></g>
-                  <g transform="matrix(1.01412,0,0,0.503469,38.0171,71.1021)"><rect x="944.767" y="126.447" width="19.722" height="3.972" /></g>
-                  <g transform="matrix(1.01412,0,0,0.503469,38.0171,75.1021)"><rect x="944.767" y="126.447" width="19.722" height="3.972" /></g>
-                </g>
-              </svg>
-            </button>
-
-            <button className='uppercase hover:text-cta' onClick={() => sortByDatePrice('created_at')}>
-              <span className={`font-serif text-tiny w-8 inline-block ${sortBy === 'created_at' ? `text-cta` : `hover:text-cta dark:hover:text-cta`}`}>
-                {sortBy === 'created_at' ?
-                  sortAsc ? `Old` : `New`
-                  :
-                  `Date`
-                }
-              </span>
-            </button>
-            <button className='uppercase hover:text-cta' onClick={() => sortByDatePrice('price')}>
-              <span className={`font-serif text-tiny w-8 inline-block ${sortBy === 'price' ? `text-cta` : `hover:text-cta dark:hover:text-cta`}`}>
-                {sortBy === 'price' ?
-                  sortAsc ? `Low` : `High`
-                  :
-                  `Price`
-                }
-              </span>
-            </button>
-            <Search search={search} setSearch={setSearch} resetSearch={resetSearch} />
-          </div>
-        </div>
+        <TabBar view={view} navigate={navigate} setDisplay={setDisplay} display={display} sortBy={sortBy} sortAsc={sortAsc} sortByDatePrice={sortByDatePrice} search={search} setSearch={setSearch} resetSearch={resetSearch} />
 
         <div className="flex flex-wrap justify-between gap-20 mb-20 w-full">
 
