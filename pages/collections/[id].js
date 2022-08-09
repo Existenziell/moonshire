@@ -5,7 +5,6 @@ import { PulseLoader } from 'react-spinners'
 import useApp from "../../context/App"
 import Head from 'next/head'
 import Link from 'next/link'
-import Search from '../../components/Search'
 import fromExponential from 'from-exponential'
 import TabBar from '../../components/TabBarCollection'
 

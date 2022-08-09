@@ -5,7 +5,6 @@ import { shortenAddress } from '../../lib/shortenAddress'
 import { PulseLoader } from 'react-spinners'
 import Head from 'next/head'
 import Link from 'next/link'
-import Search from '../../components/Search'
 import fromExponential from 'from-exponential'
 import TabBar from '../../components/TabBarNfts'
 

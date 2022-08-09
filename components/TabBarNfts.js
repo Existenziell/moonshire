@@ -1,4 +1,3 @@
-import Link from "next/link"
 import Search from "./Search"
 
 const TabBar = ({ view, navigate, setDisplay, display, sortBy, sortAsc, sortByDatePrice, search, setSearch, resetSearch }) => {

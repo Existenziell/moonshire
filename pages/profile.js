@@ -17,7 +17,6 @@ import getUserCollections from '../lib/supabase/getUserCollections'
 import fetchMyNfts from '../lib/contract/fetchMyNfts'
 import fetchListedItems from '../lib/contract/fetchListedItems'
 import getDbIdForTokenURI from '../lib/supabase/getDbIdForTokenURI'
-import Search from '../components/Search'
 import fromExponential from 'from-exponential'
 import TabBar from '../components/TabBarProfile'
 
