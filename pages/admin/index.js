@@ -120,7 +120,7 @@ const Admin = () => {
       <AnimatePresence>
         <div className='admin px-[20px] md:px-[40px] min-h-[calc(100vh-100px)]'>
           <div className='mb-10 border-b-2 border-detail dark:border-detail-dark'>
-            <ul className='text-[30px] flex gap-20 transition-colors '>
+            <ul className='text-[20px] flex gap-12 transition-colors '>
               <li className={view === 'collections' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
                 <button onClick={navigate} name='collections'>
                   Collections

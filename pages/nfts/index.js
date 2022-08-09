@@ -152,7 +152,7 @@ const Nfts = () => {
       <div className='px-[20px] md:px-[40px] w-full min-h-[calc(100vh-100px)]'>
 
         <div className='mb-10 flex justify-between w-full border-b-2 border-detail dark:border-detail-dark'>
-          <ul className='text-[30px] flex gap-20 transition-colors'>
+          <ul className='text-[20px] flex gap-12 transition-colors'>
             <li className={view === 'all' || view === undefined ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
               <button onClick={navigate} name='all'>
                 All
@@ -170,7 +170,7 @@ const Nfts = () => {
             </li>
           </ul>
 
-          <div className='flex items-center justify-center gap-8'>
+          <div className='flex items-center gap-8 relative bottom-2'>
             {/* <span className='text-detail dark:text-detail-dark'>{filteredNfts.length} results</span> */}
 
             <button onClick={() => manageDisplay('grid')}>

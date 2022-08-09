@@ -91,7 +91,7 @@ const Artist = ({ artist }) => {
               onChange={setData} required
               defaultValue={name}
               placeholder='Name'
-              className='w-full text-[20px] md:text-[30px]'
+              className='w-full text-[20px]'
               disabled={loading}
             />
           </label>

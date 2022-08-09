@@ -84,7 +84,7 @@ const CreateCollection = () => {
               type='text' name='title' id='title'
               onChange={setData} required
               placeholder='Title'
-              className='block mt-2 w-full text-[20px] md:text-[30px]'
+              className='block mt-2 w-full text-[20px]'
               disabled={loading}
             />
           </label>

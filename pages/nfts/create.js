@@ -302,7 +302,7 @@ const CreateNft = ({ artists }) => {
                 type='text' name='name' id='name'
                 onChange={setData} required
                 placeholder='Name'
-                className='block mt-2 w-full text-[20px] md:text-[30px]'
+                className='block mt-2 w-full text-[20px]'
                 disabled={loading}
               />
             </label>

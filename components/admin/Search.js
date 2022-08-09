@@ -2,7 +2,7 @@ import { XIcon } from "@heroicons/react/solid"
 
 const Search = ({ search, setSearch, resetSearch }) => {
   return (
-    <div className='flex justify-end items-end absolute right-0 -top-[84px]'>
+    <div className='flex justify-end items-end absolute right-0 -top-[80px]'>
       <div className='relative'>
         <input
           type='search'

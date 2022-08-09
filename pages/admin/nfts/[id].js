@@ -198,7 +198,7 @@ const NFT = ({ nft }) => {
           </div>
 
           <div className='flex items-center gap-10 mt-10'>
-            <p className='my-0 text-[30px] leading-none h-full'>{fromExponential(price)} ETH</p>
+            <p className='my-0 text-[20px] leading-none h-full'>{fromExponential(price)} ETH</p>
             <div className='flex items-center gap-2'>
               <input type='submit' className='button button-cta' value='Save' disabled={loading} />
               <BackBtn href='/admin?view=nfts' />

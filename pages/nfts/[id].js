@@ -184,7 +184,7 @@ const Nft = ({ propsId }) => {
               </div>
               :
               <div className='flex items-center gap-10 mt-10'>
-                <p className='my-0 text-[30px] relative bottom-1'>{fromExponential(price)} ETH</p>
+                <p className='my-0 text-[20px] relative bottom-1'>{fromExponential(price)} ETH</p>
                 {!address ?
                   <button
                     onClick={connectWallet}
