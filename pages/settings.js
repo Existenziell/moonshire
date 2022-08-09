@@ -112,8 +112,7 @@ const Profile = () => {
           </ul>
         </div>
 
-
-        <div className='flex flex-col items-center md:flex-row gap-[40px] md:h-[calc(100vh-260px)] w-full'>
+        <div className='flex flex-col items-center md:flex-row gap-[40px] md:h-[calc(100vh-280px)] w-full'>
           <Avatar
             url={avatar_url}
             onUpload={(url) => handleUpload(url)}
