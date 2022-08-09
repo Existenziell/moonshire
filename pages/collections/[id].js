@@ -1,13 +1,12 @@
 import { supabase } from '../../lib/supabase'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { shortenAddress } from '../../lib/shortenAddress'
+import { PulseLoader } from 'react-spinners'
 import useApp from "../../context/App"
 import Head from 'next/head'
 import Link from 'next/link'
-import fromExponential from 'from-exponential'
-import { shortenAddress } from '../../lib/shortenAddress'
 import Search from '../../components/Search'
-import { PulseLoader } from 'react-spinners'
+import fromExponential from 'from-exponential'
 
 const Collection = ({ collection, collectionNfts: nfts }) => {
   const { currentUser } = useApp()
