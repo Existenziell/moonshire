@@ -5,7 +5,7 @@ import fromExponential from 'from-exponential'
 const MapNfts = ({ nfts }) => {
 
   return (
-    <div className="flex flex-wrap justify-evenly gap-36 mx-16 mb-20">
+    <div className="flex flex-wrap justify-evenly gap-20 mb-20">
       {nfts.map((nft, i) => (
         <div key={i} className="flex flex-col justify-between w-min">
 

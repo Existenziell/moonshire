@@ -72,7 +72,7 @@ const Nfts = () => {
   }
 
   const filterNfts = (view) => {
-    setLoading(true)
+    // setLoading(true)
     let nfts
     switch (view) {
       case 'all':
@@ -91,7 +91,7 @@ const Nfts = () => {
     resetSearch()
     setSortBy('name')
     setFilteredNfts(nfts)
-    setLoading(false)
+    // setLoading(false)
   }
 
   const sortByDatePrice = (sort) => {
@@ -137,7 +137,7 @@ const Nfts = () => {
     setSearch('')
   }
 
-  const truncate = (input) => input.length > 26 ? `${input.substring(0, 26)}...` : input
+  const truncate = (input) => input.length > 28 ? `${input.substring(0, 28)}...` : input
 
   if (!nfts) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
   if (!filteredNfts) return <div className='flex items-center justify-center mt-32'>No result</div>
@@ -219,12 +219,12 @@ const Nfts = () => {
         </div>
 
         {loading ?
-          <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+          <div className='flex items-center justify-center w-full mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
           :
           display === 'grid' ?
-            filteredNfts.length > 0 ?
-              <div className="flex flex-wrap justify-between gap-20">
-                {filteredNfts.map((nft, i) => (
+            filteredNfts?.length > 0 ?
+              <div className="flex flex-wrap justify-between gap-20 mt-20">
+                {filteredNfts?.map((nft, i) => (
                   <div key={i} className="flex flex-col justify-between w-min mb-44">
                     <Link href={`/nfts/${nft.id}`}>
                       <a>
