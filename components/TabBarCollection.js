@@ -47,7 +47,7 @@ const TabBar = ({ view, navigate, setDisplay, display, sortBy, sortAsc, sortByDa
           </svg>
         </button>
 
-        <button className='uppercase hover:text-cta' onClick={() => sortByDatePrice('created_at')}>
+        <button className='uppercase hover:text-cta relative bottom-1' onClick={() => sortByDatePrice('created_at')}>
           <span className={`font-serif text-tiny w-8 inline-block ${sortBy === 'created_at' ? `text-cta` : `hover:text-cta dark:hover:text-cta`}`}>
             {sortBy === 'created_at' ?
               sortAsc ? `Old` : `New`
@@ -56,7 +56,7 @@ const TabBar = ({ view, navigate, setDisplay, display, sortBy, sortAsc, sortByDa
             }
           </span>
         </button>
-        <button className='uppercase hover:text-cta' onClick={() => sortByDatePrice('price')}>
+        <button className='uppercase hover:text-cta relative bottom-1' onClick={() => sortByDatePrice('price')}>
           <span className={`font-serif text-tiny w-8 inline-block ${sortBy === 'price' ? `text-cta` : `hover:text-cta dark:hover:text-cta`}`}>
             {sortBy === 'price' ?
               sortAsc ? `Low` : `High`

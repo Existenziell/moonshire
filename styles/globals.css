@@ -237,5 +237,5 @@ input[type='search']::-webkit-search-cancel-button{
 
 .button-admin {
   @apply h-[40px] px-6 rounded-sm text-tiny font-serif uppercase
-    text-black bg-detail dark:bg-detail-dark dark:text-white hover:text-cta dark:hover:text-cta transition-all duration-100;  
+    text-white bg-detail dark:bg-detail-dark hover:text-cta dark:hover:text-cta transition-all duration-100;  
 }
