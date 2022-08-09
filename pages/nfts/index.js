@@ -137,7 +137,7 @@ const Nfts = () => {
     setSearch('')
   }
 
-  const truncate = (input) => input.length > 16 ? `${input.substring(0, 16)}...` : input
+  const truncate = (input) => input.length > 26 ? `${input.substring(0, 26)}...` : input
 
   if (!nfts) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
   if (!filteredNfts) return <div className='flex items-center justify-center mt-32'>No result</div>
@@ -262,8 +262,8 @@ const Nfts = () => {
                           </>
                         }
                       </div>
-                      <div className="flex justify-between gap-8 items-end">
-                        <h1 className="mt-4 mb-0">{fromExponential(nft.price)} ETH</h1>
+                      <div className="flex justify-between gap-8 items-center mt-6">
+                        <h1 className="mb-0">{fromExponential(nft.price)} ETH</h1>
                         <Link href={`/nfts/${nft.id}`}>
                           <a className='button button-cta uppercase'>
                             View
