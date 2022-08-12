@@ -56,9 +56,12 @@ const Profile = () => {
       setCreatedAt(created_at)
       setIsPremium(is_premium)
       // fetchUserCollections(id)
-      fetchUserNfts(id)
     }
   }, [currentUser])
+
+  useEffect(() => {
+    if (nfts && currentUser) fetchUserNfts(currentUser.id)
+  }, [nfts, currentUser])
 
   const filterNfts = (view) => {
     // setLoading(true)
@@ -102,8 +105,9 @@ const Profile = () => {
         if (found?.at(0)) nft.id = found.at(0).id
       }
       // Remove filter to also see deleted NFTs (deleted from DB)
-      const activeListed = listed.filter(l => (l.id))
-      setNftsListed(activeListed)
+      // const activeListed = listed.filter(l => (l.id))
+      // setNftsListed(activeListed)
+      setNftsListed(listed)
     }
 
     let owned = await fetchMyNfts(signer)
@@ -113,11 +117,16 @@ const Profile = () => {
         if (found?.at(0)) nft.id = found.at(0).id
       }
       // Remove filter to also see deleted NFTs (deleted from DB)
-      const activeOwned = owned.filter(o => (o.id))
-      setNftsOwned(activeOwned)
+      // const activeOwned = owned.filter(o => (o.id))
+      // setNftsOwned(activeOwned)
+      setNftsOwned(owned)
     }
     setFetching(false)
   }
+
+  useEffect(() => {
+    if (view && !fetching) filterNfts(view)
+  }, [fetching])
 
   if (!address) {
     return (

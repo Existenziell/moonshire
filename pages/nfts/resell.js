@@ -41,18 +41,21 @@ export default function ResellNft() {
     }
 
     setLoading(true)
-    const hash = await resellNft(id, price, signer)
-
-    if (hash) {
-      await setItemListedState(id, true)
-      await setItemPrice(id, tokenURI, price)
-      notify(`Item succesfully listed on the market for ${price} ETH`)
-      setLoading(false)
-      setTimeout(() => {
-        router.push('/profile')
-      }, 2000)
-    } else {
-      notify("Something went horribly wrong...")
+    try {
+      const hash = await resellNft(id, price, signer)
+      if (hash) {
+        await setItemListedState(id, true)
+        await setItemPrice(id, tokenURI, price)
+        notify(`Item succesfully listed on the market for ${price} ETH`)
+        setLoading(false)
+        setTimeout(() => {
+          router.push('/profile')
+        }, 2000)
+      } else {
+        notify("Something went horribly wrong...")
+      }
+    } catch (error) {
+      console.log(error.message)
     }
   }
 
