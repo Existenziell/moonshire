@@ -123,7 +123,7 @@ const Collections = ({ collections }) => {
 
           {filteredCollections?.map((collection) => (
             <tr key={collection.id + collection.title} className='relative'>
-              <td>
+              <td className='px-0'>
                 <Link href={`/collections/${collection.id}`}>
                   <a>
                     {collection.public_url ?

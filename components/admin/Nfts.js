@@ -129,7 +129,7 @@ const Nfts = ({ nfts }) => {
 
           {filteredNfts?.map((nft) => (
             <tr key={nft.id + nft.name} className='relative'>
-              <td>
+              <td className='px-0'>
                 <Link href={`/nfts/${nft.id}`}>
                   <a>
                     {nft.image_url ?
