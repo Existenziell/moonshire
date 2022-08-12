@@ -5,17 +5,17 @@ const TabBar = ({ view, navigate, setDisplay, display, sortBy, sortAsc, sortByDa
   return (
     <div className='mb-10 flex justify-between w-full border-b-2 border-detail dark:border-detail-dark'>
       <ul className='text-[20px] flex gap-12 transition-colors'>
-        <li className={view === 'all' || view === undefined ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
+        <li className={view === 'all' || view === undefined ? `relative top-[2px] pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`}>
           <button onClick={navigate} name='all'>
             All
           </button>
         </li>
-        <li className={view === 'owned' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
+        <li className={view === 'owned' ? `relative top-[2px] pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`}>
           <button onClick={navigate} name='owned'>
             Owned
           </button>
         </li>
-        <li className={view === 'listed' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
+        <li className={view === 'listed' ? `relative top-[2px] pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`}>
           <button onClick={navigate} name='listed'>
             Listed
           </button>

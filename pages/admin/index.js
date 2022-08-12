@@ -121,27 +121,27 @@ const Admin = () => {
         <div className='admin px-[20px] md:px-[40px] min-h-[calc(100vh-100px)]'>
           <div className='mb-10 border-b-2 border-detail dark:border-detail-dark'>
             <ul className='text-[20px] flex gap-12 transition-colors '>
-              <li className={view === 'collections' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
+              <li className={view === 'collections' ? `relative top-[2px] pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`}>
                 <button onClick={navigate} name='collections'>
                   Collections
                 </button>
               </li>
-              <li className={view === 'artists' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
+              <li className={view === 'artists' ? `relative top-[2px] pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`}>
                 <button onClick={navigate} name='artists'>
                   Artists
                 </button>
               </li>
-              <li className={view === 'nfts' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`}>
+              <li className={view === 'nfts' ? `relative top-[2px] pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`}>
                 <button onClick={navigate} name='nfts'>
                   NFTs
                 </button>
               </li>
-              <li className={view === 'users' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`} >
+              <li className={view === 'users' ? `relative top-[2px] pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`} >
                 <button onClick={navigate} name='users'>
                   Users
                 </button>
               </li>
-              {/* <li className={view === 'market' ? `pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta`} >
+              {/* <li className={view === 'market' ? `relative top-[2px] pb-4 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`} >
                 <button onClick={navigate} name='market'>
                   Market
                 </button>
