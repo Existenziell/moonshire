@@ -116,7 +116,7 @@ const Nfts = () => {
         <meta name='description' content="NFTs | Project Moonshire" />
       </Head>
 
-      <div className='px-[20px] md:px-[40px] w-full min-h-[calc(100vh-100px)]'>
+      <div className='px-[40px] w-full min-h-[calc(100vh-100px)]'>
         <TabBar view={view} navigate={navigate} setDisplay={setDisplay} display={display} sortBy={sortBy} sortAsc={sortAsc} sortByDatePrice={sortByDatePrice} search={search} setSearch={setSearch} resetSearch={resetSearch} />
 
         {loading ?
@@ -126,7 +126,7 @@ const Nfts = () => {
             filteredNfts?.length > 0 ?
               <div className="flex flex-wrap justify-between gap-20 mt-20">
                 {filteredNfts?.map((nft, i) => (
-                  <div key={i} className="flex flex-col justify-between w-min mb-44">
+                  <div key={i} className="flex flex-col justify-between mb-44 flex-grow flex-shrink">
                     <Link href={`/nfts/${nft.id}`}>
                       <a>
                         <img
@@ -135,7 +135,6 @@ const Nfts = () => {
                           className='w-full aspect-square object-cover min-w-[400px] shadow-2xl mb-6' />
                       </a>
                     </Link>
-
                     <div className="flex flex-col justify-between h-full">
                       <h1 className='mt-8 mb-6'>{truncate(nft.name)}</h1>
                       <div className="text-detail-dark dark:text-detail">
