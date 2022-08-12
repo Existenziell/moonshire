@@ -91,9 +91,9 @@ const Users = ({ users }) => {
     <div className='mb-20 w-full relative'>
       <Search search={search} setSearch={setSearch} resetSearch={resetSearch} />
 
-      <table className='text-sm table-auto w-full'>
+      <table className='table-auto w-full'>
         <thead className='text-left'>
-          <tr className='font-bold text-xs border-b-2 border-lines dark:border-lines-dark'>
+          <tr className='font-bold border-b-2 border-lines dark:border-lines-dark'>
             <th>Avatar</th>
             <th>Wallet</th>
             <th>Username</th>
