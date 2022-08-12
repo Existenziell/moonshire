@@ -21,7 +21,7 @@ export default function Avatar({ url, size, onUpload }) {
             alt="Avatar"
             className="shadow-2xl max-h-[calc(100vh-260px)] aspect-square bg-cover"
           />
-          <label className="absolute top-0 right-0 bottom-0 left-0 w-full h-full" htmlFor="single">
+          <label className="absolute top-0 right-0 bottom-0 left-0 w-full h-full hover:cursor-pointer" htmlFor="single">
             <input
               type="file"
               id="single"
