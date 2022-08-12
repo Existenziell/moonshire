@@ -87,7 +87,7 @@ const Artists = ({ artists }) => {
       <table className='table-auto w-full'>
         <thead className='text-left'>
           <tr className='font-bold border-b-2 border-lines dark:border-lines-dark'>
-            <th>Avatar</th>
+            <th className='relative -left-2'>Avatar</th>
             <th>Name</th>
             <th>Headline</th>
             <th>Description</th>

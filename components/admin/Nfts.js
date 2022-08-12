@@ -91,7 +91,7 @@ const Nfts = ({ nfts }) => {
       <table className='table-auto w-full'>
         <thead className='text-left'>
           <tr className='font-bold border-b-2 border-lines dark:border-lines-dark'>
-            <th>Media</th>
+            <th className='relative -left-2'>Media</th>
             <th>Name</th>
             <th>Description</th>
             <th>Artist</th>
