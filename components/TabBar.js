@@ -21,7 +21,7 @@ const TabBar = ({ links, extra, view, navigate, setDisplay, display, sortBy, sor
         }
       </ul>
 
-      <div className='flex items-center gap-8 relative bottom-2'>
+      <div className='hidden md:flex items-center gap-8 relative bottom-2'>
         {/* <span className='text-detail dark:text-detail-dark'>{filteredNfts.length} results</span> */}
 
         <button onClick={() => setDisplay('grid')}>
