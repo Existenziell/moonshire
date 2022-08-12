@@ -204,7 +204,7 @@ const Nfts = () => {
 
                 {filteredNfts?.map((nft) => (
                   <tr key={nft.id + nft.name} className='relative mb-[20px]'>
-                    <td>
+                    <td className='px-0'>
                       <Link href={`/nfts/${nft.id}`}>
                         <a>
                           {nft.image_url ?
@@ -232,7 +232,7 @@ const Nfts = () => {
                     </td>
                     <td className='whitespace-nowrap text-[20px]'>{fromExponential(nft.price)} ETH</td>
 
-                    <td className='text-right w-28 pr-0'>
+                    <td className='text-right pr-0'>
                       <div>
                         <button className='button button-cta'>
                           <Link href={`/nfts/${nft.id}`}>
