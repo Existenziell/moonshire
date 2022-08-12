@@ -104,7 +104,7 @@ const Nfts = () => {
     setSearch('')
   }
 
-  const truncate = (input) => input.length > 28 ? `${input.substring(0, 28)}...` : input
+  // const truncate = (input) => input.length > 28 ? `${input.substring(0, 28)}...` : input
 
   if (!nfts) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
   if (!filteredNfts) return <div className='flex items-center justify-center mt-32'>No result</div>
@@ -137,17 +137,18 @@ const Nfts = () => {
             filteredNfts?.length > 0 ?
               <div className="flex flex-wrap justify-between gap-20 mt-20">
                 {filteredNfts?.map((nft, i) => (
-                  <div key={i} className="flex flex-col justify-between mb-44 flex-grow flex-shrink">
+                  <div key={i} className="flex flex-col justify-between mb-20 flex-grow flex-shrink basis-0">
                     <Link href={`/nfts/${nft.id}`}>
                       <a>
                         <img
                           src={nft.image_url ? nft.image_url : nft.image}
                           alt='NFT Image'
-                          className='w-full aspect-square object-cover min-w-[400px] shadow-2xl mb-6' />
+                          className='aspect-square object-cover shadow-2xl' />
                       </a>
                     </Link>
+                    {/* <div className='min-w-max'>1</div> */}
                     <div className="flex flex-col justify-between h-full">
-                      <h1 className='mt-8 mb-6'>{truncate(nft.name)}</h1>
+                      <h1 className='mt-8 mb-6'>{(nft.name)}</h1>
                       <div className="text-detail-dark dark:text-detail">
                         {/* <p>{nft.description}</p> */}
                         <div className='mb-2'>
@@ -174,7 +175,7 @@ const Nfts = () => {
                         }
                       </div>
                       <div className="flex justify-between gap-8 items-center mt-6">
-                        <h1 className="mb-0">{fromExponential(nft.price)} ETH</h1>
+                        <h1 className="mb-0 whitespace-nowrap">{fromExponential(nft.price)} ETH</h1>
                         <Link href={`/nfts/${nft.id}`}>
                           <a className='button button-cta uppercase'>
                             View
