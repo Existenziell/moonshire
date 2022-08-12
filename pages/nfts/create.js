@@ -12,7 +12,6 @@ import logWeb3 from '../../lib/logWeb3'
 import FilePicker from '../../components/market/FilePicker'
 import uploadFileToIpfs from '../../lib/uploadFileToIpfs'
 import getUserCollections from '../../lib/supabase/getUserCollections'
-import { create as ipfsHttpClient } from 'ipfs-http-client'
 import { PlusIcon, XIcon } from '@heroicons/react/solid'
 import ipfsClient from '../../lib/ipfsClient'
 const projectGateway = process.env.NEXT_PUBLIC_INFURA_GATEWAY
