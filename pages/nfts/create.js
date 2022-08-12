@@ -14,19 +14,8 @@ import uploadFileToIpfs from '../../lib/uploadFileToIpfs'
 import getUserCollections from '../../lib/supabase/getUserCollections'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
 import { PlusIcon, XIcon } from '@heroicons/react/solid'
-
-const projectId = process.env.NEXT_PUBLIC_INFURA_ID
-const projectSecret = process.env.NEXT_PUBLIC_INFURA_SECRET
-const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
-
-const client = ipfsHttpClient({
-  host: 'ipfs.infura.io',
-  port: 5001,
-  protocol: 'https',
-  headers: {
-    authorization: auth,
-  },
-})
+import ipfsClient from '../../lib/ipfsClient'
+const projectGateway = process.env.NEXT_PUBLIC_INFURA_GATEWAY
 
 import NFTMarketplace from '../../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json'
 import { marketplaceAddress } from '../../config'
@@ -43,9 +32,7 @@ const CreateNft = ({ artists }) => {
   const [collectionName, setCollectionName] = useState('')
   const [formIsReady, setFormIsReady] = useState(false)
   const [styles, setStyles] = useState()
-
   const router = useRouter()
-  const ipfsUrl = ' https://moonshire.infura-ipfs.io/ipfs/'
 
   useEffect(() => {
     if (currentUser && address) {
@@ -77,8 +64,8 @@ const CreateNft = ({ artists }) => {
     })
 
     try {
-      const added = await client.add(data)
-      const url = ipfsUrl + added.path
+      const added = await ipfsClient.add(data)
+      const url = `${projectGateway}/ipfs/${added.path}`
       /* After file-upload to IPFS, return the Metadata-URL to use in the transaction */
       return url
     } catch (error) {
