@@ -99,23 +99,9 @@ const Collections = ({ collections }) => {
           </tr>
         </thead>
         <tbody>
-
-          {!fetchedCollections?.length &&
-            <tr className='p-4 dark:text-brand'>
-              <td colSpan={9}>
-                No collections found.
-                <Link href='/collections/create/'>
-                  <a className='link flex items-center gap-1 text-xs mt-6'>
-                    <PlusIcon className='w-4' />Add Collection
-                  </a>
-                </Link>
-              </td>
-            </tr>
-          }
-
           {!filteredCollections?.length &&
             <tr className='p-4 dark:text-brand'>
-              <td colSpan={9}>
+              <td colSpan={9} className='px-0'>
                 No results
               </td>
             </tr>
@@ -174,15 +160,13 @@ const Collections = ({ collections }) => {
         </tbody>
       </table>
 
-      {fetchedCollections.length > 0 &&
-        <div className='mt-8 w-max'>
-          <Link href='/collections/create/'>
-            <a className='link flex items-center gap-1 text-xs'>
-              <PlusIcon className='w-4' />Add Collection
-            </a>
-          </Link>
-        </div>
-      }
+      <div className='mt-8 w-max'>
+        <Link href='/collections/create/'>
+          <a className='link flex items-center gap-1 text-xs'>
+            <PlusIcon className='w-4' />Add Collection
+          </a>
+        </Link>
+      </div>
 
       {/* Delete collection */}
       {showDelete &&

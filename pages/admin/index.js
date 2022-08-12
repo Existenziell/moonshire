@@ -35,7 +35,7 @@ const Admin = () => {
   const { data: users } = resultUsers
 
   useEffect(() => {
-    setLastTokenId(nfts?.at(length - 1).tokenId)
+    setLastTokenId(nfts?.at(length - 1)?.tokenId)
   }, [nfts])
 
   const enrichCollections = async () => {

@@ -108,14 +108,9 @@ const Users = ({ users }) => {
           </tr>
         </thead>
         <tbody>
-
-          {!fetchedUsers?.length &&
-            <tr className='p-4 dark:text-brand'><td>No users found.</td></tr>
-          }
-
           {!filteredUsers?.length &&
             <tr className='p-4 dark:text-brand'>
-              <td colSpan={9}>
+              <td colSpan={9} className='px-0'>
                 No results
               </td>
             </tr>

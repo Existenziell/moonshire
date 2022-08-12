@@ -105,23 +105,9 @@ const Nfts = ({ nfts }) => {
           </tr>
         </thead>
         <tbody>
-
-          {!fetchedNfts?.length &&
-            <tr className='p-4 dark:text-brand'>
-              <td colSpan={9}>
-                No NFTs found.
-                <Link href='/nfts/create/'>
-                  <a className='link flex items-center gap-1 text-xs mt-6'>
-                    <PlusIcon className='w-4' />Add NFT
-                  </a>
-                </Link>
-              </td>
-            </tr>
-          }
-
           {!filteredNfts?.length &&
             <tr className='p-4 dark:text-brand'>
-              <td colSpan={9}>
+              <td colSpan={11} className='px-0'>
                 No results
               </td>
             </tr>
@@ -193,15 +179,14 @@ const Nfts = ({ nfts }) => {
           ))}
         </tbody>
       </table>
-      {fetchedNfts.length > 0 &&
-        <div className='mt-8 w-max'>
-          <Link href='/nfts/create/'>
-            <a className='link flex items-center gap-1 text-xs'>
-              <PlusIcon className='w-4' />Add NFT
-            </a>
-          </Link>
-        </div>
-      }
+
+      <div className='mt-8 w-max'>
+        <Link href='/nfts/create/'>
+          <a className='link flex items-center gap-1 text-xs'>
+            <PlusIcon className='w-4' />Add NFT
+          </a>
+        </Link>
+      </div>
 
       {/* Delete nft */}
       {showDelete &&

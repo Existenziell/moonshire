@@ -99,16 +99,9 @@ const Artists = ({ artists }) => {
           </tr>
         </thead>
         <tbody>
-
-          {!fetchedArtists?.length &&
-            <tr className='p-4 dark:text-brand'>
-              <td colSpan={9}>No artists found.</td>
-            </tr>
-          }
-
           {!filteredArtists?.length &&
             <tr className='p-4 dark:text-brand'>
-              <td colSpan={9}>
+              <td colSpan={9} className='px-0'>
                 No results
               </td>
             </tr>
@@ -166,7 +159,6 @@ const Artists = ({ artists }) => {
         </tbody>
       </table>
 
-      {/* Add artist */}
       <Link href='/admin/artists/create'>
         <a className='mt-6 link flex items-center gap-1 text-xs'>
           <PlusIcon className='w-4' />Add artist
