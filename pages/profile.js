@@ -18,7 +18,7 @@ import fetchMyNfts from '../lib/contract/fetchMyNfts'
 import fetchListedItems from '../lib/contract/fetchListedItems'
 import getDbIdForTokenURI from '../lib/supabase/getDbIdForTokenURI'
 import fromExponential from 'from-exponential'
-import TabBar from '../components/TabBarProfile'
+import TabBar from '../components/TabBar'
 
 const Profile = () => {
   const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify, signer } = useApp()
@@ -167,7 +167,20 @@ const Profile = () => {
       </Head>
 
       <div className='profile flex flex-col items-center px-[40px] w-full'>
-        <TabBar view={view} navigate={navigate} setDisplay={setDisplay} display={display} sortBy={sortBy} sortAsc={sortAsc} sortByDatePrice={sortByDatePrice} search={search} setSearch={setSearch} resetSearch={resetSearch} />
+        <TabBar
+          links={['all', 'owned', 'listed']}
+          extra={'settings'}
+          view={view}
+          navigate={navigate}
+          setDisplay={setDisplay}
+          display={display}
+          sortBy={sortBy}
+          sortAsc={sortAsc}
+          sortByDatePrice={sortByDatePrice}
+          search={search}
+          setSearch={setSearch}
+          resetSearch={resetSearch}
+        />
 
         <div className="flex flex-wrap justify-between gap-20 mb-20 w-full">
 

@@ -6,7 +6,7 @@ import { PulseLoader } from 'react-spinners'
 import Head from 'next/head'
 import Link from 'next/link'
 import fromExponential from 'from-exponential'
-import TabBar from '../../components/TabBarNfts'
+import TabBar from '../../components/TabBar'
 
 const Nfts = () => {
   const [loading, setLoading] = useState(false)
@@ -117,7 +117,18 @@ const Nfts = () => {
       </Head>
 
       <div className='px-[40px] w-full min-h-[calc(100vh-100px)]'>
-        <TabBar view={view} navigate={navigate} setDisplay={setDisplay} display={display} sortBy={sortBy} sortAsc={sortAsc} sortByDatePrice={sortByDatePrice} search={search} setSearch={setSearch} resetSearch={resetSearch} />
+        <TabBar links={['all', 'available', 'sold']}
+          view={view}
+          navigate={navigate}
+          setDisplay={setDisplay}
+          display={display}
+          sortBy={sortBy}
+          sortAsc={sortAsc}
+          sortByDatePrice={sortByDatePrice}
+          search={search}
+          setSearch={setSearch}
+          resetSearch={resetSearch}
+        />
 
         {loading ?
           <div className='flex items-center justify-center w-full mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>

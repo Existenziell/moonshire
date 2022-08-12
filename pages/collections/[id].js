@@ -6,7 +6,7 @@ import useApp from "../../context/App"
 import Head from 'next/head'
 import Link from 'next/link'
 import fromExponential from 'from-exponential'
-import TabBar from '../../components/TabBarCollection'
+import TabBar from '../../components/TabBar'
 
 const Collection = ({ collection, collectionNfts: nfts }) => {
   const { currentUser } = useApp()
@@ -119,7 +119,18 @@ const Collection = ({ collection, collectionNfts: nfts }) => {
       </Head>
 
       <div className='px-[20px] md:px-[40px] w-full min-h-[calc(100vh-100px)]'>
-        <TabBar view={view} navigate={navigate} setDisplay={setDisplay} display={display} sortBy={sortBy} sortAsc={sortAsc} sortByDatePrice={sortByDatePrice} search={search} setSearch={setSearch} resetSearch={resetSearch} />
+        <TabBar links={['all', 'available', 'sold']}
+          view={view}
+          navigate={navigate}
+          setDisplay={setDisplay}
+          display={display}
+          sortBy={sortBy}
+          sortAsc={sortAsc}
+          sortByDatePrice={sortByDatePrice}
+          search={search}
+          setSearch={setSearch}
+          resetSearch={resetSearch}
+        />
 
         {nfts.length > 0 ?
           <div className="flex flex-wrap justify-between gap-20 mb-20">
