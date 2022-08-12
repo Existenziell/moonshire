@@ -232,8 +232,8 @@ const Nfts = () => {
                     </td>
                     <td className='whitespace-nowrap text-[20px]'>{fromExponential(nft.price)} ETH</td>
 
-                    <td className='text-right pr-0'>
-                      <div>
+                    <td className='pr-0 pl-auto'>
+                      <div className='justify-end flex'>
                         <button className='button button-cta'>
                           <Link href={`/nfts/${nft.id}`}>
                             <a>View</a>
