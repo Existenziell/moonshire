@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { PulseLoader } from 'react-spinners'
-import { shortenAddress } from '../../lib/shortenAddress'
+// import { shortenAddress } from '../../lib/shortenAddress'
 import { PlusIcon, CheckIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 import useApp from "../../context/App"
@@ -97,7 +97,7 @@ const Nfts = ({ nfts }) => {
             <th>Artist</th>
             <th>Collection</th>
             <th>Price</th>
-            <th>Wallet</th>
+            {/* <th>Wallet</th> */}
             <th className='text-right'>Listed</th>
             <th className='text-right'>Featured</th>
             <th className='text-right'>Edit</th>
@@ -131,13 +131,13 @@ const Nfts = ({ nfts }) => {
               <td className='whitespace-nowrap'>{nft.artists?.name}</td>
               <td className='whitespace-nowrap'>{truncate(nft.collections?.title)}</td>
               <td className='whitespace-nowrap text-cta'>{fromExponential(nft.price)} ETH</td>
-              <td className='whitespace-nowrap'>
+              {/* <td className='whitespace-nowrap'>
                 {nft.walletAddress ?
                   shortenAddress(nft.walletAddress)
                   :
                   `n/a`
                 }
-              </td>
+              </td> */}
               <td className='whitespace-nowrap text-right'>
                 {nft.listed ?
                   <CheckIcon className='w-6 ml-auto' />
