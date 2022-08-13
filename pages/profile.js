@@ -38,7 +38,7 @@ const Profile = () => {
   const [initialNfts, setInitialNfts] = useState()
   const [filteredNfts, setFilteredNfts] = useState()
   const [view, setView] = useState('all')
-  const [display, setDisplay] = useState('list')
+  const [display, setDisplay] = useState('grid')
   const [sortBy, setSortBy] = useState('name')
   const [sortAsc, setSortAsc] = useState(true)
   const [search, setSearch] = useState('')
