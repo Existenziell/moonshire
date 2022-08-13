@@ -1,6 +1,8 @@
 import Link from "next/link"
 // import { shortenAddress } from '../lib/shortenAddress'
 
+const truncate = (input) => input.length > 30 ? `${input.substring(0, 30)}...` : input
+
 const NftsGrid = ({ nfts }) => {
   return (
     <div className="flex flex-wrap justify-between gap-20 mt-20">
@@ -17,7 +19,7 @@ const NftsGrid = ({ nfts }) => {
           </Link>
 
           <div className="flex flex-col justify-between h-full">
-            <h1 className='mt-8 mb-6 h-16'>{(nft.name)}</h1>
+            <h1 className='mt-8 mb-6 h-16'>{truncate(nft.name)}</h1>
             <div className="text-detail-dark dark:text-detail">
               {/* <p>{nft.description}</p> */}
               <div className='mb-2'>
