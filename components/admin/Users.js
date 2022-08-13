@@ -118,7 +118,7 @@ const Users = ({ users }) => {
 
           {filteredUsers?.map((user) => (
             <tr key={user.id + user.username} className='relative'>
-              <td className='px-0'>
+              <td className='px-0 w-[80px]'>
                 {user.signed_url ?
                   <img src={user.signed_url} alt='User Image' className='w-[60px] shadow aspect-square bg-cover' />
                   :

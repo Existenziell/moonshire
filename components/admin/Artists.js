@@ -109,7 +109,7 @@ const Artists = ({ artists }) => {
 
           {filteredArtists?.map((artist) => (
             <tr key={artist.id + artist.name} className='relative'>
-              <td className='px-0'>
+              <td className='px-0 w-[80px]'>
                 <Link href={`/artists/${artist.id}`}>
                   <a>
                     {artist.avatar_url ?

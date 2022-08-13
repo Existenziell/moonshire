@@ -25,7 +25,7 @@ const NftsList = ({ nfts, display }) => {
 
         {nfts?.map((nft) => (
           <tr key={nft.id + nft.name} className='relative mb-[20px]'>
-            <td className='px-0'>
+            <td className='px-0 w-[90px]'>
               <Link href={`/nfts/${nft.id}`}>
                 <a>
                   <img src={nft.image_url ? nft.image_url : nft.image} alt='NFT Image' className='w-[60px] shadow aspect-square bg-cover' />
