@@ -24,7 +24,6 @@
     "canvas-confetti": "^1.5.1",
     "count-lines-of-code": "^1.0.6",
     "framer-motion": "^6.3.3",
-    "from-exponential": "^1.1.1",
     "ipfs-http-client": "^57.0.3",
     "next": "^12.2.0",
     "next-pwa": "^5.5.2",

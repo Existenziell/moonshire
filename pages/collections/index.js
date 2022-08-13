@@ -5,7 +5,6 @@ import { PulseLoader } from 'react-spinners'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
-import fromExponential from 'from-exponential'
 
 const Collections = () => {
   const [fetchedCollections, setFetchedCollections] = useState()
@@ -21,7 +20,7 @@ const Collections = () => {
     for (let collection of collections) {
       const url = await getPublicUrl('collections', collection.image_url)
       collection.public_url = url
-      let collectionPrice = '0.0'
+      let collectionPrice = 0.0
 
       if (nfts) {
         const collectionNfts = nfts.filter((n => n.collection === collection.id))
@@ -30,8 +29,7 @@ const Collections = () => {
           let collectionArtists = []
           for (let nft of collectionNfts) {
             collectionArtists.push(nft.artists.name)
-            let price = fromExponential(nft.price)
-            collectionPrice = parseFloat(collectionPrice) + parseFloat(price)
+            collectionPrice = +(collectionPrice + nft.price).toFixed(12)
           }
           /* eslint-disable no-undef */
           const uniqueCollectionArtists = await [...new Set(collectionArtists)]
@@ -53,8 +51,6 @@ const Collections = () => {
   useEffect(() => {
     if (collections && artists && nfts) enrichCollections()
   }, [collections, artists, nfts])
-
-  const truncate = (input) => input.length > 8 ? `${input.substring(0, 8)}` : input
 
   if (!fetchedCollections) return <div className='flex w-full justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
@@ -87,7 +83,7 @@ const Collections = () => {
                     </p>
                     <hr className='my-8' />
                     <div className='flex items-center gap-10'>
-                      <h1 className='mb-0'>{truncate(fromExponential(price))} ETH</h1>
+                      <h1 className='mb-0'>{price} ETH</h1>
                       <Link href={`/collections/${id}`}>
                         <a className='button button-cta mx-auto md:mx-0 uppercase whitespace-nowrap'>View Collection</a>
                       </Link>

@@ -126,7 +126,7 @@ const Users = ({ users }) => {
                 }
               </td>
 
-              <td className='whitespace-nowrap px-6'>{shortenAddress(user.walletAddress)}</td>
+              <td className='whitespace-nowrap'>{shortenAddress(user.walletAddress)}</td>
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td className='whitespace-nowrap'>{user.created_at.slice(0, 10)}</td>

@@ -6,7 +6,6 @@ import { PlusIcon, CheckIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 import useApp from "../../context/App"
 import Search from './Search'
-import fromExponential from 'from-exponential'
 
 const Nfts = ({ nfts }) => {
   const { notify } = useApp()
@@ -92,7 +91,7 @@ const Nfts = ({ nfts }) => {
         <thead className='text-left'>
           <tr className='font-bold border-b-2 border-lines dark:border-lines-dark'>
             <th className='relative -left-2'>Media</th>
-            <th>Name</th>
+            <th className='relative left-4'>Name</th>
             <th>Description</th>
             <th>Artist</th>
             <th>Collection</th>
@@ -126,11 +125,11 @@ const Nfts = ({ nfts }) => {
                   </a>
                 </Link>
               </td>
-              <td className='whitespace-nowrap'>{nft.name}</td>
+              <td className='pl-6'>{nft.name}</td>
               <td>{truncate(nft.description)}</td>
               <td className='whitespace-nowrap'>{nft.artists?.name}</td>
               <td className='whitespace-nowrap'>{truncate(nft.collections?.title)}</td>
-              <td className='whitespace-nowrap text-cta'>{fromExponential(nft.price)} ETH</td>
+              <td className='whitespace-nowrap text-cta'>{nft.price} ETH</td>
               {/* <td className='whitespace-nowrap'>
                 {nft.walletAddress ?
                   shortenAddress(nft.walletAddress)

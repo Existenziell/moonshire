@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
 import fetchMyNfts from '../../lib/contract/fetchMyNfts'
 import useApp from "../../context/App"
-import fromExponential from 'from-exponential'
 
 export default function MyNfts() {
   const [nfts, setNfts] = useState([])
@@ -48,7 +47,7 @@ export default function MyNfts() {
                       <p>by: {nft.artist}</p>
                       <p>in: {nft.collection}</p>
                     </div>
-                    <p className="text-xl">{fromExponential(nft.price)} Eth</p>
+                    <p className="text-xl">{nft.price} ETH</p>
                     <button
                       className="mt-4 button button-cta"
                       onClick={() => listNFT(nft)}

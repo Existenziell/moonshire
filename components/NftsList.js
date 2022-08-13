@@ -1,5 +1,4 @@
 import Link from "next/link"
-import fromExponential from 'from-exponential'
 
 const NftsList = ({ nfts }) => {
   return (
@@ -48,7 +47,7 @@ const NftsList = ({ nfts }) => {
                 </a>
               </Link>
             </td>
-            <td className='whitespace-nowrap text-[20px]'>{fromExponential(nft.price)} ETH</td>
+            <td className='whitespace-nowrap text-[20px]'>{nft.price} ETH</td>
 
             <td className='pr-0 pl-auto'>
               <div className='justify-end flex'>
