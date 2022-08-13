@@ -6,18 +6,18 @@ const NftsGrid = ({ nfts }) => {
   return (
     <div className="flex flex-wrap justify-between gap-20 mt-20">
       {nfts.map((nft, i) => (
-        <div key={i} className="flex flex-col justify-between mb-20 flex-grow flex-shrink basis-0">
+        <div key={i} className="flex flex-col justify-between mb-20 flex-grow flex-shrink basis-0 md:max-w-[calc(50vw)]">
           <Link href={`/nfts/${nft.id}`}>
             <a>
               <img
                 src={nft.image_url ? nft.image_url : nft.image}
                 alt='NFT Image'
-                className='aspect-square object-cover shadow-2xl' />
+                className='w-full aspect-square object-cover shadow-2xl' />
             </a>
           </Link>
 
           <div className="flex flex-col justify-between h-full">
-            <h1 className='mt-8 mb-6'>{(nft.name)}</h1>
+            <h1 className='mt-8 mb-6 h-16'>{(nft.name)}</h1>
             <div className="text-detail-dark dark:text-detail">
               {/* <p>{nft.description}</p> */}
               <div className='mb-2'>
@@ -36,12 +36,12 @@ const NftsGrid = ({ nfts }) => {
               </div>
               <hr />
 
-              {nft.owner && nft.seller &&
+              {/* {nft.owner && nft.seller &&
                 <>
                   <p className="mt-4">Owner: {shortenAddress(nft.owner)}</p>
                   <p>Seller: {shortenAddress(nft.seller)}</p>
                 </>
-              }
+              } */}
             </div>
             <div className="flex justify-between gap-8 items-center mt-6">
               <h1 className="mb-0 whitespace-nowrap">{fromExponential(nft.price)} ETH</h1>
