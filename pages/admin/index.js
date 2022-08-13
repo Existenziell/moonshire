@@ -100,6 +100,13 @@ const Admin = () => {
     if (selectedView) setView(selectedView)
   }, [selectedView])
 
+  // Make sure to load the images on first load too
+  useEffect(() => {
+    if (collections) {
+      enrichCollections()
+    }
+  }, [view, collections])
+
   const navigate = (e) => {
     router.push({
       pathname: '/admin',
