@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { shortenAddress } from '../lib/shortenAddress'
+// import { shortenAddress } from '../lib/shortenAddress'
 import fromExponential from 'from-exponential'
 
 const NftsGrid = ({ nfts }) => {
