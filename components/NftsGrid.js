@@ -2,44 +2,40 @@ import Link from "next/link"
 import { shortenAddress } from '../lib/shortenAddress'
 import fromExponential from 'from-exponential'
 
-const MapNfts = ({ nfts }) => {
-
+const NftsGrid = ({ nfts }) => {
   return (
-    <div className="flex flex-wrap justify-evenly gap-20 mb-20">
+    <div className="flex flex-wrap justify-between gap-20 mt-20">
       {nfts.map((nft, i) => (
-        <div key={i} className="flex flex-col justify-between w-min">
-
+        <div key={i} className="flex flex-col justify-between mb-20 flex-grow flex-shrink basis-0">
           <Link href={`/nfts/${nft.id}`}>
             <a>
               <img
                 src={nft.image_url ? nft.image_url : nft.image}
                 alt='NFT Image'
-                className='w-full aspect-square object-cover min-w-[300px] shadow-2xl mb-6' />
+                className='aspect-square object-cover shadow-2xl' />
             </a>
           </Link>
 
           <div className="flex flex-col justify-between h-full">
-            <h2 className="mb-6 h-full">{nft.name}</h2>
-            <hr />
+            <h1 className='mt-8 mb-6'>{(nft.name)}</h1>
             <div className="text-detail-dark dark:text-detail">
               {/* <p>{nft.description}</p> */}
-              <div className='mt-4 mb-1'>
-                Created by{` `}
-                <Link href={`/artists/${nft.artists.id}`}>
+              <div className='mb-2'>
+                <Link href={`/collections/${nft.collections?.id}`}>
+                  <a className='link-white'>
+                    {nft.collections?.title ? nft.collections.title : nft.collection}
+                  </a>
+                </Link>
+              </div>
+              <div className='mb-10'>
+                <Link href={`/artists/${nft.artists?.id}`}>
                   <a className='link-white'>
                     {nft.artists?.name ? nft.artists.name : nft.artist}
                   </a>
                 </Link>
               </div>
-              <div>
-                In{` `}
-                <Link href={`/collections/${nft.collections.id}`}>
-                  <a className='link-white'>
-                    {nft.collections?.title ? nft.collections.title : nft.collection}
-                  </a>
-                </Link>
+              <hr />
 
-              </div>
               {nft.owner && nft.seller &&
                 <>
                   <p className="mt-4">Owner: {shortenAddress(nft.owner)}</p>
@@ -47,8 +43,8 @@ const MapNfts = ({ nfts }) => {
                 </>
               }
             </div>
-            <div className="flex justify-between items-end">
-              <h1 className="mt-4 mb-0">{fromExponential(nft.price)} ETH</h1>
+            <div className="flex justify-between gap-8 items-center mt-6">
+              <h1 className="mb-0 whitespace-nowrap">{fromExponential(nft.price)} ETH</h1>
               <Link href={`/nfts/${nft.id}`}>
                 <a className='button button-cta uppercase'>
                   View
@@ -62,4 +58,4 @@ const MapNfts = ({ nfts }) => {
   )
 }
 
-export default MapNfts
+export default NftsGrid

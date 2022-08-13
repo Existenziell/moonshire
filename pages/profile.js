@@ -19,6 +19,8 @@ import fetchListedItems from '../lib/contract/fetchListedItems'
 import getDbIdForTokenURI from '../lib/supabase/getDbIdForTokenURI'
 import fromExponential from 'from-exponential'
 import TabBar from '../components/TabBar'
+import NftsGrid from '../components/NftsGrid'
+import NftsList from '../components/NftsList'
 
 const Profile = () => {
   const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify, signer } = useApp()
@@ -157,8 +159,6 @@ const Profile = () => {
     setSearch('')
   }
 
-  const truncate = (input) => input.length > 28 ? `${input.substring(0, 28)}...` : input
-
   return (
     <>
       <Head>
@@ -192,127 +192,11 @@ const Profile = () => {
             :
             display === 'grid' ?
               filteredNfts?.length > 0 ?
-                <div className="flex flex-wrap justify-between gap-20 mt-20 w-full">
-                  {filteredNfts?.map((nft, i) => (
-                    <div key={i} className="flex flex-col justify-between w-min mb-44">
-                      <Link href={`/nfts/${nft.id}`}>
-                        <a>
-                          <img
-                            src={nft.image_url ? nft.image_url : nft.image}
-                            alt='NFT Image'
-                            className='w-full aspect-square object-cover min-w-[400px] shadow-2xl mb-6' />
-                        </a>
-                      </Link>
-
-                      <div className="flex flex-col justify-between h-full">
-                        <h1 className='mt-8 mb-6'>{truncate(nft.name)}</h1>
-                        <div className="text-detail-dark dark:text-detail">
-                          {/* <p>{nft.description}</p> */}
-                          <div className='mb-2'>
-                            <Link href={`/collections/${nft.collections?.id}`}>
-                              <a className='link-white'>
-                                {nft.collections?.title ? nft.collections?.title : nft.collection}
-                              </a>
-                            </Link>
-                          </div>
-                          <div className='mb-10'>
-                            <Link href={`/artists/${nft.artists?.id}`}>
-                              <a className='link-white'>
-                                {nft.artists?.name ? nft.artists?.name : nft.artist}
-                              </a>
-                            </Link>
-                          </div>
-                          <hr />
-
-                          {nft.owner && nft.seller &&
-                            <>
-                              <p className="mt-4">Owner: {shortenAddress(nft.owner)}</p>
-                              <p>Seller: {shortenAddress(nft.seller)}</p>
-                            </>
-                          }
-                        </div>
-                        <div className="flex justify-between gap-8 items-center mt-6">
-                          <h1 className="mb-0">{fromExponential(nft.price)} ETH</h1>
-                          <Link href={`/nfts/${nft.id}`}>
-                            <a className='button button-cta uppercase'>
-                              View
-                            </a>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <NftsGrid nfts={filteredNfts} />
                 :
-                <div className='flex flex-col items-center justify-center w-full'>
-                  <h1 className="text-sm">No results</h1>
-                  {/* <Link href='/nfts/create'><a className='button button-detail'>Create Asset</a></Link> */}
-                </div>
+                <p className="flex flex-col items-center justify-center w-full">No results</p>
               :
-              <table className='table-auto w-full mt-20'>
-                <thead className='text-left'>
-                  <tr className='font-bold border-b-2 border-lines dark:border-lines-dark'>
-                    <th className='pb-8'>Media</th>
-                    <th className='pb-8'>Name</th>
-                    <th className='pb-8'>Artist</th>
-                    <th className='pb-8'>Collection</th>
-                    <th className='pb-8'>Price</th>
-                    <th className='pb-8'></th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                  {!filteredNfts?.length &&
-                    <tr className='p-4 dark:text-brand'>
-                      <td colSpan={9}>
-                        No results
-                      </td>
-                    </tr>
-                  }
-
-                  {filteredNfts?.map((nft) => (
-                    <tr key={nft.id + nft.name} className='relative mb-[20px]'>
-                      <td>
-                        <Link href={`/nfts/${nft.id}`}>
-                          <a>
-                            {nft.image ?
-                              <img src={nft.image} alt='NFT Image' className='w-[60px] shadow aspect-square bg-cover' />
-                              :
-                              "n/a"
-                            }
-                          </a>
-                        </Link>
-                      </td>
-                      <td className='whitespace-nowrap'>{nft.name}</td>
-                      <td className='whitespace-nowrap'>
-                        <Link href={`/artists/${nft.artists?.id}`}>
-                          <a className='link-white'>
-                            {nft.artists?.name ? nft.artists?.name : nft.artist}
-                          </a>
-                        </Link>
-                      </td>
-                      <td className='whitespace-nowrap'>
-                        <Link href={`/collections/${nft.collections?.id}`}>
-                          <a className='link-white'>
-                            {nft.collections?.title ? nft.collections?.title : nft.collection}
-                          </a>
-                        </Link>
-                      </td>
-                      <td className='whitespace-nowrap text-[20px]'>{fromExponential(nft.price)} ETH</td>
-
-                      <td className='text-right w-28 pr-0'>
-                        <div>
-                          <button className='button button-cta'>
-                            <Link href={`/nfts/${nft.id}`}>
-                              <a>View</a>
-                            </Link>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <NftsList nfts={filteredNfts} />
           }
         </div>
 
