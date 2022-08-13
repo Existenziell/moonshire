@@ -11,7 +11,8 @@ const NftsGrid = ({ nfts }) => {
               <img
                 src={nft.image_url ? nft.image_url : nft.image}
                 alt='NFT Image'
-                className='w-full aspect-square object-cover shadow-2xl' />
+                className='w-full aspect-square object-cover shadow-2xl bg-detail dark:bg-detail-dark'
+              />
             </a>
           </Link>
 
