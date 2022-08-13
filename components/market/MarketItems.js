@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
 import useApp from "../../context/App"
-import MapNfts from '../MapNfts'
 import fetchMarketItems from '../../lib/contract/fetchMarketItems'
 import getDbIdForTokenURI from '../../lib/supabase/getDbIdForTokenURI'
+import NftsGrid from '../NftsGrid'
 
 export default function MarketItems() {
   const [nfts, setNfts] = useState([])
@@ -41,7 +41,7 @@ export default function MarketItems() {
       <p className='text-xs mb-16'>Currently, Moonshire has {numberOfNfts} NFTs for sale.</p>
       <div className="flex justify-center">
         {nfts.length ?
-          <MapNfts nfts={nfts} />
+          <NftsGrid nfts={nfts} />
           :
           <h1 className="px-20 py-10 text-3xl">No items currently listed in marketplace.</h1>
         }
