@@ -7,7 +7,6 @@ import NftsGrid from '../NftsGrid'
 
 export default function MarketItems() {
   const [nfts, setNfts] = useState([])
-  const [numberOfNfts, setNumberOfNfts] = useState(null)
   const [loadingState, setLoadingState] = useState('not-loaded')
 
   const { address, signer, notify } = useApp()
@@ -29,7 +28,6 @@ export default function MarketItems() {
         nft.id = id
       }
       setNfts(nfts)
-      setNumberOfNfts(nfts.length)
       setLoadingState('loaded')
     }
   }
@@ -37,15 +35,12 @@ export default function MarketItems() {
   if (loadingState === 'not-loaded') return <div className='mt-12'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
 
   return (
-    <>
-      <p className='text-xs mb-16'>Currently, Moonshire has {numberOfNfts} NFTs for sale.</p>
-      <div className="flex justify-center">
-        {nfts.length ?
-          <NftsGrid nfts={nfts} display={display} />
-          :
-          <h1 className="px-20 py-10 text-3xl">No items currently listed in marketplace.</h1>
-        }
-      </div>
-    </>
+    <div className="flex justify-center">
+      {nfts.length ?
+        <NftsGrid nfts={nfts} display='grid' />
+        :
+        <h1 className="px-20 py-10 text-3xl">No items currently listed in marketplace.</h1>
+      }
+    </div>
   )
 }
