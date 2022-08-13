@@ -189,13 +189,13 @@ const Profile = () => {
               <p className='text-tiny'>Fetching assets from Blockchain...</p>
             </div>
             :
-            display === 'grid' ?
-              filteredNfts?.length > 0 ?
-                <NftsGrid nfts={filteredNfts} />
-                :
-                <p className="flex flex-col items-center justify-center w-full">No results</p>
+            filteredNfts?.length > 0 ?
+              <>
+                <NftsGrid nfts={filteredNfts} display={display} />
+                <NftsList nfts={filteredNfts} display={display} />
+              </>
               :
-              <NftsList nfts={filteredNfts} />
+              <p className="flex flex-col items-center justify-center w-full">No results</p>
           }
         </div>
 

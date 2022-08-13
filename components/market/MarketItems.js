@@ -41,7 +41,7 @@ export default function MarketItems() {
       <p className='text-xs mb-16'>Currently, Moonshire has {numberOfNfts} NFTs for sale.</p>
       <div className="flex justify-center">
         {nfts.length ?
-          <NftsGrid nfts={nfts} />
+          <NftsGrid nfts={nfts} display={display} />
           :
           <h1 className="px-20 py-10 text-3xl">No items currently listed in marketplace.</h1>
         }
