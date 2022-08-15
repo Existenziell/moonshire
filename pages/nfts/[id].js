@@ -114,7 +114,7 @@ const Nft = ({ propsId }) => {
 
         <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] w-full'>
           <div className='md:w-1/2'>
-            <img src={image_url} alt='Artist Image' className='aspect-square bg-cover max-h-[calc(100vh-260px)] shadow-2xl' />
+            <img src={image_url} alt='Artist Image' width={1000} height={1000} className='aspect-square bg-cover max-h-[calc(100vh-260px)] max-w-[calc(50vw-160px)] shadow-2xl' />
           </div>
 
           <div className='md:w-1/2'>

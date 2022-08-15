@@ -188,7 +188,7 @@ const Profile = () => {
           resetSearch={resetSearch}
         />
 
-        <div className="flex flex-wrap justify-between gap-20 mb-20 w-full">
+        <div className="flex flex-wrap justify-between gap-20 w-full">
 
           {showSettings ?
             <Settings />
