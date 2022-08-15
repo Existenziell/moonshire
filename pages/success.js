@@ -44,7 +44,7 @@ export default function Success() {
       <div className='px-[20px] md:px-[40px] md:h-[calc(100vh-200px)]'>
         <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] w-full'>
           <div className='md:w-1/2'>
-            <img src={image_url} alt='Artist Image' width={1000} height={1000} className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:md:max-w-[calc(50vw-160px)] shadow-2xl' />
+            <img src={image_url} alt='NFT Image' width={1000} height={1000} className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:md:max-w-[calc(50vw-160px)] shadow-2xl' />
           </div>
           <div className='md:w-1/2'>
             <h1 className='mb-0'>{name}</h1>
