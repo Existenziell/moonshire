@@ -51,7 +51,6 @@ const Nfts = () => {
   }
 
   const filterNfts = (view) => {
-    // setLoading(true)
     let nfts
     switch (view) {
       case 'all':
@@ -70,7 +69,6 @@ const Nfts = () => {
     resetSearch()
     setSortBy('name')
     setFilteredNfts(nfts)
-    // setLoading(false)
   }
 
   const sortByDatePrice = (sort) => {
@@ -132,7 +130,7 @@ const Nfts = () => {
           :
           filteredNfts?.length > 0 ?
             <>
-              <NftsGrid nfts={filteredNfts} display={display} />
+              <NftsGrid nfts={filteredNfts} display={display} view={view} />
               <NftsList nfts={filteredNfts} display={display} />
             </>
             :
