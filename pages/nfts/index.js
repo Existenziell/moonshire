@@ -127,16 +127,13 @@ const Nfts = () => {
           resetSearch={resetSearch}
         />
 
-        {loading ?
-          <div className='flex items-center justify-center w-full mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+        {filteredNfts?.length > 0 ?
+          <>
+            <NftsGrid nfts={filteredNfts} display={display} />
+            <NftsList nfts={filteredNfts} display={display} />
+          </>
           :
-          filteredNfts?.length > 0 ?
-            <>
-              <NftsGrid nfts={filteredNfts} display={display} />
-              <NftsList nfts={filteredNfts} display={display} />
-            </>
-            :
-            <p className="flex flex-col items-center justify-center w-full">No results</p>
+          <p className="flex flex-col items-center justify-center w-full">No results</p>
         }
       </div>
     </>
