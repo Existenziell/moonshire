@@ -125,7 +125,7 @@ const Admin = () => {
       </Head>
 
       <AnimatePresence>
-        <div className='admin px-[20px] md:px-[40px]'>
+        <div className='admin px-[20px] md:px-[40px] min-h-[calc(100vh-190px)]'>
           <div className='mb-10 border-b-2 border-detail dark:border-detail-dark'>
             <ul className='text-[20px] flex gap-12 transition-colors '>
               <li className={view === 'collections' ? `relative top-[2px] pb-6 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`}>

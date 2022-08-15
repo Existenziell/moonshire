@@ -111,7 +111,7 @@ const Nfts = () => {
         <meta name='description' content="NFTs | Project Moonshire" />
       </Head>
 
-      <div className='px-[40px] w-full'>
+      <div className='px-[40px] w-full min-h-[calc(100vh-190px)]'>
         <TabBar links={['all', 'available', 'sold']}
           view={view}
           navigate={navigate}
