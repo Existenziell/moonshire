@@ -10,9 +10,8 @@ const NftsGrid = ({ nfts, display, view }) => {
     if (view === 'all') items = nfts
     if (view === 'available') items = nfts.filter(n => { return n.listed === true })
     if (view === 'sold') items = nfts.filter(n => { return n.listed === false })
-    console.log("calc");
-    const template = document.getElementById('template')
 
+    const template = document.getElementById('template')
     const width = template?.offsetWidth + 20 // get current desired width of elements
     const elPerLine = Math.floor(window.innerWidth / width) // how many elements fit per line?
     const factor = items?.length / elPerLine // do we need to add elements?
@@ -62,7 +61,7 @@ const NftsGrid = ({ nfts, display, view }) => {
               </Link>
 
               <div className="flex flex-col justify-between h-full">
-                <h1 className='mt-8 mb-6 whitespace-nowrap w-full truncate'>{(nft.name)}</h1>
+                <h1 className='mt-8 mb-6 whitespace-nowrap w-full truncate'>{nft.name}</h1>
                 <div className="text-detail-dark dark:text-detail">
                   {/* <p>{nft.description}</p> */}
                   <div className='mb-2'>
