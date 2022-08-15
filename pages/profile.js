@@ -20,6 +20,7 @@ import getDbIdForTokenURI from '../lib/supabase/getDbIdForTokenURI'
 import TabBar from '../components/TabBar'
 import NftsGrid from '../components/NftsGrid'
 import NftsList from '../components/NftsList'
+import Settings from '../components/settings'
 
 const Profile = () => {
   const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify, signer } = useApp()
@@ -41,6 +42,7 @@ const Profile = () => {
   const [sortBy, setSortBy] = useState('name')
   const [sortAsc, setSortAsc] = useState(true)
   const [search, setSearch] = useState('')
+  const [showSettings, setShowSettings] = useState(false)
 
   let [{ data: nfts }] = useRealtime('nfts', {
     select: {
@@ -138,8 +140,14 @@ const Profile = () => {
   }
 
   const navigate = (e) => {
-    filterNfts(e.target.name)
-    setView(e.target.name)
+    const link = e.target.name
+    if (link === 'settings') {
+      setShowSettings(true)
+    } else {
+      filterNfts(link)
+      setShowSettings(false)
+    }
+    setView(link)
   }
 
   const sortByDatePrice = (sort) => {
@@ -167,8 +175,7 @@ const Profile = () => {
 
       <div className='profile flex flex-col items-center px-[40px] w-full'>
         <TabBar
-          links={['all', 'owned', 'listed']}
-          extra={'settings'}
+          links={['all', 'owned', 'listed', 'settings']}
           view={view}
           navigate={navigate}
           setDisplay={setDisplay}
@@ -183,19 +190,22 @@ const Profile = () => {
 
         <div className="flex flex-wrap justify-between gap-20 mb-20 w-full">
 
-          {fetching ?
-            <div className='flex flex-col gap-2 items-center justify-center mt-10 w-full'>
-              <PulseLoader color={'var(--color-cta)'} size={10} />
-              <p className='text-tiny'>Fetching assets from Blockchain...</p>
-            </div>
+          {showSettings ?
+            <Settings />
             :
-            filteredNfts?.length > 0 ?
-              <>
-                <NftsGrid nfts={filteredNfts} display={display} />
-                <NftsList nfts={filteredNfts} display={display} />
-              </>
+            fetching ?
+              <div className='flex flex-col gap-2 items-center justify-center mt-10 w-full'>
+                <PulseLoader color={'var(--color-cta)'} size={10} />
+                <p className='text-tiny'>Fetching assets from Blockchain...</p>
+              </div>
               :
-              <p className="flex flex-col items-center justify-center w-full">No results</p>
+              filteredNfts?.length > 0 ?
+                <>
+                  <NftsGrid nfts={filteredNfts} display={display} />
+                  <NftsList nfts={filteredNfts} display={display} />
+                </>
+                :
+                <p className="flex flex-col items-center justify-center w-full">No results</p>
           }
         </div>
 
