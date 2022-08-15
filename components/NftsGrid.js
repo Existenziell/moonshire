@@ -14,23 +14,25 @@ const NftsGrid = ({ nfts, display, view }) => {
     if (view === 'sold') items = nfts.filter(n => { return n.listed === false })
 
     const template = document.getElementById('template')
-    const width = template.offsetWidth + 20 // get current desired width of elements
-    const elPerLine = Math.floor(window.innerWidth / width) // how many elements fit per line?
-    const factor = items?.length / elPerLine // do we need to add elements?
-    const overhang = items?.length % elPerLine // how many elements are overhanging?
-    const missing = elPerLine - overhang // how many elements need to be added?
+    if (template) {
+      const width = template?.offsetWidth + 20 // get current desired width of elements
+      const elPerLine = Math.floor(window.innerWidth / width) // how many elements fit per line?
+      const factor = items?.length / elPerLine // do we need to add elements?
+      const overhang = items?.length % elPerLine // how many elements are overhanging?
+      const missing = elPerLine - overhang // how many elements need to be added?
 
-    // If there are NOT enough elements to fill all lines, add 'missing' amount
-    let elements = []
-    if (factor % 1 !== 0) { // Check if factor is NOT a full number => missing element(s)
-      for (let i = 0; i < missing; i++) {
-        elements.push({
-          "id": "fake",
-          "fake": true
-        })
+      // If there are NOT enough elements to fill all lines, add 'missing' amount
+      let elements = []
+      if (factor % 1 !== 0) { // Check if factor is NOT a full number => missing element(s)
+        for (let i = 0; i < missing; i++) {
+          elements.push({
+            "id": "fake",
+            "fake": true
+          })
+        }
       }
+      setFilteredNfts([...items, ...elements])
     }
-    setFilteredNfts([...items, ...elements])
   }
 
   useEffect(() => {
