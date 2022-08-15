@@ -70,10 +70,10 @@ const Collections = () => {
             return (
               <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-200px)] w-full mb-40'>
                 <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
-                  <div className='md:w-1/2'>
+                  <div className='md:w-1/2 w-full'>
                     <img src={public_url} alt='Cover Image' width={1000} height={1000} className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] bg-detail dark:bg-detail-dark' />
                   </div>
-                  <div className='md:w-1/2'>
+                  <div className='md:w-1/2 w-full'>
                     <h1 className='mb-0'>{title}</h1>
                     <hr className='my-8' />
                     <p className='mb-4'>{headline}</p>
@@ -82,10 +82,10 @@ const Collections = () => {
                       A selection of {numberOfNfts} exclusive artworks by <span className='link-white'>{uniqueArtists?.join(', ')}</span>
                     </p>
                     <hr className='my-8' />
-                    <div className='flex items-center gap-10'>
+                    <div className='flex items-center justify-between gap-10'>
                       <h1 className='mb-0'>{price} ETH</h1>
                       <Link href={`/collections/${id}`}>
-                        <a className='button button-cta mx-auto md:mx-0 uppercase whitespace-nowrap'>View Collection</a>
+                        <a className='button button-cta md:mx-0 uppercase whitespace-nowrap'>View Collection</a>
                       </Link>
                     </div>
                   </div>
