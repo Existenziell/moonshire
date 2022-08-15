@@ -37,7 +37,7 @@ export default function MarketItems() {
   return (
     <div className="flex justify-center">
       {nfts.length ?
-        <NftsGrid nfts={nfts} display='grid' view={view} />
+        <NftsGrid nfts={nfts} display='grid' view='all' />
         :
         <h1 className="px-20 py-10 text-3xl">No items currently listed in marketplace.</h1>
       }
