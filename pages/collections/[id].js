@@ -139,7 +139,7 @@ const Collection = ({ collection, collectionNfts: nfts }) => {
 
               filteredNfts?.length > 0 ?
                 <>
-                  <NftsGrid nfts={filteredNfts} display={display} />
+                  <NftsGrid nfts={filteredNfts} display={display} view={view} />
                   <NftsList nfts={filteredNfts} display={display} />
                 </>
                 :
