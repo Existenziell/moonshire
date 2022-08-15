@@ -85,7 +85,7 @@ const Users = ({ users }) => {
     }
   }
 
-  if (!fetchedUsers) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (!fetchedUsers) return <div className='flex justify-center items-center w-full h-[calc(100vh-300px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
 
   return (
     <div className='mb-20 w-full relative'>

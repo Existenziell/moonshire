@@ -100,7 +100,7 @@ const Nft = ({ propsId }) => {
     router.push(`/nfts/resell?id=${nft.tokenId}&tokenURI=${nft.tokenURI}`)
   }
 
-  if (!nft) return <div className='flex w-full justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (!nft) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   const { name, description, price, image_url, artists, listed, tokenURI, tokenId } = nft[0]
 
   return (
@@ -114,7 +114,7 @@ const Nft = ({ propsId }) => {
 
         <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] w-full'>
           <div className='md:w-1/2 w-full'>
-            <img src={image_url} alt='Artist Image' width={1000} height={1000} className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] shadow-2xl' />
+            <img src={image_url} alt='NFT Image' width={1000} height={1000} className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] shadow-2xl' />
           </div>
 
           <div className='md:w-1/2 w-full'>
@@ -177,7 +177,7 @@ const Nft = ({ propsId }) => {
 
             {loading ?
               <div className='flex flex-col items-start justify-center mt-8'>
-                <PulseLoader color={'var(--color-cta)'} size={20} />
+                <PulseLoader color={'var(--color-cta)'} size={10} />
                 <p className='text-xs my-4'>Please follow MetaMask prompt...</p>
                 <div id='mintingInfo' className='text-xs'></div>
               </div>

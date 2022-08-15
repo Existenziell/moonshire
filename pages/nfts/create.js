@@ -260,13 +260,7 @@ const CreateNft = ({ artists }) => {
     )
   }
 
-  if (fetching) {
-    return (
-      <div className='flex flex-col gap-2 items-center justify-center'>
-        <PulseLoader color={'var(--color-cta)'} size={20} />
-      </div>
-    )
-  }
+  if (fetching) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
 
   return (
     <>
@@ -387,7 +381,7 @@ const CreateNft = ({ artists }) => {
 
             {loading ?
               <div className='flex flex-col items-start justify-center mt-10'>
-                <PulseLoader color={'var(--color-cta)'} size={20} />
+                <PulseLoader color={'var(--color-cta)'} size={10} />
                 <p className='text-xs my-4'>Please follow MetaMask prompt...</p>
                 <div id='mintingInfo' className='text-xs'></div>
               </div>

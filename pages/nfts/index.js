@@ -101,7 +101,7 @@ const Nfts = () => {
     setSearch('')
   }
 
-  if (!nfts) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (!nfts) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!filteredNfts) return <div className='flex items-center justify-center mt-32'>No result</div>
 
   return (
@@ -111,7 +111,7 @@ const Nfts = () => {
         <meta name='description' content="NFTs | Project Moonshire" />
       </Head>
 
-      <div className='px-[40px] w-full min-h-[calc(100vh-100px)]'>
+      <div className='px-[40px] w-full'>
         <TabBar links={['all', 'available', 'sold']}
           view={view}
           navigate={navigate}
@@ -126,7 +126,7 @@ const Nfts = () => {
         />
 
         {loading ?
-          <div className='flex items-center justify-center w-full mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+          <div className='flex items-center justify-center w-full h-[calc(100vh-300px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
           :
           filteredNfts?.length > 0 ?
             <>

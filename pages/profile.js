@@ -194,9 +194,8 @@ const Profile = () => {
             <Settings />
             :
             fetching ?
-              <div className='flex flex-col gap-2 items-center justify-center mt-10 w-full'>
+              <div className='flex items-center justify-center w-full h-full'>
                 <PulseLoader color={'var(--color-cta)'} size={10} />
-                <p className='text-tiny'>Fetching assets from Blockchain...</p>
               </div>
               :
               filteredNfts?.length > 0 ?

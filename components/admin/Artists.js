@@ -78,7 +78,7 @@ const Artists = ({ artists }) => {
   }
   const truncate = (input) => input.length > 30 ? `${input.substring(0, 30)}...` : input
 
-  if (!fetchedArtists) return <div className='flex items-center justify-center'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (!fetchedArtists) return <div className='flex justify-center items-center w-full h-[calc(100vh-300px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
 
   return (
     <div className='mb-20 w-full relative'>

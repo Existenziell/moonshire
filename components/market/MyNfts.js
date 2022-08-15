@@ -26,7 +26,7 @@ export default function MyNfts() {
     router.push(`/nfts/resell?id=${nft.tokenId}&tokenURI=${nft.tokenURI}`)
   }
 
-  if (loadingState === 'not-loaded') return <div className='mt-8 mb-12'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (loadingState === 'not-loaded') return <div className='mt-8 mb-12'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
 
   return (
     <>

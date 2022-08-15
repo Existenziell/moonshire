@@ -121,7 +121,7 @@ const NFT = ({ nft }) => {
 
   const truncate = (input) => `${input.substring(0, 22)}...${input.substring(input.length - 12, input.length)}`
 
-  if (initializing) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (initializing) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!session) return <SupaAuth />
 
   return (
@@ -129,7 +129,7 @@ const NFT = ({ nft }) => {
       <form onSubmit={saveNft} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='edit-user flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
 
         <div className='md:w-1/2 h-full'>
-          <img src={image_url} alt='NFT Image' className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)]' />
+          <img src={image_url} alt='NFT Image' width={1000} height={1000} className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] shadow-2xl' />
         </div>
 
         <div className='md:w-1/2'>

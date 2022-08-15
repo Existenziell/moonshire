@@ -32,7 +32,7 @@ export default function MarketItems() {
     }
   }
 
-  if (loadingState === 'not-loaded') return <div className='mt-12'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (loadingState === 'not-loaded') return <div className='mt-12'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
 
   return (
     <div className="flex justify-center">

@@ -116,7 +116,7 @@ const Collection = ({ collection, collectionNfts: nfts }) => {
         <meta name='description' content={`${collection.title} | Collection | Project Moonshire`} />
       </Head>
 
-      <div className='px-[20px] md:px-[40px] w-full min-h-[calc(100vh-100px)]'>
+      <div className='px-[20px] md:px-[40px] w-full'>
         <TabBar links={['all', 'available', 'sold']}
           view={view}
           navigate={navigate}
@@ -134,7 +134,7 @@ const Collection = ({ collection, collectionNfts: nfts }) => {
           <div className="flex flex-wrap justify-between gap-20 mb-20">
 
             {loading ?
-              <div className='flex items-center justify-center w-full mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+              <div className='flex items-center justify-center w-full h-[calc(100vh-350px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
               :
 
               filteredNfts?.length > 0 ?

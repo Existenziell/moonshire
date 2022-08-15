@@ -63,7 +63,7 @@ const User = ({ user }) => {
     setStyles(tempStyles)
   }, [darkmode])
 
-  if (initializing) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (initializing) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!session) return <SupaAuth />
 
   return (

@@ -40,7 +40,7 @@ const Artists = () => {
     if (artists && nfts) enrichArtists()
   }, [artists, nfts])
 
-  if (!fetchedArtists) return <div className='flex w-full justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={20} /></div>
+  if (!fetchedArtists) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
 
   return (
     <>
