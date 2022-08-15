@@ -192,7 +192,7 @@ const Nft = ({ propsId }) => {
                   </button>
                   :
                   fetching ?
-                    <PulseLoader color={'white'} size={4} />
+                    <div className='h-[40px]'><PulseLoader color={'white'} size={4} /></div>
                     :
                     listed ?
                       sellerIsOwner ?
