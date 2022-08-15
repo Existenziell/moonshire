@@ -55,7 +55,7 @@ export default function SuccessCollection() {
       <div className='px-[20px] md:px-[40px] md:h-[calc(100vh-200px)]'>
         <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] w-full'>
           <div className='md:w-1/2'>
-            <img src={imageUrl} alt='Collection Image' className='aspect-square bg-cover max-h-[calc(100vh-260px)] shadow-2xl' />
+            <img src={imageUrl} alt='Collection Image' width={1000} height={1000} className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:md:max-w-[calc(50vw-160px)] shadow-2xl' />
           </div>
           <div className='md:w-1/2'>
             <h1 className='mb-0'>{title}</h1>
