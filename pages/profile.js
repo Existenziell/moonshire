@@ -20,7 +20,7 @@ import getDbIdForTokenURI from '../lib/supabase/getDbIdForTokenURI'
 import TabBar from '../components/TabBar'
 import NftsGrid from '../components/NftsGrid'
 import NftsList from '../components/NftsList'
-import Settings from '../components/settings'
+import Settings from '../components/Settings'
 
 const Profile = () => {
   const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify, signer } = useApp()
