@@ -44,7 +44,7 @@ const NftsGrid = ({ nfts, display, view }) => {
         <div
           key={i}
           id={(i === 0) ? `template` : ``}
-          className={`flex flex-col justify-between mb-20 w-full flex-grow flex-shrink basis-0 md:min-w-[350px]`}
+          className={`flex flex-col justify-between mb-20 w-full flex-grow flex-shrink basis-0 min-w-[350px]`}
         >
           {nft.fake ?
             <div className="h-full"></div>
@@ -61,7 +61,7 @@ const NftsGrid = ({ nfts, display, view }) => {
               </Link>
 
               <div className="flex flex-col justify-between h-full">
-                <h1 className='mt-8 mb-6 whitespace-nowrap w-full truncate'>{nft.name}</h1>
+                <h1 className='mt-8 mb-6 whitespace-nowrap w-full max-w-[300px] truncate'>{nft.name}</h1>
                 <div className="text-detail-dark dark:text-detail">
                   {/* <p>{nft.description}</p> */}
                   <div className='mb-2'>
