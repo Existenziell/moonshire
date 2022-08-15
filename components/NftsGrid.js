@@ -5,34 +5,31 @@ import { useEffect, useState } from "react"
 const NftsGrid = ({ nfts, display, view }) => {
   const [filteredNfts, setFilteredNfts] = useState(nfts)
 
-  const truncate = (input) => input.length > 30 ? `${input.substring(0, 30)}...` : input
-
   const calculateWidth = () => {
     let items
     if (view === 'all') items = nfts
     if (view === 'available') items = nfts.filter(n => { return n.listed === true })
     if (view === 'sold') items = nfts.filter(n => { return n.listed === false })
-
+    console.log("calc");
     const template = document.getElementById('template')
-    if (template) {
-      const width = template?.offsetWidth + 20 // get current desired width of elements
-      const elPerLine = Math.floor(window.innerWidth / width) // how many elements fit per line?
-      const factor = items?.length / elPerLine // do we need to add elements?
-      const overhang = items?.length % elPerLine // how many elements are overhanging?
-      const missing = elPerLine - overhang // how many elements need to be added?
 
-      // If there are NOT enough elements to fill all lines, add 'missing' amount
-      let elements = []
-      if (factor % 1 !== 0) { // Check if factor is NOT a full number => missing element(s)
-        for (let i = 0; i < missing; i++) {
-          elements.push({
-            "id": "fake",
-            "fake": true
-          })
-        }
+    const width = template?.offsetWidth + 20 // get current desired width of elements
+    const elPerLine = Math.floor(window.innerWidth / width) // how many elements fit per line?
+    const factor = items?.length / elPerLine // do we need to add elements?
+    const overhang = items?.length % elPerLine // how many elements are overhanging?
+    const missing = elPerLine - overhang // how many elements need to be added?
+
+    // If there are NOT enough elements to fill all lines, add 'missing' amount
+    let elements = []
+    if (factor % 1 !== 0) { // Check if factor is NOT a full number => missing element(s)
+      for (let i = 0; i < missing; i++) {
+        elements.push({
+          "id": "fake",
+          "fake": true
+        })
       }
-      setFilteredNfts([...items, ...elements])
     }
+    setFilteredNfts([...items, ...elements])
   }
 
   useEffect(() => {
@@ -40,7 +37,6 @@ const NftsGrid = ({ nfts, display, view }) => {
     window.addEventListener('resize', function () {
       calculateWidth()
     }, true)
-
   }, [nfts])
 
   return (
@@ -66,7 +62,7 @@ const NftsGrid = ({ nfts, display, view }) => {
               </Link>
 
               <div className="flex flex-col justify-between h-full">
-                <h1 className='mt-8 mb-6 h-16'>{truncate(nft.name)}</h1>
+                <h1 className='mt-8 mb-6 whitespace-nowrap w-full truncate'>{(nft.name)}</h1>
                 <div className="text-detail-dark dark:text-detail">
                   {/* <p>{nft.description}</p> */}
                   <div className='mb-2'>
