@@ -7,7 +7,7 @@ const NftsGrid = ({ nfts, display }) => {
   return (
     <div className={`${display === 'grid' ? `flex` : `hidden`} flex-wrap justify-between gap-20 mt-20`}>
       {nfts.map((nft, i) => (
-        <div key={i} className="flex flex-col justify-between mb-20 flex-grow flex-shrink basis-0 md:max-w-[calc(50vw)]">
+        <div key={i} className="flex flex-col justify-between mb-20 flex-grow flex-shrink basis-0 md:min-w-[250px] md:max-w-[calc(50vw)]">
           <Link href={`/nfts/${nft.id}`}>
             <a>
               <img
