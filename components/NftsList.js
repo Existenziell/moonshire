@@ -32,7 +32,7 @@ const NftsList = ({ nfts, display }) => {
                 </a>
               </Link>
             </td>
-            <td className='whitespace-nowrap'>{nft.name}</td>
+            <td className='whitespace-nowrap w-[250px] max-w-[250px] truncate overflow-hidden overflow-ellipsis pr-12'>{nft.name}</td>
             <td className='whitespace-nowrap'>
               <Link href={`/artists/${nft.artists?.id}`}>
                 <a className='link-white'>
