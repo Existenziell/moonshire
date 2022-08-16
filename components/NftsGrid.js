@@ -28,7 +28,7 @@ const NftsGrid = ({ nfts, display, view }) => {
         })
       }
     }
-    setFilteredNfts([...items, ...elements])
+    if (elements.length) setFilteredNfts([...items, ...elements])
   }
 
   useEffect(() => {
