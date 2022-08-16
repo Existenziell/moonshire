@@ -15,13 +15,13 @@ const Home = () => {
       <div className='h-screen md:snap-y md:snap-mandatory md:overflow-y-scroll'>
 
         <div className='md:snap-start md:snap-always flex items-center justify-center'>
-          <Link href='/collections/ceccc272-5f26-4f8d-9e51-03e527bf3df6'>
+          <Link href='/collections'>
             <a className='h-screen w-full bg-cover bg-center bg-home1'></a>
           </Link>
         </div>
 
         <div className='md:snap-start md:snap-always flex items-center justify-center'>
-          <Link href='/collections/3b0cfe15-8865-4086-a7d2-4c25744913f9'>
+          <Link href='/collections'>
             <a className='h-screen w-full bg-cover bg-center bg-home2'></a>
           </Link>
         </div>
@@ -33,7 +33,7 @@ const Home = () => {
         </div>
 
         <div className='md:snap-start md:snap-always flex items-center justify-center'>
-          <Link href='/collections/5c7e9370-d5f3-4887-9845-a8b046dc1471'>
+          <Link href='/collections'>
             <a className='h-screen w-full bg-cover bg-center bg-home4'></a>
           </Link>
         </div>
@@ -45,13 +45,13 @@ const Home = () => {
         </div>
 
         <div className='md:snap-start md:snap-always flex items-center justify-center'>
-          <Link href='/collections/36ee7dd8-8629-451c-a328-090e23074de7'>
+          <Link href='/collections'>
             <a className='h-screen w-full bg-cover bg-center bg-home6'></a>
           </Link>
         </div>
 
         <div className='md:snap-start md:snap-always flex items-center justify-center'>
-          <Link href='/collections/5c7e9370-d5f3-4887-9845-a8b046dc1471'>
+          <Link href='/collections'>
             <a className='h-screen w-full bg-cover bg-center bg-home7'></a>
           </Link>
         </div>

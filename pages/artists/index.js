@@ -1,12 +1,14 @@
-import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import { useRealtime, useFilter } from 'react-supabase'
-import Head from 'next/head'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
+import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
+import useApp from '../../context/App'
+import Head from 'next/head'
+import Link from 'next/link'
 
 const Artists = () => {
   const [fetchedArtists, setFetchedArtists] = useState()
+  const { currentUser } = useApp()
 
   let [{ data: nfts }] = useRealtime('nfts', { select: { columns: '*, artists(*), collections(*)' } })
   let [{ data: artists }] = useRealtime('artists', {
@@ -102,8 +104,13 @@ const Artists = () => {
           })}
         </div>
         :
-        <div>
-          <h1 className="text-3xl mx-auto w-max">No artists found</h1>
+        <div className='flex flex-col items-center justify-center w-full'>
+          <h1 className="mb-4 text-3xl">No artists found</h1>
+          {currentUser?.role === 1 &&
+            <Link href='/admin/artists/create'>
+              <a className='button button-detail'>Create Artist</a>
+            </Link>
+          }
         </div>
       }
     </>
