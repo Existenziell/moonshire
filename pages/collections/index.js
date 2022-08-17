@@ -28,12 +28,12 @@ const Collections = () => {
           collection.numberOfNfts = collectionNfts.length
           let collectionArtists = []
           for (let nft of collectionNfts) {
-            collectionArtists.push(nft.artists.name)
+            collectionArtists.push(nft.artists)
+            // Prevent JS floating point madness...
             collectionPrice = +(collectionPrice + nft.price).toFixed(12)
           }
-          /* eslint-disable no-undef */
-          const uniqueCollectionArtists = await [...new Set(collectionArtists)]
-          /* eslint-enable no-undef */
+          // Filter deep inside the array of objects for artist.name 
+          const uniqueCollectionArtists = collectionArtists.filter((artist, index, array) => array.findIndex(a => a.name == artist.name) == index);
           collection.uniqueArtists = uniqueCollectionArtists
         } else {
           collection.numberOfNfts = 0
@@ -88,9 +88,29 @@ const Collections = () => {
                     <hr className='my-8' />
                     <p className='mb-4'>{headline}</p>
                     <p className='my-4'>{description}</p>
-                    <p className='mb-4'>
-                      A selection of {numberOfNfts} exclusive artworks by <span className='link-white'>{uniqueArtists?.join(', ')}</span>
-                    </p>
+                    <div className='mb-4'>
+                      A selection of {numberOfNfts} exclusive artworks by{` `}
+                      {uniqueArtists.length === 1 ?
+                        <Link href={`/artists/${uniqueArtists.at(0).id}`}>
+                          <a className='link-white'>
+                            {uniqueArtists.at(0).name}
+                          </a>
+                        </Link>
+                        :
+                        uniqueArtists.map((artist, idx) => (
+                          <div className='inline-block' key={artist.id}>
+                            <Link key={artist.id} href={`/artists/${artist.id}`}>
+                              <a className='link-white'>
+                                {artist.name}
+                              </a>
+                            </Link>
+                            {uniqueArtists.length !== idx + 1 &&
+                              <span className=''>,{` `}</span>
+                            }
+                          </div>
+                        ))
+                      }
+                    </div>
                     <hr className='my-8' />
                     <div className='flex items-center justify-between gap-10'>
                       <h1 className='mb-0'>{price} ETH</h1>
