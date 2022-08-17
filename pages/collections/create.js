@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import UploadImage from '../../components/UploadImage'
 import useApp from "../../context/App"
+import Success from '../../components/Success'
 
 const CreateCollection = () => {
   const { address, signer, currentUser, notify } = useApp()
@@ -11,6 +12,7 @@ const CreateCollection = () => {
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
   const [formIsReady, setFormIsReady] = useState(false)
+  const [success, setSuccess] = useState(false)
   const router = useRouter()
 
   const setData = (e) => {
@@ -56,7 +58,10 @@ const CreateCollection = () => {
       notify("Collection created successfully!")
       setFormData(null)
       setLoading(false)
-      router.push(`/success-collection?id=${id}&title=${formData.title}&image_url=${imageUrl}`)
+      setSuccess(true)
+      setTimeout(() => {
+        router.push(`/collections/${id}`)
+      }, 3000)
     }
   }
 
@@ -75,54 +80,65 @@ const CreateCollection = () => {
             // size={200}
             onUpload={(url) => handleUpload(url)}
           />
-          {/* <img src={public_url} alt='Cover Image' className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)]' /> */}
         </div>
 
-        <div className='md:w-1/2'>
-          <label htmlFor='title' className='mt-12 w-full'>
-            <input
-              type='text' name='title' id='title'
-              onChange={setData} required
-              placeholder='Title'
-              className='block mt-2 w-full text-[20px]'
-              disabled={loading}
-            />
-          </label>
-          <hr className='my-8' />
+        <div className='md:w-1/2 w-full'>
+          {success ?
+            <>
+              <h1 className='mb-4'>Congratulations</h1>
+              <hr />
+              <p className='mt-4'>Collection was created successfully.</p>
+              <Success />
+            </>
+            :
+            <>
+              <label htmlFor='title' className='mt-12 w-full'>
+                <input
+                  type='text' name='title' id='title'
+                  onChange={setData} required
+                  placeholder='Title'
+                  className='block mt-2 w-full text-[20px]'
+                  disabled={loading}
+                />
+              </label>
+              <hr className='my-8' />
 
-          <label htmlFor='headline' className='mt-12 w-full'>
-            <input
-              type='text' name='headline' id='headline'
-              onChange={setData} required
-              placeholder='Headline'
-              className='block mt-2 w-full'
-              disabled={loading}
-            />
-          </label>
+              <label htmlFor='headline' className='mt-12 w-full'>
+                <input
+                  type='text' name='headline' id='headline'
+                  onChange={setData} required
+                  placeholder='Headline'
+                  className='block mt-2 w-full'
+                  disabled={loading}
+                />
+              </label>
 
-          <label htmlFor='description' className='mt-12 w-full'>
-            <textarea
-              name='description' id='description' rows={10}
-              onChange={setData} required
-              placeholder="Description"
-              className='block mt-2 w-full'
-              disabled={loading}
-            />
-          </label>
+              <label htmlFor='description' className='mt-12 w-full'>
+                <textarea
+                  name='description' id='description' rows={10}
+                  onChange={setData} required
+                  placeholder="Description"
+                  className='block mt-2 w-full'
+                  disabled={loading}
+                />
+              </label>
 
-          <label htmlFor='year' className='mt-12 w-full'>
-            <input
-              type='number' name='year' id='year'
-              onChange={setData} required
-              placeholder='Year of Appearance'
-              className='block mt-2 w-full'
-              disabled={loading}
-            />
-          </label>
+              <label htmlFor='year' className='mt-12 w-full'>
+                <input
+                  type='number' name='year' id='year'
+                  onChange={setData} required
+                  placeholder='Year of Appearance'
+                  className='block mt-2 w-full'
+                  disabled={loading}
+                />
+              </label>
 
-          <input type='submit' className='button button-cta mt-12 ml-4' value='Create' disabled={!formIsReady || loading} />
+              <input type='submit' className='button button-cta mt-12 ml-4' value='Create' disabled={!formIsReady || loading} />
+            </>
+          }
         </div>
       </form>
+
     </>
   )
 }

@@ -52,7 +52,7 @@ export default function ResellNft() {
           router.push('/profile')
         }, 2000)
       } else {
-        notify("Something went horribly wrong...")
+        notify("Something went wrong...")
       }
     } catch (error) {
       console.log(error.message)
