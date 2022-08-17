@@ -15,8 +15,8 @@ const Collection = ({ collection, collectionNfts: nfts }) => {
   const [filteredNfts, setFilteredNfts] = useState()
   const [view, setView] = useState('all')
   const [display, setDisplay] = useState('grid')
-  const [sortBy, setSortBy] = useState('name')
-  const [sortAsc, setSortAsc] = useState(true)
+  const [sortBy, setSortBy] = useState('created_at')
+  const [sortAsc, setSortAsc] = useState(false)
   const [search, setSearch] = useState('')
   const [userOwnsCollection, setUserOwnsCollection] = useState(false)
 
