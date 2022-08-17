@@ -71,13 +71,17 @@ const Collections = () => {
               <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-300px)] w-full mb-40'>
                 <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
                   <div className='md:w-1/2 w-full'>
-                    <img
-                      src={public_url}
-                      alt='Cover Image'
-                      width={1000}
-                      height={1000}
-                      className='md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] bg-detail dark:bg-detail-dark aspect-square shadow-2xl ' /
-                    >
+                    <Link href={`/collections/${id}`}>
+                      <a className='block w-max'>
+                        <img
+                          src={public_url}
+                          alt='Cover Image'
+                          width={1000}
+                          height={1000}
+                          className='md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] bg-detail dark:bg-detail-dark aspect-square shadow-2xl ' /
+                        >
+                      </a>
+                    </Link>
                   </div>
                   <div className='md:w-1/2 w-full'>
                     <h1 className='mb-0'>{title}</h1>
