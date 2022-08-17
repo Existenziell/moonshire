@@ -7,7 +7,7 @@ const NftsGrid = ({ nfts, display, view }) => {
 
   const calculateWidth = () => {
     let items
-    if (view === 'all') items = nfts
+    if (view === 'all' || view === 'listed' || view === 'owned') items = nfts
     if (view === 'available') items = nfts.filter(n => { return n.listed === true })
     if (view === 'sold') items = nfts.filter(n => { return n.listed === false })
 
@@ -28,7 +28,7 @@ const NftsGrid = ({ nfts, display, view }) => {
         })
       }
     }
-    if (elements.length) setFilteredNfts([...items, ...elements])
+    setFilteredNfts([...items, ...elements])
   }
 
   useEffect(() => {
@@ -65,18 +65,26 @@ const NftsGrid = ({ nfts, display, view }) => {
                 <div className="text-detail-dark dark:text-detail">
                   {/* <p>{nft.description}</p> */}
                   <div className='mb-2'>
-                    <Link href={`/collections/${nft.collections?.id}`}>
-                      <a className='link-white'>
-                        {nft.collections?.title ? nft.collections.title : nft.collection}
-                      </a>
-                    </Link>
+                    {nft.collections ?
+                      <Link href={`/collections/${nft.collections.id}`}>
+                        <a className='link-white'>
+                          {nft.collections.title}
+                        </a>
+                      </Link>
+                      :
+                      <p>{nft.collection}</p>
+                    }
                   </div>
                   <div className='mb-10'>
-                    <Link href={`/artists/${nft.artists?.id}`}>
-                      <a className='link-white'>
-                        {nft.artists?.name ? nft.artists.name : nft.artist}
-                      </a>
-                    </Link>
+                    {nft.artists ?
+                      <Link href={`/artists/${nft.artists.id}`}>
+                        <a className='link-white'>
+                          {nft.artists.name}
+                        </a>
+                      </Link>
+                      :
+                      <p>{nft.artist}</p>
+                    }
                   </div>
                   <hr />
 
