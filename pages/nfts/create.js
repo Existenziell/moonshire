@@ -53,6 +53,7 @@ const CreateNft = ({ artists }) => {
   }
 
   const uploadMetadataToIpfs = async (name, description, price) => {
+    console.log('uploadMetadataToIpfs: ', name, price);
     const data = JSON.stringify({
       name,
       description,
@@ -74,6 +75,7 @@ const CreateNft = ({ artists }) => {
   }
 
   const createNft = async (e) => {
+    console.log('createNFT');
     e.preventDefault()
 
     if (!checkChain(chainId)) {
@@ -92,12 +94,15 @@ const CreateNft = ({ artists }) => {
     logWeb3(`Uploading Metadata to IPFS...`)
     const url = await uploadMetadataToIpfs(name, description, price)
     if (url) {
+      console.log('url after uploadMetadataToIpfs: ', url)
       // logWeb3(`Successfully uploaded to ${url}`)
       listNFTForSale(url, price)
     }
   }
 
   const listNFTForSale = async (url, price) => {
+
+    console.log('listNFTForSale', url, price);
     logWeb3("Creating Asset on Blockchain...")
     const parsedPrice = ethers.utils.parseUnits(price, 'ether')
     let contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer)
@@ -112,6 +117,7 @@ const CreateNft = ({ artists }) => {
         tokenId = parseInt(tokenId)
         logWeb3(`Item ${tokenId} successfully created!`)
         logWeb3(`Transaction Hash: ${transaction.hash}`)
+        console.log('tokenId: ', tokenId)
         saveNftToDb(tokenId, url, price)
       })
     } catch (e) {
@@ -120,6 +126,7 @@ const CreateNft = ({ artists }) => {
   }
 
   const saveNftToDb = async (tokenId, url, price) => {
+    console.log('saveNftToDb');
     if (!tokenId || !url || !price) return
 
     // Create assets array
@@ -171,9 +178,9 @@ const CreateNft = ({ artists }) => {
       setLoading(false)
       setFormData(null)
       setSuccess(true)
-      setTimeout(() => {
-        router.push(`/profile`)
-      }, 3000)
+      // setTimeout(() => {
+      //   router.push(`/profile`)
+      // }, 3000)
     } else {
       notify("Something went wrong...")
     }
