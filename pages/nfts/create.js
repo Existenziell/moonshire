@@ -60,6 +60,7 @@ const CreateNft = ({ artists }) => {
       image: fileUrl,
       artist: artistName,
       collection: collectionName,
+      created_at: Date.now()
     })
 
     try {

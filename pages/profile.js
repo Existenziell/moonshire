@@ -39,8 +39,8 @@ const Profile = () => {
   const [filteredNfts, setFilteredNfts] = useState()
   const [view, setView] = useState('all')
   const [display, setDisplay] = useState('grid')
-  const [sortBy, setSortBy] = useState('name')
-  const [sortAsc, setSortAsc] = useState(true)
+  const [sortBy, setSortBy] = useState('created_at')
+  const [sortAsc, setSortAsc] = useState(false)
   const [search, setSearch] = useState('')
   const [showSettings, setShowSettings] = useState(false)
 
@@ -84,7 +84,8 @@ const Profile = () => {
         break
     }
     // resetSearch()
-    setSortBy('name')
+    // setSortBy('created_at')
+    // setSortAsc(false)
     setFilteredNfts(nfts)
     // setLoading(false)
   }
