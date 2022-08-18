@@ -95,6 +95,7 @@ const Nfts = ({ nfts }) => {
             <th>Description</th>
             <th>Artist</th>
             <th>Collection</th>
+            <th>TokenId</th>
             <th>Price</th>
             {/* <th>Wallet</th> */}
             <th className='text-right'>Listed</th>
@@ -129,6 +130,7 @@ const Nfts = ({ nfts }) => {
               <td>{truncate(nft.description)}</td>
               <td className='whitespace-nowrap'>{nft.artists?.name}</td>
               <td className='whitespace-nowrap'>{truncate(nft.collections?.title)}</td>
+              <td>{nft.tokenId}</td>
               <td className='whitespace-nowrap text-cta'>{nft.price} ETH</td>
               {/* <td className='whitespace-nowrap'>
                 {nft.walletAddress ?
