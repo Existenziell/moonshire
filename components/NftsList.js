@@ -24,7 +24,7 @@ const NftsList = ({ nfts, display }) => {
         }
 
         {nfts?.map((nft) => (
-          <tr key={nft.id + nft.name} className='relative mb-[20px]'>
+          <tr key={nft.tokenId + nft.name} className='relative mb-[20px]'>
             <td className='px-0 w-[90px]'>
               <Link href={`/nfts/${nft.id}`}>
                 <a>

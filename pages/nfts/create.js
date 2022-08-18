@@ -52,8 +52,7 @@ const CreateNft = ({ artists }) => {
     setFileUrl(url)
   }
 
-  const uploadMetadataToIpfs = async () => {
-    const { name, description, price } = formData
+  const uploadMetadataToIpfs = async (name, description, price) => {
     const data = JSON.stringify({
       name,
       description,
@@ -81,44 +80,46 @@ const CreateNft = ({ artists }) => {
       return
     }
 
-    const { name, description, price, artist, collection } = formData
+    let { name, description, price, artist, collection } = formData
     if (!name || !description || !price || !fileUrl || !artist || !collection) {
       notify("Something is missing...")
       return
     }
+    price = price.replaceAll(',', '.')
+
     setLoading(true)
     logWeb3(`Uploading Metadata to IPFS...`)
-    const url = await uploadMetadataToIpfs()
+    const url = await uploadMetadataToIpfs(name, description, price)
     if (url) {
       // logWeb3(`Successfully uploaded to ${url}`)
-      listNFTForSale(url)
+      listNFTForSale(url, price)
     }
   }
 
-  const listNFTForSale = async (url) => {
+  const listNFTForSale = async (url, price) => {
     logWeb3("Creating Asset on Blockchain...")
-    const price = ethers.utils.parseUnits(formData.price, 'ether')
+    const parsedPrice = ethers.utils.parseUnits(price, 'ether')
     let contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer)
     let listingPrice = await contract.getListingPrice()
     listingPrice = listingPrice.toString()
 
     try {
-      let transaction = await contract.createToken(url, price, { value: listingPrice })
+      let transaction = await contract.createToken(url, parsedPrice, { value: listingPrice })
       await transaction.wait()
       logWeb3("Looking good, waiting for Blockchain confirmation")
       contract.on("MarketItemCreated", (tokenId) => {
         tokenId = parseInt(tokenId)
         logWeb3(`Item ${tokenId} successfully created!`)
-        logWeb3(`CreateToken Transaction Hash: ${transaction.hash}`)
-        saveNftToDb(tokenId, url)
+        logWeb3(`Transaction Hash: ${transaction.hash}`)
+        saveNftToDb(tokenId, url, price)
       })
     } catch (e) {
       console.log(e)
     }
   }
 
-  const saveNftToDb = async (tokenId, url) => {
-    if (!tokenId || !url) return
+  const saveNftToDb = async (tokenId, url, price) => {
+    if (!tokenId || !url || !price) return
 
     // Create assets array
     let assets = []
@@ -149,10 +150,14 @@ const CreateNft = ({ artists }) => {
     const { error } = await supabase
       .from('nfts')
       .insert([{
-        ...formData,
+        name: formData.name,
+        description: formData.description,
+        artist: formData.artist,
+        collection: formData.collection,
         image_url: fileUrl,
         tokenId,
         tokenURI: url,
+        price,
         walletAddress: address,
         user: currentUser.id,
         listed: true,
