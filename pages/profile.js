@@ -186,6 +186,7 @@ const Profile = () => {
           search={search}
           setSearch={setSearch}
           resetSearch={resetSearch}
+          length={filteredNfts?.length}
         />
 
         <div className="flex flex-wrap justify-between gap-20 w-full">

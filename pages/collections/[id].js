@@ -128,6 +128,7 @@ const Collection = ({ collection, collectionNfts: nfts }) => {
           search={search}
           setSearch={setSearch}
           resetSearch={resetSearch}
+          length={filteredNfts?.length}
         />
 
         {nfts.length > 0 ?

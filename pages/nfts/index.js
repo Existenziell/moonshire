@@ -123,6 +123,7 @@ const Nfts = () => {
           search={search}
           setSearch={setSearch}
           resetSearch={resetSearch}
+          length={filteredNfts?.length}
         />
 
         {loading ?

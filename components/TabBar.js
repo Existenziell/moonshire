@@ -1,7 +1,7 @@
 import Link from "next/link"
 import Search from "./Search"
 
-const TabBar = ({ links, extra, view, navigate, setDisplay, display, sortBy, sortAsc, sortByDatePrice, search, setSearch, resetSearch }) => {
+const TabBar = ({ links, extra, view, navigate, setDisplay, display, sortBy, sortAsc, sortByDatePrice, search, setSearch, resetSearch, length }) => {
   return (
     <div className='mb-10 flex justify-between w-full border-b-2 border-detail dark:border-detail-dark'>
       <ul className='text-[20px] flex gap-12 transition-colors'>
@@ -23,7 +23,7 @@ const TabBar = ({ links, extra, view, navigate, setDisplay, display, sortBy, sor
 
       {view !== 'settings' &&
         <div className='hidden md:flex items-center gap-8 relative bottom-2'>
-          {/* <span className='text-detail dark:text-detail-dark'>{filteredNfts.length} results</span> */}
+          <span className='text-brand-dark/20 dark:text-white'>{length} results</span>
 
           <button onClick={() => setDisplay('grid')}>
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"
