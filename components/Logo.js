@@ -11,7 +11,7 @@ const Logo = () => {
             <path d="M1578 3477 l-1578 -492 0 -1492 c0 -821 1 -1493 3 -1493 1 0 42 13 92 29 l90 29 3 1038 c1 579 6 1042 11 1047 5 5 676 217 1492 471 l1484 462 3 92 3 91 -58 -19 c-80 -27 -2882 -899 -2910 -906 l-23 -6 0 266 0 266 23 10 c24 10 2943 920 2952 920 3 0 5 41 5 90 0 50 -3 90 -7 89 -5 0 -718 -222 -1585 -492z" />
           </g>
         </svg> */}
-        <img src="/sf_logo.png" alt='Logo' className="h-[40px] w-[118px] text-white hover:text-cta" />
+        <img src="/sf_logo.png" alt='Logo' className="h-[40px] w-[118px] mb-[20px] text-white hover:text-cta" />
       </a>
     </Link>
   )
