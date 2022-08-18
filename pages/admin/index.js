@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
-import { useRealtime } from 'react-supabase'
+import { useRealtime, useFilter } from 'react-supabase'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import { getSignedUrl } from '../../lib/supabase/getSignedUrl'
 import { marketplaceAddress } from '../../config'
@@ -24,10 +24,27 @@ const Admin = () => {
   const router = useRouter()
   const { view: selectedView } = router.query
 
-  const [resultCollections] = useRealtime('collections')
-  const [resultArtists] = useRealtime('artists')
-  const [resultUsers] = useRealtime('users', { select: { columns: '*, roles(*)' } })
-  const [resultNfts] = useRealtime('nfts', { select: { columns: '*, artists(*), collections(*)' } })
+  const [resultCollections] = useRealtime('collections', {
+    select: { filter: useFilter((query) => query.order('created_at', { ascending: false })) }
+  })
+
+  const [resultArtists] = useRealtime('artists', {
+    select: { filter: useFilter((query) => query.order('created_at', { ascending: false })) }
+  })
+
+  const [resultUsers] = useRealtime('users', {
+    select: {
+      columns: '*, roles(*)',
+      filter: useFilter((query) => query.order('created_at', { ascending: false }))
+    }
+  })
+
+  const [resultNfts] = useRealtime('nfts', {
+    select: {
+      columns: '*, artists(*), collections(*)',
+      filter: useFilter((query) => query.order('created_at', { ascending: false }))
+    }
+  })
 
   const { data: collections } = resultCollections
   const { data: nfts } = resultNfts
