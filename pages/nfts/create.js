@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 import { supabase } from '../../lib/supabase'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
 import { PlusIcon, XIcon } from '@heroicons/react/solid'
 import { marketplaceAddress } from '../../config'
@@ -32,7 +32,7 @@ const CreateNft = ({ artists }) => {
   const [formIsReady, setFormIsReady] = useState(false)
   const [success, setSuccess] = useState(false)
   const [styles, setStyles] = useState()
-  const router = useRouter()
+  // const router = useRouter()
 
   useEffect(() => {
     if (currentUser && address) {
