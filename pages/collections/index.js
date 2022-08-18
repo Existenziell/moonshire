@@ -104,8 +104,8 @@ const Collections = () => {
                                 {artist.name}
                               </a>
                             </Link>
-                            {uniqueArtists.length !== idx + 1 &&
-                              <span className=''>,{` `}</span>
+                            {uniqueArtists.length > idx + 1 &&
+                              <span className='pr-2'>, {`  `}</span>
                             }
                           </div>
                         ))
