@@ -34,7 +34,7 @@ const Nft = ({ propsId }) => {
   const setAssets = async () => {
     let physicalAssets = []
     let digitalAssets = []
-    if (nft[0].assets) {
+    if (nft[0]?.assets) {
       for (let el of nft[0].assets) {
         el.type === 'digital' ?
           digitalAssets.push(el)
@@ -104,6 +104,8 @@ const Nft = ({ propsId }) => {
   }
 
   if (!nft) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (!nft[0]) return <h1 className="mb-4 text-3xl flex items-center justify-center">NFT not found</h1>
+
   const { name, description, price, image_url, artists, listed, tokenURI, tokenId } = nft[0]
 
   return (
