@@ -10,6 +10,7 @@ const Nav = () => {
     const router = useRouter()
 
     const urls = [
+        { name: 'About', href: '/about', title: 'about' },
         { name: 'NFTs', href: '/nfts', title: 'nfts' },
         { name: 'Artists', href: '/artists', title: 'Artists' },
         { name: 'Collections', href: '/collections', title: 'Collections' },
