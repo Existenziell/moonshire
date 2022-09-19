@@ -6,7 +6,6 @@ module.exports = {
   darkMode: 'class', // false or 'media' or 'class'
   theme: {
     extend: {
-      // https://tailwindcss.com/docs/font-family#customizing
       fontFamily: {
         sans: [
           'Atlas-Typewriter',
