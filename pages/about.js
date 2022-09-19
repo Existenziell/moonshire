@@ -17,7 +17,7 @@ const About = () => {
       <div className='md:max-w-6xl leading-relaxed mx-auto px-[20px] md:px-[40px]'>
         <h1 className='mx-auto w-max mt-20 mb-12 '>Who we are</h1>
         <div>
-          <div className='xs:flex gap-8 items-start justify-center'>
+          <div className='xs:flex gap-8 items-center justify-start'>
             <img src='/team/andi.png' alt='Andreas' width='200' className='flex-shrink-0' />
             <div>
               <h2>Andreas Rothaug <span className='text-sm'>*1986</span></h2>
@@ -30,7 +30,7 @@ const About = () => {
               </a>
             </div>
           </div>
-          <div className='xs:flex gap-8 items-start justify-center mt-16'>
+          <div className='xs:flex gap-8 items-center justify-start mt-16'>
             <img src='/team/joi.png' alt='Joi' width='200' className='flex-shrink-0' />
             <div>
               <h2>Joi Samuels <span className='text-sm'>*1970</span></h2>
@@ -43,7 +43,7 @@ const About = () => {
               </a>
             </div>
           </div>
-          <div className='xs:flex gap-8 items-start justify-center mt-16'>
+          <div className='xs:flex gap-8 items-center justify-start mt-16'>
             <img src='/team/chris.png' alt='Chris' width='200' className='flex-shrink-0' />
             <div>
               <h2>Christof Bauer <span className='text-sm'>*1980</span></h2>
