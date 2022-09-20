@@ -109,10 +109,9 @@ const CreateNft = ({ artists }) => {
     try {
       let transaction = await contract.createToken(url, parsedPrice, { value: listingPrice })
       const receipt = await transaction.wait()
-      // logWeb3("Looking good, waiting for Blockchain confirmation")
+      logWeb3("Looking good, waiting for Blockchain confirmation")
       if (receipt) {
         const tokenId = parseInt(receipt.events.at(3).args.tokenId)
-        // console.log("Event MarketItemCreated: ", tokenId);
         logWeb3(`Item ${tokenId} successfully created!`)
         logWeb3(`Transaction Hash: ${transaction.hash}`)
         saveNftToDb(tokenId, url, price)
