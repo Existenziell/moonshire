@@ -114,7 +114,7 @@ const CreateNft = ({ artists }) => {
         const tokenId = parseInt(receipt.events.at(3).args.tokenId)
         logWeb3(`Item ${tokenId} successfully created!`)
         logWeb3(`Transaction Hash: ${transaction.hash}`)
-        saveNftToDb(tokenId, url, price)
+        saveNftToDb(tokenId, url, price, transaction.hash)
       }
       // contract.on("MarketItemCreated", (tokenId) => {
       //   tokenId = parseInt(tokenId)
@@ -128,8 +128,8 @@ const CreateNft = ({ artists }) => {
     }
   }
 
-  const saveNftToDb = async (tokenId, url, price) => {
-    if (!tokenId || !url || !price) return
+  const saveNftToDb = async (tokenId, url, price, txHash) => {
+    if (!tokenId || !url || !price || !txHash) return
 
     // Create assets array
     let assets = []
@@ -175,7 +175,7 @@ const CreateNft = ({ artists }) => {
       }])
 
     if (!error) {
-      logEvent("LIST", currentUser.id, data.at(0)?.id, price, tokenId)
+      await logEvent("CREATE", txHash, address, currentUser.id, data.at(0)?.id, price, tokenId)
       logWeb3(`Successfully listed NFT for Sale!`)
       notify("NFT created successfully!")
       setLoading(false)

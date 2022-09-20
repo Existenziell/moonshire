@@ -6,6 +6,7 @@ import resellNft from '../../lib/contract/resellNft'
 import setItemPrice from '../../lib/supabase/setItemPrice'
 import setItemListedState from '../../lib/supabase/setItemListedState'
 import useApp from "../../context/App"
+import logEvent from '../../lib/logEvent'
 
 export default function ResellNft() {
   const { address, signer, notify } = useApp()
@@ -14,7 +15,7 @@ export default function ResellNft() {
   const { image, price } = formInput
 
   const router = useRouter()
-  const { id, tokenURI } = router.query
+  const { id, tokenId, tokenURI, userId } = router.query
 
   useEffect(() => {
     fetchNft()
@@ -42,10 +43,12 @@ export default function ResellNft() {
 
     setLoading(true)
     try {
-      const hash = await resellNft(id, price, signer)
+      const hash = await resellNft(tokenId, price, signer)
       if (hash) {
-        await setItemListedState(id, true)
-        await setItemPrice(id, tokenURI, price)
+        await setItemListedState(tokenId, true)
+        await setItemPrice(tokenId, tokenURI, price)
+        await logEvent("LIST", hash, address, userId, id, price, tokenId)
+
         notify(`Item succesfully listed on the market for ${price} ETH`)
         setLoading(false)
         setTimeout(() => {
@@ -55,7 +58,10 @@ export default function ResellNft() {
         notify("Something went wrong...")
       }
     } catch (error) {
-      console.log(error.message)
+      // console.log(error.message)
+      if (error.message.includes('ACTION_REJECTED')) {
+        setLoading(false)
+      }
     }
   }
 

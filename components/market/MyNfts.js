@@ -8,7 +8,7 @@ export default function MyNfts() {
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
   const router = useRouter()
-  const { address, signer } = useApp()
+  const { address, currentUser, signer } = useApp()
 
   useEffect(() => {
     if (signer) loadNfts()
@@ -23,7 +23,7 @@ export default function MyNfts() {
   }
 
   const listNFT = (nft) => {
-    router.push(`/nfts/resell?id=${nft.tokenId}&tokenURI=${nft.tokenURI}`)
+    router.push(`/nfts/resell?id=${nft.id}&tokenId=${nft.tokenId}&tokenURI=${nft.tokenURI}&userId=${currentUser.id}`)
   }
 
   if (loadingState === 'not-loaded') return <div className='mt-8 mb-12'><PulseLoader color={'var(--color-cta)'} size={10} /></div>

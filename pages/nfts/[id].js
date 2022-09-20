@@ -14,7 +14,7 @@ import Success from '../../components/Success'
 
 const Nft = ({ propsId }) => {
   const router = useRouter()
-  const { address, signer, notify, connectWallet } = useApp()
+  const { address, currentUser, signer, notify, connectWallet } = useApp()
   const [physicalAssets, setPhysicalAssets] = useState()
   const [digitalAssets, setDigitalAssets] = useState()
 
@@ -82,7 +82,7 @@ const Nft = ({ propsId }) => {
     logWeb3(`Initiating blockchain transfer...`)
 
     try {
-      const hash = await buyNft(nft.at(0), signer)
+      const hash = await buyNft(nft.at(0), signer, address, currentUser.id)
       if (hash) {
         notify("Transfer to your wallet was successful!")
         setHash(hash)
@@ -100,7 +100,7 @@ const Nft = ({ propsId }) => {
   }
 
   const listNFT = (nft) => {
-    router.push(`/nfts/resell?id=${nft.tokenId}&tokenURI=${nft.tokenURI}`)
+    router.push(`/nfts/resell?id=${nft.id}&tokenId=${nft.tokenId}&tokenURI=${nft.tokenURI}&userId=${currentUser.id}`)
   }
 
   if (!nft) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
