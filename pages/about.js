@@ -20,7 +20,7 @@ const About = () => {
           <div className='flex flex-col xs:flex-row gap-8 items-center text-center xs:text-left xs:justify-start'>
             <img src='/team/andi.png' alt='Andreas' width='200' />
             <div>
-              <h2>Andreas Rothaug <span className='text-sm'>*1986</span></h2>
+              <h2>Andreas Rothaug</h2>
               <p className='mb-4'>Designer, media artist, entrepreneur</p>
               <p className='mb-4'>Pioneer in the field of Human Computer Interaction, Creative Technologies and Computational Art</p>
               <p className='mb-4'>Early web explorer since the late 1990s</p>
@@ -33,7 +33,7 @@ const About = () => {
           <div className='flex flex-col xs:flex-row gap-8 items-center text-center xs:text-left xs:justify-start mt-16'>
             <img src='/team/joi.png' alt='Joi' width='200' />
             <div>
-              <h2>Joi Samuels <span className='text-sm'>*1970</span></h2>
+              <h2>Joi Samuels</h2>
               <p className='mb-4'>Creative free spirit</p>
               <p className='mb-4'>Possesses profound know-how in the field of &quot;digital&quot;</p>
               <p className='mb-4'>Supports and advises various start-ups in building their brand and business model and was founder and CCO of a top 100 listed digital creative agency in Germany</p>
@@ -46,7 +46,7 @@ const About = () => {
           <div className='flex flex-col xs:flex-row gap-8 items-center text-center xs:text-left xs:justify-start mt-16 mb-16'>
             <img src='/team/chris.png' alt='Chris' width='200' />
             <div>
-              <h2>Christof Bauer <span className='text-sm'>*1980</span></h2>
+              <h2>Christof Bauer</h2>
               <p className='mb-4'>Developer for more than 20 years</p>
               <p className='mb-4'>Digital nomad, has been traveling around the world for half a decade</p>
               <p className='mb-4'>Relentless optimist, philanthropist and outdoorsman</p>
