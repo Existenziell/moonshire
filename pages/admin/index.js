@@ -52,7 +52,7 @@ const Admin = () => {
   const { data: users } = resultUsers
 
   useEffect(() => {
-    setLastTokenId(nfts?.at(length - 1)?.tokenId)
+    setLastTokenId(nfts?.at(0)?.tokenId)
   }, [nfts])
 
   const enrichCollections = async () => {
@@ -165,11 +165,11 @@ const Admin = () => {
                   Users
                 </button>
               </li>
-              {/* <li className={view === 'market' ? `relative top-[2px] pb-6 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`} >
+              <li className={view === 'market' ? `relative top-[2px] pb-6 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`} >
                 <button onClick={navigate} name='market'>
                   Market
                 </button>
-              </li> */}
+              </li>
             </ul>
           </div>
 
@@ -225,8 +225,8 @@ const Admin = () => {
                   <p>Market contract address: <a href={`https://rinkeby.etherscan.io/address/${marketplaceAddress}#code`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{marketplaceAddress}</a></p>
                   <p>Contract Balance: {contractBalance} ETH</p>
                   <p>Tokens minted: {lastTokenId}</p>
-                  <p>Total transactions: 94</p>
-                  <p>Unique token holders: 5</p>
+                  {/* <p>Total transactions: 94</p>
+                  <p>Unique token holders: 5</p> */}
                 </div>
               </motion.div>
             }

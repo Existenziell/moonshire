@@ -1,18 +1,22 @@
+/**
+ * @type {import('next').NextConfig}
+ */
+
 const withPWA = require("next-pwa")
 
-const settings = {
+const nextConfig = {
   i18n: {
     locales: ['en'],
     defaultLocale: 'en',
   },
-  pwa: {
-    dest: "public",
-    register: true,
-    skipWaiting: true,
-  },
-  devIndicators: {
-    autoPrerender: false,
-  },
+  // pwa: {
+  //   dest: "public",
+  //   register: true,
+  //   skipWaiting: true,
+  // },
+  // devIndicators: {
+  //   autoPrerender: false,
+  // },
   // experimental: {
   //   images: {
   //     allowFutureImage: true,
@@ -23,4 +27,4 @@ const settings = {
   // },
 }
 
-module.exports = process.env.NODE_ENV === 'development' ? settings : withPWA(settings)
+module.exports = nextConfig

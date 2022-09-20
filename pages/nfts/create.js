@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { ethers } from 'ethers'
 import { supabase } from '../../lib/supabase'
 import { useEffect, useState } from 'react'
@@ -17,6 +18,7 @@ import FilePicker from '../../components/market/FilePicker'
 import uploadFileToIpfs from '../../lib/uploadFileToIpfs'
 import getUserCollections from '../../lib/supabase/getUserCollections'
 import ipfsClient from '../../lib/ipfsClient'
+import logEvent from '../../lib/logEvent'
 const projectGateway = process.env.NEXT_PUBLIC_INFURA_GATEWAY
 
 const CreateNft = ({ artists }) => {
@@ -106,14 +108,22 @@ const CreateNft = ({ artists }) => {
 
     try {
       let transaction = await contract.createToken(url, parsedPrice, { value: listingPrice })
-      await transaction.wait()
-      logWeb3("Looking good, waiting for Blockchain confirmation")
-      contract.on("MarketItemCreated", (tokenId) => {
-        tokenId = parseInt(tokenId)
+      const receipt = await transaction.wait()
+      // logWeb3("Looking good, waiting for Blockchain confirmation")
+      if (receipt) {
+        const tokenId = parseInt(receipt.events.at(3).args.tokenId)
+        // console.log("Event MarketItemCreated: ", tokenId);
         logWeb3(`Item ${tokenId} successfully created!`)
         logWeb3(`Transaction Hash: ${transaction.hash}`)
         saveNftToDb(tokenId, url, price)
-      })
+      }
+      // contract.on("MarketItemCreated", (tokenId) => {
+      //   tokenId = parseInt(tokenId)
+      //   console.log("Event MarketItemCreated: ", tokenId);
+      //   logWeb3(`Item ${tokenId} successfully created!`)
+      //   logWeb3(`Transaction Hash: ${transaction.hash}`)
+      //   saveNftToDb(tokenId, url, price)
+      // })
     } catch (e) {
       console.log(e)
     }
@@ -148,7 +158,7 @@ const CreateNft = ({ artists }) => {
     })
 
     // Save all to DB
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('nfts')
       .insert([{
         name: formData.name,
@@ -166,6 +176,7 @@ const CreateNft = ({ artists }) => {
       }])
 
     if (!error) {
+      logEvent("LIST", currentUser.id, data.at(0)?.id, price, tokenId)
       logWeb3(`Successfully listed NFT for Sale!`)
       notify("NFT created successfully!")
       setLoading(false)
