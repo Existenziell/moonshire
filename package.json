@@ -23,7 +23,7 @@
     "axios": "^0.27.2",
     "canvas-confetti": "^1.5.1",
     "count-lines-of-code": "^1.0.6",
-    "framer-motion": "^7.3.6",
+    "framer-motion": "^6.3.3",
     "ipfs-http-client": "^58.0.0",
     "next": "^12.3.0",
     "next-pwa": "^5.5.2",
