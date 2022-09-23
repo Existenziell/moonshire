@@ -11,11 +11,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ethersproject/providers": "^5.6.8",
-    "@heroicons/react": "^1.0.6",
+    "@ethersproject/providers": "^5.7.1",
+    "@heroicons/react": "^2.0.11",
     "@metamask/detect-provider": "^1.2.0",
     "@openzeppelin/contracts": "^4.6.0",
-    "@supabase/supabase-js": "^1.35.2",
+    "@supabase/supabase-js": "^1.35.7",
     "@supabase/ui": "^0.36.5",
     "@tailwindcss/forms": "^0.5.2",
     "@walletconnect/web3-provider": "^1.7.8",
@@ -26,7 +26,7 @@
     "framer-motion": "^6.3.3",
     "ipfs-http-client": "^58.0.0",
     "next": "^12.3.0",
-    "next-pwa": "^5.5.2",
+    "next-pwa": "^5.6.0",
     "nextjs-progressbar": "^0.0.14",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -34,7 +34,7 @@
     "react-spinners": "^0.11.0",
     "react-supabase": "^0.2.0",
     "uuid": "^9.0.0",
-    "web3modal": "^1.9.7"
+    "web3modal": "^1.9.9"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",
@@ -42,7 +42,6 @@
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "autoprefixer": "^10.4.7",
     "chai": "^4.3.6",
-    "dotenv": "^16.0.1",
     "eslint": "^7.32.0",
     "eslint-config-next": "12.1.6",
     "eslint-config-prettier": "^8.5.0",
