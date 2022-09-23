@@ -8,10 +8,10 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: [
-          'Atlas-Typewriter',
+          'Atlas-Typewriter', ...defaultTheme.fontFamily.sans,
         ],
         serif: [
-          'Arial',
+          'Arial', ...defaultTheme.fontFamily.serif,
         ]
       },
       fontSize: {
