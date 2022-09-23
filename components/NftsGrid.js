@@ -45,7 +45,7 @@ const NftsGrid = ({ nfts, display, view }) => {
         <div
           key={i}
           id={(i === 0) ? `template` : ``}
-          className={`flex flex-col justify-between mb-20 w-full flex-grow flex-shrink basis-0 min-w-[350px]`}
+          className='flex flex-col justify-between mb-20 w-full flex-grow flex-shrink basis-0 md:min-w-[350px]'
         >
           {nft.fake ?
             <div className="h-full"></div>

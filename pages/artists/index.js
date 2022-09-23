@@ -53,7 +53,7 @@ const Artists = () => {
       </Head>
 
       {fetchedArtists.length > 0 ?
-        <div className='md:snap-y md:snap-mandatory md:h-[calc(100vh-200px)] md:overflow-y-scroll'>
+        <div className='md:snap-y md:snap-mandatory md:h-[calc(100vh-200px)] md:overflow-y-scroll pb-24'>
 
           {fetchedArtists.map(artist => {
             const { id, name, headline, description, public_url, collections, numberOfCollections, nfts, numberOfNfts } = artist
