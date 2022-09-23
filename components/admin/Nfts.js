@@ -33,6 +33,16 @@ const Nfts = ({ nfts }) => {
   }
 
   const deleteNft = async () => {
+    const { error: eventsError } = await supabase
+      .from('events')
+      .delete()
+      .eq('nft', nftToDelete.id)
+
+    if (eventsError) {
+      notify(eventsError.message)
+      return
+    }
+
     const { error } = await supabase
       .from('nfts')
       .delete()
