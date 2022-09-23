@@ -4,19 +4,12 @@ import useApp from "../context/App"
 import Link from 'next/link'
 
 const Wallet = () => {
-  const { address, notify, currentUser, hasMetamask, connectWallet } = useApp()
+  const { address, notify, currentUser, connectWallet } = useApp()
   const [walletAddress, setWalletAddress] = useState('')
 
   useEffect(() => {
     if (address) setWalletAddress(address)
   }, [address])
-
-  const syncWallet = async () => {
-    hasMetamask ?
-      await connectWallet()
-      :
-      notify("Please install Metamask to proceed")
-  }
 
   if (walletAddress) {
     return (
@@ -35,7 +28,7 @@ const Wallet = () => {
   return (
     <div className='bg-brand dark:bg-brand-dark '>
       <button
-        onClick={syncWallet}
+        onClick={connectWallet}
         className='button button-connect uppercase font-serif'>
         Sync Wallet
       </button>
