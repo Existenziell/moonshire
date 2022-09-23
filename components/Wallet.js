@@ -4,7 +4,7 @@ import useApp from "../context/App"
 import Link from 'next/link'
 
 const Wallet = () => {
-  const { address, notify, currentUser, connectWallet } = useApp()
+  const { address, currentUser, connectWallet } = useApp()
   const [walletAddress, setWalletAddress] = useState('')
 
   useEffect(() => {
