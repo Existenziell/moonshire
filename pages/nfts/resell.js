@@ -7,6 +7,7 @@ import setItemPrice from '../../lib/supabase/setItemPrice'
 import setItemListedState from '../../lib/supabase/setItemListedState'
 import useApp from "../../context/App"
 import logEvent from '../../lib/logEvent'
+import Image from 'next/image'
 
 export default function ResellNft() {
   const { address, signer, notify } = useApp()
@@ -69,7 +70,7 @@ export default function ResellNft() {
     <div>
       <div className="flex justify-center px-[40px]">
         <form autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className="list-nft flex flex-col items-center">
-          <h1>Enter price in ETH:</h1>
+          <h1 className='mb-4'>Enter price in ETH:</h1>
           <input
             type='text' required
             placeholder="e.g. 0.25"
@@ -83,17 +84,27 @@ export default function ResellNft() {
               <p className='text-xs'>Waiting for blockchain confirmation...</p>
             </div>
             :
-            <button onClick={initiateResell} className="mt-10 button button-cta">
+            <button onClick={initiateResell} className="mt-4 button button-cta">
               List NFT
             </button>
           }
         </form>
 
       </div>
-      <div className='flex flex-col justify-center items-center mt-20 text-sm'>
-        {image && <img className="rounded-sm shadow-xl max-w-xs mb-8" src={image} alt='NFT Image' />}
+      <div className='flex flex-col justify-center items-center mt-12 text-tiny'>
+        {image &&
+          <Image
+            width={400}
+            height={400}
+            src={image}
+            blurDataURL={image}
+            placeholder="blur"
+            alt='NFT Image'
+            className="rounded-sm shadow-xl max-w-xs"
+          />
+        }
 
-        <p>TokenURI</p>
+        <p className='mt-4'>Token URI:</p>
         <a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link'>{tokenURI}</a>
       </div>
     </div>

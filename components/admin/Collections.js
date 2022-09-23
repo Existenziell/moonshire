@@ -5,6 +5,7 @@ import { PlusIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import useApp from "../../context/App"
 import Search from './Search'
+import Image from 'next/image'
 
 const Collections = ({ collections }) => {
   const { notify } = useApp()
@@ -113,7 +114,15 @@ const Collections = ({ collections }) => {
                 <Link href={`/collections/${collection.id}`}>
                   <a>
                     {collection.public_url ?
-                      <img src={collection.public_url} alt='Collection Image' className='w-[60px] shadow aspect-square bg-cover' />
+                      <Image
+                        width={60}
+                        height={60}
+                        placeholder="blur"
+                        src={collection.public_url}
+                        blurDataURL={collection.public_url}
+                        alt='Collection Image'
+                        className='w-[60px] shadow aspect-square bg-cover'
+                      />
                       :
                       "n/a"
                     }

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import downloadImage from '../lib/supabase/downloadImage'
 import uploadImage from '../lib/supabase/uploadImage'
 
@@ -16,8 +17,12 @@ export default function Avatar({ url, size, onUpload }) {
     <div className='md:w-1/2'>
       {avatarUrl ? (
         <div className='relative'>
-          <img
+          <Image
+            width={500}
+            height={500}
+            placeholder="blur"
             src={avatarUrl}
+            blurDataURL={avatarUrl}
             alt="Avatar"
             className="shadow-2xl max-h-[calc(100vh-260px)] aspect-square bg-cover"
           />

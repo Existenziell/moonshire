@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 
 const NftsList = ({ nfts, display }) => {
@@ -28,7 +29,15 @@ const NftsList = ({ nfts, display }) => {
             <td className='px-0 w-[90px]'>
               <Link href={`/nfts/${nft.id}`}>
                 <a>
-                  <img src={nft.image_url ? nft.image_url : nft.image} alt='NFT Image' className='w-[60px] shadow aspect-square bg-cover' />
+                  <Image
+                    width={60}
+                    height={60}
+                    placeholder="blur"
+                    src={nft.image_url ? nft.image_url : nft.image}
+                    blurDataURL={nft.image_url ? nft.image_url : nft.image}
+                    alt='NFT Image'
+                    className='w-[60px] shadow aspect-square bg-cover'
+                  />
                 </a>
               </Link>
             </td>

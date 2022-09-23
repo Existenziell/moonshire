@@ -11,6 +11,7 @@ import logWeb3 from '../../lib/logWeb3'
 import fetchMarketItemsMeta from '../../lib/contract/fetchMarketItemsMeta'
 import fetchMyNfts from '../../lib/contract/fetchMyNfts'
 import Success from '../../components/Success'
+import Image from 'next/image'
 
 const Nft = ({ propsId }) => {
   const router = useRouter()
@@ -119,7 +120,15 @@ const Nft = ({ propsId }) => {
 
         <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] w-full'>
           <div className='md:w-1/2 w-full'>
-            <img src={image_url} alt='NFT Image' width={1000} height={1000} className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] shadow-2xl' />
+            <Image
+              width={1000}
+              height={1000}
+              placeholder="blur"
+              src={image_url}
+              blurDataURL={image_url}
+              alt='NFT Image'
+              className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] shadow-2xl'
+            />
           </div>
 
           <div className='md:w-1/2 w-full'>

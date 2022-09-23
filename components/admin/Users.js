@@ -8,6 +8,7 @@ import Search from './Search'
 import Select from 'react-select'
 import selectStyles from '../../lib/selectStyles'
 import roleOptions from '../../lib/roleOptions'
+import Image from 'next/image'
 
 const Users = ({ users }) => {
   const { notify, darkmode } = useApp()
@@ -120,7 +121,15 @@ const Users = ({ users }) => {
             <tr key={user.id + user.username} className='relative'>
               <td className='px-0 w-[80px]'>
                 {user.signed_url ?
-                  <img src={user.signed_url} alt='User Image' className='w-[60px] shadow aspect-square bg-cover' />
+                  <Image
+                    width={60}
+                    height={60}
+                    placeholder="blur"
+                    src={user.signed_url}
+                    blurDataURL={user.signed_url}
+                    alt='User Image'
+                    className='w-[60px] shadow aspect-square bg-cover'
+                  />
                   :
                   "n/a"
                 }

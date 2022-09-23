@@ -4,11 +4,12 @@ import { supabase } from '../../../lib/supabase'
 import { useRouter } from 'next/router'
 import { shortenAddress } from '../../../lib/shortenAddress'
 import { PlusIcon, XIcon } from '@heroicons/react/solid'
+import { PulseLoader } from 'react-spinners'
 import useApp from "../../../context/App"
 import BackBtn from '../../../components/admin/BackBtn'
 import getProfile from '../../../lib/supabase/getProfile'
 import SupaAuth from '../../../components/SupaAuth'
-import { PulseLoader } from 'react-spinners'
+import Image from 'next/image'
 
 const NFT = ({ nft }) => {
   const { id, name, description, walletAddress, owner, price, tokenId, tokenURI, image_url, users, artists, collections, listed, assets: initialAssets } = nft
@@ -129,7 +130,15 @@ const NFT = ({ nft }) => {
       <form onSubmit={saveNft} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='edit-user flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
 
         <div className='md:w-1/2 h-full'>
-          <img src={image_url} alt='NFT Image' width={1000} height={1000} className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] shadow-2xl' />
+          <Image
+            width={1000}
+            height={1000}
+            src={image_url}
+            blurDataURL={image_url}
+            placeholder="blur"
+            alt='NFT Image'
+            className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] shadow-2xl'
+          />
         </div>
 
         <div className='md:w-1/2'>

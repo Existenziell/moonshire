@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Image from 'next/image'
 
 const About = () => {
   return (
@@ -17,9 +18,20 @@ const About = () => {
       <div className='md:max-w-6xl leading-relaxed mx-auto px-[20px] md:px-[40px]'>
         <h1 className='mx-auto w-max mt-20 mb-12 '>Who we are</h1>
         <div>
-          <div className='flex flex-col xs:flex-row gap-8 items-center text-center xs:text-left xs:justify-start'>
-            <img src='/team/andi.png' alt='Andreas' width='200' />
-            <div>
+          <div className='flex flex-col md:flex-row gap-8 items-center text-center md:text-left md:justify-start'>
+            <div className='md:w-1/3'>
+              <Image
+                src='/team/andi.png'
+                alt='Andreas'
+                placeholder='blur'
+                blurDataURL='/team/andi.png'
+                width={200}
+                height={285}
+                className=''
+              // layout='responsive'
+              />
+            </div>
+            <div className='md:w-2/3'>
               <h2>Andreas Rothaug</h2>
               <p className='mb-4'>Designer, media artist, entrepreneur</p>
               <p className='mb-4'>Pioneer in the field of Human Computer Interaction, Creative Technologies and Computational Art</p>
@@ -30,9 +42,20 @@ const About = () => {
               </a>
             </div>
           </div>
-          <div className='flex flex-col xs:flex-row gap-8 items-center text-center xs:text-left xs:justify-start mt-16'>
-            <img src='/team/joi.png' alt='Joi' width='200' />
-            <div>
+          <div className='flex flex-col md:flex-row gap-8 items-center text-center md:text-left md:justify-start mt-16'>
+            <div className='md:w-1/3'>
+              <Image
+                src='/team/joi.png'
+                alt='Joi'
+                placeholder='blur'
+                blurDataURL='/team/joi.png'
+                width={200}
+                height={285}
+                className=''
+              // layout='responsive'
+              />
+            </div>
+            <div className='md:w-2/3'>
               <h2>Joi Samuels</h2>
               <p className='mb-4'>Creative free spirit</p>
               <p className='mb-4'>Possesses profound know-how in the field of &quot;digital&quot;</p>
@@ -43,9 +66,20 @@ const About = () => {
               </a>
             </div>
           </div>
-          <div className='flex flex-col xs:flex-row gap-8 items-center text-center xs:text-left xs:justify-start mt-16 mb-16'>
-            <img src='/team/chris.png' alt='Chris' width='200' />
-            <div>
+          <div className='flex flex-col md:flex-row gap-8 items-center text-center md:text-left md:justify-start mt-16 mb-16'>
+            <div className='md:w-1/3'>
+              <Image
+                src='/team/chris.png'
+                alt='Chris'
+                placeholder='blur'
+                blurDataURL='/team/chris.png'
+                width={200}
+                height={285}
+                className=''
+              // layout='responsive'
+              />
+            </div>
+            <div className='md:w-2/3'>
               <h2>Christof Bauer</h2>
               <p className='mb-4'>Developer for more than 20 years</p>
               <p className='mb-4'>Digital nomad, has been traveling around the world for half a decade</p>

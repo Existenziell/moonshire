@@ -22,9 +22,9 @@ const nextConfig = {
   //     allowFutureImage: true,
   //   },
   // },
-  // images: {
-  //   domains: ['bpwdpdrdsuhpgevetixn.supabase.co'],
-  // },
+  images: {
+    domains: ['bpwdpdrdsuhpgevetixn.supabase.co', 'moonshire.infura-ipfs.io'],
+  },
 }
 
 module.exports = nextConfig

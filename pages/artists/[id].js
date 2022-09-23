@@ -1,7 +1,8 @@
 import { supabase } from '../../lib/supabase'
-import Head from 'next/head'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
+import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 
 /* eslint-disable no-unused-vars */
 const Artist = ({ artist }) => {
@@ -20,7 +21,15 @@ const Artist = ({ artist }) => {
 
         <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] w-full'>
           <div className='md:w-1/2'>
-            <img src={public_url} alt='Artist Image' className='aspect-square bg-cover max-h-[calc(100vh-260px)] shadow-2xl' />
+            <Image
+              width={1000}
+              height={1000}
+              placeholder="blur"
+              src={public_url}
+              blurDataURL={public_url}
+              alt='Artist Image'
+              className='aspect-square bg-cover max-h-[calc(100vh-260px)] shadow-2xl'
+            />
           </div>
           <div className='md:w-1/2'>
             <h1 className='mx-auto'>{name}</h1>

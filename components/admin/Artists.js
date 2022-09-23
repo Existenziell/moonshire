@@ -5,6 +5,7 @@ import { PlusIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import useApp from "../../context/App"
 import Search from './Search'
+import Image from 'next/image'
 
 const Artists = ({ artists }) => {
   const { notify } = useApp()
@@ -113,7 +114,15 @@ const Artists = ({ artists }) => {
                 <Link href={`/artists/${artist.id}`}>
                   <a>
                     {artist.avatar_url ?
-                      <img src={artist.public_url} alt='Artist Image' className='w-[60px] shadow aspect-square bg-cover' />
+                      <Image
+                        width={60}
+                        height={60}
+                        placeholder="blur"
+                        src={artist.public_url}
+                        blurDataURL={artist.public_url}
+                        alt='Artist Image'
+                        className='w-[60px] shadow aspect-square bg-cover'
+                      />
                       :
                       "n/a"
                     }

@@ -3,21 +3,21 @@ import { supabase } from '../../../lib/supabase'
 import { useRouter } from 'next/router'
 import { getSignedUrl } from '../../../lib/supabase/getSignedUrl'
 import { shortenAddress } from '../../../lib/shortenAddress'
+import { PulseLoader } from 'react-spinners'
 import useApp from "../../../context/App"
 import Select from 'react-select'
 import selectStyles from '../../../lib/selectStyles'
 import BackBtn from '../../../components/admin/BackBtn'
 import roleOptions from '../../../lib/roleOptions'
 import SupaAuth from '../../../components/SupaAuth'
-import { PulseLoader } from 'react-spinners'
+import Image from 'next/image'
 
 const User = ({ user }) => {
-  const { id, username, walletAddress, email, is_premium, signed_url } = user
+  const { id, username, walletAddress, email, signed_url } = user
   const { notify, darkmode, currentUser } = useApp()
 
   const [loading, setLoading] = useState(false)
   const [selectedRole, setSelectedRole] = useState(null)
-  const [premium, setPremium] = useState(false)
   const [styles, setStyles] = useState()
   const [session, setSession] = useState(null)
   const [initializing, setInitializing] = useState(true)
@@ -46,7 +46,6 @@ const User = ({ user }) => {
     const { error } = await supabase
       .from('users')
       .update({
-        is_premium: premium,
         role: selectedRole,
       })
       .eq('id', id)
@@ -68,13 +67,19 @@ const User = ({ user }) => {
 
   return (
     <div className='mb-20 w-full relative'>
-      <BackBtn href='/admin?view=users' />
-
       <form onSubmit={saveUser} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='edit-user flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
         <h1 className='mb-10'>Edit User</h1>
 
         <div className='flex flex-col md:flex-row gap-10 items-start justify-start'>
-          <img src={signed_url} alt='User Image' className='max-w-xs shadow-2xl rounded-sm' />
+          <Image
+            width={1000}
+            height={1000}
+            src={signed_url}
+            blurDataURL={signed_url}
+            placeholder="blur"
+            alt='User Image'
+            className='shadow-2xl rounded-sm'
+          />
 
           <div>
             <div>
@@ -92,28 +97,6 @@ const User = ({ user }) => {
           </div>
         </div>
 
-        <h2 className='mt-8'>Membership</h2>
-        <div onChange={(e) => setPremium(e.target.value)} className='block'>
-          <label htmlFor='isPremiumNo' className='cursor-pointer flex items-center gap-2'>
-            <input
-              type="radio" value="false"
-              name='is_premium'
-              id='isPremiumNo'
-              defaultChecked={!is_premium}
-              className='w-4 h-4 text-cta bg-gray-100 border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600'
-            /> Free
-          </label>
-          <label htmlFor='isPremiumYes' className='cursor-pointer flex items-center gap-2'>
-            <input
-              type="radio" value="true"
-              name='is_premium'
-              id='isPremiumYes'
-              defaultChecked={is_premium}
-              className='w-4 h-4 text-cta bg-gray-100 border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600'
-            /> Premium
-          </label>
-        </div>
-
         <h2 className='mt-10'>Role</h2>
         <Select
           options={roleOptions}
@@ -123,7 +106,10 @@ const User = ({ user }) => {
           styles={styles}
         />
 
-        <input type='submit' className='button button-cta mt-12' value='Save' disabled={loading} />
+        <div className='flex items-center gap-2 mt-12'>
+          <input type='submit' className='button button-cta' value='Save' disabled={loading} />
+          <BackBtn href='/admin?view=users' />
+        </div>
       </form>
     </div>
   )

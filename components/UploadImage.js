@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import downloadImage from '../lib/supabase/downloadImage'
 import uploadImage from '../lib/supabase/uploadImage'
 
-export default function UploadImage({ bucket, url, size, onUpload }) {
+export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
   const [imageUrl, setImageUrl] = useState(null)
   const [uploading, setUploading] = useState(false)
 
@@ -16,10 +17,13 @@ export default function UploadImage({ bucket, url, size, onUpload }) {
     <div>
       {imageUrl ? (
         <div className='relative max-w-max'>
-          <img
+          <Image
+            width={size}
+            height={size}
+            placeholder="blur"
             src={imageUrl}
+            blurDataURL={imageUrl}
             alt="Upload Image"
-            style={{ height: size, width: size }}
             className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)]'
           />
           <button

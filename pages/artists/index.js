@@ -5,6 +5,7 @@ import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import useApp from '../../context/App'
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const Artists = () => {
   const [fetchedArtists, setFetchedArtists] = useState()
@@ -60,7 +61,15 @@ const Artists = () => {
               <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-200px)] w-full mb-40'>
                 <div className={`flex flex-col md:flex-row items-center justify-center gap-[40px] px-[20px] md:px-[40px]`}>
                   <div className='md:w-1/2 w-full'>
-                    <img src={public_url} alt='Artist Image' width={1000} height={1000} className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] bg-detail dark:bg-detail-dark' />
+                    <Image
+                      width={1000}
+                      height={1000}
+                      placeholder="blur"
+                      src={public_url}
+                      blurDataURL={public_url}
+                      alt='Artist Image'
+                      className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] bg-detail dark:bg-detail-dark'
+                    />
                   </div>
                   <div className='md:w-1/2 w-full'>
                     <h1>{name}</h1>

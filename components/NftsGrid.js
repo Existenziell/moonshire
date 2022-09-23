@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 // import { shortenAddress } from '../lib/shortenAddress'
@@ -52,8 +53,12 @@ const NftsGrid = ({ nfts, display, view }) => {
             <>
               <Link href={`/nfts/${nft.id}`}>
                 <a>
-                  <img
+                  <Image
+                    width={1000}
+                    height={1000}
+                    placeholder="blur"
                     src={nft.image_url ? nft.image_url : nft.image}
+                    blurDataURL={nft.image_url ? nft.image_url : nft.image}
                     alt='NFT Image'
                     className='w-full aspect-square object-cover shadow-2xl bg-detail dark:bg-detail-dark'
                   />

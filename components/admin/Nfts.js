@@ -6,6 +6,7 @@ import { PlusIcon, CheckIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 import useApp from "../../context/App"
 import Search from './Search'
+import Image from 'next/image'
 
 const Nfts = ({ nfts }) => {
   const { notify } = useApp()
@@ -129,7 +130,15 @@ const Nfts = ({ nfts }) => {
                 <Link href={`/nfts/${nft.id}`}>
                   <a>
                     {nft.image_url ?
-                      <img src={nft.image_url} alt='NFT Image' className='w-[60px] shadow aspect-square bg-cover' />
+                      <Image
+                        width={60}
+                        height={60}
+                        placeholder="blur"
+                        src={nft.image_url}
+                        blurDataURL={nft.image_url}
+                        alt='NFT Image'
+                        className='w-[60px] shadow aspect-square bg-cover'
+                      />
                       :
                       "n/a"
                     }

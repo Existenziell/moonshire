@@ -5,6 +5,7 @@ import { PulseLoader } from 'react-spinners'
 import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const Collections = () => {
   const [fetchedCollections, setFetchedCollections] = useState()
@@ -72,14 +73,16 @@ const Collections = () => {
                 <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
                   <div className='md:w-1/2 w-full'>
                     <Link href={`/collections/${id}`}>
-                      <a className='block w-max'>
-                        <img
-                          src={public_url}
-                          alt='Cover Image'
+                      <a>
+                        <Image
                           width={1000}
                           height={1000}
-                          className='md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] bg-detail dark:bg-detail-dark aspect-square shadow-2xl ' /
-                        >
+                          placeholder="blur"
+                          src={public_url}
+                          blurDataURL={public_url}
+                          alt='Cover Image'
+                          className='md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] bg-detail dark:bg-detail-dark aspect-square shadow-2xl '
+                        />
                       </a>
                     </Link>
                   </div>
