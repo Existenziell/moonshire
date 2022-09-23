@@ -138,7 +138,7 @@ const Nft = ({ propsId }) => {
                 <hr />
                 <p className='mt-4'>Transaction was successfully executed on the Blockchain.<br />You are now the owner of this NFT.</p>
                 <p className="mt-4">Transaction hash:</p>
-                <p><a href={`https://rinkeby.etherscan.io/tx/${hash}`} target='_blank' rel='noopener noreferrer nofollow' className='link'>sdcdskjcshckjcdsgcsucsjbcsdkc{hash}</a></p>
+                <p><a href={`https://rinkeby.etherscan.io/tx/${hash}`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{hash}</a></p>
                 <Success />
               </>
               :
