@@ -70,26 +70,18 @@ const NftsGrid = ({ nfts, display, view }) => {
                 <div className="text-detail-dark dark:text-detail">
                   {/* <p>{nft.description}</p> */}
                   <div className='mb-2'>
-                    {nft.collections ?
-                      <Link href={`/collections/${nft.collections.id}`}>
-                        <a className='link-white'>
-                          {nft.collections.title}
-                        </a>
-                      </Link>
-                      :
-                      <p>{nft.collection}</p>
-                    }
+                    <Link href={`/collections/${nft.collections.id}`}>
+                      <a className='link-white'>
+                        {nft.collections.title}
+                      </a>
+                    </Link>
                   </div>
                   <div className='mb-10'>
-                    {nft.artists ?
-                      <Link href={`/artists/${nft.artists.id}`}>
-                        <a className='link-white'>
-                          {nft.artists.name}
-                        </a>
-                      </Link>
-                      :
-                      <p>{nft.artist}</p>
-                    }
+                    <Link href={`/artists/${nft.artists?.id}`}>
+                      <a className='link-white'>
+                        {nft.artists?.name}
+                      </a>
+                    </Link>
                   </div>
                   <hr />
 

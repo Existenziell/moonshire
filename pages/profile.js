@@ -21,6 +21,8 @@ import TabBar from '../components/TabBar'
 import NftsGrid from '../components/NftsGrid'
 import NftsList from '../components/NftsList'
 import Settings from '../components/Settings'
+import { getArtistId } from '../lib/supabase/getArtistId'
+import { getCollectionId } from '../lib/supabase/getCollectionId'
 
 const Profile = () => {
   const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify, signer } = useApp()
@@ -66,7 +68,7 @@ const Profile = () => {
     if (nfts && currentUser) fetchUserNfts(currentUser.id)
   }, [nfts, currentUser])
 
-  const filterNfts = (view) => {
+  const filterNfts = async (view) => {
     // setLoading(true)
     let nfts
     switch (view) {
@@ -86,6 +88,24 @@ const Profile = () => {
     // resetSearch()
     // setSortBy('created_at')
     // setSortAsc(false)
+
+    // Add artistID and collectionID for /profile 
+    for (let nft of nfts) {
+      if (!nft.artists) {
+        const id = await getArtistId(nft.artist)
+        nft.artists = {
+          id: id,
+          name: nft.artist
+        }
+      }
+      if (!nft.collections) {
+        const id = await getCollectionId(nft.collection)
+        nft.collections = {
+          id: id,
+          title: nft.collection
+        }
+      }
+    }
     setFilteredNfts(nfts)
     // setLoading(false)
   }
