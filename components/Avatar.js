@@ -14,17 +14,16 @@ export default function Avatar({ url, size, onUpload }) {
   }, [url])
 
   return (
-    <div className='md:w-1/2'>
+    <div className=''>
       {avatarUrl ? (
-        <div className='relative'>
+        <div className='relative shadow-2xl nextimg'>
           <Image
-            width={500}
-            height={500}
+            width={400}
+            height={400}
             placeholder="blur"
             src={avatarUrl}
             blurDataURL={avatarUrl}
             alt="Avatar"
-            className="shadow-2xl max-h-[calc(100vh-260px)] aspect-square bg-cover"
           />
           <label className="absolute top-0 right-0 bottom-0 left-0 w-full h-full hover:cursor-pointer" htmlFor="single">
             <input

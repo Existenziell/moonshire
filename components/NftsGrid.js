@@ -52,7 +52,7 @@ const NftsGrid = ({ nfts, display, view }) => {
             :
             <>
               <Link href={`/nfts/${nft.id}`}>
-                <a>
+                <a className='shadow-2xl nextimg'>
                   <Image
                     width={1000}
                     height={1000}
@@ -60,7 +60,7 @@ const NftsGrid = ({ nfts, display, view }) => {
                     src={nft.image_url ? nft.image_url : nft.image}
                     blurDataURL={nft.image_url ? nft.image_url : nft.image}
                     alt='NFT Image'
-                    className='w-full aspect-square object-cover shadow-2xl bg-detail dark:bg-detail-dark'
+                    className='w-full aspect-square object-cover bg-detail dark:bg-detail-dark'
                   />
                 </a>
               </Link>

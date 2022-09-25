@@ -16,7 +16,7 @@ export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
   return (
     <div>
       {imageUrl ? (
-        <div className='relative max-w-max'>
+        <div className='relative shadow-2xl nextimg md:max-h-[calc(100vh-260px)]'>
           <Image
             width={size}
             height={size}
@@ -24,7 +24,6 @@ export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
             src={imageUrl}
             blurDataURL={imageUrl}
             alt="Upload Image"
-            className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)]'
           />
           <button
             className='absolute top-0 right-0 px-2 pb-1 rounded-sm text-detail-dark/80 dark:text-detail hover:text-cta text-3xl dark:hover:text-cta hover:cursor-pointer hover:scale-110 transition-all'

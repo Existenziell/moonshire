@@ -129,7 +129,7 @@ const NFT = ({ nft }) => {
     <div className='mb-20 w-full relative'>
       <form onSubmit={saveNft} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='edit-user flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
 
-        <div className='md:w-1/2 h-full'>
+        <div className='md:w-1/2 h-full shadow-2xl nextimg'>
           <Image
             width={1000}
             height={1000}
@@ -137,7 +137,7 @@ const NFT = ({ nft }) => {
             blurDataURL={image_url}
             placeholder="blur"
             alt='NFT Image'
-            className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] shadow-2xl'
+            className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)]'
           />
         </div>
 

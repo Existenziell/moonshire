@@ -121,7 +121,7 @@ const Artists = ({ artists }) => {
                         src={artist.public_url}
                         blurDataURL={artist.public_url}
                         alt='Artist Image'
-                        className='w-[60px] shadow aspect-square bg-cover'
+                        className='w-[60px] aspect-square bg-cover'
                       />
                       :
                       "n/a"

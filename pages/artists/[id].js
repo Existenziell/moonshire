@@ -20,7 +20,7 @@ const Artist = ({ artist }) => {
       <div className='px-[20px] md:px-[40px] md:h-[calc(100vh-200px)]'>
 
         <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] w-full'>
-          <div className='md:w-1/2'>
+          <div className='shadow-2xl nextimg md:max-w-[calc(50vw-160px)] md:max-h-[calc(100vh-260px)]'>
             <Image
               width={1000}
               height={1000}
@@ -28,7 +28,6 @@ const Artist = ({ artist }) => {
               src={public_url}
               blurDataURL={public_url}
               alt='Artist Image'
-              className='aspect-square bg-cover max-h-[calc(100vh-260px)] shadow-2xl'
             />
           </div>
           <div className='md:w-1/2'>

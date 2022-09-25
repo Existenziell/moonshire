@@ -68,7 +68,24 @@ export default function ResellNft() {
 
   return (
     <div>
-      <div className="flex justify-center px-[40px]">
+      <div className='flex flex-col justify-center items-center text-tiny'>
+        {image &&
+          <div className='shadow-2xl nextimg max-w-md'>
+            <Image
+              width={600}
+              height={600}
+              src={image}
+              blurDataURL={image}
+              placeholder="blur"
+              alt='NFT Image'
+            />
+          </div>
+        }
+        {/* <p className='mt-4'>Token URI:</p><a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link'>{tokenURI}</a> */}
+      </div>
+
+      <div className="flex justify-center px-[40px] mt-12 ">
+
         <form autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className="list-nft flex flex-col items-center">
           <h1 className='mb-4'>Enter price in ETH:</h1>
           <input
@@ -91,22 +108,7 @@ export default function ResellNft() {
         </form>
 
       </div>
-      <div className='flex flex-col justify-center items-center mt-12 text-tiny'>
-        {image &&
-          <Image
-            width={400}
-            height={400}
-            src={image}
-            blurDataURL={image}
-            placeholder="blur"
-            alt='NFT Image'
-            className="rounded-sm shadow-xl max-w-xs"
-          />
-        }
 
-        <p className='mt-4'>Token URI:</p>
-        <a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link'>{tokenURI}</a>
-      </div>
     </div>
   )
 }

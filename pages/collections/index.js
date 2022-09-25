@@ -53,6 +53,11 @@ const Collections = () => {
     if (collections && artists && nfts) enrichCollections()
   }, [collections, artists, nfts])
 
+  const calcHeight = () => {
+    const height = window.innerHeight - 260
+    return height
+  }
+
   if (!fetchedCollections) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
 
   return (
@@ -73,15 +78,15 @@ const Collections = () => {
                 <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
                   <div className='md:w-1/2 w-full'>
                     <Link href={`/collections/${id}`}>
-                      <a>
+                      <a className='shadow-2xl'>
                         <Image
-                          width={1000}
-                          height={1000}
+                          width={calcHeight()}
+                          height={calcHeight()}
                           placeholder="blur"
                           src={public_url}
                           blurDataURL={public_url}
                           alt='Cover Image'
-                          className='md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] bg-detail dark:bg-detail-dark aspect-square shadow-2xl '
+                          className=' bg-detail dark:bg-detail-dark aspect-square'
                         />
                       </a>
                     </Link>

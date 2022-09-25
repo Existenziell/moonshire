@@ -27,7 +27,6 @@ const About = () => {
                 blurDataURL='/team/andi.png'
                 width={200}
                 height={285}
-                className=''
               // layout='responsive'
               />
             </div>
@@ -51,7 +50,6 @@ const About = () => {
                 blurDataURL='/team/joi.png'
                 width={200}
                 height={285}
-                className=''
               // layout='responsive'
               />
             </div>
@@ -75,7 +73,6 @@ const About = () => {
                 blurDataURL='/team/chris.png'
                 width={200}
                 height={285}
-                className=''
               // layout='responsive'
               />
             </div>

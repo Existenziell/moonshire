@@ -71,16 +71,16 @@ const User = ({ user }) => {
         <h1 className='mb-10'>Edit User</h1>
 
         <div className='flex flex-col md:flex-row gap-10 items-start justify-start'>
-          <Image
-            width={1000}
-            height={1000}
-            src={signed_url}
-            blurDataURL={signed_url}
-            placeholder="blur"
-            alt='User Image'
-            className='shadow-2xl rounded-sm'
-          />
-
+          <div className='shadow-2xl nextimg rounded-sm'>
+            <Image
+              width={1000}
+              height={1000}
+              src={signed_url}
+              blurDataURL={signed_url}
+              placeholder="blur"
+              alt='User Image'
+            />
+          </div>
           <div>
             <div>
               <h2 className='mb-2'>Username</h2>

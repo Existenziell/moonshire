@@ -119,7 +119,7 @@ const Nft = ({ propsId }) => {
       <div className='px-[20px] md:px-[40px] md:h-[calc(100vh-200px)]'>
 
         <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] w-full'>
-          <div className='md:w-1/2 w-full'>
+          <div className='w-full md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] shadow-2xl nextimg'>
             <Image
               width={1000}
               height={1000}
@@ -127,7 +127,6 @@ const Nft = ({ propsId }) => {
               src={image_url}
               blurDataURL={image_url}
               alt='NFT Image'
-              className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] shadow-2xl'
             />
           </div>
 
