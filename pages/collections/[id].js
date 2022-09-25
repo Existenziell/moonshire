@@ -181,7 +181,7 @@ const Collection = ({ collection, collectionNfts: nfts }) => {
 export async function getServerSideProps(context) {
   const id = context.params.id
   let { data: collection } = await supabase.from('collections').select(`*`).eq('id', id).single()
-  let { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('name', { ascending: true })
+  let { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('created_at', { ascending: false })
 
   if (!collection) {
     return {
