@@ -26,6 +26,13 @@ const Nft = ({ propsId }) => {
   const [view, setView] = useState('description')
   const links = ['description', 'assets', 'provenance']
 
+  const [loading, setLoading] = useState(true)
+  const [fetching, setFetching] = useState(true)
+  const [buying, setBuying] = useState(false)
+  const [sellerIsOwner, setSellerIsOwner] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [hash, setHash] = useState('')
+
   let [{ data: nft }] = useRealtime('nfts', {
     select: {
       columns: '*, artists(*), collections(*), users(*)',
@@ -40,11 +47,16 @@ const Nft = ({ propsId }) => {
     }
   })
 
-  const [fetching, setFetching] = useState(true)
-  const [loading, setLoading] = useState(false)
-  const [sellerIsOwner, setSellerIsOwner] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const [hash, setHash] = useState('')
+  useEffect(() => {
+    if (address && nft) {
+      fetchMeta()
+      setAssets()
+    }
+  }, [address, nft])
+
+  useEffect(() => {
+    if (events) fetchUser()
+  }, [events])
 
   const fetchUser = async () => {
     for (let e of events) {
@@ -74,10 +86,6 @@ const Nft = ({ propsId }) => {
     }
   }
 
-  useEffect(() => {
-    if (events) fetchUser()
-  }, [events])
-
   const setAssets = async () => {
     let physicalAssets = []
     let digitalAssets = []
@@ -92,13 +100,6 @@ const Nft = ({ propsId }) => {
     setDigitalAssets(digitalAssets)
     setPhysicalAssets(physicalAssets)
   }
-
-  useEffect(() => {
-    if (address && nft) {
-      fetchMeta()
-      setAssets()
-    }
-  }, [address, nft])
 
   const fetchMeta = async () => {
     if (tokenId) {
@@ -117,19 +118,15 @@ const Nft = ({ propsId }) => {
         }
       }
     }
+    setFetching(false)
 
     const url = await getSignedUrl('avatars', nft.at(0).users.avatar_url)
     setCreatorUrl(url)
 
-    let price = await fetch('/api/convertPrice', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(nft.at(0).price)
-    })
-    price = await price.json()
-    setPriceUSD(price)
-
-    setFetching(false)
+    const result = await fetch(`https://api.coinconvert.net/convert/eth/usd?amount=${nft.at(0).price}`)
+    const price = await result.json()
+    setPriceUSD(price.USD.toFixed(2))
+    setLoading(false)
   }
 
   const initiateBuy = async (nft) => {
@@ -137,7 +134,7 @@ const Nft = ({ propsId }) => {
       notify("Please connect your wallet to proceed")
       return
     }
-    setLoading(true)
+    setBuying(true)
     logWeb3(`Initiating blockchain transfer...`)
 
     try {
@@ -152,7 +149,7 @@ const Nft = ({ propsId }) => {
       } else {
         notify("Something went wrong...")
       }
-      setLoading(false)
+      setBuying(false)
     } catch (e) {
       notify("Something went wrong...")
     }
@@ -162,7 +159,7 @@ const Nft = ({ propsId }) => {
     router.push(`/nfts/resell?id=${nft.id}&tokenId=${nft.tokenId}&tokenURI=${nft.tokenURI}&userId=${currentUser.id}`)
   }
 
-  if (!nft) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (!nft || loading) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!nft[0]) return <h1 className="mb-4 text-3xl flex items-center justify-center">NFT not found</h1>
 
   const { name, description, price, image_url, artists, users, listed, tokenURI, tokenId, created_at } = nft.at(0)
@@ -270,7 +267,7 @@ const Nft = ({ propsId }) => {
               </div>
               <hr className='my-8' />
 
-              {loading ?
+              {buying ?
                 <div className='flex flex-col items-start justify-center mt-8'>
                   <PulseLoader color={'var(--color-cta)'} size={10} />
                   <p className='text-xs my-4'>Please follow MetaMask prompt...</p>
@@ -279,10 +276,8 @@ const Nft = ({ propsId }) => {
                 :
                 <div className='flex items-center justify-between gap-10 mt-10'>
                   <div className='flex items-center gap-6'>
-                    {creatorUrl ?
+                    {creatorUrl &&
                       <img src={creatorUrl} alt='NFT Creator' width={50} height={50} />
-                      :
-                      <div className="w-[50px]"></div>
                     }
                     <div>
                       Listed by <span className='link-white'>@{users.username}</span>
