@@ -22,6 +22,8 @@ const Nft = ({ propsId }) => {
   const { address, currentUser, signer, notify, connectWallet } = useApp()
   const [physicalAssets, setPhysicalAssets] = useState()
   const [digitalAssets, setDigitalAssets] = useState()
+  const [creatorUrl, setCreatorUrl] = useState()
+  const [priceUSD, setPriceUSD] = useState()
   const [view, setView] = useState('description')
   const links = ['description', 'assets', 'provenance']
 
@@ -90,13 +92,13 @@ const Nft = ({ propsId }) => {
     }
     setDigitalAssets(digitalAssets)
     setPhysicalAssets(physicalAssets)
+    convertPrice()
   }
 
   useEffect(() => {
     if (address && nft) {
       fetchMeta()
       setAssets()
-      setPriceUSD()
     }
   }, [address, nft])
 
@@ -119,15 +121,15 @@ const Nft = ({ propsId }) => {
     }
 
     const url = await getSignedUrl('avatars', nft.at(0).users.avatar_url)
-    nft.at(0).creatorUrl = url
+    setCreatorUrl(url)
 
     setFetching(false)
   }
 
-  const setPriceUSD = async () => {
+  const convertPrice = async () => {
     await convert.ready(); //Cache is not yet loaded on first start
     const price = new convert.from("ETH").to("USD").amount(nft.at(0).price).toFixed(2)
-    nft.at(0).priceUSD = price
+    setPriceUSD(price)
     return price
   }
 
@@ -164,7 +166,7 @@ const Nft = ({ propsId }) => {
   if (!nft) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!nft[0]) return <h1 className="mb-4 text-3xl flex items-center justify-center">NFT not found</h1>
 
-  const { name, description, price, priceUSD, image_url, artists, users, listed, tokenURI, tokenId, creatorUrl, created_at } = nft.at(0)
+  const { name, description, price, image_url, artists, users, listed, tokenURI, tokenId, created_at } = nft.at(0)
 
   return (
     <>
