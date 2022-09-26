@@ -75,7 +75,7 @@ const Collections = () => {
 
             return (
               <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-300px)] w-full mb-40'>
-                <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] px-[20px] md:px-[40px]'>
+                <div className='flex flex-col md:flex-row items-center justify-start gap-[40px] px-[20px] md:px-[40px]'>
                   <Link href={`/collections/${id}`}>
                     <a className='shadow-2xl nextimg bg-detail dark:bg-detail-dark'>
                       <Image

@@ -116,65 +116,64 @@ const Nft = ({ propsId }) => {
         <meta name='description' content={`${name} | NFT | Project Moonshire`} />
       </Head>
 
-      <div className='px-[20px] md:px-[40px] md:h-[calc(100vh-200px)]'>
+      <div className='px-[20px] md:px-[40px] md:h-[calc(100vh-200px)] flex flex-col md:flex-row items-center justify-start gap-[40px] w-full'>
 
-        <div className='flex flex-col md:flex-row items-center justify-center gap-[40px] w-full'>
-          <div className='w-full md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] shadow-2xl nextimg'>
-            <Image
-              width={1000}
-              height={1000}
-              placeholder="blur"
-              src={image_url}
-              blurDataURL={image_url}
-              alt='NFT Image'
-            />
-          </div>
+        <div className='w-full md:w-1/2 md:max-h-[calc(100vh-260px)] shadow-2xl nextimg'>
+          <Image
+            width={1000}
+            height={1000}
+            placeholder="blur"
+            src={image_url}
+            blurDataURL={image_url}
+            alt='NFT Image'
+          />
+        </div>
 
-          <div className='md:w-1/2 w-full'>
-            {success ?
-              <>
-                <h1 className='mb-4'>Congratulations</h1>
-                <hr />
-                <p className='mt-4'>Transaction was successfully executed on the Blockchain.<br />You are now the owner of this NFT.</p>
-                <p className="mt-4">Transaction hash:</p>
-                <p><a href={`https://rinkeby.etherscan.io/tx/${hash}`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{hash}</a></p>
-                <Success />
-              </>
-              :
-              <>
-                <h1 className='mb-0'>{name}</h1>
-                <hr className='my-6' />
-                <p className='mb-4'>
-                  {description}
-                  {` `}Created by {` `}
-                  <Link href={`/artists/${artists.id}`}><a className='link-white'>{artists.name}</a></Link>
-                </p>
+        <div className='md:w-1/2 w-full '>
+          {success ?
+            <>
+              <h1 className='mb-4'>Congratulations</h1>
+              <hr />
+              <p className='mt-4'>Transaction was successfully executed on the Blockchain.<br />You are now the owner of this NFT.</p>
+              <p className="mt-4">Transaction hash:</p>
+              <p><a href={`https://rinkeby.etherscan.io/tx/${hash}`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{hash}</a></p>
+              <Success />
+            </>
+            :
+            <>
+              <h1 className='mb-0'>{name}</h1>
+              <hr className='my-6' />
+              <p className='mb-4'>
+                {description}
+                {` `}Created by {` `}
+                <Link href={`/artists/${artists.id}`}><a className='link-white'>{artists.name}</a></Link>
+              </p>
 
-                <div className='mt-16'>
-                  <h1 className='mb-0'>Assets</h1>
-                  <hr className='my-8' />
-                  <p className='mb-4'>Physical <span className='text-[#777777] dark:text-[#999999]'>(free shipping worldwide)</span></p>
-                  <ul>
-                    {physicalAssets?.map((asset, idx) => (
-                      <li key={asset.name + idx}>&#8212;	{asset.name}</li>
-                    ))}
-                  </ul>
-                  <p className='mb-4 mt-8'>Digital</p>
-                  <ul>
-                    {digitalAssets?.map((asset, idx) => (
-                      <li key={asset.name + idx}>
-                        &#8212; {asset.name}{` `}
-                        <Link href={`/download/${asset.link}`}>
-                          <a className='link-white'>Download</a>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
+              <div className='mt-16'>
+                <h1 className='mb-0'>Assets</h1>
                 <hr className='my-8' />
+                <p className='mb-4'>Physical <span className='text-[#777777] dark:text-[#999999]'>(free shipping worldwide)</span></p>
+                <ul>
+                  {physicalAssets?.map((asset, idx) => (
+                    <li key={asset.name + idx}>&#8212;	{asset.name}</li>
+                  ))}
+                </ul>
+                <p className='mb-4 mt-8'>Digital</p>
+                <ul>
+                  {digitalAssets?.map((asset, idx) => (
+                    <li key={asset.name + idx}>
+                      &#8212; {asset.name}{` `}
+                      <Link href={`/download/${asset.link}`}>
+                        <a className='link-white'>Download</a>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-                {/* <div className='whitespace-nowrap flex flex-col gap-1'>
+              <hr className='my-8' />
+
+              {/* <div className='whitespace-nowrap flex flex-col gap-1'>
              <p>
                 <span className='text-sm'>Created by:{` `}</span>
                 <Link href={`/artists/${artists.id}`}><a className='link-white'>{artists.name}</a></Link>
@@ -199,44 +198,43 @@ const Nft = ({ propsId }) => {
               </div>
             </div> */}
 
-                {loading ?
-                  <div className='flex flex-col items-start justify-center mt-8'>
-                    <PulseLoader color={'var(--color-cta)'} size={10} />
-                    <p className='text-xs my-4'>Please follow MetaMask prompt...</p>
-                    <div id='mintingInfo' className='text-xs'></div>
-                  </div>
-                  :
-                  <div className='flex items-center justify-between gap-10 mt-10'>
-                    <p className='my-0 text-[20px] relative bottom-1'>{price} ETH</p>
-                    {!address ?
-                      <button
-                        onClick={connectWallet}
-                        className='button button-connect uppercase font-serif'>
-                        Sync Wallet
-                      </button>
+              {loading ?
+                <div className='flex flex-col items-start justify-center mt-8'>
+                  <PulseLoader color={'var(--color-cta)'} size={10} />
+                  <p className='text-xs my-4'>Please follow MetaMask prompt...</p>
+                  <div id='mintingInfo' className='text-xs'></div>
+                </div>
+                :
+                <div className='flex items-center justify-between gap-10 mt-10'>
+                  <p className='my-0 text-[20px] relative bottom-1'>{price} ETH</p>
+                  {!address ?
+                    <button
+                      onClick={connectWallet}
+                      className='button button-connect uppercase font-serif'>
+                      Sync Wallet
+                    </button>
+                    :
+                    fetching ?
+                      <div className='h-[40px] flex items-center justify-center'><PulseLoader color={'white'} size={4} /></div>
                       :
-                      fetching ?
-                        <div className='h-[40px] flex items-center justify-center'><PulseLoader color={'white'} size={4} /></div>
-                        :
-                        listed ?
-                          sellerIsOwner ?
-                            // <p className='text-tiny'>You listed this NFT</p>
-                            <button className='button button-cta'>Unlist</button>
-                            :
-                            <button onClick={() => initiateBuy(nft)} className='button button-cta'>Buy</button>
+                      listed ?
+                        sellerIsOwner ?
+                          // <p className='text-tiny'>You listed this NFT</p>
+                          <button className='button button-cta'>Unlist</button>
                           :
-                          sellerIsOwner ?
-                            <button onClick={() => listNFT(nft.at(0))} className='button button-cta'>List</button>
-                            :
-                            // <p className='text-tiny'>NFT not listed</p>
-                            <button className='button button-cta'>List</button>
-                    }
-                  </div>
-                }
-              </>
-            }
+                          <button onClick={() => initiateBuy(nft)} className='button button-cta'>Buy</button>
+                        :
+                        sellerIsOwner ?
+                          <button onClick={() => listNFT(nft.at(0))} className='button button-cta'>List</button>
+                          :
+                          // <p className='text-tiny'>NFT not listed</p>
+                          <button className='button button-cta'>List</button>
+                  }
+                </div>
+              }
+            </>
+          }
 
-          </div>
         </div>
       </div>
     </>

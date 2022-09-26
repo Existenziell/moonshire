@@ -60,8 +60,8 @@ const Artists = () => {
 
             return (
               <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-300px)] w-full mb-40'>
-                <div className={`flex flex-col md:flex-row items-center justify-center gap-[40px] px-[20px] md:px-[40px]`}>
-                  <div className='w-full shadow-2xl nextimg md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] bg-detail dark:bg-detail-dark'>
+                <div className={`flex flex-col md:flex-row items-center justify-start gap-[40px] px-[20px] md:px-[40px]`}>
+                  <div className='shadow-2xl nextimg md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] bg-detail dark:bg-detail-dark'>
                     <Image
                       width={1000}
                       height={1000}
@@ -87,7 +87,7 @@ const Artists = () => {
                     <div className='mt-16'>
                       <h1 className='mb-0'>Assets</h1>
                       <hr className='my-8' />
-                      <div className='flex flex-col items-start justify-start max-h-80 flex-wrap'>
+                      <div className='flex flex-col items-start justify-start max-h-64 flex-wrap'>
                         <p className='mb-4'>{numberOfCollections} {numberOfCollections > 1 ? `Collections` : `Collection`}</p>
                         {collections.map(c => (
                           <Link key={c.id} href={`/collections/${c.id}`}><a className='link-white block'>{c.title}</a></Link>
