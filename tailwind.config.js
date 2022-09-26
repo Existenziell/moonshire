@@ -29,6 +29,7 @@ module.exports = {
       backgroundImage: {
         'upload': 'url(/upload.png)',
         'upload-dark': 'url(/upload-dark.png)',
+        'home0': 'url(/home/0.jpg)',
         'home1': 'url(/home/1.webp)',
         'home2': 'url(/home/2.png)',
         'home3': 'url(/home/3.webp)',
