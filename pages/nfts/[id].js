@@ -92,7 +92,7 @@ const Nft = ({ propsId }) => {
     }
     setDigitalAssets(digitalAssets)
     setPhysicalAssets(physicalAssets)
-    convertPrice()
+    await convertPrice()
   }
 
   useEffect(() => {
