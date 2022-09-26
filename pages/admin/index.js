@@ -165,11 +165,13 @@ const Admin = () => {
                   Users
                 </button>
               </li>
-              <li className={view === 'market' ? `relative top-[2px] pb-6 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`} >
-                <button onClick={navigate} name='market'>
-                  Market
-                </button>
-              </li>
+              {(currentUser.username === 'Zooloo' || currentUser.username === 'Chris') &&
+                <li className={view === 'market' ? `relative top-[2px] pb-6 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`} >
+                  <button onClick={navigate} name='market'>
+                    Market
+                  </button>
+                </li>
+              }
             </ul>
           </div>
 
