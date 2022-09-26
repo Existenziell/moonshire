@@ -1,6 +1,5 @@
 import { supabase } from "../../lib/supabase"
 import { useState, useEffect } from 'react'
-import { useRealtime, useFilter } from 'react-supabase'
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
 import { getSignedUrl } from '../../lib/supabase/getSignedUrl'
@@ -16,90 +15,22 @@ import Success from '../../components/Success'
 import Image from 'next/image'
 import moment from 'moment'
 
-const Nft = ({ propsId }) => {
+const Nft = ({ nft }) => {
   const router = useRouter()
   const { address, currentUser, signer, notify, connectWallet } = useApp()
-  const [physicalAssets, setPhysicalAssets] = useState()
-  const [digitalAssets, setDigitalAssets] = useState()
-  const [creatorUrl, setCreatorUrl] = useState()
-  const [priceUSD, setPriceUSD] = useState()
-  const [view, setView] = useState('description')
-  const links = ['description', 'assets', 'provenance']
-
-  const [loading, setLoading] = useState(true)
   const [fetching, setFetching] = useState(true)
   const [buying, setBuying] = useState(false)
   const [sellerIsOwner, setSellerIsOwner] = useState(false)
   const [success, setSuccess] = useState(false)
   const [hash, setHash] = useState('')
-
-  let [{ data: nft }] = useRealtime('nfts', {
-    select: {
-      columns: '*, artists(*), collections(*), users(*)',
-      filter: useFilter((query) => query.eq('id', router.query.id ? router.query.id : propsId))
-    }
-  })
-
-  let [{ data: events }] = useRealtime('events', {
-    select: {
-      columns: '*, nfts(*)',
-      filter: useFilter((query) => query.eq('nft', router.query.id ? router.query.id : propsId))
-    }
-  })
+  const [view, setView] = useState('description')
+  const links = ['description', 'assets', 'provenance']
 
   useEffect(() => {
     if (address && nft) {
       fetchMeta()
-      setAssets()
     }
   }, [address, nft])
-
-  useEffect(() => {
-    if (events) fetchUser()
-  }, [events])
-
-  const fetchUser = async () => {
-    for (let e of events) {
-      const { data: user } = await supabase
-        .from('users')
-        .select(`*`)
-        .eq('id', e.user)
-        .single()
-
-      e.users = {
-        username: user.username,
-        id: user.id,
-        signed_url: await getSignedUrl('avatars', user.avatar_url)
-      }
-
-      switch (e.type) {
-        case 'CREATE':
-          e.typeClean = 'Minted by'
-          break
-        case 'BUY':
-          e.typeClean = 'Bought by'
-          break
-        case 'LIST':
-          e.typeClean = 'Listed by'
-          break
-      }
-    }
-  }
-
-  const setAssets = async () => {
-    let physicalAssets = []
-    let digitalAssets = []
-    if (nft[0]?.assets) {
-      for (let el of nft[0].assets) {
-        el.type === 'digital' ?
-          digitalAssets.push(el)
-          :
-          physicalAssets.push(el)
-      }
-    }
-    setDigitalAssets(digitalAssets)
-    setPhysicalAssets(physicalAssets)
-  }
 
   const fetchMeta = async () => {
     if (tokenId) {
@@ -119,14 +50,6 @@ const Nft = ({ propsId }) => {
       }
     }
     setFetching(false)
-
-    const url = await getSignedUrl('avatars', nft.at(0).users.avatar_url)
-    setCreatorUrl(url)
-
-    const result = await fetch(`https://api.coinconvert.net/convert/eth/usd?amount=${nft.at(0).price}`)
-    const price = await result.json()
-    setPriceUSD(price.USD.toFixed(2))
-    setLoading(false)
   }
 
   const initiateBuy = async (nft) => {
@@ -159,10 +82,9 @@ const Nft = ({ propsId }) => {
     router.push(`/nfts/resell?id=${nft.id}&tokenId=${nft.tokenId}&tokenURI=${nft.tokenURI}&userId=${currentUser.id}`)
   }
 
-  if (!nft || loading) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
-  if (!nft[0]) return <h1 className="mb-4 text-3xl flex items-center justify-center">NFT not found</h1>
+  if (!nft) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'>NFT not found</div>
 
-  const { name, description, price, image_url, artists, users, listed, tokenURI, tokenId, created_at } = nft.at(0)
+  const { name, description, price, image_url, artists, users, events, listed, tokenURI, tokenId, created_at, creatorUrl, priceUSD, physicalAssets, digitalAssets } = nft
 
   return (
     <>
@@ -197,7 +119,6 @@ const Nft = ({ propsId }) => {
             :
             <>
               <h1 className='mb-12'>{name}</h1>
-
               <div className='flex justify-between w-full border-b-2 border-detail dark:border-detail-dark'>
                 <ul className='flex items-center justify-start gap-8 transition-colors'>
                   {links.map(link => (
@@ -225,7 +146,7 @@ const Nft = ({ propsId }) => {
                     <p className='mb-4'>Physical <span className='text-[#777777] dark:text-[#999999]'>(free shipping worldwide)</span></p>
                     <ul>
                       {physicalAssets?.map((asset, idx) => (
-                        <li key={asset.name + idx}>&#8212;	{asset.name}</li>
+                        <li key={asset.name + idx}>&#8212; {asset.name}</li>
                       ))}
                     </ul>
                     <p className='mb-4 mt-8'>Digital</p>
@@ -326,8 +247,72 @@ const Nft = ({ propsId }) => {
 
 export async function getServerSideProps(context) {
   const id = context.params.id
+
+  const { data: nft } = await supabase
+    .from('nfts')
+    .select(`*, artists(*), collections(*), users(*)`)
+    .eq('id', id)
+    .single()
+
+  const { data: events } = await supabase
+    .from('events')
+    .select(`*, nfts(*)`)
+    .eq('nft', id)
+
+  if (nft) {
+
+    let physicalAssets = []
+    let digitalAssets = []
+    if (nft.assets) {
+      for (let el of nft.assets) {
+        el.type === 'digital' ?
+          digitalAssets.push(el)
+          :
+          physicalAssets.push(el)
+      }
+    }
+    nft.digitalAssets = digitalAssets
+    nft.physicalAssets = physicalAssets
+
+    const url = await getSignedUrl('avatars', nft.users.avatar_url)
+    nft.creatorUrl = url
+
+    const result = await fetch(`https://api.coinconvert.net/convert/eth/usd?amount=${nft.price}`)
+    const price = await result.json()
+    nft.priceUSD = price.USD
+  }
+
+  if (events) {
+    for (let e of events) {
+      const { data: user } = await supabase
+        .from('users')
+        .select(`*`)
+        .eq('id', e.user)
+        .single()
+
+      e.users = {
+        username: user.username,
+        id: user.id,
+        signed_url: await getSignedUrl('avatars', user.avatar_url)
+      }
+
+      switch (e.type) {
+        case 'CREATE':
+          e.typeClean = 'Minted by'
+          break
+        case 'BUY':
+          e.typeClean = 'Bought by'
+          break
+        case 'LIST':
+          e.typeClean = 'Listed by'
+          break
+      }
+    }
+    nft.events = events
+  }
+
   return {
-    props: { propsId: id },
+    props: { nft },
   }
 }
 export default Nft
