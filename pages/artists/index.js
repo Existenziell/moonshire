@@ -57,10 +57,11 @@ const Artists = () => {
 
           {fetchedArtists.map(artist => {
             const { id, name, headline, description, public_url, collections, numberOfCollections, nfts, numberOfNfts } = artist
+
             return (
-              <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-200px)] w-full mb-40'>
+              <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-300px)] w-full mb-40'>
                 <div className={`flex flex-col md:flex-row items-center justify-center gap-[40px] px-[20px] md:px-[40px]`}>
-                  <div className='md:w-1/2 w-full'>
+                  <div className='w-full shadow-2xl nextimg md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] bg-detail dark:bg-detail-dark'>
                     <Image
                       width={1000}
                       height={1000}
@@ -68,7 +69,6 @@ const Artists = () => {
                       src={public_url}
                       blurDataURL={public_url}
                       alt='Artist Image'
-                      className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] bg-detail dark:bg-detail-dark'
                     />
                   </div>
                   <div className='md:w-1/2 w-full'>
@@ -87,23 +87,15 @@ const Artists = () => {
                     <div className='mt-16'>
                       <h1 className='mb-0'>Assets</h1>
                       <hr className='my-8' />
-                      <div className={numberOfNfts >= 10 ? `flex items-start justify-start gap-20` : ``}>
-                        <div>
-                          <p className='mb-4'>{numberOfCollections} {numberOfCollections > 1 ? `Collections` : `Collection`}</p>
-                          <div>
-                            {collections.map(c => (
-                              <Link key={c.id} href={`/collections/${c.id}`}><a className='link-white block'>{c.title}</a></Link>
-                            ))}
-                          </div>
-                        </div>
-                        <div className={numberOfNfts >= 10 ? `` : `mt-8`}>
-                          <p className='mb-4'>{numberOfNfts} {numberOfNfts > 1 ? `NFTs` : `NFT`}</p>
-                          <div>
-                            {nfts.map(n => (
-                              <Link key={n.id} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
-                            ))}
-                          </div>
-                        </div>
+                      <div className='flex flex-col items-start justify-start max-h-80 flex-wrap'>
+                        <p className='mb-4'>{numberOfCollections} {numberOfCollections > 1 ? `Collections` : `Collection`}</p>
+                        {collections.map(c => (
+                          <Link key={c.id} href={`/collections/${c.id}`}><a className='link-white block'>{c.title}</a></Link>
+                        ))}
+                        <p className='mt-8 mb-4'>{numberOfNfts} {numberOfNfts > 1 ? `NFTs` : `NFT`}</p>
+                        {nfts.map(n => (
+                          <Link key={n.id} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
+                        ))}
                       </div>
                     </div>
                   </div>
