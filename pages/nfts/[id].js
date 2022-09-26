@@ -216,7 +216,7 @@ const Nft = ({ propsId }) => {
                 </ul>
               </div>
 
-              <div className='h-72 mt-8 overflow-y-auto pr-4'>
+              <div className='h-72 mt-8 overflow-y-auto'>
 
                 {view === 'description' &&
                   <p className='mb-4'>
