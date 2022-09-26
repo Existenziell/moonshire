@@ -121,7 +121,6 @@ const Nft = ({ propsId }) => {
     }
 
     const url = await getSignedUrl('avatars', nft.at(0).users.avatar_url)
-    console.log('setCreatorUrl', url)
     setCreatorUrl(url)
 
     setFetching(false)
@@ -130,7 +129,6 @@ const Nft = ({ propsId }) => {
   const convertPrice = async () => {
     await convert.ready(); //Cache is not yet loaded on first start
     const price = new convert.from("ETH").to("USD").amount(nft.at(0).price).toFixed(2)
-    console.log("setPrice:", price);
     setPriceUSD(price)
     return price
   }
@@ -282,7 +280,11 @@ const Nft = ({ propsId }) => {
                 :
                 <div className='flex items-center justify-between gap-10 mt-10'>
                   <div className='flex items-center gap-6'>
-                    <img src={creatorUrl} alt='NFT Creator' width={50} height={50} />
+                    {creatorUrl ?
+                      <img src={creatorUrl} alt='NFT Creator' width={50} height={50} />
+                      :
+                      <div className="w-[50px]"></div>
+                    }
                     <div>
                       Listed by <span className='link-white'>@{users.username}</span>
                       <p className='whitespace-nowrap'>{moment(created_at).format('MMMM Do YYYY, h:mm a')}</p>
@@ -290,7 +292,9 @@ const Nft = ({ propsId }) => {
                   </div>
                   <div className='flex items-center gap-6'>
                     <p className='my-0 text-[20px] whitespace-nowrap'>{price} ETH</p>
-                    <p className='text-[20px] text-gray-400 whitespace-nowrap'>${priceUSD}</p>
+                    {priceUSD &&
+                      <p className='text-[20px] text-gray-400 whitespace-nowrap'>${priceUSD}</p>
+                    }
                     {!address ?
                       <button
                         onClick={connectWallet}
