@@ -59,7 +59,7 @@ const Home = () => {
               <Image src={`/home/${i}.webp`} layout='fill' alt='Collection Image' className='object-cover' />
             </div>
             {collection.title &&
-              <div className='absolute bottom-[150px] right-8 left-12 flex flex-col items-end'>
+              <div className='absolute bottom-[150px] right-[25px] left-[40px] flex flex-col items-end'>
                 <p className='text-8xl leading-tight text-white w-2/3 text-right'>{collection.title}</p>
                 <div className='flex justify-between items-center w-full mt-8'>
                   <div className='flex items-center gap-8'>
