@@ -30,7 +30,7 @@ const Home = () => {
         id: ''
       }
     },
-    undefined, undefined, undefined, undefined, undefined,
+    { image: '/home/2.webp' }, { image: '/home/2.webp' }, { image: '/home/2.webp' }, { image: '/home/2.webp' }, { image: '/home/2.webp' },
     {
       id: '26da2b76-b8d2-4b56-b429-5bd28f67c467',
       title: 'Cuvée Sensorium Art Editions',
@@ -53,10 +53,12 @@ const Home = () => {
 
       <div className='h-screen md:snap-y md:snap-mandatory md:overflow-y-scroll'>
 
-        {collections.map((collection, idx) =>
-          <div key={idx} className={`h-screen w-full bg-cover bg-center bg-home${idx} md:snap-start md:snap-always flex items-center justify-center relative`}>
-
-            {collection &&
+        {collections.map((collection, i) =>
+          <div key={i} className={`h-screen w-full bg-cover bg-center md:snap-start md:snap-always flex items-center justify-center relative`}>
+            <div className='absolute w-full h-screen object-cover'>
+              <Image src={`/home/${i}.webp`} layout='fill' alt='Collection Image' />
+            </div>
+            {collection.title &&
               <div className='absolute bottom-[150px] right-16 left-16 flex flex-col items-end'>
                 <p className='text-8xl leading-tight text-white w-2/3 text-right'>{collection.title}</p>
                 <div className='flex justify-between items-center w-full mt-8'>
@@ -75,19 +77,17 @@ const Home = () => {
                   </div>
                   <div className='flex items-center gap-12 '>
                     <span className='text-4xl text-white'>{collection.price} ETH</span>
-                    <span className='text-4xl text-gray-400'>{collection.priceUSD} USD</span>
+                    <span className='text-4xl text-gray-400'>${collection.priceUSD}</span>
                     <Link href={collection.id ? `/collections/${collection.id}` : `/collections`}>
                       <a><button className='button button-cta'>EXPLORE</button></a>
                     </Link>
                   </div>
-
                 </div>
               </div>
             }
           </div>
         )}
       </div>
-
 
       {/* <div className='flex flex-col items-center justify-center w-full px-[40px] pb-24'> */}
       {/* {collections?.length > 0 &&
