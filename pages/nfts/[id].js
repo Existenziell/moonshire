@@ -121,7 +121,7 @@ const Nft = ({ propsId }) => {
     const url = await getSignedUrl('avatars', nft.at(0).users.avatar_url)
     setCreatorUrl(url)
 
-    const price = await fetch('/api/convertPrice', {
+    let price = await fetch('/api/convertPrice', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(nft.at(0).price)
