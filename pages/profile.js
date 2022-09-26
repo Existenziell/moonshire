@@ -74,6 +74,9 @@ const Profile = () => {
     switch (view) {
       case 'all':
         nfts = [...nftsOwned, ...nftsListed]
+        nfts.sort(function (a, b) {
+          return new Date(b.created_at) - new Date(a.created_at);
+        })
         break
       case 'owned':
         nfts = nftsOwned
@@ -106,6 +109,7 @@ const Profile = () => {
         }
       }
     }
+    // console.log(nfts);
     setFilteredNfts(nfts)
     setFetching(false)
   }
