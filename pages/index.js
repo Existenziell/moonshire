@@ -10,7 +10,7 @@ const Home = () => {
   const collections = [
     {
       id: 'ac566a41-7985-404a-90cf-5f484d7fe605',
-      title: 'SHARO COLLECTION by KHALED x CARTIER',
+      title: 'SHARQ COLLECTION by KHALED x CARTIER',
       price: 0.323,
       priceUSD: 418.90,
       createdAt: 'Sep 25, 2022 at 04:54pm',
@@ -54,12 +54,12 @@ const Home = () => {
       <div className='h-screen md:snap-y md:snap-mandatory md:overflow-y-scroll'>
 
         {collections.map((collection, i) =>
-          <div key={i} className={`h-screen w-full bg-cover bg-center md:snap-start md:snap-always flex items-center justify-center relative`}>
-            <div className='absolute w-full h-screen object-cover'>
-              <Image src={`/home/${i}.webp`} layout='fill' alt='Collection Image' />
+          <div key={i} className={`h-screen w-full md:snap-start md:snap-always flex items-center justify-center relative`}>
+            <div className='absolute w-full h-full'>
+              <Image src={`/home/${i}.webp`} layout='fill' alt='Collection Image' className='object-cover' />
             </div>
             {collection.title &&
-              <div className='absolute bottom-[150px] right-16 left-16 flex flex-col items-end'>
+              <div className='absolute bottom-[150px] right-8 left-12 flex flex-col items-end'>
                 <p className='text-8xl leading-tight text-white w-2/3 text-right'>{collection.title}</p>
                 <div className='flex justify-between items-center w-full mt-8'>
                   <div className='flex items-center gap-8'>
