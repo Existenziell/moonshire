@@ -12,7 +12,7 @@ const Home = () => {
       id: 'ac566a41-7985-404a-90cf-5f484d7fe605',
       title: 'SHARQ COLLECTION by KHALED x CARTIER',
       price: 0.323,
-      priceUSD: 418.90,
+      priceUSD: '418.90',
       createdAt: 'Sep 25, 2022 at 04:54pm',
       artist: {
         name: 'DJ Khaled',
@@ -23,7 +23,7 @@ const Home = () => {
       id: '',
       title: 'HIM / HER INTERCONNECTION',
       price: 2.4,
-      priceUSD: 3112.56,
+      priceUSD: '3112.56',
       createdAt: 'Aug 12, 2022 at 08:21am',
       artist: {
         name: 'Andreas Rothaug',
@@ -35,7 +35,7 @@ const Home = () => {
       id: '26da2b76-b8d2-4b56-b429-5bd28f67c467',
       title: 'Cuvée Sensorium Art Editions',
       price: 1.75,
-      priceUSD: 2269.58,
+      priceUSD: '2269.58',
       createdAt: 'Feb 18, 2022 at 11:34pm',
       artist: {
         name: 'James Rizzi',
