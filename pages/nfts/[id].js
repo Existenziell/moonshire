@@ -14,7 +14,6 @@ import fetchMarketItemsMeta from '../../lib/contract/fetchMarketItemsMeta'
 import fetchMyNfts from '../../lib/contract/fetchMyNfts'
 import Success from '../../components/Success'
 import Image from 'next/image'
-import convert from 'crypto-convert'
 import moment from 'moment'
 
 const Nft = ({ propsId }) => {
@@ -92,7 +91,6 @@ const Nft = ({ propsId }) => {
     }
     setDigitalAssets(digitalAssets)
     setPhysicalAssets(physicalAssets)
-    await convertPrice()
   }
 
   useEffect(() => {
@@ -123,14 +121,15 @@ const Nft = ({ propsId }) => {
     const url = await getSignedUrl('avatars', nft.at(0).users.avatar_url)
     setCreatorUrl(url)
 
-    setFetching(false)
-  }
-
-  const convertPrice = async () => {
-    await convert.ready(); //Cache is not yet loaded on first start
-    const price = new convert.from("ETH").to("USD").amount(nft.at(0).price).toFixed(2)
+    const price = await fetch('/api/convertPrice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(nft.at(0).price)
+    })
+    price = await price.json()
     setPriceUSD(price)
-    return price
+
+    setFetching(false)
   }
 
   const initiateBuy = async (nft) => {
