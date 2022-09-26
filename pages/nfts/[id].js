@@ -121,6 +121,7 @@ const Nft = ({ propsId }) => {
     }
 
     const url = await getSignedUrl('avatars', nft.at(0).users.avatar_url)
+    console.log('setCreatorUrl', url)
     setCreatorUrl(url)
 
     setFetching(false)
@@ -129,6 +130,7 @@ const Nft = ({ propsId }) => {
   const convertPrice = async () => {
     await convert.ready(); //Cache is not yet loaded on first start
     const price = new convert.from("ETH").to("USD").amount(nft.at(0).price).toFixed(2)
+    console.log("setPrice:", price);
     setPriceUSD(price)
     return price
   }
