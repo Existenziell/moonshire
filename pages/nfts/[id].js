@@ -197,9 +197,7 @@ const Nft = ({ nft }) => {
                 :
                 <div className='flex items-center justify-between gap-10 mt-10'>
                   <div className='flex items-center gap-6'>
-                    {creatorUrl &&
-                      <img src={creatorUrl} alt='NFT Creator' width={50} height={50} />
-                    }
+                    <img src={creatorUrl} alt='NFT Creator' width={50} height={50} />
                     <div>
                       Listed by <span className='link-white'>@{users.username}</span>
                       <p className='whitespace-nowrap'>{moment(created_at).format('MMMM Do YYYY, h:mm a')}</p>
@@ -207,9 +205,7 @@ const Nft = ({ nft }) => {
                   </div>
                   <div className='flex items-center gap-6'>
                     <p className='my-0 text-[20px] whitespace-nowrap'>{price} ETH</p>
-                    {priceUSD &&
-                      <p className='text-[20px] text-gray-400 whitespace-nowrap'>${priceUSD}</p>
-                    }
+                    <p className='text-[20px] text-gray-400 whitespace-nowrap'>${priceUSD}</p>
                     {!address ?
                       <button
                         onClick={connectWallet}
@@ -279,7 +275,7 @@ export async function getServerSideProps(context) {
 
     const result = await fetch(`https://api.coinconvert.net/convert/eth/usd?amount=${nft.price}`)
     const price = await result.json()
-    nft.priceUSD = price.USD
+    nft.priceUSD = price.USD.toFixed(2)
   }
 
   if (events) {
