@@ -28,7 +28,7 @@ const NftsList = ({ nfts, display }) => {
           <tr key={nft.tokenId + nft.name} className='relative mb-[20px]'>
             <td className='px-0 w-[90px]'>
               <Link href={`/nfts/${nft.id}`}>
-                <a>
+                <a className='w-[60px] shadow nextimg aspect-square'>
                   <Image
                     width={60}
                     height={60}
@@ -36,7 +36,6 @@ const NftsList = ({ nfts, display }) => {
                     src={nft.image_url ? nft.image_url : nft.image}
                     blurDataURL={nft.image_url ? nft.image_url : nft.image}
                     alt='NFT Image'
-                    className='w-[60px] shadow aspect-square bg-cover'
                   />
                 </a>
               </Link>
