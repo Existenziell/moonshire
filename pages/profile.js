@@ -36,7 +36,6 @@ const Profile = () => {
   const [nftsListed, setNftsListed] = useState(null)
   const [fetching, setFetching] = useState(true)
 
-  const [loading, setLoading] = useState(false)
   const [initialNfts, setInitialNfts] = useState()
   const [filteredNfts, setFilteredNfts] = useState()
   const [view, setView] = useState('all')
@@ -69,7 +68,8 @@ const Profile = () => {
   }, [nfts, currentUser])
 
   const filterNfts = async (view) => {
-    // setLoading(true)
+    setFetching(true)
+
     let nfts
     switch (view) {
       case 'all':
@@ -107,7 +107,7 @@ const Profile = () => {
       }
     }
     setFilteredNfts(nfts)
-    // setLoading(false)
+    setFetching(false)
   }
 
   useEffect(() => {
