@@ -61,7 +61,7 @@ const Nft = ({ nft }) => {
     logWeb3(`Initiating blockchain transfer...`)
 
     try {
-      const hash = await buyNft(nft.at(0), signer, address, currentUser.id)
+      const hash = await buyNft(nft, signer, address, currentUser.id)
       if (hash) {
         notify("Transfer to your wallet was successful!")
         setHash(hash)
@@ -74,7 +74,8 @@ const Nft = ({ nft }) => {
       }
       setBuying(false)
     } catch (e) {
-      notify("Something went wrong...")
+      // console.log(e);
+      notify("Something went wrong!...")
     }
   }
 
@@ -225,7 +226,7 @@ const Nft = ({ nft }) => {
                             <button onClick={() => initiateBuy(nft)} className='button button-cta'>Buy</button>
                           :
                           sellerIsOwner ?
-                            <button onClick={() => listNFT(nft.at(0))} className='button button-cta'>List</button>
+                            <button onClick={() => listNFT(nft)} className='button button-cta'>List</button>
                             :
                             <a href={`https://rinkeby.etherscan.io/tx/${lastEvent.txHash}`} target='_blank' rel='noopener noreferrer nofollow' className='button button-detail'>
                               Etherscan
