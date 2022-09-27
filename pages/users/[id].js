@@ -15,7 +15,7 @@ const User = ({ user, nfts }) => {
 
       <div className='px-[20px] md:px-[40px] md:h-[calc(100vh-200px)]'>
         <div className='flex flex-col md:flex-row items-center justify-start gap-[40px] w-full'>
-          <div className='shadow-2xl nextimg md:max-w-[calc(50vw-160px)] md:max-h-[calc(100vh-260px)]'>
+          <div className='w-full md:w-1/2 shadow-2xl nextimg md:max-h-[calc(100vh-200px)]'>
             <Image
               width={1000}
               height={1000}
@@ -31,11 +31,15 @@ const User = ({ user, nfts }) => {
             {nfts.length > 0 &&
               <>
                 <p className='mb-4'>Created Assets:</p>
-                {nfts.map(nft =>
+                {nfts.map((nft, i) =>
+                  i <= 16 &&
                   <Link key={nft.id} href={`/nfts/${nft.id}`}>
                     <a className='block link'>{nft.name}</a>
                   </Link>
                 )}
+                {nfts.length > 16 &&
+                  <p>...</p>
+                }
               </>
             }
           </div>

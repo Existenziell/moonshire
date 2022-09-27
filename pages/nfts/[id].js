@@ -94,7 +94,6 @@ const Nft = ({ nft }) => {
       </Head>
 
       <div className='px-[20px] md:px-[40px] md:h-[calc(100vh-200px)] flex flex-col md:flex-row items-center justify-start gap-[40px] w-full'>
-
         <div className='w-full md:w-1/2 shadow-2xl nextimg'>
           <Image
             width={1000}
