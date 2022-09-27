@@ -61,7 +61,7 @@ export async function getServerSideProps(context) {
   let { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).eq('user', id).order('created_at', { ascending: false })
   const url = await getSignedUrl('avatars', user.avatar_url)
   user.public_url = url
-  console.log(nfts);
+
   return {
     props: { user, nfts },
   }
