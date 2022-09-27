@@ -121,7 +121,7 @@ const Settings = () => {
                 className="text-cta mr-2 bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600"
               />
               <span>Show assets on your {` `}
-                <Link href={`/users/${currentUser.id}`}>
+                <Link href={`/users/${encodeURIComponent(currentUser.username)}`}>
                   <a className='link'>public profile</a>
                 </Link>
                 ?</span>

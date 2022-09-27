@@ -169,7 +169,7 @@ const Nft = ({ nft }) => {
                         <div className="flex items-center gap-6">
                           <img src={e.users?.signed_url} alt='NFT Creator' width={50} height={50} />
                           <div>
-                            <p>{e.typeClean} <span className="link-white">@{e.users?.username}</span></p>
+                            <p>{e.typeClean} <Link href={`/users/${encodeURIComponent(e.users.username)}`}><a className="link-white">@{e.users?.username}</a></Link></p>
                             <p>{moment(e.created_at).format('MMMM Do YYYY, h:mm a')}</p>
                           </div>
                         </div>

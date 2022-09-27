@@ -50,8 +50,9 @@ const User = ({ user, nfts }) => {
 }
 
 export async function getServerSideProps(context) {
-  const id = context.params.id
-  let { data: user } = await supabase.from('users').select(`*`).eq('id', id).single()
+  const username = decodeURIComponent(context.params.id)
+  let { data: user } = await supabase.from('users').select(`*`).eq('username', username).single()
+
   if (!user) {
     return {
       redirect: {
@@ -62,7 +63,7 @@ export async function getServerSideProps(context) {
     }
   }
 
-  let { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).eq('user', id).order('created_at', { ascending: false })
+  let { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).eq('user', user.id).order('created_at', { ascending: false })
   const url = await getSignedUrl('avatars', user.avatar_url)
   user.public_url = url
 
