@@ -198,7 +198,10 @@ const Nft = ({ nft }) => {
                   <div className='flex items-center gap-6'>
                     <img src={lastEvent.users.signed_url} alt='NFT Creator' width={50} height={50} />
                     <div>
-                      Listed by <span className='link-white'>@{lastEvent.users.username}</span>
+                      {listed ? `Listed by ` : `Sold to `}
+                      <Link href={`/users/${encodeURIComponent(lastEvent.users.username)}`}>
+                        <a className="link-white">@{lastEvent.users?.username}</a>
+                      </Link>
                       <p className='whitespace-nowrap'>{moment(lastEvent.created_at).format('MMMM Do YYYY, h:mm a')}</p>
                     </div>
                   </div>
@@ -224,7 +227,9 @@ const Nft = ({ nft }) => {
                           sellerIsOwner ?
                             <button onClick={() => listNFT(nft.at(0))} className='button button-cta'>List</button>
                             :
-                            <button className='button button-detail' disabled>SOLD</button>
+                            <a href={`https://rinkeby.etherscan.io/tx/${lastEvent.txHash}`} target='_blank' rel='noopener noreferrer nofollow' className='button button-detail'>
+                              Etherscan
+                            </a>
                     }
                   </div>
                 </div>
@@ -270,8 +275,7 @@ export async function getServerSideProps(context) {
     const price = await result.json()
     nft.priceUSD = price.USD.toFixed(2)
   }
-
-  if (events) {
+  if (events.length) {
     for (let e of events) {
       const { data: user } = await supabase
         .from('users')
@@ -297,9 +301,9 @@ export async function getServerSideProps(context) {
           break
       }
     }
-    const lastEvent = events.pop();
+    const lastEvent = events.slice(-1)
     nft.events = events
-    nft.lastEvent = lastEvent
+    nft.lastEvent = lastEvent[0]
   }
 
   return {
