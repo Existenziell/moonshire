@@ -40,14 +40,12 @@ const Artist = ({ artist }) => {
             <div className='mt-20'>
               <h1 className='mb-0'>Assets</h1>
               <hr className='my-8' />
-              <p className='mb-4'>{numberOfCollections} {numberOfCollections > 1 ? `Collections` : `Collection`}</p>
-              <div>
+              <div className='flex flex-col items-start justify-start max-h-64 flex-wrap'>
+                <p className='mb-4'>{numberOfCollections} {numberOfCollections > 1 ? `Collections` : `Collection`}</p>
                 {collections.map(c => (
                   <Link key={c.id} href={`/collections/${c.id}`}><a className='link-white block'>{c.title}</a></Link>
                 ))}
-              </div>
-              <p className='mb-4 mt-8'>{numberOfNfts} {numberOfNfts > 1 ? `NFTs` : `NFT`}</p>
-              <div>
+                <p className='mb-4 mt-8'>{numberOfNfts} {numberOfNfts > 1 ? `NFTs` : `NFT`}</p>
                 {nfts.map(n => (
                   <Link key={n.id} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
                 ))}
