@@ -84,7 +84,7 @@ const Nft = ({ nft }) => {
 
   if (!nft) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'>NFT not found</div>
 
-  const { name, description, price, image_url, artists, users, events, listed, tokenURI, tokenId, created_at, creatorUrl, priceUSD, physicalAssets, digitalAssets } = nft
+  const { name, description, price, image_url, artists, events, lastEvent, listed, tokenURI, tokenId, priceUSD, physicalAssets, digitalAssets } = nft
 
   return (
     <>
@@ -105,7 +105,7 @@ const Nft = ({ nft }) => {
           />
         </div>
 
-        <div className='md:w-1/2 w-full'>
+        <div className='md:min-w-1/2 w-full'>
           {success ?
             <>
               <h1 className='mb-4'>Congratulations</h1>
@@ -175,7 +175,7 @@ const Nft = ({ nft }) => {
                         </div>
                         <div className="flex items-center gap-6">
                           <p className='my-0 text-[20px] whitespace-nowrap'>{e.price} ETH</p>
-                          <a href={`https://rinkeby.etherscan.io/tx/${e.txHash}`} target='_blank' rel='noopener noreferrer nofollow' className='button button-cta'>
+                          <a href={`https://rinkeby.etherscan.io/tx/${e.txHash}`} target='_blank' rel='noopener noreferrer nofollow' className='button button-detail'>
                             Etherscan
                           </a>
                         </div>
@@ -196,10 +196,10 @@ const Nft = ({ nft }) => {
                 :
                 <div className='flex items-center justify-between gap-10 mt-10'>
                   <div className='flex items-center gap-6'>
-                    <img src={creatorUrl} alt='NFT Creator' width={50} height={50} />
+                    <img src={lastEvent.users.signed_url} alt='NFT Creator' width={50} height={50} />
                     <div>
-                      Listed by <span className='link-white'>@{users.username}</span>
-                      <p className='whitespace-nowrap'>{moment(created_at).format('MMMM Do YYYY, h:mm a')}</p>
+                      Listed by <span className='link-white'>@{lastEvent.users.username}</span>
+                      <p className='whitespace-nowrap'>{moment(lastEvent.created_at).format('MMMM Do YYYY, h:mm a')}</p>
                     </div>
                   </div>
                   <div className='flex items-center gap-6'>
@@ -213,27 +213,24 @@ const Nft = ({ nft }) => {
                       </button>
                       :
                       fetching ?
-                        <div className='h-[40px] flex items-center justify-center'><PulseLoader color={'white'} size={4} /></div>
+                        <div className='h-[40px] flex items-center justify-center whitespace-nowrap'><PulseLoader color={'white'} size={4} /></div>
                         :
                         listed ?
                           sellerIsOwner ?
-                            // <p className='text-tiny'>You listed this NFT</p>
-                            <button className='button button-cta'>Unlist</button>
+                            <button className='button button-cta' disabled>Unlist</button>
                             :
                             <button onClick={() => initiateBuy(nft)} className='button button-cta'>Buy</button>
                           :
                           sellerIsOwner ?
                             <button onClick={() => listNFT(nft.at(0))} className='button button-cta'>List</button>
                             :
-                            // <p className='text-tiny'>NFT not listed</p>
-                            <button className='button button-cta'>List</button>
+                            <button className='button button-detail' disabled>SOLD</button>
                     }
                   </div>
                 </div>
               }
             </>
           }
-
         </div >
       </div >
     </>
@@ -253,9 +250,9 @@ export async function getServerSideProps(context) {
     .from('events')
     .select(`*, nfts(*)`)
     .eq('nft', id)
+    .order('created_at', { ascending: true })
 
   if (nft) {
-
     let physicalAssets = []
     let digitalAssets = []
     if (nft.assets) {
@@ -268,9 +265,6 @@ export async function getServerSideProps(context) {
     }
     nft.digitalAssets = digitalAssets
     nft.physicalAssets = physicalAssets
-
-    const url = await getSignedUrl('avatars', nft.users.avatar_url)
-    nft.creatorUrl = url
 
     const result = await fetch(`https://api.coinconvert.net/convert/eth/usd?amount=${nft.price}`)
     const price = await result.json()
@@ -303,7 +297,9 @@ export async function getServerSideProps(context) {
           break
       }
     }
+    const lastEvent = events.pop();
     nft.events = events
+    nft.lastEvent = lastEvent
   }
 
   return {

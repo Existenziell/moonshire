@@ -101,11 +101,11 @@ input[type='search']::-webkit-search-cancel-button{
 }
 
 .button-detail {
-  @apply text-black bg-detail dark:bg-detail-dark dark:text-detail hover:text-cta dark:hover:text-cta transition-all duration-100; 
+  @apply text-white bg-detail dark:bg-detail-dark dark:text-detail hover:text-cta dark:hover:text-cta transition-all duration-100; 
 }
 
 .button:disabled {
-  @apply text-black bg-detail dark:bg-detail-dark dark:text-detail hover:cursor-not-allowed;
+  @apply text-white bg-detail dark:bg-detail-dark dark:text-detail hover:cursor-not-allowed;
 }
 
 .button-connect {
