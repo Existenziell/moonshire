@@ -11,7 +11,13 @@ const Artists = () => {
   const [fetchedArtists, setFetchedArtists] = useState()
   const { currentUser } = useApp()
 
-  let [{ data: nfts }] = useRealtime('nfts', { select: { columns: '*, artists(*), collections(*)' } })
+  let [{ data: nfts }] = useRealtime('nfts', {
+    select: {
+      columns: '*, artists(*), collections(*)',
+      filter: useFilter((query) => query.order('created_at', { ascending: false }))
+    }
+  })
+
   let [{ data: artists }] = useRealtime('artists', {
     select: { filter: useFilter((query) => query.order('created_at', { ascending: false })) }
   })

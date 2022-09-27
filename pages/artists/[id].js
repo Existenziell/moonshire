@@ -37,7 +37,7 @@ const Artist = ({ artist }) => {
             <p className='mt-4'>{description}</p>
             {/* <p className='mt-4'>Origin: {origin}</p> */}
             {/* <p className='mt-8 text-xs'>On Moonshire since: {created_at.slice(0, 10)}</p> */}
-            <div className='mt-20'>
+            <div className='mt-16'>
               <h1 className='mb-0'>Assets</h1>
               <hr className='my-8' />
               <div className='flex flex-col items-start justify-start max-h-64 flex-wrap'>
