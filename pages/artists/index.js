@@ -86,7 +86,7 @@ const Artists = () => {
                     <div className='mt-16'>
                       <h1 className='mb-0'>Assets</h1>
                       <hr className='my-8' />
-                      <div className='flex flex-col items-start justify-start max-h-64 flex-wrap'>
+                      <div className='flex flex-col items-start justify-start md:max-h-64 flex-wrap'>
                         <p className='mb-4'>{numberOfCollections} {numberOfCollections > 1 ? `Collections` : `Collection`}</p>
                         {collections.map(c => (
                           <Link key={c.id} href={`/collections/${c.id}`}><a className='link-white block'>{c.title}</a></Link>

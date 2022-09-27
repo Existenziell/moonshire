@@ -63,10 +63,10 @@ const Home = () => {
             </div>
             {collection.title &&
               <div className='absolute bottom-[150px] right-[40px] left-[43px] flex flex-col items-end'>
-                <p className='text-8xl leading-tight text-white'>{collection.title}</p>
-                <p className='text-8xl leading-tight text-white'>{collection.subtitle}</p>
+                <p className='text-8xl leading-tight text-white hidden md:block'>{collection.title}</p>
+                <p className='text-8xl leading-tight text-white hidden md:block'>{collection.subtitle}</p>
                 <div className='flex justify-between items-center w-full mt-8'>
-                  <div className='flex items-center gap-8'>
+                  <div className='hidden md:flex items-center gap-8'>
                     <div className='nextimg'>
                       <Image src='/home/thing.png' width={60} height={60} alt='Thing' />
                     </div>
@@ -81,7 +81,7 @@ const Home = () => {
                   </div>
                   <div className='flex items-center gap-12 '>
                     <span className='text-4xl text-white'>{collection.price} ETH</span>
-                    <span className='text-4xl text-gray-400'>${collection.priceUSD}</span>
+                    <span className='text-4xl text-gray-400 hidden md:block'>${collection.priceUSD}</span>
                     <Link href={collection.id ? `/collections/${collection.id}` : `/collections`}>
                       <a><button className='button button-cta'>EXPLORE</button></a>
                     </Link>

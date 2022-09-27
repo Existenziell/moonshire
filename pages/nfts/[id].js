@@ -171,11 +171,11 @@ const Nft = ({ nft }) => {
                           <img src={e.users?.signed_url} alt='NFT Creator' width={50} height={50} />
                           <div>
                             <p>{e.typeClean} <Link href={`/users/${encodeURIComponent(e.users.username)}`}><a className="link-white">@{e.users?.username}</a></Link></p>
-                            <p>{moment(e.created_at).format('MMMM Do YYYY, h:mm a')}</p>
+                            <p className="hidden md:block">{moment(e.created_at).format('MMMM Do YYYY, h:mm a')}</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-6">
-                          <p className='my-0 text-[20px] whitespace-nowrap'>{e.price} ETH</p>
+                          <p className='my-0 md:text-[20px] whitespace-nowrap'>{e.price} ETH</p>
                           <a href={`https://rinkeby.etherscan.io/tx/${e.txHash}`} target='_blank' rel='noopener noreferrer nofollow' className='button button-detail'>
                             Etherscan
                           </a>
@@ -195,7 +195,7 @@ const Nft = ({ nft }) => {
                   <div id='mintingInfo' className='text-xs'></div>
                 </div>
                 :
-                <div className='flex items-center justify-between gap-10 mt-10'>
+                <div className='flex flex-col md:flex-row items-start md:items-center justify-between gap-10 mt-10'>
                   <div className='flex items-center gap-6'>
                     <img src={lastEvent.users.signed_url} alt='NFT Creator' width={50} height={50} />
                     <div>
