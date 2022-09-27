@@ -162,28 +162,28 @@ const Nft = ({ nft }) => {
                   </div>
                 }
 
-                {view === 'provenance' &&
+                {view === 'provenance' && (
                   events.length > 0 ?
-                  events.map(e =>
-                    <div key={e.id} className='flex items-center justify-between w-full mb-4'>
-                      <div className="flex items-center gap-6">
-                        <img src={e.users?.signed_url} alt='NFT Creator' width={50} height={50} />
-                        <div>
-                          <p>{e.typeClean} <span className="link-white">@{e.users?.username}</span></p>
-                          <p>{moment(e.created_at).format('MMMM Do YYYY, h:mm a')}</p>
+                    events.map(e =>
+                      <div key={e.id} className='flex items-center justify-between w-full mb-4'>
+                        <div className="flex items-center gap-6">
+                          <img src={e.users?.signed_url} alt='NFT Creator' width={50} height={50} />
+                          <div>
+                            <p>{e.typeClean} <span className="link-white">@{e.users?.username}</span></p>
+                            <p>{moment(e.created_at).format('MMMM Do YYYY, h:mm a')}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-6">
+                          <p className='my-0 text-[20px] whitespace-nowrap'>{e.price} ETH</p>
+                          <a href={`https://rinkeby.etherscan.io/tx/${e.txHash}`} target='_blank' rel='noopener noreferrer nofollow' className='button button-cta'>
+                            Etherscan
+                          </a>
                         </div>
                       </div>
-                      <div className="flex items-center gap-6">
-                        <p className='my-0 text-[20px] whitespace-nowrap'>{e.price} ETH</p>
-                        <a href={`https://rinkeby.etherscan.io/tx/${e.txHash}`} target='_blank' rel='noopener noreferrer nofollow' className='button button-cta'>
-                          Etherscan
-                        </a>
-                      </div>
-                    </div>
-                  )
-                  :
-                  <p>No data</p>
-                }
+                    )
+                    :
+                    <p>No data</p>
+                )}
               </div>
               <hr className='my-8' />
 
