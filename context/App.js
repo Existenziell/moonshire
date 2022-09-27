@@ -91,7 +91,9 @@ export const AppProvider = ({ children }) => {
       await web3modal.clearCachedProvider()
       setSigner(null)
       setAddress(null)
-      router.push('/')
+      localStorage.removeItem('WEB3_CONNECT_CACHED_PROVIDER')
+      localStorage.removeItem('supabase.auth.token')
+      window.location.href = '/'
     }
     catch (e) {
       console.log(e)

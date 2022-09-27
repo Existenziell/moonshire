@@ -59,7 +59,7 @@ const Home = () => {
         {collections.map((collection, i) =>
           <div key={i} className={`h-screen w-full md:snap-start md:snap-always flex items-center justify-center relative`}>
             <div className='absolute w-full h-full'>
-              <Image src={`/home/${i}.webp`} layout='fill' alt='Collection Image' className='object-cover' />
+              <Image src={`/home/${i}.webp`} layout='fill' priority={i === 0 ? true : false} alt='Collection Image' className='object-cover' />
             </div>
             {collection.title &&
               <div className='absolute bottom-[150px] right-[25px] left-[40px] flex flex-col items-end'>
@@ -232,8 +232,6 @@ const Home = () => {
 //   }
 //   // Filter to only get collections with more than 0 NFTs
 //   const notEmptyCollections = collections.filter(collection => collection.numberOfNfts !== 0)
-//   // console.log(nfts, collections, artists);
-
 //   return {
 //     props: {collections: notEmptyCollections, artists, nfts: featuredNfts },
 //   }

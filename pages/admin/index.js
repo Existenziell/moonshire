@@ -16,7 +16,7 @@ import SupaAuth from '../../components/SupaAuth'
 import useApp from "../../context/App"
 
 const Admin = () => {
-  const { currentUser, contractBalance } = useApp()
+  const { address, currentUser, contractBalance } = useApp()
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
   const [view, setView] = useState('collections')
@@ -131,6 +131,7 @@ const Admin = () => {
     }, undefined, { shallow: true })
   }
 
+  if (!address) return <p className='w-full h-full flex items-center justify-center'>Please connect your wallet to proceed.</p>
   if (loading) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!session) return <SupaAuth />
 

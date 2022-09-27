@@ -16,7 +16,7 @@ export default function Avatar({ url, size, onUpload }) {
   return (
     <div className=''>
       {avatarUrl ? (
-        <div className='relative shadow-2xl nextimg'>
+        <div className='relative shadow-2xl nextimg' style={{ width: size, height: size }}>
           <Image
             width={400}
             height={400}

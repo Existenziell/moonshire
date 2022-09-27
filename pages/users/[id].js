@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const User = ({ user, nfts }) => {
-  const { username, public_url } = user
+  const { username, public_url, assets_on_profile } = user
   return (
     <>
       <Head>
@@ -28,7 +28,7 @@ const User = ({ user, nfts }) => {
           <div className='md:w-1/2'>
             <h1 className='mx-auto'>{username}</h1>
             <hr className='my-8' />
-            {nfts.length > 0 &&
+            {nfts.length > 0 && assets_on_profile &&
               <>
                 <p className='mb-4'>Created Assets:</p>
                 {nfts.map((nft, i) =>

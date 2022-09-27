@@ -93,23 +93,25 @@ const Profile = () => {
     // setSortAsc(false)
 
     // Add artistID and collectionID for /profile 
-    for (let nft of nfts) {
-      if (!nft.artists) {
-        const id = await getArtistId(nft.artist)
-        nft.artists = {
-          id: id,
-          name: nft.artist
+    if (nfts) {
+      for (let nft of nfts) {
+        if (!nft.artists) {
+          const id = await getArtistId(nft.artist)
+          nft.artists = {
+            id: id,
+            name: nft.artist
+          }
         }
-      }
-      if (!nft.collections) {
-        const id = await getCollectionId(nft.collection)
-        nft.collections = {
-          id: id,
-          title: nft.collection
+        if (!nft.collections) {
+          const id = await getCollectionId(nft.collection)
+          nft.collections = {
+            id: id,
+            title: nft.collection
+          }
         }
       }
     }
-    // console.log(nfts);
+
     setFilteredNfts(nfts)
     setFetching(false)
   }
@@ -156,14 +158,6 @@ const Profile = () => {
     if (view && !fetching) filterNfts(view)
   }, [fetching])
 
-  if (!address) {
-    return (
-      <p className='w-full h-full flex items-center justify-center'>
-        Please connect your wallet to proceed.
-      </p>
-    )
-  }
-
   const navigate = (e) => {
     const link = e.target.name
     if (link === 'settings') {
@@ -189,6 +183,22 @@ const Profile = () => {
   const resetSearch = () => {
     // setFilteredNfts(initialNfts)
     setSearch('')
+  }
+
+  if (!address) {
+    return (
+      <p className='w-full h-full flex items-center justify-center'>
+        Please connect your wallet to proceed.
+      </p>
+    )
+  }
+
+  if (!hasMetamask) {
+    return (
+      <p className='w-full h-full flex items-center justify-center'>
+        Please install Metamask to proceed.
+      </p>
+    )
   }
 
   return (
