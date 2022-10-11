@@ -25,6 +25,7 @@ const nextConfig = {
   images: {
     domains: ['bpwdpdrdsuhpgevetixn.supabase.co', 'moonshire.infura-ipfs.io'],
   },
+  reactStrictMode: true,
 }
 
 module.exports = nextConfig
