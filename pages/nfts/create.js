@@ -79,7 +79,7 @@ const CreateNft = ({ artists }) => {
     e.preventDefault()
 
     if (!checkChain(chainId)) {
-      notify('Please change network to Rinkeby in Metamask.')
+      notify('Please change network to Sepolia in Metamask.')
       return
     }
 

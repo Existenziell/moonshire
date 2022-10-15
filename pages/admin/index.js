@@ -225,7 +225,7 @@ const Admin = () => {
                 exit={{ opacity: 0 }}
                 className='w-full'>
                 <div className='flex flex-col gap-2'>
-                  <p>Market contract address: <a href={`https://rinkeby.etherscan.io/address/${marketplaceAddress}#code`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{marketplaceAddress}</a></p>
+                  <p>Market contract address: <a href={`https://sepolia.etherscan.io/address/${marketplaceAddress}#code`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{marketplaceAddress}</a></p>
                   <p>Contract Balance: {contractBalance} ETH</p>
                   <p>Tokens minted: {lastTokenId}</p>
                   {/* <p>Total transactions: 94</p>

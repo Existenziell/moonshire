@@ -36,8 +36,8 @@ export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
       ) : (
         <label
           htmlFor="single"
-          // style={{ width: size, height: size }}
-          className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)] block bg-detail bg-upload dark:bg-upload-dark bg-no-repeat bg-contain hover:cursor-pointer'
+          style={{ width: size, height: size }}
+          className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)] md:max-w-[calc(100vh-260px)] block bg-upload dark:bg-upload-dark bg-no-repeat bg-contain hover:cursor-pointer'
         >
           <input
             type="file"

@@ -113,7 +113,7 @@ const Nft = ({ nft }) => {
               <hr />
               <p className='mt-4'>Transaction was successfully executed on the Blockchain.<br />You are now the owner of this NFT.</p>
               <p className="mt-4">Transaction hash:</p>
-              <p><a href={`https://rinkeby.etherscan.io/tx/${hash}`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{hash}</a></p>
+              <p><a href={`https://sepolia.etherscan.io/tx/${hash}`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{hash}</a></p>
               <Success />
             </>
             :
@@ -176,7 +176,7 @@ const Nft = ({ nft }) => {
                         </div>
                         <div className="flex items-center gap-6">
                           <p className='my-0 md:text-[20px] whitespace-nowrap'>{e.price} ETH</p>
-                          <a href={`https://rinkeby.etherscan.io/tx/${e.txHash}`} target='_blank' rel='noopener noreferrer nofollow' className='button button-detail'>
+                          <a href={`https://sepolia.etherscan.io/tx/${e.txHash}`} target='_blank' rel='noopener noreferrer nofollow' className='button button-detail'>
                             Etherscan
                           </a>
                         </div>
@@ -228,7 +228,7 @@ const Nft = ({ nft }) => {
                           sellerIsOwner ?
                             <button onClick={() => listNFT(nft)} className='button button-cta'>List</button>
                             :
-                            <a href={`https://rinkeby.etherscan.io/tx/${lastEvent.txHash}`} target='_blank' rel='noopener noreferrer nofollow' className='button button-detail'>
+                            <a href={`https://sepolia.etherscan.io/tx/${lastEvent.txHash}`} target='_blank' rel='noopener noreferrer nofollow' className='button button-detail'>
                               Etherscan
                             </a>
                     }

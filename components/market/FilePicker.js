@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export default function FilePicker({ onChange, size, url }) {
+export default function FilePicker({ onChange, size = 1000, url }) {
   const [imageUrl, setImageUrl] = useState(null)
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function FilePicker({ onChange, size, url }) {
           <label
             htmlFor="single"
             style={{ width: size, height: size }}
-            className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)] block bg-detail bg-upload dark:bg-upload-dark bg-no-repeat bg-contain hover:cursor-pointer'
+            className='aspect-square shadow-2xl md:max-h-[calc(100vh-260px)] md:max-w-[calc(100vh-260px)] bg-upload dark:bg-upload-dark bg-no-repeat bg-contain hover:cursor-pointer'
           >
             <input
               type="file"

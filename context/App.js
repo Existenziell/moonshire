@@ -62,7 +62,7 @@ export const AppProvider = ({ children }) => {
 
   const connectWallet = async () => {
     try {
-      const web3modal = new Web3Modal({ cacheProvider: true, providerOptions, network: 'rinkeby', })
+      const web3modal = new Web3Modal({ cacheProvider: true, providerOptions, network: 'sepolia', })
       const instance = await web3modal.connect()
       const provider = new Web3Provider(instance)
       const signer = provider.getSigner()
@@ -87,7 +87,7 @@ export const AppProvider = ({ children }) => {
 
   async function disconnect() {
     try {
-      const web3modal = new Web3Modal({ cacheProvider: true, providerOptions, network: 'rinkeby', })
+      const web3modal = new Web3Modal({ cacheProvider: true, providerOptions, network: 'sepolia', })
       await web3modal.clearCachedProvider()
       setSigner(null)
       setAddress(null)
@@ -139,10 +139,10 @@ export const AppProvider = ({ children }) => {
   }
 
   const checkChain = (chainId) => {
-    if (parseInt(chainId) === 4) {  // Local: 1337 - Rinkeby: 4 - Mumbai: 80001
+    if (parseInt(chainId) === 11155111) {  // Local: 1337 - Rinkeby: 4 - Mumbai: 80001 - Sepolia: 11155111
       return true
     } else {
-      notify(`Please change network to Rinkeby in Metamask.`)
+      notify(`Please change network to Sepolia in Metamask.`)
       return false
     }
   }
