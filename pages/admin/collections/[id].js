@@ -144,8 +144,8 @@ const Collection = ({ collection }) => {
 export async function getServerSideProps(context) {
   const id = context.params.id
 
-  let { data: collection } = await supabase.from('collections').select(`*`).eq('id', id).single()
-  let { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('id', { ascending: true })
+  const { data: collection } = await supabase.from('collections').select(`*`).eq('id', id).single()
+  const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('id', { ascending: true })
 
   if (!collection) {
     return {
@@ -163,14 +163,13 @@ export async function getServerSideProps(context) {
   }
 
   // Set Number of NFTs in collection
-  const collectionNfts = nfts.filter((n => n.collection === collection.id))
+  const collectionNfts = nfts.filter(n => n.collection === collection.id)
   collection.numberOfNfts = collectionNfts.length
 
   if (collectionNfts.length > 0) {
-
     // Collect artists that have NFTs in this collection
-    let collectionArtists = []
-    for (let nft of collectionNfts) {
+    const collectionArtists = []
+    for (const nft of collectionNfts) {
       collectionArtists.push(nft.artists.name)
     }
 

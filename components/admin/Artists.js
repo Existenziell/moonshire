@@ -47,7 +47,7 @@ const Artists = ({ artists }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (fetchedArtists) {
-      let artists = fetchedArtists.filter(c => (
+      const artists = fetchedArtists.filter(c => (
         c.name.toLowerCase().includes(search.toLowerCase()) ||
         c.description.toLowerCase().includes(search.toLowerCase()) ||
         c.headline.toLowerCase().includes(search.toLowerCase()) ||

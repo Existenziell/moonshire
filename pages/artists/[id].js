@@ -61,7 +61,7 @@ const Artist = ({ artist }) => {
 export async function getServerSideProps(context) {
   const id = context.params.id
 
-  let { data: artist } = await supabase.from('artists').select(`*`).eq('id', id).single()
+  const { data: artist } = await supabase.from('artists').select(`*`).eq('id', id).single()
 
   if (!artist) {
     return {
@@ -73,23 +73,21 @@ export async function getServerSideProps(context) {
     }
   }
 
-  let { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).eq('artist', artist.id).order('created_at', { ascending: false })
+  const { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).eq('artist', artist.id).order('created_at', { ascending: false })
 
   const url = await getPublicUrl('artists', artist.avatar_url)
   artist.public_url = url
 
-  let collections = []
+  const collections = []
   for (let nft of nfts) {
     collections.push(nft.collections)
   }
-  /* eslint-disable no-undef */
-  let uniqueCollections = [...new Map(collections.map((item) => [item['id'], item])).values()]
-  /* eslint-enable no-undef */
+  const uniqueCollections = [...new Map(collections.map((item) => [item['id'], item])).values()]
 
   artist.collections = uniqueCollections
   artist.numberOfCollections = uniqueCollections.length
 
-  const filteredNfts = nfts.filter((n => n.artist === artist.id))
+  const filteredNfts = nfts.filter(n => n.artist === artist.id)
   artist.nfts = filteredNfts
   artist.numberOfNfts = filteredNfts.length
 

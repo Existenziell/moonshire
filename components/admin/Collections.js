@@ -46,7 +46,7 @@ const Collections = ({ collections }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (fetchedCollections) {
-      let collections = fetchedCollections.filter(c => (
+      const collections = fetchedCollections.filter(c => (
         c.title.toLowerCase().includes(search.toLowerCase()) ||
         c.description.toLowerCase().includes(search.toLowerCase()) ||
         c.headline.toLowerCase().includes(search.toLowerCase()) ||

@@ -50,7 +50,7 @@ const Users = ({ users }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (fetchedUsers) {
-      let users = fetchedUsers.filter(u => (
+      const users = fetchedUsers.filter(u => (
         u.username?.toLowerCase().includes(search.toLowerCase()) ||
         u.email?.toLowerCase().includes(search.toLowerCase()) ||
         u.roles.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -67,7 +67,7 @@ const Users = ({ users }) => {
   }
 
   useEffect(() => {
-    let tempStyles = selectStyles(darkmode)
+    const tempStyles = selectStyles(darkmode)
     setStyles(tempStyles)
   }, [darkmode])
 

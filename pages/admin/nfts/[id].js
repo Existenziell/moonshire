@@ -37,8 +37,8 @@ const NFT = ({ nft }) => {
     }
   }, [currentUser?.roles?.name])
 
-  let initialPhysicalAssets = []
-  let initialDigitalAssets = []
+  const initialPhysicalAssets = []
+  const initialDigitalAssets = []
   if (initialAssets) {
     for (let el of initialAssets) {
       el.type === 'digital' ?
@@ -82,12 +82,12 @@ const NFT = ({ nft }) => {
     setLoading(true)
 
     // Create assets array
-    let assets = []
+    const assets = []
     const physicalInputs = document.getElementsByClassName('inputPhysical')
     const digitalInputs = document.getElementsByClassName('digitalAsset')
 
     Array.from(physicalInputs).forEach(p => {
-      let physicalElement = {
+      const physicalElement = {
         type: "physical"
       }
       if (p.value === '') return
@@ -96,7 +96,7 @@ const NFT = ({ nft }) => {
     })
 
     Array.from(digitalInputs).forEach(d => {
-      let digitalElement = {
+      const digitalElement = {
         type: "digital"
       }
       const elements = d.getElementsByTagName('input')
@@ -218,11 +218,10 @@ const NFT = ({ nft }) => {
   )
 }
 
-
 export async function getServerSideProps(context) {
   const id = context.params.id
 
-  let { data: nft } = await supabase
+  const { data: nft } = await supabase
     .from('nfts')
     .select(`*, artists(*), collections(*), users(*)`)
     .eq('id', id)

@@ -137,7 +137,6 @@ const Profile = () => {
               }
               <hr className='mt-6 w-full' />
 
-
               {/* <div className='mt-10'>
                 <h1 className='mb-0'>Assets</h1>
                 <hr className='my-8' />

@@ -61,7 +61,7 @@ const Admin = () => {
       collection.public_url = url
 
       if (nfts) {
-        const collectionNfts = nfts.filter((n => n.collection === collection.id))
+        const collectionNfts = nfts.filter(n => n.collection === collection.id)
         collection.numberOfNfts = collectionNfts.length
       } else {
         collection.numberOfNfts = 0
@@ -71,7 +71,7 @@ const Admin = () => {
 
   const enrichArtists = async () => {
     for (let artist of artists) {
-      const artistNfts = nfts?.filter((n => n.artist === artist.id))
+      const artistNfts = nfts?.filter(n => n.artist === artist.id)
       artist.numberOfNfts = artistNfts?.length
       const url = await getPublicUrl('artists', artist.avatar_url)
       artist.public_url = url
@@ -85,8 +85,8 @@ const Admin = () => {
         user.signed_url = url
       }
 
-      let userCollections = collections.filter(c => (c.user === user.id))
-      let userNfts = nfts.filter(nft => (nft.user === user.id))
+      const userCollections = collections.filter(c => (c.user === user.id))
+      const userNfts = nfts.filter(nft => (nft.user === user.id))
       user.numberOfCollections = userCollections.length
       user.numberOfNfts = userNfts.length
     }

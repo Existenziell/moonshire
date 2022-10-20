@@ -15,7 +15,7 @@ export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
 
   return (
     <div>
-      {imageUrl ? (
+      {imageUrl ?
         <div className='relative shadow-2xl nextimg md:max-h-[calc(100vh-260px)]'>
           <Image
             width={size}
@@ -33,7 +33,7 @@ export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
             &times;
           </button>
         </div>
-      ) : (
+        :
         <label
           htmlFor="single"
           style={{ width: size, height: size }}
@@ -48,7 +48,7 @@ export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
             className='hidden'
           />
         </label>
-      )}
+      }
     </div>
   )
 }

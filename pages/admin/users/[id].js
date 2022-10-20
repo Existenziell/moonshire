@@ -58,7 +58,7 @@ const User = ({ user }) => {
   }
 
   useEffect(() => {
-    let tempStyles = selectStyles(darkmode)
+    const tempStyles = selectStyles(darkmode)
     setStyles(tempStyles)
   }, [darkmode])
 

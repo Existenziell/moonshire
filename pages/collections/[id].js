@@ -29,11 +29,11 @@ const Collection = ({ collection, collectionNfts: nfts }) => {
   const fetchNfts = async (sortBy, ascending) => {
     setLoading(true)
 
-    let { data: nfts } = await supabase.from('nfts')
+    const { data: nfts } = await supabase.from('nfts')
       .select(`*, collections(*), artists(*)`)
-      .order(sortBy, { ascending: ascending })
+      .order(sortBy, { ascending })
 
-    let collectionNfts = nfts.filter((n => n.collection === collection.id))
+    let collectionNfts = nfts.filter(n => n.collection === collection.id)
     if (view === 'sold') collectionNfts = collectionNfts.filter(n => (n.listed === false))
     if (view === 'available') collectionNfts = collectionNfts.filter(n => (n.listed === true))
 
@@ -91,7 +91,7 @@ const Collection = ({ collection, collectionNfts: nfts }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (filteredNfts) {
-      let nfts = filteredNfts.filter(n => (
+      const nfts = filteredNfts.filter(n => (
         n.name.toLowerCase().includes(search.toLowerCase()) ||
         n.description.toLowerCase().includes(search.toLowerCase()) ||
         n.artists.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -180,8 +180,8 @@ const Collection = ({ collection, collectionNfts: nfts }) => {
 
 export async function getServerSideProps(context) {
   const id = context.params.id
-  let { data: collection } = await supabase.from('collections').select(`*`).eq('id', id).single()
-  let { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('created_at', { ascending: false })
+  const { data: collection } = await supabase.from('collections').select(`*`).eq('id', id).single()
+  const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('created_at', { ascending: false })
 
   if (!collection) {
     return {
@@ -193,7 +193,7 @@ export async function getServerSideProps(context) {
     }
   }
 
-  const collectionNfts = nfts.filter((n => n.collection === collection.id))
+  const collectionNfts = nfts.filter(n => n.collection === collection.id)
   collection.numberOfNfts = collectionNfts.length
 
   return {

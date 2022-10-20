@@ -13,8 +13,8 @@ const Collections = () => {
   let [{ data: collections }] = useRealtime('collections', {
     select: { filter: useFilter((query) => query.order('created_at', { ascending: false })) }
   })
-  let [{ data: nfts }] = useRealtime('nfts', { select: { columns: '*, artists(*), collections(*)' } })
-  let [{ data: artists }] = useRealtime('artists')
+  const [{ data: nfts }] = useRealtime('nfts', { select: { columns: '*, artists(*), collections(*)' } })
+  const [{ data: artists }] = useRealtime('artists')
 
   // Enrich each collection with numberOfNfts, public_url, price, artists
   const enrichCollections = async () => {
@@ -24,17 +24,17 @@ const Collections = () => {
       let collectionPrice = 0.0
 
       if (nfts) {
-        const collectionNfts = nfts.filter((n => n.collection === collection.id))
+        const collectionNfts = nfts.filter(n => n.collection === collection.id)
         if (collectionNfts.length > 0) {
           collection.numberOfNfts = collectionNfts.length
-          let collectionArtists = []
+          const collectionArtists = []
           for (let nft of collectionNfts) {
             collectionArtists.push(nft.artists)
             // Prevent JS floating point madness...
             collectionPrice = +(collectionPrice + nft.price).toFixed(12)
           }
-          // Filter deep inside the array of objects for artist.name 
-          const uniqueCollectionArtists = collectionArtists.filter((artist, index, array) => array.findIndex(a => a.name == artist.name) == index);
+          // Filter deep inside the array of objects for artist.name
+          const uniqueCollectionArtists = collectionArtists.filter((artist, index, array) => array.findIndex(a => a.name === artist.name) === index)
           collection.uniqueArtists = uniqueCollectionArtists
         } else {
           collection.numberOfNfts = 0

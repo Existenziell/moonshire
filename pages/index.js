@@ -6,7 +6,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 const Home = () => {
-
   const collections = [
     {
       id: 'ac566a41-7985-404a-90cf-5f484d7fe605',
@@ -59,7 +58,7 @@ const Home = () => {
         {collections.map((collection, i) =>
           <div key={i} className={`h-screen w-full md:snap-start md:snap-always flex items-center justify-center relative`}>
             <div className='absolute w-full h-full'>
-              <Image src={`/home/${i}.webp`} layout='fill' priority={i === 0 ? true : false} alt='Collection Image' className='object-cover' />
+              <Image src={`/home/${i}.webp`} layout='fill' priority={i === 0} alt='Collection Image' className='object-cover' />
             </div>
             {collection.title &&
               <div className='absolute bottom-[150px] right-[40px] left-[43px] flex flex-col items-end'>

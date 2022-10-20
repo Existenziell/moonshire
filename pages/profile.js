@@ -45,7 +45,7 @@ const Profile = () => {
   const [search, setSearch] = useState('')
   const [showSettings, setShowSettings] = useState(false)
 
-  let [{ data: nfts }] = useRealtime('nfts', {
+  const [{ data: nfts }] = useRealtime('nfts', {
     select: {
       columns: '*, artists(*), collections(*)',
       filter: useFilter((query) => query.order(sortBy, { ascending: sortAsc }))
@@ -75,7 +75,7 @@ const Profile = () => {
       case 'all':
         nfts = [...nftsOwned, ...nftsListed]
         nfts.sort(function (a, b) {
-          return new Date(b.created_at) - new Date(a.created_at);
+          return new Date(b.created_at) - new Date(a.created_at)
         })
         break
       case 'owned':
@@ -92,20 +92,20 @@ const Profile = () => {
     // setSortBy('created_at')
     // setSortAsc(false)
 
-    // Add artistID and collectionID for /profile 
+    // Add artistID and collectionID for /profile
     if (nfts) {
       for (let nft of nfts) {
         if (!nft.artists) {
           const id = await getArtistId(nft.artist)
           nft.artists = {
-            id: id,
+            id,
             name: nft.artist
           }
         }
         if (!nft.collections) {
           const id = await getCollectionId(nft.collection)
           nft.collections = {
-            id: id,
+            id,
             title: nft.collection
           }
         }
@@ -128,10 +128,10 @@ const Profile = () => {
   // }
 
   const fetchUserNfts = async (id) => {
-    let listed = await fetchListedItems(signer)
+    const listed = await fetchListedItems(signer)
     if (listed) {
       for (let nft of listed) {
-        let found = nfts?.filter(n => (n.tokenURI === nft.tokenURI))
+        const found = nfts?.filter(n => (n.tokenURI === nft.tokenURI))
         if (found?.at(0)) nft.id = found.at(0).id
       }
       // Remove filter to also see deleted NFTs (deleted from DB)
@@ -140,10 +140,10 @@ const Profile = () => {
       // setNftsListed(listed)
     }
 
-    let owned = await fetchMyNfts(signer)
+    const owned = await fetchMyNfts(signer)
     if (owned) {
       for (let nft of owned) {
-        let found = nfts?.filter(n => (n.tokenURI === nft.tokenURI))
+        const found = nfts?.filter(n => (n.tokenURI === nft.tokenURI))
         if (found?.at(0)) nft.id = found.at(0).id
       }
       // Remove filter to also see deleted NFTs (deleted from DB)

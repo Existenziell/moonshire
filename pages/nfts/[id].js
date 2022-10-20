@@ -42,9 +42,9 @@ const Nft = ({ nft }) => {
         if (nft.seller === address) setSellerIsOwner(true)
       } else {
         // If we get no meta, item is not listed
-        let myNfts = await fetchMyNfts(signer)
+        const myNfts = await fetchMyNfts(signer)
         if (myNfts.length) {
-          let filtered = myNfts.filter(nft => (nft.tokenId === tokenId && nft.tokenURI === tokenURI))
+          const filtered = myNfts.filter(nft => (nft.tokenId === tokenId && nft.tokenURI === tokenURI))
           if (filtered.length) setSellerIsOwner(true)
         }
       }
@@ -259,8 +259,8 @@ export async function getServerSideProps(context) {
     .order('created_at', { ascending: true })
 
   if (nft) {
-    let physicalAssets = []
-    let digitalAssets = []
+    const physicalAssets = []
+    const digitalAssets = []
     if (nft.assets) {
       for (let el of nft.assets) {
         el.type === 'digital' ?

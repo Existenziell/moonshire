@@ -11,7 +11,7 @@ export default function FilePicker({ onChange, size = 1000, url }) {
 
   return (
     <div>
-      {imageUrl ? (
+      {imageUrl ?
         <div className='relative max-w-max'>
           <img
             src={imageUrl}
@@ -27,7 +27,7 @@ export default function FilePicker({ onChange, size = 1000, url }) {
             &times;
           </button>
         </div>
-      ) : (
+        :
         <div
           className='hover:border-cta dark:hover:border-cta transition-all'
         >
@@ -45,7 +45,7 @@ export default function FilePicker({ onChange, size = 1000, url }) {
             />
           </label>
         </div>
-      )}
+      }
     </div>
   )
 }

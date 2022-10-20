@@ -1,7 +1,6 @@
 import Link from 'next/link'
 
 const Social = () => {
-
   const socialLinks = [
     {
       name: 'WhatsApp',

@@ -20,12 +20,12 @@ const NftsGrid = ({ nfts, display, view }) => {
     const missing = elPerLine - overhang // how many elements need to be added?
 
     // If there are NOT enough elements to fill all lines, add 'missing' amount
-    let elements = []
+    const elements = []
     if (factor % 1 !== 0) { // Check if factor is NOT a full number => missing element(s)
       for (let i = 0; i < missing; i++) {
         elements.push({
-          "id": "fake",
-          "fake": true
+          id: "fake",
+          fake: true
         })
       }
     }

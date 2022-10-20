@@ -16,7 +16,6 @@ export default function MarketItems() {
     // ToDo: Remove when merging with /nft
     if (!address) {
       notify("Please connect your wallet to proceed")
-      return
     }
   }, [address])
 

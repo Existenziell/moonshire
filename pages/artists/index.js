@@ -11,7 +11,7 @@ const Artists = () => {
   const [fetchedArtists, setFetchedArtists] = useState()
   const { currentUser } = useApp()
 
-  let [{ data: nfts }] = useRealtime('nfts', {
+  const [{ data: nfts }] = useRealtime('nfts', {
     select: {
       columns: '*, artists(*), collections(*)',
       filter: useFilter((query) => query.order('created_at', { ascending: false }))
@@ -32,13 +32,13 @@ const Artists = () => {
         if (nft.artist === artist.id) collections.push(nft.collections)
       }
       /* eslint-disable no-undef */
-      let uniqueCollections = [...new Map(collections.map((item) => [item['id'], item])).values()]
+      const uniqueCollections = [...new Map(collections.map((item) => [item['id'], item])).values()]
       /* eslint-enable no-undef */
 
       artist.collections = uniqueCollections
       artist.numberOfCollections = uniqueCollections.length
 
-      const filteredNfts = nfts.filter((n => n.artist === artist.id))
+      const filteredNfts = nfts.filter(n => n.artist === artist.id)
       artist.nfts = filteredNfts
       artist.numberOfNfts = filteredNfts.length
     }

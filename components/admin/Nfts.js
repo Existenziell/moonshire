@@ -61,7 +61,7 @@ const Nfts = ({ nfts }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (fetchedNfts) {
-      let nfts = fetchedNfts.filter(n => (
+      const nfts = fetchedNfts.filter(n => (
         n.name.toLowerCase().includes(search.toLowerCase()) ||
         n.description.toLowerCase().includes(search.toLowerCase()) ||
         n.artists.name.toLowerCase().includes(search.toLowerCase()) ||

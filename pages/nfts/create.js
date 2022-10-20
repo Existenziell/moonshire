@@ -102,12 +102,12 @@ const CreateNft = ({ artists }) => {
   const listNFTForSale = async (url, price) => {
     logWeb3("Creating Asset on Blockchain...")
     const parsedPrice = ethers.utils.parseUnits(price, 'ether')
-    let contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer)
+    const contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer)
     let listingPrice = await contract.getListingPrice()
     listingPrice = listingPrice.toString()
 
     try {
-      let transaction = await contract.createToken(url, parsedPrice, { value: listingPrice })
+      const transaction = await contract.createToken(url, parsedPrice, { value: listingPrice })
       const receipt = await transaction.wait()
       logWeb3("Looking good, waiting for Blockchain confirmation")
       if (receipt) {
@@ -132,12 +132,12 @@ const CreateNft = ({ artists }) => {
     if (!tokenId || !url || !price || !txHash) return
 
     // Create assets array
-    let assets = []
+    const assets = []
     const physicalInputs = document.getElementsByClassName('inputPhysical')
     const digitalInputs = document.getElementsByClassName('digitalAsset')
 
     Array.from(physicalInputs).forEach(p => {
-      let physicalElement = {
+      const physicalElement = {
         type: "physical"
       }
       if (p.value === '') return
@@ -146,7 +146,7 @@ const CreateNft = ({ artists }) => {
     })
 
     Array.from(digitalInputs).forEach(d => {
-      let digitalElement = {
+      const digitalElement = {
         type: "digital"
       }
       const elements = d.getElementsByTagName('input')
@@ -190,7 +190,7 @@ const CreateNft = ({ artists }) => {
   }
 
   const checkForm = () => {
-    (fileUrl && formData?.name && formData?.description && formData?.price && artistName != '' && collectionName != '')
+    (fileUrl && formData?.name && formData?.description && formData?.price && artistName !== '' && collectionName !== '')
       ?
       setFormIsReady(true)
       :
@@ -216,12 +216,12 @@ const CreateNft = ({ artists }) => {
     setFormData({ ...formData, ...{ artist: e.value } })
   }
 
-  let artistOptions = []
+  const artistOptions = []
   artists.forEach(a => {
     artistOptions.push({ value: a.id, label: a.name })
   })
 
-  let collectionOptions = []
+  const collectionOptions = []
   if (userCollections) {
     userCollections.forEach(c => {
       collectionOptions.push({ value: c.id, label: c.title })
@@ -229,7 +229,7 @@ const CreateNft = ({ artists }) => {
   }
 
   useEffect(() => {
-    let tempStyles = selectStyles(darkmode)
+    const tempStyles = selectStyles(darkmode)
     setStyles(tempStyles)
   }, [darkmode])
 

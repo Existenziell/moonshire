@@ -17,7 +17,7 @@ const Nfts = () => {
   const [sortAsc, setSortAsc] = useState(false)
   const [search, setSearch] = useState('')
 
-  let [{ data: nfts }] = useRealtime('nfts', {
+  const [{ data: nfts }] = useRealtime('nfts', {
     select: {
       columns: '*, artists(*), collections(*)',
       filter: useFilter((query) => query.order(sortBy, { ascending: sortAsc }))
@@ -28,7 +28,7 @@ const Nfts = () => {
     setLoading(true)
     let { data: nfts } = await supabase.from('nfts')
       .select(`*, collections(*), artists(*)`)
-      .order(sortBy, { ascending: ascending })
+      .order(sortBy, { ascending })
 
     if (view === 'sold') nfts = nfts.filter(n => (n.listed === false))
     if (view === 'available') nfts = nfts.filter(n => (n.listed === true))

@@ -2,7 +2,6 @@ import MarketItems from '../../components/market/MarketItems'
 import Head from 'next/head'
 
 export default function Nfts() {
-
   return (
     <>
       <Head>
