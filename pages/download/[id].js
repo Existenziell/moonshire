@@ -1,6 +1,10 @@
 import Head from "next/head"
+import { useRouter } from "next/router"
 
-export default function Download({ id }) {
+export default function Download() {
+  const router = useRouter()
+  const { id } = router.query
+
   return (
     <>
       <Head >
@@ -11,16 +15,11 @@ export default function Download({ id }) {
       <div className='px-[40px] w-full'>
         <h1 className="mb-0">Download Asset</h1>
         <hr className="my-8 " />
-        ID: {id}
+        <div>
+          ID: {id}
+          <button className="button button-cta uppercase mt-8">Download</button>
+        </div>
       </div>
     </>
   )
-}
-
-export async function getServerSideProps(context) {
-  const id = context.params.id
-
-  return {
-    props: { id },
-  }
 }
