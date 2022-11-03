@@ -35,8 +35,8 @@ const Artist = () => {
   )
 
   if (status === "error") return <p>{status}</p>
-  if (status === 'success' && !artist) return <h1 className="mb-4 text-3xl">No artist found</h1>
   if (status === 'loading') return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (status === 'success' && !artist) return <h1 className="mb-4 text-3xl">No artist found</h1>
 
   const { name, headline, description, avatar_url, nfts, numberOfNfts, collections, numberOfCollections } = artist
 

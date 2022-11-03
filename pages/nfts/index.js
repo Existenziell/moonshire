@@ -27,7 +27,6 @@ const Nfts = () => {
         nft.listed === viewModifier
       ))
     }
-
     return nfts
   }
 
