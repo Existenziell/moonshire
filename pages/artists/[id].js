@@ -1,14 +1,42 @@
 import { supabase } from '../../lib/supabase'
-import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
+import { useQuery } from 'react-query'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
-/* eslint-disable no-unused-vars */
-const Artist = ({ artist }) => {
-  /* eslint-enable no-unused-vars */
+const Artist = () => {
+  const router = useRouter()
+  const { id } = router.query
 
-  const { name, headline, description, public_url, nfts, numberOfNfts, collections, numberOfCollections } = artist
+  async function fetchApi(...args) {
+    if (!id) return
+    let { data: artist } = await supabase.from('artists').select(`*`).eq('id', id).single()
+    let { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).eq('artist', artist.id).order('created_at', { ascending: false })
+
+    const collections = []
+    for (let nft of nfts) {
+      collections.push(nft.collections)
+    }
+    const uniqueCollections = [...new Map(collections.map((item) => [item['id'], item])).values()]
+    artist.collections = uniqueCollections
+    artist.numberOfCollections = uniqueCollections.length
+
+    const filteredNfts = nfts.filter(n => n.artist === artist.id)
+    artist.nfts = filteredNfts
+    artist.numberOfNfts = filteredNfts.length
+
+    return artist
+  }
+
+  const { status, data: artist } = useQuery(["artist", id], () =>
+    fetchApi(id)
+  )
+
+  if (status === "error") return <p>{status}</p>
+  if (!artist) return null
+
+  const { name, headline, description, avatar_url, nfts, numberOfNfts, collections, numberOfCollections } = artist
 
   return (
     <>
@@ -25,8 +53,8 @@ const Artist = ({ artist }) => {
               width={1000}
               height={1000}
               placeholder="blur"
-              src={public_url}
-              blurDataURL={public_url}
+              src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${avatar_url}`}
+              blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${avatar_url}`}
               alt='Artist Image'
             />
           </div>
@@ -56,44 +84,6 @@ const Artist = ({ artist }) => {
       </div>
     </>
   )
-}
-
-export async function getServerSideProps(context) {
-  const id = context.params.id
-
-  const { data: artist } = await supabase.from('artists').select(`*`).eq('id', id).single()
-
-  if (!artist) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/artists",
-      },
-      props: {}
-    }
-  }
-
-  const { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).eq('artist', artist.id).order('created_at', { ascending: false })
-
-  const url = await getPublicUrl('artists', artist.avatar_url)
-  artist.public_url = url
-
-  const collections = []
-  for (let nft of nfts) {
-    collections.push(nft.collections)
-  }
-  const uniqueCollections = [...new Map(collections.map((item) => [item['id'], item])).values()]
-
-  artist.collections = uniqueCollections
-  artist.numberOfCollections = uniqueCollections.length
-
-  const filteredNfts = nfts.filter(n => n.artist === artist.id)
-  artist.nfts = filteredNfts
-  artist.numberOfNfts = filteredNfts.length
-
-  return {
-    props: { artist },
-  }
 }
 
 export default Artist

@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-import { supabase } from '../lib/supabase'
-import { getPublicUrl } from '../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -209,31 +206,5 @@ const Home = () => {
     </>
   )
 }
-
-// export async function getServerSideProps() {
-//   const {data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('created_at', {ascending: false })
-//   const {data: featuredNfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).eq('featured', true).order('created_at', {ascending: false })
-//   const {data: collections } = await supabase.from('collections').select(`*`).eq('featured', true).order('created_at', {ascending: false })
-//   const {data: artists } = await supabase.from('artists').select(`*`).eq('featured', true).order('created_at', {ascending: false })
-
-//   for (let artist of artists) {
-//     const artistNfts = nfts.filter((n => n.artist === artist.id))
-//     artist.numberOfNfts = artistNfts.length
-//     const url = await getPublicUrl('artists', artist.avatar_url)
-//     artist.public_url = url
-//   }
-
-//   for (let collection of collections) {
-//     const collectionNfts = nfts.filter((n => n.collection === collection.id))
-//     const url = await getPublicUrl('collections', collection.image_url)
-//     collection.numberOfNfts = collectionNfts.length
-//     collection.image_url = url
-//   }
-//   // Filter to only get collections with more than 0 NFTs
-//   const notEmptyCollections = collections.filter(collection => collection.numberOfNfts !== 0)
-//   return {
-//     props: {collections: notEmptyCollections, artists, nfts: featuredNfts },
-//   }
-// }
 
 export default Home
