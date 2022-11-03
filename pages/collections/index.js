@@ -1,26 +1,16 @@
-
-import { useRealtime, useFilter } from 'react-supabase'
-import { useEffect, useState } from 'react'
+import { supabase } from '../../lib/supabase'
+import { useQuery } from 'react-query'
 import { PulseLoader } from 'react-spinners'
-import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 
 const Collections = () => {
-  const [fetchedCollections, setFetchedCollections] = useState()
+  async function fetchApi(...args) {
+    let { data: collections } = await supabase.from('collections').select(`*`).order('created_at', { ascending: false })
+    let { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).order('created_at', { ascending: false })
 
-  let [{ data: collections }] = useRealtime('collections', {
-    select: { filter: useFilter((query) => query.order('created_at', { ascending: false })) }
-  })
-  const [{ data: nfts }] = useRealtime('nfts', { select: { columns: '*, artists(*), collections(*)' } })
-  const [{ data: artists }] = useRealtime('artists')
-
-  // Enrich each collection with numberOfNfts, public_url, price, artists
-  const enrichCollections = async () => {
     for (let collection of collections) {
-      const url = await getPublicUrl('collections', collection.image_url)
-      collection.public_url = url
       let collectionPrice = 0.0
 
       if (nfts) {
@@ -46,19 +36,22 @@ const Collections = () => {
     }
     // Filter to only get collections with more than 0 NFTs
     collections = collections.filter(collection => collection.numberOfNfts > 0)
-    setFetchedCollections(collections)
+
+    return collections
   }
 
-  useEffect(() => {
-    if (collections && artists && nfts) enrichCollections()
-  }, [collections, artists, nfts])
+  const { status, data: collections } = useQuery(["collections"], () =>
+    fetchApi()
+  )
 
   const calcHeight = () => {
     const height = window.innerHeight - 260
     return height
   }
 
-  if (!fetchedCollections) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (status === "error") return <p>{status}</p>
+  if (status === 'loading') return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (status === 'success' && !collections) return <h1 className="mb-4 text-3xl">No collections found</h1>
 
   return (
     <>
@@ -67,11 +60,11 @@ const Collections = () => {
         <meta name='description' content="Collections | Project Moonshire" />
       </Head>
 
-      {fetchedCollections.length > 0 ?
+      {collections.length > 0 ?
         <div className='md:snap-y md:snap-mandatory md:h-[calc(100vh-200px)] md:overflow-y-scroll'>
 
-          {fetchedCollections.map(collection => {
-            const { id, title, headline, description, public_url, numberOfNfts, price, uniqueArtists } = collection
+          {collections.map(collection => {
+            const { id, title, headline, description, image_url, numberOfNfts, price, uniqueArtists } = collection
 
             return (
               <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-300px)] w-full mb-40'>
@@ -82,8 +75,8 @@ const Collections = () => {
                         width={calcHeight()}
                         height={calcHeight()}
                         placeholder="blur"
-                        src={public_url}
-                        blurDataURL={public_url}
+                        src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${image_url}`}
+                        blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${image_url}`}
                         alt='Cover Image'
                       />
                     </a>

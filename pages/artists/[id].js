@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { PulseLoader } from 'react-spinners'
 
 const Artist = () => {
   const router = useRouter()
@@ -30,11 +31,12 @@ const Artist = () => {
   }
 
   const { status, data: artist } = useQuery(["artist", id], () =>
-    fetchApi(id)
+    fetchApi()
   )
 
   if (status === "error") return <p>{status}</p>
-  if (!artist) return null
+  if (status === 'success' && !artist) return <h1 className="mb-4 text-3xl">No artist found</h1>
+  if (status === 'loading') return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
 
   const { name, headline, description, avatar_url, nfts, numberOfNfts, collections, numberOfCollections } = artist
 
