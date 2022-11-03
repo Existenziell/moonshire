@@ -118,8 +118,8 @@ const Artists = ({ artists }) => {
                         width={60}
                         height={60}
                         placeholder="blur"
-                        src={artist.public_url}
-                        blurDataURL={artist.public_url}
+                        src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${artist.avatar_url}`}
+                        blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${artist.avatar_url}`}
                         alt='Artist Image'
                         className='w-[60px] aspect-square bg-cover'
                       />

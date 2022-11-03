@@ -113,13 +113,13 @@ const Collections = ({ collections }) => {
               <td className='px-0 w-[80px]'>
                 <Link href={`/collections/${collection.id}`}>
                   <a>
-                    {collection.public_url ?
+                    {collection.image_url ?
                       <Image
                         width={60}
                         height={60}
                         placeholder="blur"
-                        src={collection.public_url}
-                        blurDataURL={collection.public_url}
+                        src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${collection.image_url}`}
+                        blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${collection.image_url}`}
                         alt='Collection Image'
                         className='w-[60px] shadow aspect-square bg-cover'
                       />

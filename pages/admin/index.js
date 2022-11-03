@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { useRealtime, useFilter } from 'react-supabase'
-import { getPublicUrl } from '../../lib/supabase/getPublicUrl'
 import { getSignedUrl } from '../../lib/supabase/getSignedUrl'
 import { marketplaceAddress } from '../../config'
 import { useRouter } from 'next/router'
@@ -57,9 +56,6 @@ const Admin = () => {
 
   const enrichCollections = async () => {
     for (let collection of collections) {
-      const url = await getPublicUrl('collections', collection.image_url)
-      collection.public_url = url
-
       if (nfts) {
         const collectionNfts = nfts.filter(n => n.collection === collection.id)
         collection.numberOfNfts = collectionNfts.length
@@ -73,8 +69,6 @@ const Admin = () => {
     for (let artist of artists) {
       const artistNfts = nfts?.filter(n => n.artist === artist.id)
       artist.numberOfNfts = artistNfts?.length
-      const url = await getPublicUrl('artists', artist.avatar_url)
-      artist.public_url = url
     }
   }
 
