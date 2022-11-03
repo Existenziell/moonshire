@@ -14,14 +14,6 @@ const nextConfig = {
   //   register: true,
   //   skipWaiting: true,
   // },
-  // devIndicators: {
-  //   autoPrerender: false,
-  // },
-  // experimental: {
-  //   images: {
-  //     allowFutureImage: true,
-  //   },
-  // },
   images: {
     domains: ['bpwdpdrdsuhpgevetixn.supabase.co', 'moonshire.infura-ipfs.io'],
   },

@@ -32,7 +32,7 @@ module.exports = {
     'operator-linebreak': ['off'],
     'camelcase': 0,
     'react-hooks/exhaustive-deps': 0,
-    "prefer-const": ["warn", {
+    "prefer-const": ["off", {
       "destructuring": "any",
       "ignoreReadBeforeAssign": false
     }],
