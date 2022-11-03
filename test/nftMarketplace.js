@@ -9,7 +9,7 @@ describe("NftMarketplace", function () {
     await nftMarketplace.deployed()
 
     const contractAddress = nftMarketplace.address
-    console.log("contractAddress:", contractAddress)
+    // console.log("contractAddress:", contractAddress)
 
     let listingPrice = await nftMarketplace.getListingPrice()
     listingPrice = listingPrice.toString()
@@ -22,7 +22,7 @@ describe("NftMarketplace", function () {
     await nftMarketplace.createToken("https://www.mytokenlocation2.com", auctionPrice, { value: listingPrice })
 
     const [_, buyerAddress] = await ethers.getSigners()
-    console.log('buyerAddress.address', buyerAddress.address)
+    // console.log('buyerAddress.address', buyerAddress.address)
 
     /* execute sale of token to another user */
     await nftMarketplace.connect(buyerAddress).buyToken(1, { value: auctionPrice })
