@@ -135,6 +135,10 @@ export const AppProvider = ({ children }) => {
     if (!error) {
       notify("Welcome to Project Moonshire.")
       setCurrentUser(data[0])
+      router.push({
+        pathname: '/profile',
+        query: { onboarding: 'true' }
+      })
     }
   }
 

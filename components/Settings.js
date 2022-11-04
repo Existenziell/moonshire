@@ -82,11 +82,13 @@ const Settings = () => {
 
       <div className='profile flex flex-col items-center justify-start w-full pb-12'>
         <div className='flex flex-col items-center justify-start md:flex-row gap-[40px] w-full'>
-          <Avatar
-            url={avatar_url}
-            onUpload={(url) => handleUpload(url)}
-            size={120}
-          />
+          <div className='w-full md:w-1/2'>
+            <Avatar
+              url={avatar_url}
+              onUpload={(url) => handleUpload(url)}
+            // size={120}
+            />
+          </div>
           <div className='flex flex-col md:items-start w-full'>
             <div className='flex flex-col md:items-start md:justify-start w-full'>
               <label htmlFor="username">
@@ -110,24 +112,28 @@ const Settings = () => {
           </div>
         </div>
         <div className='self-start'>
-          <h2 className='mt-12 mb-4'>Preferences</h2>
-          <div>
-            <label htmlFor="assetsOnProfile" className="cursor-pointer flex items-center justify-end">
-              <input
-                type="checkbox"
-                id="assetsOnProfile"
-                defaultChecked={assetsOnProfile}
-                onChange={(e) => savePublicAssetState(e.target.checked)}
-                className="text-cta mr-2 bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600"
-              />
-              <span>Show assets on your {` `}
-                <Link href={`/users/${encodeURIComponent(currentUser.username)}`}>
-                  <a className='link'>public profile</a>
-                </Link>
-                ?</span>
-            </label>
+          {currentUser?.username &&
+            <>
+              <h2 className='mt-12 mb-4'>Preferences</h2>
+              <div>
+                <label htmlFor="assetsOnProfile" className="cursor-pointer flex items-center justify-end">
+                  <input
+                    type="checkbox"
+                    id="assetsOnProfile"
+                    defaultChecked={assetsOnProfile}
+                    onChange={(e) => savePublicAssetState(e.target.checked)}
+                    className="text-cta mr-2 bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600"
+                  />
 
-          </div>
+                  <span>Show assets on your {` `}
+                    <Link href={`/users/${encodeURIComponent(currentUser.username)}`}>
+                      <a className='link-white'>public profile</a>
+                    </Link>
+                    ?</span>
+                </label>
+              </div>
+            </>
+          }
         </div>
         <div className='self-start mt-8'>
           <button className='button button-detail' onClick={disconnect}>Logout</button>

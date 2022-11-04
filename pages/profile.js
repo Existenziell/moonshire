@@ -23,6 +23,7 @@ import NftsList from '../components/NftsList'
 import Settings from '../components/Settings'
 import { getArtistId } from '../lib/supabase/getArtistId'
 import { getCollectionId } from '../lib/supabase/getCollectionId'
+import { useRouter } from 'next/router'
 
 const Profile = () => {
   const { address, currentUser, setCurrentUser, disconnect, hasMetamask, notify, signer } = useApp()
@@ -51,6 +52,16 @@ const Profile = () => {
       filter: useFilter((query) => query.order(sortBy, { ascending: sortAsc }))
     }
   })
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (router.query) {
+      const isOnboarding = router.query.onboarding === 'true'
+      setShowSettings(isOnboarding)
+      setView(isOnboarding ? 'settings' : 'all')
+    }
+  }, [router.query])
 
   useEffect(() => {
     if (currentUser) {
