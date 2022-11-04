@@ -49,8 +49,9 @@ const Footer = () => {
         <DarkModeToggle />
         <div>
           <span className='text-tiny'>&copy; 2022 FE1</span>
-          {/* <Link href='/about'><a className={`${router.pathname === '/about' ? 'active-nav' : ''} link text-tiny ml-4 uppercase font-serif`}>About</a></Link> */}
-          <Link href='/imprint'><a className={`${router.pathname === '/imprint' ? 'active-nav' : ''} link text-tiny ml-4 uppercase font-serif`}>Imprint</a></Link>
+          <Link href='/help'><a className={`${router.pathname === '/help' ? 'active-nav' : ''} link text-tiny ml-4 uppercase font-serif`}>Help</a></Link>
+          <Link href='/about'><a className={`${router.pathname === '/about' ? 'active-nav' : ''} link text-tiny ml-4 uppercase font-serif`}>About</a></Link>
+          {/* <Link href='/imprint'><a className={`${router.pathname === '/imprint' ? 'active-nav' : ''} link text-tiny ml-4 uppercase font-serif`}>Imprint</a></Link> */}
         </div>
       </div>
     </footer>
