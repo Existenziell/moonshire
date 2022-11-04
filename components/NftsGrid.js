@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { convertEthToUsd } from "../lib/convertEthToUsd"
 
 const NftsGrid = ({ nfts, display, view }) => {
@@ -13,7 +13,9 @@ const NftsGrid = ({ nfts, display, view }) => {
     setConvertedNfts(nfts)
   }
 
-  fetchUsdPrice()
+  useEffect(() => {
+    fetchUsdPrice()
+  }, [nfts])
 
   return (
     <div className={`${display === 'grid' ? `grid` : `hidden`} grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-20 mt-20`}>
