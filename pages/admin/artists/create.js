@@ -5,6 +5,7 @@ import { PulseLoader } from 'react-spinners'
 import useApp from "../../../context/App"
 import UploadImage from '../../../components/UploadImage'
 import SupaAuth from '../../../components/SupaAuth'
+import Head from 'next/head'
 
 const Create = () => {
   const { notify, currentUser } = useApp()
@@ -81,61 +82,67 @@ const Create = () => {
   if (!session) return <SupaAuth />
 
   return (
-    <form onSubmit={addArtist} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='create-artist flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
-      <div className='md:w-1/2 h-full'>
+    <>
+      <Head>
+        <title>Create Artist | Project Moonshire</title>
+        <meta name='description' content="Create Artist | Project Moonshire" />
+      </Head>
+
+      <form onSubmit={addArtist} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'
+        className='create-artist flex flex-col md:flex-row items-center justify-start gap-[40px] px-[40px]'>
+
         <UploadImage
           bucket='artists'
           url={fileUrl}
-          // size={200}
           onUpload={(url) => handleUpload(url)}
         />
-      </div>
 
-      <div className='md:w-1/2'>
-        <label htmlFor='name' className='mt-12 w-full'>
-          <input
-            type='text' name='name' id='name'
-            onChange={setData} required
-            placeholder='Name'
-            className='block mt-2 w-full text-[20px]'
-            disabled={loading}
-          />
-        </label>
-        <hr className='my-8' />
+        <div className='w-full md:w-1/2'>
+          <label htmlFor='name' className='mt-12 w-full'>
+            <input
+              type='text' name='name' id='name'
+              onChange={setData} required
+              placeholder='Name'
+              className='block mt-2 w-full text-[20px]'
+              disabled={loading}
+            />
+          </label>
+          <hr className='my-8' />
 
-        <label htmlFor='headline' className='mt-12 w-full'>
-          <input
-            type='text' name='headline' id='headline'
-            onChange={setData} required
-            placeholder='Headline'
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+          <label htmlFor='headline' className='mt-12 w-full'>
+            <input
+              type='text' name='headline' id='headline'
+              onChange={setData} required
+              placeholder='Headline'
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <label htmlFor='description' className='mt-12 w-full'>
-          <textarea
-            name='description' id='description' rows={10}
-            onChange={setData} required
-            placeholder="Description"
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+          <label htmlFor='description' className='mt-12 w-full'>
+            <textarea
+              name='description' id='description' rows={10}
+              onChange={setData} required
+              placeholder="Description"
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <label htmlFor='origin' className='mt-12 w-full'>
-          <input
-            type='text' name='origin' id='origin'
-            onChange={setData} required
-            placeholder='Origin'
-            className='block mt-2 w-full'
-            disabled={loading}
-          />
-        </label>
+          <label htmlFor='origin' className='mt-12 w-full'>
+            <input
+              type='text' name='origin' id='origin'
+              onChange={setData} required
+              placeholder='Origin'
+              className='block mt-2 w-full'
+              disabled={loading}
+            />
+          </label>
 
-        <input type='submit' className='button button-cta mt-10' value='Create' disabled={!formIsReady || loading} />
-      </div>
-    </form>
+          <input type='submit' className='button button-cta mt-10' value='Create' disabled={!formIsReady || loading} />
+        </div>
+      </form>
+    </>
   )
 }
 

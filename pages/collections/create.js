@@ -72,17 +72,17 @@ const CreateCollection = () => {
         <meta name='description' content="Create Collection | Project Moonshire" />
       </Head>
 
-      <form onSubmit={saveCollection} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='create-collection flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
-        <div className='md:w-1/2 h-full'>
+      <form onSubmit={saveCollection} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'
+        className='create-collection flex flex-col md:flex-row items-center justify-start gap-[40px] px-[40px]'>
+
+        <div>
           <UploadImage
             bucket='collections'
             url={imageUrl}
-            // size={200}
             onUpload={(url) => handleUpload(url)}
           />
         </div>
-
-        <div className='md:w-1/2 w-full'>
+        <div className='w-full md:w-1/2'>
           {success ?
             <>
               <h1 className='mb-4'>Congratulations</h1>
