@@ -52,7 +52,7 @@ const NftsList = ({ nfts, display }) => {
                 </a>
               </Link>
             </td>
-            <td className=''>
+            <td>
               <Link href={`/collections/${nft.collections?.id}`}>
                 <a className='link-white'>
                   {nft.collections?.title ? nft.collections.title : nft.collection}
