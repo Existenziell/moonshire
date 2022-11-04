@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
-import { useRealtime, useFilter } from 'react-supabase'
-import { getSignedUrl } from '../../lib/supabase/getSignedUrl'
 import { marketplaceAddress } from '../../config'
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
@@ -19,76 +17,8 @@ const Admin = () => {
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
   const [view, setView] = useState('collections')
-  const [lastTokenId, setLastTokenId] = useState()
   const router = useRouter()
   const { view: selectedView } = router.query
-
-  const [resultCollections] = useRealtime('collections', {
-    select: { filter: useFilter((query) => query.order('created_at', { ascending: false })) }
-  })
-
-  const [resultArtists] = useRealtime('artists', {
-    select: { filter: useFilter((query) => query.order('created_at', { ascending: false })) }
-  })
-
-  const [resultUsers] = useRealtime('users', {
-    select: {
-      columns: '*, roles(*)',
-      filter: useFilter((query) => query.order('created_at', { ascending: false }))
-    }
-  })
-
-  const [resultNfts] = useRealtime('nfts', {
-    select: {
-      columns: '*, artists(*), collections(*)',
-      filter: useFilter((query) => query.order('created_at', { ascending: false }))
-    }
-  })
-
-  const { data: collections } = resultCollections
-  const { data: nfts } = resultNfts
-  const { data: artists } = resultArtists
-  const { data: users } = resultUsers
-
-  useEffect(() => {
-    setLastTokenId(nfts?.at(0)?.tokenId)
-  }, [nfts])
-
-  const enrichCollections = async () => {
-    for (let collection of collections) {
-      if (nfts) {
-        const collectionNfts = nfts.filter(n => n.collection === collection.id)
-        collection.numberOfNfts = collectionNfts.length
-      } else {
-        collection.numberOfNfts = 0
-      }
-    }
-  }
-
-  const enrichArtists = async () => {
-    for (let artist of artists) {
-      const artistNfts = nfts?.filter(n => n.artist === artist.id)
-      artist.numberOfNfts = artistNfts?.length
-    }
-  }
-
-  const enrichUsers = async () => {
-    for (let user of users) {
-      if (user.avatar_url) {
-        const url = await getSignedUrl('avatars', user.avatar_url)
-        user.signed_url = url
-      }
-
-      const userCollections = collections.filter(c => (c.user === user.id))
-      const userNfts = nfts.filter(nft => (nft.user === user.id))
-      user.numberOfCollections = userCollections.length
-      user.numberOfNfts = userNfts.length
-    }
-  }
-
-  if (collections && nfts) enrichCollections()
-  if (artists && nfts) enrichArtists()
-  if (users && nfts && collections) enrichUsers()
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -111,13 +41,6 @@ const Admin = () => {
     if (selectedView) setView(selectedView)
   }, [selectedView])
 
-  // Make sure to load the images on first load too
-  useEffect(() => {
-    if (collections) {
-      enrichCollections()
-    }
-  }, [view, collections])
-
   const navigate = (e) => {
     router.push({
       pathname: '/admin',
@@ -125,8 +48,8 @@ const Admin = () => {
     }, undefined, { shallow: true })
   }
 
-  if (!address) return <p className='w-full h-full flex items-center justify-center'>Please connect your wallet to proceed.</p>
   if (loading) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (!address) return <p className='w-full h-full flex items-center justify-center'>Please connect your wallet to proceed.</p>
   if (!session) return <SupaAuth />
 
   return (
@@ -178,7 +101,7 @@ const Admin = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 className='w-full'>
-                <Collections collections={collections} />
+                <Collections />
               </motion.div>
             }
             {view === 'artists' &&
@@ -188,7 +111,7 @@ const Admin = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 className='w-full'>
-                <Artists artists={artists} collections={collections} />
+                <Artists />
               </motion.div>
             }
             {view === 'nfts' &&
@@ -198,7 +121,7 @@ const Admin = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 className='w-full'>
-                <Nfts nfts={nfts} />
+                <Nfts />
               </motion.div>
             }
             {view === 'users' &&
@@ -208,7 +131,7 @@ const Admin = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 className='w-full'>
-                <Users users={users} />
+                <Users />
               </motion.div>
             }
             {view === 'market' &&
@@ -221,7 +144,7 @@ const Admin = () => {
                 <div className='flex flex-col gap-2'>
                   <p>Market contract address: <a href={`https://sepolia.etherscan.io/address/${marketplaceAddress}#code`} target='_blank' rel='noopener noreferrer nofollow' className='link'>{marketplaceAddress}</a></p>
                   <p>Contract Balance: {contractBalance} ETH</p>
-                  <p>Tokens minted: {lastTokenId}</p>
+                  {/* <p>Tokens minted: 88</p> */}
                   {/* <p>Total transactions: 94</p>
                   <p>Unique token holders: 5</p> */}
                 </div>

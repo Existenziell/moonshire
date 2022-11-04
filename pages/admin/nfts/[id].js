@@ -120,8 +120,6 @@ const NFT = ({ nft }) => {
     }
   }
 
-  const truncate = (input) => `${input.substring(0, 22)}...${input.substring(input.length - 12, input.length)}`
-
   if (initializing) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!session) return <SupaAuth />
 
@@ -151,7 +149,7 @@ const NFT = ({ nft }) => {
           {/* <p className='mb-2'>TokenID: {tokenId}</p> */}
           {/* <p className='mb-2'>Currently listed: {listed ? `Yes` : `No`}</p> */}
           {/* <p className='mb-2'>Current owner: {shortenAddress(walletAddress)} ({owner})</p> */}
-          {/* <p className='mb-2 whitespace-nowrap'>TokenURI: <a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link'>{truncate(tokenURI)}</a></p> */}
+          {/* <p className='mb-2 whitespace-nowrap'>TokenURI: <a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link max-w-[150px] truncate '>{tokenURI}</a></p> */}
 
           <div className='mt-16'>
             <h1 className='mb-0'>Assets</h1>

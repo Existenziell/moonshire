@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
+import { useQuery } from 'react-query'
 import { supabase } from '../../lib/supabase'
+import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
 import { shortenAddress } from '../../lib/shortenAddress'
+import { getSignedUrl } from '../../lib/supabase/getSignedUrl'
 import useApp from "../../context/App"
 import Search from './Search'
 // import Link from 'next/link'
@@ -10,20 +13,53 @@ import selectStyles from '../../lib/selectStyles'
 import roleOptions from '../../lib/roleOptions'
 import Image from 'next/image'
 
-const Users = ({ users }) => {
+const Users = () => {
   const { notify, darkmode } = useApp()
-  const [fetchedUsers, setFetchedUsers] = useState()
-  const [filteredUsers, setFilteredUsers] = useState()
   const [showDelete, setShowDelete] = useState(false)
   const [userToDelete, setUserToDelete] = useState()
   const [search, setSearch] = useState('')
   const [styles, setStyles] = useState()
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
+
+  async function fetchApi(...args) {
+    let { data: users } = await supabase
+      .from('users')
+      .select(`*, roles(*)`)
+      .ilike('username', `%${search}%`)
+      .order('created_at', { ascending: false })
+
+    let { data: collections } = await supabase
+      .from('collections')
+      .select(`*`)
+      .order('created_at', { ascending: false })
+
+    let { data: nfts } = await supabase
+      .from('nfts')
+      .select(`*, artists(*), collections(*)`)
+      .order('created_at', { ascending: false })
+
+    for (let user of users) {
+      if (user.avatar_url) {
+        const url = await getSignedUrl('avatars', user.avatar_url)
+        user.signed_url = url
+      }
+      const userCollections = collections.filter(c => (c.user === user.id))
+      const userNfts = nfts.filter(nft => (nft.user === user.id))
+      user.numberOfCollections = userCollections.length
+      user.numberOfNfts = userNfts.length
+    }
+    return users
+  }
+
+  const { status, data: users } = useQuery(["users", search], () =>
+    fetchApi()
+  )
 
   useEffect(() => {
-    setFetchedUsers(users)
-    setFilteredUsers(users)
-  }, [users])
+    const tempStyles = selectStyles(darkmode)
+    setStyles(tempStyles)
+  }, [darkmode])
 
   const toggleDeleteModal = (user) => {
     setUserToDelete(user)
@@ -39,37 +75,11 @@ const Users = ({ users }) => {
     if (!error) {
       notify("User deleted successfully!")
       setShowDelete(false)
-      const filtered = fetchedUsers.filter(c => { return c.id !== userToDelete.id })
-      setFetchedUsers(filtered)
-      setFilteredUsers(filtered)
+      router.reload()
     } else {
       notify("Error...")
     }
   }
-
-  /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    if (fetchedUsers) {
-      const users = fetchedUsers.filter(u => (
-        u.username?.toLowerCase().includes(search.toLowerCase()) ||
-        u.email?.toLowerCase().includes(search.toLowerCase()) ||
-        u.roles.name.toLowerCase().includes(search.toLowerCase()) ||
-        u.walletAddress?.toLowerCase().includes(search.toLowerCase())
-      ))
-      setFilteredUsers(users)
-    }
-  }, [search])
-  /* eslint-enable react-hooks/exhaustive-deps */
-
-  const resetSearch = () => {
-    setFilteredUsers(fetchedUsers)
-    setSearch('')
-  }
-
-  useEffect(() => {
-    const tempStyles = selectStyles(darkmode)
-    setStyles(tempStyles)
-  }, [darkmode])
 
   const saveUser = async (id, value) => {
     setLoading(true)
@@ -86,94 +96,77 @@ const Users = ({ users }) => {
     }
   }
 
-  if (!fetchedUsers) return <div className='flex justify-center items-center w-full h-[calc(100vh-300px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (status === "error") return <p>{status}</p>
+  if (status === 'success' & !users) return <h1 className="mb-4 text-3xl">No users found</h1>
 
   return (
     <div className='mb-20 w-full relative'>
-      <Search search={search} setSearch={setSearch} resetSearch={resetSearch} />
+      <Search search={search} setSearch={setSearch} resetSearch={() => setSearch('')} />
 
-      <table className='table-auto w-full'>
-        <thead className='text-left'>
-          <tr className='font-bold border-b-2 border-lines dark:border-lines-dark'>
-            <th className='relative -left-2'>Avatar</th>
-            <th>Wallet</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Created</th>
-            <th>Collections</th>
-            <th>NFTs</th>
-            {/* <th className='text-right'>Membership</th> */}
-            <th className='text-right'>Role</th>
-            {/* <th className='text-right'>Edit</th> */}
-            <th className='text-right w-28'>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {!filteredUsers?.length &&
-            <tr className='p-4 dark:text-brand'>
-              <td colSpan={9} className='px-0'>
-                No results
-              </td>
+      {status === 'loading' ?
+        <div className='flex items-center justify-center min-w-max h-[calc(100vh-420px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+        :
+        <table className='table-auto w-full'>
+          <thead className='text-left'>
+            <tr className='font-bold border-b-2 border-lines dark:border-lines-dark'>
+              <th className='relative -left-2'>Avatar</th>
+              <th>Wallet</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Created</th>
+              <th>Collections</th>
+              <th>NFTs</th>
+              <th className='text-right'>Role</th>
+              <th className='text-right w-28'>Delete</th>
             </tr>
-          }
-
-          {filteredUsers?.map((user) => (
-            <tr key={user.id + user.username} className='relative'>
-              <td className='px-0 w-[80px]'>
-                {user.signed_url ?
-                  <Image
-                    width={60}
-                    height={60}
-                    placeholder="blur"
-                    src={user.signed_url}
-                    blurDataURL={user.signed_url}
-                    alt='User Image'
-                    className='w-[60px] shadow aspect-square bg-cover'
-                  />
-                  :
-                  "n/a"
-                }
-              </td>
-
-              <td className='whitespace-nowrap'>{shortenAddress(user.walletAddress)}</td>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td className='whitespace-nowrap'>{user.created_at.slice(0, 10)}</td>
-              <td>{user.numberOfCollections}</td>
-              <td>{user.numberOfNfts}</td>
-              {/* <td className='text-right'>{user.is_premium ? `Premium` : `Free`}</td> */}
-
-              <td className='text-right'>
-                <Select
-                  options={roleOptions}
-                  onChange={(e) => saveUser(user.id, e.value)}
-                  instanceId // Needed to prevent errors being thrown
-                  defaultValue={roleOptions.filter(o => o.value === user.role)}
-                  styles={styles}
-                  disabled={loading}
-                />
-                {/* {user.roles.name} */}
-              </td>
-
-              {/* <td className='text-right align-middle pr-0'>
-                // <Link href={`/admin/users/${user.id}`}>
-                  <a>
-                    <button className='button-admin'>
-                      Edit
+          </thead>
+          <tbody>
+            {users.length <= 0 ?
+              <tr className="flex flex-col items-start"><td>No results</td></tr>
+              :
+              users?.map((user) => (
+                <tr key={user.id + user.username} className='relative'>
+                  <td className='px-0 w-[80px]'>
+                    {user.signed_url ?
+                      <Image
+                        width={60}
+                        height={60}
+                        placeholder="blur"
+                        src={user.signed_url}
+                        blurDataURL={user.signed_url}
+                        alt='User Image'
+                        className='w-[60px] shadow aspect-square bg-cover'
+                      />
+                      :
+                      "n/a"
+                    }
+                  </td>
+                  <td className='whitespace-nowrap'>{shortenAddress(user.walletAddress)}</td>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                  <td className='whitespace-nowrap'>{user.created_at.slice(0, 10)}</td>
+                  <td>{user.numberOfCollections}</td>
+                  <td>{user.numberOfNfts}</td>
+                  <td className='text-right'>
+                    <Select
+                      options={roleOptions}
+                      onChange={(e) => saveUser(user.id, e.value)}
+                      instanceId // Needed to prevent errors being thrown
+                      defaultValue={roleOptions.filter(o => o.value === user.role)}
+                      styles={styles}
+                      disabled={loading}
+                    />
+                  </td>
+                  <td className='text-right align-middle w-28 pr-0'>
+                    <button onClick={() => toggleDeleteModal(user)} aria-label='Toggle Delete Modal' className='button-admin'>
+                      Delete
                     </button>
-                  </a>
-                // </Link>
-              </td> */}
-
-              <td className='text-right align-middle w-28 pr-0'>
-                <button onClick={() => toggleDeleteModal(user)} aria-label='Toggle Delete Modal' className='button-admin'>
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      }
 
       {/* Delete user */}
       {showDelete &&
