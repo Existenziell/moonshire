@@ -40,19 +40,19 @@ const NftsList = ({ nfts, display }) => {
                 </a>
               </Link>
             </td>
-            <td className='whitespace-nowrap w-[350px] max-w-[350px] truncate overflow-hidden overflow-ellipsis pr-12'>
+            <td className='whitespace-nowrap max-w-[350px] truncate overflow-hidden overflow-ellipsis pr-12'>
               <Link href={`/nfts/${nft.id}`}>
                 <a>{nft.name}</a>
               </Link>
             </td>
-            <td className='whitespace-nowrap'>
+            <td className=''>
               <Link href={`/artists/${nft.artists?.id}`}>
                 <a className='link-white'>
                   {nft.artists?.name ? nft.artists.name : nft.artist}
                 </a>
               </Link>
             </td>
-            <td className='whitespace-nowrap'>
+            <td className=''>
               <Link href={`/collections/${nft.collections?.id}`}>
                 <a className='link-white'>
                   {nft.collections?.title ? nft.collections.title : nft.collection}
