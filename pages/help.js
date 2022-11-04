@@ -1,5 +1,5 @@
-import Head from "next/head";
-import Image from "next/image";
+import Head from "next/head"
+import Image from "next/image"
 
 export default function Help() {
   return (
@@ -27,8 +27,6 @@ export default function Help() {
         </div>
         <p>
           After adding Sepolia to Metamask you can receive free test SepoliaETH through the <a href='https://faucet.sepolia.dev/' target='_blank' rel='noopener noreferrer nofollow' className='link-white'>Sepolia faucet</a>.
-
-
         </p>
         <div className='flex items-center justify-center gap-4 mt-8'>
           <p>Find even more information<br /> about <a href='https://sepolia.dev/' target='_blank' rel='noopener noreferrer nofollow' className='link-white'>Sepolia</a></p>
