@@ -29,6 +29,7 @@ const CreateNft = ({ artists }) => {
   const [loading, setLoading] = useState(false)
   const [userCollections, setUserCollections] = useState([])
   const [fetching, setFetching] = useState(true)
+  const [uploading, setUploading] = useState(false)
   const [artistName, setArtistName] = useState('')
   const [collectionName, setCollectionName] = useState('')
   const [formIsReady, setFormIsReady] = useState(false)
@@ -50,7 +51,7 @@ const CreateNft = ({ artists }) => {
   }
 
   const handleUpload = async (e) => {
-    const url = await uploadFileToIpfs(e)
+    const url = await uploadFileToIpfs(e, setUploading)
     setFileUrl(url)
   }
 
@@ -300,8 +301,11 @@ const CreateNft = ({ artists }) => {
         </div>
         :
         <form onSubmit={createNft} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='create-nft flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
-          <div className='w-full md:w-1/2'>
-            <FilePicker onChange={(e) => handleUpload(e)} url={fileUrl} />
+          <div>
+            <FilePicker
+              url={fileUrl}
+              onChange={(e) => handleUpload(e)}
+              uploading={uploading} />
           </div>
 
           <div className='w-full md:w-1/2'>

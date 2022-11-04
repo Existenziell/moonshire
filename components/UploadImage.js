@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
+import { PulseLoader } from 'react-spinners'
 import Image from 'next/image'
 import uploadImage from '../lib/supabase/uploadImage'
 import useApp from "../context/App"
-import { PulseLoader } from 'react-spinners'
 
 export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
   const [imageUrl, setImageUrl] = useState(null)
