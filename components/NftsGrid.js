@@ -1,10 +1,23 @@
 import Image from "next/image"
 import Link from "next/link"
+import { useState } from "react"
+import { convertEthToUsd } from "../lib/convertEthToUsd"
 
 const NftsGrid = ({ nfts, display, view }) => {
+  const [convertedNfts, setConvertedNfts] = useState([])
+
+  const fetchUsdPrice = async () => {
+    for (let nft of nfts) {
+      nft.priceUSD = await convertEthToUsd(nft.price)
+    }
+    setConvertedNfts(nfts)
+  }
+
+  fetchUsdPrice()
+
   return (
     <div className={`${display === 'grid' ? `grid` : `hidden`} grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-20 mt-20`}>
-      {nfts?.map((nft, i) => (
+      {convertedNfts?.map((nft, i) => (
         <div key={nft.id}>
           <Link href={`/nfts/${nft.id}`}>
             <a className='shadow-2xl nextimg'>
@@ -23,7 +36,6 @@ const NftsGrid = ({ nfts, display, view }) => {
           <div>
             <h1 className='mt-8 mb-6 whitespace-nowrap w-full max-w-[300px] truncate'>{nft.name}</h1>
             <div className="text-detail-dark dark:text-detail">
-              {/* <p>{nft.description}</p> */}
               <div className='mb-2'>
                 <Link href={`/collections/${nft.collections.id}`}>
                   <a className='link-white'>
@@ -38,17 +50,15 @@ const NftsGrid = ({ nfts, display, view }) => {
                   </a>
                 </Link>
               </div>
-              <hr />
-
-              {/* {nft.owner && nft.seller &&
-                <>
-                  <p className="mt-4">Owner: {shortenAddress(nft.owner)}</p>
-                  <p>Seller: {shortenAddress(nft.seller)}</p>
-                </>
-              } */}
             </div>
+
+            <hr />
+
             <div className="flex justify-between gap-8 items-center mt-6">
-              <h1 className="mb-0 whitespace-nowrap">{nft.price} ETH</h1>
+              <div className="flex gap-4">
+                <h1 className="mb-0 whitespace-nowrap">{nft.price} ETH</h1>
+                <p className='text-[20px] text-gray-400 whitespace-nowrap'>${nft.priceUSD}</p>
+              </div>
               <Link href={`/nfts/${nft.id}`}>
                 <a className='button button-cta uppercase'>
                   View
