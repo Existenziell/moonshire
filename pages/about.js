@@ -15,7 +15,7 @@ const About = () => {
         <p>With Project Moonshire creators are given full control of their releases offering a direct channel for their community of fans to collect and trade releases by their idols.</p>
       </div>
 
-      <div className='md:max-w-6xl leading-relaxed mx-auto px-[20px] md:px-[40px]'>
+      {/* <div className='md:max-w-6xl leading-relaxed mx-auto px-[20px] md:px-[40px]'>
         <h1 className='mx-auto w-max mt-20 mb-12 '>Who we are</h1>
         <div>
           <div className='flex flex-col md:flex-row gap-8 items-center text-center md:text-left md:justify-start'>
@@ -88,7 +88,7 @@ const About = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }
