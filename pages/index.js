@@ -1,47 +1,57 @@
+import { supabase } from '../lib/supabase'
+import { useQuery } from 'react-query'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
+import { convertEthToUsd } from '../lib/convertEthToUsd'
 
 const Home = () => {
-  const collections = [
-    {
-      id: 'ac566a41-7985-404a-90cf-5f484d7fe605',
-      title: 'SHARQ COLLECTION',
-      subtitle: 'by KHALED x CARTIER',
-      price: 0.323,
-      priceUSD: '418.90',
-      createdAt: 'Sep 25, 2022 at 04:54pm',
-      artist: {
-        name: 'DJ Khaled',
-        id: '03d4c910-745f-4eec-b5ce-f4637bad4ed6'
+  async function fetchApi(...args) {
+    let { data: collections } = await supabase
+      .from('collections')
+      .select(`*`)
+      .eq('featured', true)
+      .order('created_at', { ascending: false })
+
+    let { data: nfts } = await supabase.from('nfts')
+      .select(`*, collections(*), artists(*)`)
+      .order('created_at', { ascending: false })
+
+    for (let collection of collections) {
+      let collectionPrice = 0.0
+
+      if (nfts) {
+        const collectionNfts = nfts.filter(n => n.collection === collection.id)
+        if (collectionNfts.length > 0) {
+          collection.numberOfNfts = collectionNfts.length
+          const collectionArtists = []
+          for (let nft of collectionNfts) {
+            collectionArtists.push(nft.artists)
+            // Prevent JS floating point madness...
+            collectionPrice = +(collectionPrice + nft.price).toFixed(12)
+          }
+          // Filter deep inside the array of objects for artist.name
+          const uniqueCollectionArtists = collectionArtists.filter((artist, index, array) => array.findIndex(a => a.name === artist.name) === index)
+          collection.uniqueArtists = uniqueCollectionArtists
+        } else {
+          collection.numberOfNfts = 0
+        }
+      } else {
+        collection.numberOfNfts = 0
       }
-    },
-    {
-      id: '',
-      title: 'HIM / HER',
-      subtitle: 'INTERCONNECTION',
-      price: 2.4,
-      priceUSD: '3112.56',
-      createdAt: 'Aug 12, 2022 at 08:21am',
-      artist: {
-        name: 'Andreas Rothaug',
-        id: ''
-      }
-    },
-    { image: '/home/2.webp' }, { image: '/home/2.webp' }, { image: '/home/2.webp' }, { image: '/home/2.webp' }, { image: '/home/2.webp' },
-    {
-      id: '26da2b76-b8d2-4b56-b429-5bd28f67c467',
-      title: 'Cuvée Sensorium',
-      subtitle: 'Art Editions',
-      price: 1.75,
-      priceUSD: '2269.58',
-      createdAt: 'Feb 18, 2022 at 11:34pm',
-      artist: {
-        name: 'James Rizzi',
-        id: '253a5e63-cb52-4a82-99f6-38c640cb0482'
-      }
+      collection.priceUSD = await convertEthToUsd(collectionPrice)
+      collection.price = collectionPrice
     }
-  ]
+    // Filter to only get collections with more than 0 NFTs
+    collections = collections.filter(collection => collection.numberOfNfts > 0)
+    return collections
+  }
+
+  const { status, data: collections } = useQuery(["home"], () =>
+    fetchApi()
+  )
+
+  if (status === "error") return <p>{status}</p>
 
   return (
     <>
@@ -51,158 +61,60 @@ const Home = () => {
       </Head>
 
       <div className='h-screen md:snap-y md:snap-mandatory md:overflow-y-scroll'>
-
-        {collections.map((collection, i) =>
-          <div key={i} className={`h-screen w-full md:snap-start md:snap-always flex items-center justify-center relative`}>
-            <div className='absolute w-full h-full'>
-              <Image src={`/home/${i}.webp`} layout='fill' priority={i === 0} alt='Collection Image' className='object-cover' />
-            </div>
-            {collection.title &&
-              <div className='absolute bottom-[150px] right-[40px] left-[43px] flex flex-col items-end'>
-                <p className='text-8xl leading-tight text-white hidden md:block'>{collection.title}</p>
-                <p className='text-8xl leading-tight text-white hidden md:block'>{collection.subtitle}</p>
-                <div className='flex justify-between items-center w-full mt-8'>
-                  <div className='hidden md:flex items-center gap-8'>
-                    <div className='nextimg'>
-                      <Image src='/home/thing.png' width={60} height={60} alt='Thing' />
-                    </div>
-                    <div>Created by {` `}
-                      <Link href={`/artists/${collection.artist.id}`}>
-                        <a className='link-white'>
-                          {collection.artist.name}
-                        </a>
-                      </Link>
-                      <br />{collection.createdAt}
-                    </div>
-                  </div>
-                  <div className='flex items-center gap-12 '>
-                    <span className='text-4xl text-white'>{collection.price} ETH</span>
-                    <span className='text-4xl text-gray-400 hidden md:block'>${collection.priceUSD}</span>
-                    <Link href={collection.id ? `/collections/${collection.id}` : `/collections`}>
-                      <a><button className='button button-cta'>EXPLORE</button></a>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            }
-          </div>
-        )}
-      </div>
-
-      {/* <div className='flex flex-col items-center justify-center w-full px-[40px] pb-24'> */}
-      {/* {collections?.length > 0 &&
+        {collections?.length > 0 &&
           <>
             <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Collections</h2>
 
             {collections.map((collection, idx) => {
-              const { id, title, headline, description, image_url } = collection
+              const { id, title, image_url, uniqueArtists, price, priceUSD } = collection
 
               return (
-                <div key={id} className='w-full flex flex-col md:flex-row items-center justify-between gap-[40px] mb-20'>
-                  <div className={idx % 2 !== 0 ? `order-2` : ``}>
-                    <Link href={`/collections/${id}`}>
-                      <a className='block w-[300px]'>
-                        <Image
-                          width={300}
-                          height={300}
-                          placeholder="blur"
-                          src={image_url}
-                          blurDataURL={image_url}
-                          alt='Cover Image'
-                          className='aspect-square bg-cover rounded-sm shadow-2xl'
-                        />
-                      </a>
-                    </Link>
+                <div key={id} className={`h-screen w-full md:snap-start md:snap-always flex items-center justify-center relative`}>
+                  <div className='absolute w-full h-full'>
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${image_url}`}
+                      placeholder='blur'
+                      blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${image_url}`}
+                      layout='fill'
+                      priority={idx === 0}
+                      alt='Collection Image'
+                      objectFit='cover'
+                    />
                   </div>
-
-                  <div className='flex flex-col flex-grow justify-between'>
-                    <div className={idx % 2 !== 0 ? `text-right` : ``}>
-                      <h1 className='mb-0'>{title}</h1>
-                      <hr className='my-8' />
-                      <p>{headline}</p>
-                      <p>{description}</p>
+                  {title &&
+                    <div className='absolute bottom-[150px] right-[40px] left-[43px] flex flex-col items-end'>
+                      <p className='text-8xl leading-tight text-white hidden md:block'>{title}</p>
+                      <div className='flex justify-between items-center w-full mt-8'>
+                        <div className='hidden md:flex items-center gap-8'>
+                          <div className='nextimg'>
+                            <Image src='/home/thing.png' width={60} height={60} alt='Thing' />
+                          </div>
+                          <div className=''>Created by {` `}<br />
+                            {uniqueArtists.map((artist, idx) => (
+                              <Link href={`/artists/${artist.id}`} key={artist.id}>
+                                <a className='link-white'>
+                                  {artist.name}{idx + 1 < uniqueArtists.length ? `, ` : ``}
+                                </a>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                        <div className='flex items-center gap-12 '>
+                          <span className='text-4xl text-white'>{price} ETH</span>
+                          <span className='text-4xl text-gray-400 hidden md:block'>${priceUSD}</span>
+                          <Link href={id ? `/collections/${id}` : `/collections`}>
+                            <a><button className='button button-cta'>EXPLORE</button></a>
+                          </Link>
+                        </div>
+                      </div>
                     </div>
-                    <Link href={`/collections/${id}`}>
-                      <a className={`${idx % 2 !== 0 ? `self-end` : ``} button button-cta mt-10`}>View Collection</a>
-                    </Link>
-                  </div>
+                  }
                 </div>
               )
             })}
           </>
-        } */}
-
-      {/* {artists?.length > 0 &&
-          <>
-            <h2 className='border-b border-detail dark:border-detail-dark my-8 self-start'>Featured Artists</h2>
-            <div className='flex justify-center md:justify-start flex-wrap gap-[40px] w-full'>
-              {artists.map((artist, idx) => {
-                const { id, name, headline, description, public_url } = artist
-                return (
-                  <div key={id} className='w-full flex flex-col md:flex-row items-center justify-between gap-[40px] mb-20'>
-                    <div className={idx % 2 !== 0 ? `order-2` : ``}>
-                      <Link href={`/artists/${id}`} >
-                        <a className='block w-[300px]'>
-                          {public_url &&
-                            <Image
-                              width={300}
-                              height={300}
-                              placeholder="blur"
-                              src={public_url}
-                              blurDataURL={public_url}
-                              alt='Artist Image'
-                              className='aspect-square bg-cover rounded-sm shadow-2xl'
-                            />
-                          }
-                        </a>
-                      </Link>
-                    </div>
-                    <div className='flex flex-col flex-grow justify-between'>
-                      <div className={idx % 2 !== 0 ? `text-right` : ``}>
-                        <h1 className='mb-0'>{name}</h1>
-                        <hr className='my-8' />
-                        <p>{headline}</p>
-                        <p>{description}</p>
-                      </div>
-                      <Link href={`/artists/${id}`}>
-                        <a className={`${idx % 2 !== 0 ? `self-end` : ``} button button-cta mt-10`}>View Artist</a>
-                      </Link>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </>
-        } */}
-
-      {/* {nfts?.length > 0 &&
-          <div className='mt-24 w-full'>
-            <h2 className='border-b border-detail dark:border-detail-dark my-8'>Featured NFTs</h2>
-            <div className='flex justify-start md:justify-start flex-wrap gap-[40px] w-full'>
-              {nfts.map(nft => {
-                const { id, image_url } = nft
-                return (
-                  <div key={id} className='relative' >
-                    <Link href={`/nfts/${id}`}>
-                      <a className='block w-[300px]'>
-                        <Image
-                          width={300}
-                          height={300}
-                          placeholder="blur"
-                          src={image_url}
-                          blurDataURL={image_url}
-                          alt='NFT Image'
-                          className='aspect-square bg-cover max-w-md rounded-sm shadow-2xl'
-                        />
-                      </a>
-                    </Link>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        } */}
-      {/* </div> */}
+        }
+      </div>
     </>
   )
 }

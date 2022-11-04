@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
 import { getSignedUrl } from '../../lib/supabase/getSignedUrl'
-// import { shortenAddress } from '../../lib/shortenAddress'
+import { convertEthToUsd } from "../../lib/convertEthToUsd"
 import useApp from "../../context/App"
 import Head from 'next/head'
 import Link from 'next/link'
@@ -271,10 +271,7 @@ export async function getServerSideProps(context) {
     }
     nft.digitalAssets = digitalAssets
     nft.physicalAssets = physicalAssets
-
-    const result = await fetch(`https://api.coinconvert.net/convert/eth/usd?amount=${nft.price}`)
-    const price = await result.json()
-    nft.priceUSD = price.USD.toFixed(2)
+    nft.priceUSD = await convertEthToUsd(nft.price)
   }
   if (events.length) {
     for (let e of events) {
