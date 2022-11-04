@@ -172,7 +172,8 @@ const CreateNft = ({ artists }) => {
         walletAddress: address,
         user: currentUser.id,
         listed: true,
-        assets
+        assets,
+        owner: currentUser.id,
       }])
 
     if (!error) {
