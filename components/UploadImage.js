@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import downloadImage from '../lib/supabase/downloadImage'
 import uploadImage from '../lib/supabase/uploadImage'
 import useApp from "../context/App"
+import { PulseLoader } from 'react-spinners'
 
 export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
   const [imageUrl, setImageUrl] = useState(null)
@@ -11,7 +11,7 @@ export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
 
   useEffect(() => {
     if (url) {
-      downloadImage(bucket, url, setImageUrl)
+      setImageUrl(`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${bucket}/${url}`)
     }
   }, [url])
 
@@ -45,6 +45,12 @@ export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
             blurDataURL='/upload.png'
             alt="Upload Image"
           />
+
+          {uploading &&
+            <div className='absolute top-0 left-0 bottom-0 right-0 flex items-center justify-center pt-20'>
+              <PulseLoader color={'white'} size={4} />
+            </div>
+          }
           <label htmlFor="single" className='opacity-0 absolute top-0 left-0 bottom-0 right-0'>
             <input
               type="file"

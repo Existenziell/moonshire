@@ -91,12 +91,13 @@ const Create = () => {
       <form onSubmit={addArtist} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'
         className='create-artist flex flex-col md:flex-row items-center justify-start gap-[40px] px-[40px]'>
 
-        <UploadImage
-          bucket='artists'
-          url={fileUrl}
-          onUpload={(url) => handleUpload(url)}
-        />
-
+        <div>
+          <UploadImage
+            bucket='artists'
+            url={fileUrl}
+            onUpload={(url) => handleUpload(url)}
+          />
+        </div>
         <div className='w-full md:w-1/2'>
           <label htmlFor='name' className='mt-12 w-full'>
             <input
