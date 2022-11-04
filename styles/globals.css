@@ -218,6 +218,32 @@ input[type='search']::-webkit-search-cancel-button{
   word-spacing: 0;
 }
 
+
+/* ==========================================================================
+	Layout / Snapping
+	========================================================================== */
+
+.snap-container {
+  @apply md:snap-y md:snap-mandatory md:h-[calc(100vh-200px)] md:overflow-y-scroll pb-24;
+}
+
+.snap-item {
+  @apply md:snap-start md:snap-always w-full mb-40;
+}
+
+.snap-grid {
+  @apply flex flex-col md:flex-row items-center justify-start gap-[40px] px-[20px] md:px-[40px];
+}
+
+.snap-image {
+  @apply shadow-2xl nextimg bg-detail dark:bg-detail-dark;
+}
+
+.snap-text {
+  @apply md:w-1/2 w-full;
+}
+
+
 /* ==========================================================================
 	Admin
 	========================================================================== */

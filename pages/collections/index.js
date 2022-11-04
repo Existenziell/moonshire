@@ -52,6 +52,14 @@ const Collections = () => {
   if (status === "error") return <p>{status}</p>
   if (status === 'loading') return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (status === 'success' && !collections) return <h1 className="mb-4 text-3xl">No collections found</h1>
+  if (!collections.length) {
+    return (
+      <div className='flex flex-col items-center justify-center w-full'>
+        <h1 className="mb-4 text-3xl">No collections found</h1>
+        <Link href='/collections/create'><a className='button button-detail'>Create Collection</a></Link>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -60,74 +68,66 @@ const Collections = () => {
         <meta name='description' content="Collections | Project Moonshire" />
       </Head>
 
-      {collections.length > 0 ?
-        <div className='md:snap-y md:snap-mandatory md:h-[calc(100vh-200px)] md:overflow-y-scroll'>
+      <div className='snap-container'>
+        {collections.map(collection => {
+          const { id, title, headline, description, image_url, numberOfNfts, price, uniqueArtists } = collection
 
-          {collections.map(collection => {
-            const { id, title, headline, description, image_url, numberOfNfts, price, uniqueArtists } = collection
-
-            return (
-              <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-300px)] w-full mb-40'>
-                <div className='flex flex-col md:flex-row items-center justify-start gap-[40px] px-[20px] md:px-[40px]'>
-                  <Link href={`/collections/${id}`}>
-                    <a className='shadow-2xl nextimg bg-detail dark:bg-detail-dark'>
-                      <Image
-                        width={calcHeight()}
-                        height={calcHeight()}
-                        placeholder="blur"
-                        src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${image_url}`}
-                        blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${image_url}`}
-                        alt='Cover Image'
-                      />
-                    </a>
-                  </Link>
-                  <div className='md:w-1/2 w-full'>
-                    <h1 className='mb-0'>{title}</h1>
-                    <hr className='my-8' />
-                    <p className='mb-4'>{headline}</p>
-                    <p className='my-4'>{description}</p>
-                    <div className='mb-4'>
-                      A selection of {numberOfNfts} exclusive artworks by{` `}
-                      {uniqueArtists.length === 1 ?
-                        <Link href={`/artists/${uniqueArtists.at(0).id}`}>
-                          <a className='link-white'>
-                            {uniqueArtists.at(0).name}
-                          </a>
-                        </Link>
-                        :
-                        uniqueArtists.map((artist, idx) => (
-                          <div className='inline-block' key={artist.id}>
-                            <Link key={artist.id} href={`/artists/${artist.id}`}>
-                              <a className='link-white'>
-                                {artist.name}
-                              </a>
-                            </Link>
-                            {uniqueArtists.length > idx + 1 &&
-                              <span className='pr-2'>, {`  `}</span>
-                            }
-                          </div>
-                        ))
-                      }
-                    </div>
-                    <hr className='my-8' />
-                    <div className='flex items-center justify-between gap-10'>
-                      <h1 className='mb-0'>{price} ETH</h1>
-                      <Link href={`/collections/${id}`}>
-                        <a className='button button-cta md:mx-0 uppercase whitespace-nowrap'>View Collection</a>
+          return (
+            <div key={id} className='snap-item'>
+              <div className='snap-grid'>
+                <Link href={`/collections/${id}`}>
+                  <a className='snap-image'>
+                    <Image
+                      width={calcHeight()}
+                      height={calcHeight()}
+                      placeholder="blur"
+                      src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${image_url}`}
+                      blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${image_url}`}
+                      alt='Cover Image'
+                    />
+                  </a>
+                </Link>
+                <div className='snap-text'>
+                  <h1>{title}</h1>
+                  <hr className='mt-8 mb-12' />
+                  <p className='mb-4'>{headline}</p>
+                  <p className='my-4'>{description}</p>
+                  <div className='mb-4'>
+                    A selection of {numberOfNfts} exclusive artworks by{` `}
+                    {uniqueArtists.length === 1 ?
+                      <Link href={`/artists/${uniqueArtists.at(0).id}`}>
+                        <a className='link-white'>
+                          {uniqueArtists.at(0).name}
+                        </a>
                       </Link>
-                    </div>
+                      :
+                      uniqueArtists.map((artist, idx) => (
+                        <div className='inline-block' key={artist.id}>
+                          <Link key={artist.id} href={`/artists/${artist.id}`}>
+                            <a className='link-white'>
+                              {artist.name}
+                            </a>
+                          </Link>
+                          {uniqueArtists.length > idx + 1 &&
+                            <span className='pr-2'>, {`  `}</span>
+                          }
+                        </div>
+                      ))
+                    }
+                  </div>
+                  <hr className='my-8' />
+                  <div className='flex items-center justify-between gap-10'>
+                    <h1 className='mb-0'>{price} ETH</h1>
+                    <Link href={`/collections/${id}`}>
+                      <a className='button button-cta md:mx-0 uppercase whitespace-nowrap'>View Collection</a>
+                    </Link>
                   </div>
                 </div>
               </div>
-            )
-          })}
-        </div>
-        :
-        <div className='flex flex-col items-center justify-center w-full'>
-          <h1 className="mb-4 text-3xl">No collections found</h1>
-          <Link href='/collections/create'><a className='button button-detail'>Create Collection</a></Link>
-        </div>
-      }
+            </div>
+          )
+        })}
+      </div>
     </>
   )
 }

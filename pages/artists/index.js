@@ -31,6 +31,11 @@ const Artists = () => {
     fetchApi()
   )
 
+  const calcHeight = () => {
+    const height = window.innerHeight - 260
+    return height
+  }
+
   if (status === "error") return <p>{status}</p>
   if (status === 'loading') return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (status === 'success' && !artists) return <h1 className="mb-4 text-3xl">No artists found</h1>
@@ -42,23 +47,26 @@ const Artists = () => {
         <meta name='description' content="Artists | Project Moonshire" />
       </Head>
 
-      <div className='md:snap-y md:snap-mandatory md:h-[calc(100vh-200px)] md:overflow-y-scroll pb-24'>
+      <div className='snap-container'>
         {artists.map(artist => {
           const { id, name, headline, description, avatar_url, collections, numberOfCollections, nfts, numberOfNfts } = artist
+
           return (
-            <div key={id} className='md:snap-start md:snap-always md:h-[calc(100vh-300px)] w-full mb-40'>
-              <div className={`flex flex-col md:flex-row items-center justify-start gap-[40px] px-[20px] md:px-[40px]`}>
-                <div className='shadow-2xl nextimg md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)] bg-detail dark:bg-detail-dark'>
-                  <Image
-                    width={1000}
-                    height={1000}
-                    placeholder="blur"
-                    src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${avatar_url}`}
-                    blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${avatar_url}`}
-                    alt='Artist Image'
-                  />
-                </div>
-                <div className='md:w-1/2 w-full'>
+            <div key={id} className='snap-item'>
+              <div className='snap-grid'>
+                <Link href={`/artists/${id}`}>
+                  <a className='snap-image'>
+                    <Image
+                      width={calcHeight()}
+                      height={calcHeight()}
+                      placeholder="blur"
+                      src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${avatar_url}`}
+                      blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${avatar_url}`}
+                      alt='Artist Image'
+                    />
+                  </a>
+                </Link>
+                <div className='snap-text'>
                   <h1>{name}</h1>
                   <hr className='mt-8 mb-12' />
                   <p>{headline}</p>
