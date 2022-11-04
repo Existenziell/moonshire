@@ -62,57 +62,51 @@ const Home = () => {
 
       <div className='h-screen md:snap-y md:snap-mandatory md:overflow-y-scroll'>
         {collections?.length > 0 &&
-          <>
-            <h2 className='border-b border-detail dark:border-detail-dark mb-8 self-start'>Featured Collections</h2>
+          collections.map((collection, idx) => {
+            const { id, title, image_url, uniqueArtists, price, priceUSD } = collection
 
-            {collections.map((collection, idx) => {
-              const { id, title, image_url, uniqueArtists, price, priceUSD } = collection
-
-              return (
-                <div key={id} className={`h-screen w-full md:snap-start md:snap-always flex items-center justify-center relative`}>
-                  <div className='absolute w-full h-full'>
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${image_url}`}
-                      placeholder='blur'
-                      blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${image_url}`}
-                      layout='fill'
-                      priority={idx === 0}
-                      alt='Collection Image'
-                      objectFit='cover'
-                    />
-                  </div>
-                  {title &&
-                    <div className='absolute bottom-[150px] right-[40px] left-[43px] flex flex-col items-end'>
-                      <p className='text-8xl leading-tight text-white hidden md:block'>{title}</p>
-                      <div className='flex justify-between items-center w-full mt-8'>
-                        <div className='hidden md:flex items-center gap-8'>
-                          <div className='nextimg'>
-                            <Image src='/home/thing.png' width={60} height={60} alt='Thing' />
-                          </div>
-                          <div className=''>Created by {` `}<br />
-                            {uniqueArtists.map((artist, idx) => (
-                              <Link href={`/artists/${artist.id}`} key={artist.id}>
-                                <a className='link-white'>
-                                  {artist.name}{idx + 1 < uniqueArtists.length ? `, ` : ``}
-                                </a>
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                        <div className='flex items-center gap-12 '>
-                          <span className='text-4xl text-white'>{price} ETH</span>
-                          <span className='text-4xl text-gray-400 hidden md:block'>${priceUSD}</span>
-                          <Link href={id ? `/collections/${id}` : `/collections`}>
-                            <a><button className='button button-cta'>EXPLORE</button></a>
+            return (
+              <div key={id} className={`h-screen w-full md:snap-start md:snap-always flex items-center justify-center relative`}>
+                <div className='absolute w-full h-full'>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${image_url}`}
+                    placeholder='blur'
+                    blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}collections/${image_url}`}
+                    layout='fill'
+                    priority={idx === 0}
+                    alt='Collection Image'
+                    objectFit='cover'
+                  />
+                </div>
+                <div className='absolute bottom-[150px] right-[25px] left-[43px] flex flex-col items-end'>
+                  <p className='text-8xl leading-tight text-white hidden md:block text-right'>{title}</p>
+                  <div className='flex justify-between items-center w-full mt-8'>
+                    <div className='hidden md:flex items-center gap-8'>
+                      <div className='nextimg'>
+                        <Image src='/home/thing.png' width={60} height={60} alt='Thing' />
+                      </div>
+                      <div className=''>Created by {` `}<br />
+                        {uniqueArtists.map((artist, idx) => (
+                          <Link href={`/artists/${artist.id}`} key={artist.id}>
+                            <a className='link-white'>
+                              {artist.name}{idx + 1 < uniqueArtists.length ? `, ` : ``}
+                            </a>
                           </Link>
-                        </div>
+                        ))}
                       </div>
                     </div>
-                  }
+                    <div className='flex items-center gap-12'>
+                      <span className='text-4xl text-white'>{price} ETH</span>
+                      <span className='text-4xl text-gray-400 hidden md:block'>${priceUSD}</span>
+                      <Link href={id ? `/collections/${id}` : `/collections`}>
+                        <a><button className='button button-cta'>EXPLORE</button></a>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              )
-            })}
-          </>
+              </div>
+            )
+          })
         }
       </div>
     </>

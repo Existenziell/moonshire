@@ -20,7 +20,7 @@ const NftsGrid = ({ nfts, display, view }) => {
   return (
     <div className={`${display === 'grid' ? `grid` : `hidden`} grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-20 mt-20`}>
       {convertedNfts?.map((nft, i) => (
-        <div key={nft.id}>
+        <div key={nft.id} className='mb-20'>
           <Link href={`/nfts/${nft.id}`}>
             <a className='shadow-2xl nextimg'>
               <Image
