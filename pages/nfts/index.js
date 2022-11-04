@@ -34,11 +34,9 @@ const Nfts = () => {
     fetchApi()
   )
 
-  if (status === "error") return <p>{status}</p>
+  const navigate = (e) => { setView(e.target.name) }
 
-  const navigate = (e) => {
-    setView(e.target.name)
-  }
+  if (status === "error") return <p>{status}</p>
 
   return (
     <>

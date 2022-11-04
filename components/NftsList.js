@@ -45,7 +45,7 @@ const NftsList = ({ nfts, display }) => {
                 <a>{nft.name}</a>
               </Link>
             </td>
-            <td className=''>
+            <td className='whitespace-nowrap'>
               <Link href={`/artists/${nft.artists?.id}`}>
                 <a className='link-white'>
                   {nft.artists?.name ? nft.artists.name : nft.artist}
