@@ -14,7 +14,7 @@ export default function Help() {
         <p className='mb-6'>Project Moonshire backend runs on the Sepolia Network, a test network for Ethereum.</p>
         <p>You can add Sepolia to Metamask using these settings:</p>
 
-        <div className=" bg-detail dark:bg-detail-dark px-8 py-4 mt-2 mb-8 rounded-sm font-mono max-w-max mx-auto">
+        <div className=" bg-detail dark:bg-detail-dark px-8 py-4 my-8 rounded-sm font-mono max-w-max mx-auto">
           <p className="text-xl mb-4">Configuration for Sepolia:</p>
           <ul>
             <li>Name: Sepolia Test Network</li>
