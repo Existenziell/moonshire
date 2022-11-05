@@ -30,9 +30,7 @@ const Nfts = () => {
     return nfts
   }
 
-  const { status, data: nfts } = useQuery(["nfts", sortBy, sortAsc, search, view], () =>
-    fetchApi()
-  )
+  const { status, data: nfts } = useQuery(["nfts", sortBy, sortAsc, search, view], () => fetchApi())
 
   const navigate = (e) => { setView(e.target.name) }
 

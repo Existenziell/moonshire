@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useQuery } from 'react-query'
 import { supabase } from '../../../lib/supabase'
 import { useRouter } from 'next/router'
 import { shortenAddress } from '../../../lib/shortenAddress'
@@ -10,15 +11,37 @@ import SupaAuth from '../../../components/SupaAuth'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const NFT = ({ nft }) => {
-  const { id, name, description, ownerName, ownerAddress, price, tokenId, tokenURI, image_url, users, artists, collections, listed, assets: initialAssets } = nft
-
+const NFT = () => {
+  const router = useRouter()
+  const { id: queryId } = router.query
   const { notify, currentUser } = useApp()
   const [loading, setLoading] = useState(false)
   const [session, setSession] = useState(null)
   const [initializing, setInitializing] = useState(true)
   const [showInfo, setShowInfo] = useState(false)
-  const router = useRouter()
+  const [initialPhysicalAssets, setInitialPhysicalAssets] = useState([])
+  const [initialDigitalAssets, setInitialDigitalAssets] = useState([])
+
+  async function fetchApi(...args) {
+    if (!queryId) return
+    const { data: nft } = await supabase
+      .from('nfts')
+      .select(`*, artists(*), collections(*), users(*)`)
+      .eq('id', queryId)
+      .single()
+
+    const { data: owner } = await supabase
+      .from('users')
+      .select(`*`)
+      .eq('id', nft.owner)
+      .single()
+
+    nft.ownerName = owner?.username
+    nft.ownerAddress = owner.walletAddress
+    return nft
+  }
+
+  const { status, data: nft } = useQuery(["nft", queryId], () => fetchApi())
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -37,16 +60,17 @@ const NFT = ({ nft }) => {
     }
   }, [currentUser?.roles?.name])
 
-  const initialPhysicalAssets = []
-  const initialDigitalAssets = []
-  if (initialAssets) {
-    for (let el of initialAssets) {
-      el.type === 'digital' ?
-        initialDigitalAssets.push(el)
-        :
-        initialPhysicalAssets.push(el)
+  useEffect(() => {
+    if (nft?.assets) {
+      let digitalAssets = []
+      let physicalAssets = []
+      for (let el of nft.assets) {
+        el.type === 'digital' ? digitalAssets.push(el) : physicalAssets.push(el)
+      }
+      setInitialDigitalAssets(digitalAssets)
+      setInitialPhysicalAssets(physicalAssets)
     }
-  }
+  }, [nft?.assets])
 
   const addRowPhysical = () => {
     const list = document.getElementById('assetsPhysical')
@@ -80,7 +104,6 @@ const NFT = ({ nft }) => {
   const saveNft = async (e) => {
     e.preventDefault()
     setLoading(true)
-
     // Create assets array
     const assets = []
     const physicalInputs = document.getElementsByClassName('inputPhysical')
@@ -120,8 +143,11 @@ const NFT = ({ nft }) => {
     }
   }
 
-  if (initializing) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (status === "error") return <p>{status}</p>
+  if (initializing || !nft) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!session) return <SupaAuth />
+
+  const { id, name, description, ownerName, ownerAddress, price, tokenId, tokenURI, image_url, users, artists, collections, listed } = nft
 
   return (
     <div className='mb-20 w-full relative'>
@@ -228,29 +254,6 @@ const NFT = ({ nft }) => {
       </form>
     </div>
   )
-}
-
-export async function getServerSideProps(context) {
-  const id = context.params.id
-
-  const { data: nft } = await supabase
-    .from('nfts')
-    .select(`*, artists(*), collections(*), users(*)`)
-    .eq('id', id)
-    .single()
-
-  const { data: owner } = await supabase
-    .from('users')
-    .select(`*`)
-    .eq('id', nft.owner)
-    .single()
-
-  nft.ownerName = owner?.username
-  nft.ownerAddress = owner.walletAddress
-
-  return {
-    props: { nft },
-  }
 }
 
 export default NFT
