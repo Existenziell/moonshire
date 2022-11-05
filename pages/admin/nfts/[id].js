@@ -1,15 +1,15 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react'
 import { supabase } from '../../../lib/supabase'
 import { useRouter } from 'next/router'
 import { shortenAddress } from '../../../lib/shortenAddress'
-import { PlusIcon, XIcon } from '@heroicons/react/solid'
+import { PlusIcon, XIcon, DotsVerticalIcon } from '@heroicons/react/outline'
 import { PulseLoader } from 'react-spinners'
 import useApp from "../../../context/App"
 import BackBtn from '../../../components/admin/BackBtn'
 import getProfile from '../../../lib/supabase/getProfile'
 import SupaAuth from '../../../components/SupaAuth'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const NFT = ({ nft }) => {
   const { id, name, description, walletAddress, owner, price, tokenId, tokenURI, image_url, users, artists, collections, listed, assets: initialAssets } = nft
@@ -18,6 +18,7 @@ const NFT = ({ nft }) => {
   const [loading, setLoading] = useState(false)
   const [session, setSession] = useState(null)
   const [initializing, setInitializing] = useState(true)
+  const [showInfo, setShowInfo] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -139,17 +140,31 @@ const NFT = ({ nft }) => {
           />
         </div>
 
-        <div className='md:w-1/2'>
-          <h1 className='mb-0'>{name}</h1>
+        <div className='w-full md:w-1/2'>
+          <div className='flex justify-between items-center relative'>
+            <h1 className='mb-0'>{name}</h1>
+            <DotsVerticalIcon className='w-5 hover:cursor-pointer hover:text-cta' onClick={() => setShowInfo(current => !current)} />
+            {showInfo &&
+              <div className='absolute top-6 right-6 bg-detail/30 dark:bg-detail-dark/30 p-4 rounded-sm backdrop-blur flex flex-col gap-1'>
+                <p>TokenID: {tokenId}</p>
+                <div>
+                  Created by:{` `}
+                  <Link href={`/users/${users.username}`}>
+                    <a className='link'>{users.username}</a>
+                  </Link>
+                </div>
+                <p>Currently listed: {listed ? `Yes` : `No`}</p>
+                <p>Current owner: {shortenAddress(walletAddress)} ({owner})</p>
+                <p>TokenURI:{` `}
+                  <a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link'>{tokenURI.slice(37, 66)}...</a>
+                </p>
+              </div>
+            }
+          </div>
           <hr className='my-9' />
           <p className='mb-8'>Description: {description}</p>
           <p className='mb-2'>Artist: {artists.name}</p>
           <p className='mb-2'>Collection: {collections.title}</p>
-          {/* <p className='mb-2'>Created by: {users.username}</p> */}
-          {/* <p className='mb-2'>TokenID: {tokenId}</p> */}
-          {/* <p className='mb-2'>Currently listed: {listed ? `Yes` : `No`}</p> */}
-          {/* <p className='mb-2'>Current owner: {shortenAddress(walletAddress)} ({owner})</p> */}
-          {/* <p className='mb-2 whitespace-nowrap'>TokenURI: <a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link max-w-[150px] truncate '>{tokenURI}</a></p> */}
 
           <div className='mt-16'>
             <h1 className='mb-0'>Assets</h1>
@@ -181,7 +196,7 @@ const NFT = ({ nft }) => {
               <PlusIcon className='w-5 h-5 hover:cursor-pointer hover:text-cta' onClick={addRowDigital} />
             </div>
             <ul id='assetsDigital'>
-              <li id='templateDigital' className='hidden gap-2'>
+              <li id='templateDigital' className='hidden flex-col md:flex-row gap-2'>
                 <input type="text" name='name' placeholder="Name" className='inputDigital' />
                 <input type="text" name='link' placeholder="Link" className='inputDigital' />
                 <input type="text" name='format' placeholder="Format" className='w-28 inputDigital' />
@@ -191,7 +206,7 @@ const NFT = ({ nft }) => {
               </li>
 
               {initialDigitalAssets.map((asset, idx) => (
-                <li key={asset.name + idx} className='flex gap-2 digitalAsset'>
+                <li key={asset.name + idx} className='flex flex-col md:flex-row gap-2 digitalAsset'>
                   <input type="text" name='name' placeholder="Name" className='inputDigital' defaultValue={asset.name} />
                   <input type="text" name='link' placeholder="Link" className='inputDigital' defaultValue={asset.link} />
                   <input type="text" name='format' placeholder="Format" className='w-28 inputDigital' defaultValue={asset.format} />
