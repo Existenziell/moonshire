@@ -92,89 +92,91 @@ const Artists = () => {
       {status === 'loading' ?
         <div className='flex items-center justify-center min-w-max h-[calc(100vh-420px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
         :
-        <table className='table-auto w-full'>
-          <thead className='text-left'>
-            <tr className='font-bold border-b-2 border-lines dark:border-lines-dark'>
-              <th className='relative -left-2'>Avatar</th>
-              <th>Name</th>
-              <th>Headline</th>
-              <th>Description</th>
-              <th>Origin</th>
-              <th className='text-right'>NFTs</th>
-              <th className='text-right'>Featured</th>
-              <th className='text-right'>Edit</th>
-              <th className='text-right w-28'>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {artists.length <= 0 ?
-              <tr className="flex flex-col items-start"><td>No results</td></tr>
-              :
-              artists?.map((artist) => (
-                <tr key={artist.id + artist.name} className='relative'>
-                  <td className='px-0 w-[80px]'>
-                    <Link href={`/artists/${artist.id}`}>
-                      <a>
-                        {artist.avatar_url ?
-                          <Image
-                            width={60}
-                            height={60}
-                            placeholder="blur"
-                            src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${artist.avatar_url}`}
-                            blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${artist.avatar_url}`}
-                            alt='Artist Image'
-                            className='w-[60px] aspect-square bg-cover'
-                          />
-                          :
-                          "n/a"
-                        }
-                      </a>
-                    </Link>
-                  </td>
-                  <td>{artist.name}</td>
-                  <td className='max-w-[150px] truncate'>{artist.headline}</td>
-                  <td className='max-w-[150px] truncate'>{artist.description}</td>
-                  <td>{artist.origin}</td>
-                  <td className='text-right'>{artist.numberOfNfts}</td>
+        <>
+          <table className='table-auto w-full'>
+            <thead className='text-left'>
+              <tr className='font-bold border-b-2 border-lines dark:border-lines-dark'>
+                <th className='relative -left-2'>Avatar</th>
+                <th>Name</th>
+                <th>Headline</th>
+                <th>Description</th>
+                <th>Origin</th>
+                <th className='text-right'>NFTs</th>
+                <th className='text-right'>Featured</th>
+                <th className='text-right'>Edit</th>
+                <th className='text-right w-28'>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {artists.length <= 0 ?
+                <tr className="flex flex-col items-start"><td>No results</td></tr>
+                :
+                artists?.map((artist) => (
+                  <tr key={artist.id + artist.name} className='relative'>
+                    <td className='px-0 w-[80px]'>
+                      <Link href={`/artists/${artist.id}`}>
+                        <a>
+                          {artist.avatar_url ?
+                            <Image
+                              width={60}
+                              height={60}
+                              placeholder="blur"
+                              src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${artist.avatar_url}`}
+                              blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${artist.avatar_url}`}
+                              alt='Artist Image'
+                              className='w-[60px] aspect-square bg-cover'
+                            />
+                            :
+                            "n/a"
+                          }
+                        </a>
+                      </Link>
+                    </td>
+                    <td>{artist.name}</td>
+                    <td className='max-w-[150px] truncate'>{artist.headline}</td>
+                    <td className='max-w-[150px] truncate'>{artist.description}</td>
+                    <td>{artist.origin}</td>
+                    <td className='text-right'>{artist.numberOfNfts}</td>
 
-                  <td className='whitespace-nowrap text-right'>
-                    <label htmlFor="featured" className="cursor-pointer flex items-center justify-end">
-                      <input
-                        type="checkbox"
-                        id="featured"
-                        defaultChecked={artist.featured}
-                        onChange={(e) => saveState(artist.id, e.target.checked)}
-                        disabled={loading}
-                      />
-                    </label>
-                  </td>
+                    <td className='whitespace-nowrap text-right'>
+                      <label htmlFor="featured" className="cursor-pointer flex items-center justify-end">
+                        <input
+                          type="checkbox"
+                          id="featured"
+                          defaultChecked={artist.featured}
+                          onChange={(e) => saveState(artist.id, e.target.checked)}
+                          disabled={loading}
+                        />
+                      </label>
+                    </td>
 
-                  <td className='text-right align-middle pr-0'>
-                    <Link href={`/admin/artists/${artist.id}`}>
-                      <a>
-                        <button className='button-admin ml-auto'>
-                          Edit
-                        </button>
-                      </a>
-                    </Link>
-                  </td>
+                    <td className='text-right align-middle pr-0'>
+                      <Link href={`/admin/artists/${artist.id}`}>
+                        <a>
+                          <button className='button-admin ml-auto'>
+                            Edit
+                          </button>
+                        </a>
+                      </Link>
+                    </td>
 
-                  <td className='text-right align-middle w-28 pr-0'>
-                    <button onClick={() => toggleDeleteModal(artist)} aria-label='Toggle Delete Modal' className='button-admin'>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+                    <td className='text-right align-middle w-28 pr-0'>
+                      <button onClick={() => toggleDeleteModal(artist)} aria-label='Toggle Delete Modal' className='button-admin'>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+
+          <Link href='/admin/artists/create'>
+            <a className='mt-6 link flex items-center gap-1 text-xs'>
+              <PlusIcon className='w-4' />Add artist
+            </a>
+          </Link>
+        </>
       }
-
-      <Link href='/admin/artists/create'>
-        <a className='mt-6 link flex items-center gap-1 text-xs'>
-          <PlusIcon className='w-4' />Add artist
-        </a>
-      </Link>
 
       {/* Delete artist */}
       {showDelete &&
