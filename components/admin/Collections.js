@@ -160,7 +160,6 @@ const Collections = () => {
                         defaultChecked={collection.featured}
                         onChange={(e) => saveState(collection.id, e.target.checked)}
                         disabled={loading}
-                        className="text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600"
                       />
                     </label>
                   </td>

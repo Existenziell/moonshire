@@ -122,10 +122,9 @@ const Settings = () => {
                     id="assetsOnProfile"
                     defaultChecked={assetsOnProfile}
                     onChange={(e) => savePublicAssetState(e.target.checked)}
-                    className="text-cta mr-2 bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600"
                   />
 
-                  <span>Show assets on your {` `}
+                  <span className='pl-4'>Show assets on your {` `}
                     <Link href={`/users/${encodeURIComponent(currentUser.username)}`}>
                       <a className='link-white'>public profile</a>
                     </Link>
