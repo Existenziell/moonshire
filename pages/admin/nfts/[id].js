@@ -6,13 +6,12 @@ import { PlusIcon, XIcon, DotsVerticalIcon } from '@heroicons/react/outline'
 import { PulseLoader } from 'react-spinners'
 import useApp from "../../../context/App"
 import BackBtn from '../../../components/admin/BackBtn'
-import getProfile from '../../../lib/supabase/getProfile'
 import SupaAuth from '../../../components/SupaAuth'
 import Image from 'next/image'
 import Link from 'next/link'
 
 const NFT = ({ nft }) => {
-  const { id, name, description, walletAddress, owner, price, tokenId, tokenURI, image_url, users, artists, collections, listed, assets: initialAssets } = nft
+  const { id, name, description, ownerName, ownerAddress, price, tokenId, tokenURI, image_url, users, artists, collections, listed, assets: initialAssets } = nft
 
   const { notify, currentUser } = useApp()
   const [loading, setLoading] = useState(false)
@@ -154,7 +153,7 @@ const NFT = ({ nft }) => {
                   </Link>
                 </div>
                 <p>Currently listed: {listed ? `Yes` : `No`}</p>
-                <p>Current owner: {shortenAddress(walletAddress)} ({owner})</p>
+                <p>Current owner: {shortenAddress(ownerAddress)} ({ownerName})</p>
                 <p>TokenURI:{` `}
                   <a href={tokenURI} target='_blank' rel='noopener noreferrer' className='link'>{tokenURI.slice(37, 66)}...</a>
                 </p>
@@ -240,18 +239,14 @@ export async function getServerSideProps(context) {
     .eq('id', id)
     .single()
 
-  if (!nft) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/nfts",
-      },
-      props: {}
-    }
-  }
+  const { data: owner } = await supabase
+    .from('users')
+    .select(`*`)
+    .eq('id', nft.owner)
+    .single()
 
-  const owner = await getProfile(nft.walletAddress)
-  nft.owner = owner.username
+  nft.ownerName = owner?.username
+  nft.ownerAddress = owner.walletAddress
 
   return {
     props: { nft },
