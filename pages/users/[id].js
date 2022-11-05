@@ -14,7 +14,7 @@ const User = () => {
   async function fetchApi(...args) {
     if (!id) return
     let { data: user } = await supabase.from('users').select(`*`).eq('username', username).single()
-    let { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).eq('user', user.id).order('created_at', { ascending: false })
+    let { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).eq('owner', user.id).order('created_at', { ascending: false })
     user.nfts = nfts
     return user
   }
@@ -52,7 +52,7 @@ const User = () => {
             <hr className='my-8' />
             {user?.nfts?.length > 0 && assets_on_profile &&
               <>
-                <p className='mb-4'>Created Assets:</p>
+                <p className='mb-4'>Owned Assets:</p>
                 {user?.nfts?.map((nft, i) =>
                   i <= 16 &&
                   <Link key={nft.id} href={`/nfts/${nft.id}`}>

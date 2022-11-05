@@ -74,7 +74,7 @@ const Settings = () => {
         <meta name='description' content='Settings | Project Moonshire' />
       </Head>
 
-      <div className='profile flex flex-col items-center justify-start w-full pb-24'>
+      <div className='profile flex flex-col items-center justify-start w-full pb-24 mt-20'>
         <div className='flex flex-col items-center justify-start md:flex-row gap-[40px] w-full'>
           <div className='w-full md:w-1/2 md:max-w-[400px]'>
             <Avatar
