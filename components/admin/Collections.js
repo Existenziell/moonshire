@@ -53,7 +53,6 @@ const Collections = () => {
       }
       collection.price = collectionPrice
     }
-
     return collections
   }
 
@@ -194,8 +193,6 @@ const Collections = () => {
           </div>
         </>
       }
-
-
 
       {/* Delete collection */}
       {showDelete &&
