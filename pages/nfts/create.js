@@ -1,6 +1,7 @@
 import { ethers } from 'ethers'
 import { supabase } from '../../lib/supabase'
 import { useEffect, useState } from 'react'
+import { useQuery } from 'react-query'
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
 import { PlusIcon, XIcon } from '@heroicons/react/solid'
@@ -20,9 +21,8 @@ import ipfsClient from '../../lib/ipfsClient'
 import logEvent from '../../lib/logEvent'
 const projectGateway = process.env.NEXT_PUBLIC_INFURA_GATEWAY
 
-const CreateNft = ({ artists }) => {
+const CreateNft = () => {
   const { address, signer, currentUser, darkmode, hasMetamask, notify, checkChain, chainId } = useApp()
-
   const [fileUrl, setFileUrl] = useState(null)
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
@@ -30,17 +30,46 @@ const CreateNft = ({ artists }) => {
   const [fetching, setFetching] = useState(true)
   const [uploading, setUploading] = useState(false)
   const [artistName, setArtistName] = useState('')
+  const [artistOptions, setArtistOptions] = useState([])
+  const [collectionOptions, setCollectionOptions] = useState([])
   const [collectionName, setCollectionName] = useState('')
   const [formIsReady, setFormIsReady] = useState(false)
   const [success, setSuccess] = useState(false)
   const [styles, setStyles] = useState()
   const router = useRouter()
 
+  async function fetchApi(...args) {
+    const { data: artists } = await supabase.from('artists').select(`*`).order('id', { ascending: true })
+    return artists
+  }
+
+  const { status, data: artists } = useQuery(["artists"], () => fetchApi())
+
   useEffect(() => {
     if (currentUser && address) {
       fetchUserCollections()
     }
   }, [currentUser, address])
+
+  useEffect(() => {
+    if (artists) {
+      let options = []
+      artists.forEach(a => {
+        options.push({ value: a.id, label: a.name })
+      })
+      setArtistOptions(options)
+    }
+  }, [artists])
+
+  useEffect(() => {
+    if (userCollections) {
+      let options = []
+      userCollections.forEach(c => {
+        options.push({ value: c.id, label: c.title })
+      })
+      setCollectionOptions(options)
+    }
+  }, [userCollections])
 
   const fetchUserCollections = async () => {
     const userCollections = await getUserCollections(currentUser.id)
@@ -192,10 +221,8 @@ const CreateNft = ({ artists }) => {
 
   const checkForm = () => {
     (fileUrl && formData?.name && formData?.description && formData?.price && artistName !== '' && collectionName !== '')
-      ?
-      setFormIsReady(true)
-      :
-      setFormIsReady(false)
+      ? setFormIsReady(true)
+      : setFormIsReady(false)
   }
 
   useEffect(() => {
@@ -215,18 +242,6 @@ const CreateNft = ({ artists }) => {
   const setArtist = (e) => {
     setArtistName(e.label)
     setFormData({ ...formData, ...{ artist: e.value } })
-  }
-
-  const artistOptions = []
-  artists.forEach(a => {
-    artistOptions.push({ value: a.id, label: a.name })
-  })
-
-  const collectionOptions = []
-  if (userCollections) {
-    userCollections.forEach(c => {
-      collectionOptions.push({ value: c.id, label: c.title })
-    })
   }
 
   useEffect(() => {
@@ -279,6 +294,7 @@ const CreateNft = ({ artists }) => {
     )
   }
 
+  if (status === "error") return <p>{status}</p>
   if (fetching) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
 
   return (
@@ -427,14 +443,6 @@ const CreateNft = ({ artists }) => {
       }
     </>
   )
-}
-
-export async function getServerSideProps() {
-  const { data: artists } = await supabase.from('artists').select(`*`).order('id', { ascending: true })
-
-  return {
-    props: { artists },
-  }
 }
 
 export default CreateNft
