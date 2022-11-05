@@ -1,23 +1,32 @@
 import { useState, useEffect } from 'react'
+import { useQuery } from 'react-query'
 import { supabase } from '../../../lib/supabase'
 import { useRouter } from 'next/router'
-import { getPublicUrl } from '../../../lib/supabase/getPublicUrl'
 import { PulseLoader } from 'react-spinners'
 import useApp from "../../../context/App"
 import SupaAuth from '../../../components/SupaAuth'
 import UploadImage from '../../../components/UploadImage'
 import BackBtn from '../../../components/admin/BackBtn'
 
-const Collection = ({ collection }) => {
-  const { id, title, headline, description, year, image_url } = collection
+const Collection = () => {
+  const router = useRouter()
+  const { id: queryId } = router.query
   const { notify, currentUser } = useApp()
-
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState()
   const [session, setSession] = useState(null)
-  const [initializing, setInitializing] = useState(true)
-  const router = useRouter()
+  const [initializing, setInitializing] = useState(false)
+
+  async function fetchApi(...args) {
+    if (!queryId) return
+    let { data: collection } = await supabase.from('collections').select(`*`).eq('id', queryId).single()
+    let { nftCount } = await supabase.from('nfts').select(`*`, { count: 'exact' }).eq('collection', collection.id)
+    collection.numberOfNfts = nftCount
+    return collection
+  }
+
+  const { status, data: collection } = useQuery(["collection", queryId], () => fetchApi())
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -37,8 +46,8 @@ const Collection = ({ collection }) => {
   }, [currentUser?.roles?.name])
 
   useEffect(() => {
-    setImageUrl(image_url)
-  }, [image_url])
+    setImageUrl(collection?.image_url)
+  }, [collection?.image_url])
 
   const setData = (e) => {
     const { name, value } = e.target
@@ -67,8 +76,11 @@ const Collection = ({ collection }) => {
     }
   }
 
-  if (initializing) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (status === "error") return <p>{status}</p>
+  if (initializing || !collection) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!session) return <SupaAuth />
+
+  const { id, title, headline, description, year } = collection
 
   return (
     <div className='mb-20 w-full relative'>
@@ -77,7 +89,6 @@ const Collection = ({ collection }) => {
           <UploadImage
             bucket='collections'
             url={imageUrl}
-            // size={200}
             onUpload={(url) => {
               setFormData({ ...formData, image_url: url })
               setImageUrl(url)
@@ -139,64 +150,6 @@ const Collection = ({ collection }) => {
       </form>
     </div>
   )
-}
-
-export async function getServerSideProps(context) {
-  const id = context.params.id
-
-  const { data: collection } = await supabase.from('collections').select(`*`).eq('id', id).single()
-  const { data: nfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).order('id', { ascending: true })
-
-  if (!collection) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/admin",
-      },
-      props: {}
-    }
-  }
-
-  if (collection.image_url) {
-    const url = await getPublicUrl('collections', collection.image_url)
-    collection.public_url = url
-  }
-
-  // Set Number of NFTs in collection
-  const collectionNfts = nfts.filter(n => n.collection === collection.id)
-  collection.numberOfNfts = collectionNfts.length
-
-  if (collectionNfts.length > 0) {
-    // Collect artists that have NFTs in this collection
-    const collectionArtists = []
-    for (const nft of collectionNfts) {
-      collectionArtists.push(nft.artists.name)
-    }
-
-    /* eslint-disable no-undef */
-    const uniqueCollectionArtists = [...new Set(collectionArtists)]
-    /* eslint-enable no-undef */
-    collection.artists = uniqueCollectionArtists
-
-    // Set floor and highest price
-    let floorPrice = 1000000
-    let highestPrice = 0
-
-    for (let nft of collectionNfts) {
-      if (highestPrice < nft.price) {
-        highestPrice = nft.price
-      }
-      if (floorPrice > nft.price) {
-        floorPrice = nft.price
-      }
-    }
-    collection.floorPrice = floorPrice
-    collection.highestPrice = highestPrice
-  }
-
-  return {
-    props: { collection, collectionNfts },
-  }
 }
 
 export default Collection

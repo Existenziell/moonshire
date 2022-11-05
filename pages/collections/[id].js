@@ -9,14 +9,13 @@ import NftsGrid from '../../components/NftsGrid'
 import NftsList from '../../components/NftsList'
 
 const Collection = () => {
+  const router = useRouter()
+  const { id } = router.query
   const [view, setView] = useState('all')
   const [display, setDisplay] = useState('grid')
   const [sortBy, setSortBy] = useState('created_at')
   const [sortAsc, setSortAsc] = useState(false)
   const [search, setSearch] = useState('')
-
-  const router = useRouter()
-  const { id } = router.query
 
   async function fetchApi(...args) {
     if (!id) return

@@ -1,22 +1,31 @@
 import { useState, useEffect } from 'react'
+import { useQuery } from 'react-query'
 import { supabase } from '../../../lib/supabase'
 import { useRouter } from 'next/router'
-import { getPublicUrl } from '../../../lib/supabase/getPublicUrl'
 import { PulseLoader } from 'react-spinners'
 import useApp from "../../../context/App"
 import SupaAuth from '../../../components/SupaAuth'
 import UploadImage from '../../../components/UploadImage'
 import BackBtn from '../../../components/admin/BackBtn'
 
-const Artist = ({ artist }) => {
-  const { id, name, headline, description, origin, avatar_url } = artist
+const Artist = () => {
+  const router = useRouter()
+  const { id: queryId } = router.query
   const { notify, currentUser } = useApp()
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
   const [avatarUrl, setAvatarUrl] = useState()
   const [session, setSession] = useState(null)
   const [initializing, setInitializing] = useState(true)
-  const router = useRouter()
+
+  async function fetchApi(...args) {
+    if (!queryId) return
+    let { data: artist } = await supabase.from('artists').select(`*`).eq('id', queryId).single()
+    let { nftCount } = await supabase.from('nfts').select(`*`, { count: 'exact' }).eq('artist', artist.id)
+    artist.numberOfNfts = nftCount
+    return artist
+  }
+  const { status, data: artist } = useQuery(["artist", queryId], () => fetchApi())
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -36,8 +45,8 @@ const Artist = ({ artist }) => {
   }, [currentUser?.roles?.name])
 
   useEffect(() => {
-    setAvatarUrl(avatar_url)
-  }, [avatar_url])
+    setAvatarUrl(artist?.avatar_url)
+  }, [artist?.avatar_url])
 
   const setData = (e) => {
     const { name, value } = e.target
@@ -66,8 +75,11 @@ const Artist = ({ artist }) => {
     }
   }
 
-  if (initializing) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (status === "error") return <p>{status}</p>
+  if (initializing || !artist) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!session) return <SupaAuth />
+
+  const { id, name, headline, description, origin } = artist
 
   return (
     <div className='mb-20 w-full relative'>
@@ -76,7 +88,6 @@ const Artist = ({ artist }) => {
           <UploadImage
             bucket='artists'
             url={avatarUrl}
-            // size={200}
             onUpload={(url) => {
               setFormData({ ...formData, avatar_url: url })
               setAvatarUrl(url)
@@ -139,20 +150,6 @@ const Artist = ({ artist }) => {
       </form>
     </div>
   )
-}
-
-export async function getServerSideProps(context) {
-  const id = context.params.id
-  const { data: artist } = await supabase.from('artists').select(`*`).eq('id', id).single()
-  const { data: artistNfts } = await supabase.from('nfts').select(`*, collections(*), artists(*)`).eq('artist', id).order('created_at', { ascending: false })
-
-  artist.numberOfNfts = artistNfts.length
-  const url = await getPublicUrl('artists', artist.avatar_url)
-  artist.public_url = url
-
-  return {
-    props: { artist },
-  }
 }
 
 export default Artist

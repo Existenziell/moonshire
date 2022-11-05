@@ -1,6 +1,5 @@
 import { supabase } from '../../lib/supabase'
 import { useQuery } from 'react-query'
-import { getSignedUrl } from '../../lib/supabase/getSignedUrl'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -16,23 +15,18 @@ const User = () => {
     if (!id) return
     let { data: user } = await supabase.from('users').select(`*`).eq('username', username).single()
     let { data: nfts } = await supabase.from('nfts').select(`*, artists(*), collections(*)`).eq('user', user.id).order('created_at', { ascending: false })
-
     user.nfts = nfts
-    const url = await getSignedUrl('avatars', user?.avatar_url)
-    user.public_url = url
-
     return user
   }
 
-  const { status, data: user } = useQuery(["user", username], () =>
-    fetchApi()
-  )
+  const { status, data: user } = useQuery(["user", username], () => fetchApi())
 
   if (status === "error") return <p>{status}</p>
   if (status === 'loading') return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (status === 'success' && !user) return <h1 className="mb-4 text-3xl">User not found</h1>
 
-  const { public_url, assets_on_profile } = user
+  const { avatar_url, assets_on_profile } = user
+
   return (
     <>
       <Head>
@@ -47,9 +41,10 @@ const User = () => {
               width={1000}
               height={1000}
               placeholder="blur"
-              src={public_url}
-              blurDataURL={public_url}
+              src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}
+              blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}
               alt='User Image'
+              className='rounded'
             />
           </div>
           <div className='md:w-1/2'>

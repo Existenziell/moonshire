@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
+import { useQuery } from 'react-query'
 import { supabase } from '../../../lib/supabase'
 import { useRouter } from 'next/router'
-import { getSignedUrl } from '../../../lib/supabase/getSignedUrl'
 import { shortenAddress } from '../../../lib/shortenAddress'
 import { PulseLoader } from 'react-spinners'
 import useApp from "../../../context/App"
@@ -12,16 +12,25 @@ import roleOptions from '../../../lib/roleOptions'
 import SupaAuth from '../../../components/SupaAuth'
 import Image from 'next/image'
 
-const User = ({ user }) => {
-  const { id, username, walletAddress, email, signed_url } = user
+const User = () => {
+  const router = useRouter()
+  const { id: queryId } = router.query
   const { notify, darkmode, currentUser } = useApp()
-
   const [loading, setLoading] = useState(false)
   const [selectedRole, setSelectedRole] = useState(null)
   const [styles, setStyles] = useState()
   const [session, setSession] = useState(null)
   const [initializing, setInitializing] = useState(true)
-  const router = useRouter()
+
+  async function fetchApi(...args) {
+    if (!queryId) return
+    const { data: user } = await supabase.from('users').select(`*, roles(*)`).eq('id', queryId).single()
+    return user
+  }
+
+  const { status, data: user } = useQuery(["user", queryId], () =>
+    fetchApi()
+  )
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -40,6 +49,11 @@ const User = ({ user }) => {
     }
   }, [currentUser?.roles?.name])
 
+  useEffect(() => {
+    const tempStyles = selectStyles(darkmode)
+    setStyles(tempStyles)
+  }, [darkmode])
+
   const saveUser = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -57,13 +71,11 @@ const User = ({ user }) => {
     }
   }
 
-  useEffect(() => {
-    const tempStyles = selectStyles(darkmode)
-    setStyles(tempStyles)
-  }, [darkmode])
-
-  if (initializing) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (status === "error") return <p>{status}</p>
+  if (initializing || !user) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!session) return <SupaAuth />
+
+  const { id, username, walletAddress, email, avatar_url } = user
 
   return (
     <div className='mb-20 w-full relative'>
@@ -71,14 +83,15 @@ const User = ({ user }) => {
         <h1 className='mb-10'>Edit User</h1>
 
         <div className='flex flex-col md:flex-row gap-10 items-start justify-start'>
-          <div className='shadow-2xl nextimg rounded-sm'>
+          <div className='shadow-2xl nextimg'>
             <Image
               width={1000}
               height={1000}
-              src={signed_url}
-              blurDataURL={signed_url}
+              src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}
+              blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}
               placeholder="blur"
               alt='User Image'
+              className='rounded-sm'
             />
           </div>
           <div>
@@ -113,29 +126,6 @@ const User = ({ user }) => {
       </form>
     </div>
   )
-}
-
-export async function getServerSideProps(context) {
-  const id = context.params.id
-  const { data: user } = await supabase.from('users').select(`*, roles(*)`).eq('id', id).single()
-
-  if (!user) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/admin",
-      },
-      props: {}
-    }
-  }
-
-  if (user.avatar_url) {
-    const url = await getSignedUrl('avatars', user.avatar_url)
-    user.signed_url = url
-  }
-  return {
-    props: { user }
-  }
 }
 
 export default User

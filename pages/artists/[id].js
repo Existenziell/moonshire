@@ -30,9 +30,7 @@ const Artist = () => {
     return artist
   }
 
-  const { status, data: artist } = useQuery(["artist", id], () =>
-    fetchApi()
-  )
+  const { status, data: artist } = useQuery(["artist", id], () => fetchApi())
 
   if (status === "error") return <p>{status}</p>
   if (status === 'loading') return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>

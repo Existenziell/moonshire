@@ -2,7 +2,6 @@ import { supabase } from "../../lib/supabase"
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
-import { getSignedUrl } from '../../lib/supabase/getSignedUrl'
 import { convertEthToUsd } from "../../lib/convertEthToUsd"
 import useApp from "../../context/App"
 import Head from 'next/head'
@@ -168,7 +167,14 @@ const Nft = ({ nft }) => {
                     events.map(e =>
                       <div key={e.id} className='flex items-center justify-between w-full mb-4'>
                         <div className="flex items-center gap-6">
-                          <img src={e.users?.signed_url} alt='NFT Creator' width={50} height={50} />
+                          <Image
+                            src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${lastEvent.users.avatar_url}`}
+                            alt='NFT Creator'
+                            width={50}
+                            height={50}
+                            placeholder='blur'
+                            blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${lastEvent.users.avatar_url}`}
+                          />
                           <div>
                             <p>{e.typeClean} <Link href={`/users/${encodeURIComponent(e.users.username)}`}><a className="link-white">@{e.users?.username}</a></Link></p>
                             <p className="hidden md:block">{moment(e.created_at).format('MMMM Do YYYY, h:mm a')}</p>
@@ -197,7 +203,16 @@ const Nft = ({ nft }) => {
                 :
                 <div className='flex flex-col md:flex-row items-start md:items-center justify-between gap-10 mt-10'>
                   <div className='flex items-center gap-6'>
-                    <img src={lastEvent.users.signed_url} alt='NFT Creator' width={50} height={50} />
+                    <div className="nextimg w-[50px] h-[50px]">
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${lastEvent.users.avatar_url}`}
+                        alt='NFT Creator'
+                        width={50}
+                        height={50}
+                        placeholder='blur'
+                        blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${lastEvent.users.avatar_url}`}
+                      />
+                    </div>
                     <div>
                       {listed ? `Listed by ` : `Sold to `}
                       <Link href={`/users/${encodeURIComponent(lastEvent.users.username)}`}>
@@ -284,7 +299,7 @@ export async function getServerSideProps(context) {
       e.users = {
         username: user.username,
         id: user.id,
-        signed_url: await getSignedUrl('avatars', user.avatar_url)
+        avatar_url: user.avatar_url
       }
 
       switch (e.type) {

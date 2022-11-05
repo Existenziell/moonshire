@@ -4,14 +4,14 @@ import { supabase } from '../../lib/supabase'
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
 import { shortenAddress } from '../../lib/shortenAddress'
-import { getSignedUrl } from '../../lib/supabase/getSignedUrl'
+import { UserIcon } from '@heroicons/react/solid'
 import useApp from "../../context/App"
 import Search from './Search'
-// import Link from 'next/link'
 import Select from 'react-select'
 import selectStyles from '../../lib/selectStyles'
 import roleOptions from '../../lib/roleOptions'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Users = () => {
   const { notify, darkmode } = useApp()
@@ -40,10 +40,6 @@ const Users = () => {
       .order('created_at', { ascending: false })
 
     for (let user of users) {
-      if (user.avatar_url) {
-        const url = await getSignedUrl('avatars', user.avatar_url)
-        user.signed_url = url
-      }
       const userCollections = collections.filter(c => (c.user === user.id))
       const userNfts = nfts.filter(nft => (nft.user === user.id))
       user.numberOfCollections = userCollections.length
@@ -125,21 +121,27 @@ const Users = () => {
               <tr className="flex flex-col items-start"><td>No results</td></tr>
               :
               users?.map((user) => (
-                <tr key={user.id + user.username} className='relative'>
+                <tr key={user.id} className='relative'>
                   <td className='px-0 w-[80px]'>
-                    {user.signed_url ?
-                      <Image
-                        width={60}
-                        height={60}
-                        placeholder="blur"
-                        src={user.signed_url}
-                        blurDataURL={user.signed_url}
-                        alt='User Image'
-                        className='w-[60px] shadow aspect-square bg-cover'
-                      />
-                      :
-                      "n/a"
-                    }
+                    <Link href={`/users/${encodeURIComponent(user.username)}`}>
+                      <a>
+                        {user.avatar_url ?
+                          <Image
+                            width={60}
+                            height={60}
+                            placeholder="blur"
+                            src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${user.avatar_url}`}
+                            blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${user.avatar_url}`}
+                            alt='User Image'
+                            className='w-[60px] shadow aspect-square bg-cover'
+                          />
+                          :
+                          <div className='h-[60px] w-[60px] flex items-center justify-center'>
+                            <UserIcon className='w-16' />
+                          </div>
+                        }
+                      </a>
+                    </Link>
                   </td>
                   <td className='whitespace-nowrap'>{shortenAddress(user.walletAddress)}</td>
                   <td>{user.username}</td>
