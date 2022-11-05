@@ -73,7 +73,6 @@ const Nft = ({ nft }) => {
       }
       setBuying(false)
     } catch (e) {
-      // console.log(e);
       notify("Something went wrong!...")
     }
   }
@@ -168,12 +167,13 @@ const Nft = ({ nft }) => {
                       <div key={e.id} className='flex items-center justify-between w-full mb-4'>
                         <div className="flex items-center gap-6">
                           <Image
-                            src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${lastEvent.users.avatar_url}`}
+                            src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${e.users.avatar_url}`}
                             alt='NFT Creator'
                             width={50}
                             height={50}
                             placeholder='blur'
-                            blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${lastEvent.users.avatar_url}`}
+                            blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${e.users.avatar_url}`}
+                            className='rounded-sm'
                           />
                           <div>
                             <p>{e.typeClean} <Link href={`/users/${encodeURIComponent(e.users.username)}`}><a className="link-white">@{e.users?.username}</a></Link></p>
@@ -189,7 +189,7 @@ const Nft = ({ nft }) => {
                       </div>
                     )
                     :
-                    <p>No data</p>
+                    <p>No data yet</p>
                 )}
               </div>
               <hr className='my-8' />
@@ -314,9 +314,9 @@ export async function getServerSideProps(context) {
           break
       }
     }
-    const lastEvent = events.slice(-1)
+    const lastEvent = events.pop()
     nft.events = events
-    nft.lastEvent = lastEvent[0]
+    nft.lastEvent = lastEvent
   }
 
   return {
