@@ -145,7 +145,7 @@ const NFT = ({ nft }) => {
             <h1 className='mb-0'>{name}</h1>
             <DotsVerticalIcon className='w-5 hover:cursor-pointer hover:text-cta' onClick={() => setShowInfo(current => !current)} />
             {showInfo &&
-              <div className='absolute top-6 right-6 bg-detail/30 dark:bg-detail-dark/30 p-4 rounded-sm backdrop-blur flex flex-col gap-1'>
+              <div className='info-tab'>
                 <p>TokenID: {tokenId}</p>
                 <div>
                   Created by:{` `}

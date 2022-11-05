@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { ethers } from 'ethers'
 import { supabase } from '../../lib/supabase'
 import { useEffect, useState } from 'react'
@@ -421,7 +420,6 @@ const CreateNft = ({ artists }) => {
                   :
                   <input type='submit' value='Create' disabled={!formIsReady} className='button button-cta my-12 ml-4' />
                 }
-
               </>
             }
           </div>

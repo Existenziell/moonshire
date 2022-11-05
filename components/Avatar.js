@@ -18,11 +18,12 @@ export default function Avatar({ url, size = 400, onUpload }) {
   return (
     <div>
       {avatarUrl ?
-        <div className='relative shadow-2xl nextimg' style={{ width: size, height: size }}>
+        <div className='relative shadow-2xl nextimg'>
           <Image
             width={400}
             height={400}
             placeholder="blur"
+            layout='responsive'
             src={avatarUrl}
             blurDataURL={avatarUrl}
             alt="Avatar"
@@ -46,10 +47,11 @@ export default function Avatar({ url, size = 400, onUpload }) {
           </button>
         </div>
         :
-        <div className='relative' style={{ width: size, height: size }}>
+        <div className='relative'>
           <Image
             width={400}
             height={400}
+            layout='responsive'
             placeholder="blur"
             src={darkmode === 'light' ? `/upload.png` : `/upload-dark.png`}
             blurDataURL='/upload.png'

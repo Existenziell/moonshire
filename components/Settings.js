@@ -1,33 +1,26 @@
-/* eslint-disable no-unused-vars */
 import { supabase } from '../lib/supabase'
 import { useEffect, useState } from 'react'
 import { addToMetamask } from '../lib/addToMetamask'
-import { shortenAddress } from '../lib/shortenAddress'
+import { DotsVerticalIcon } from '@heroicons/react/outline'
 import useApp from "../context/App"
 import Head from 'next/head'
+import Link from 'next/link'
 import Avatar from '../components/Avatar'
 import updateProfile from '../lib/supabase/updateProfile'
-import MyNfts from '../components/market/MyNfts'
-import MyListedNfts from '../components/market/MyListedNfts'
-import Link from 'next/link'
 
 const Settings = () => {
-  const { address, currentUser, setCurrentUser, disconnect, notify, signer } = useApp()
+  const { currentUser, setCurrentUser, disconnect, notify } = useApp()
   const [username, setUsername] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
-  const [createdAt, setCreatedAt] = useState(null)
-  const [is_premium, setIsPremium] = useState(null)
   const [modified, setModified] = useState(false)
   const [assetsOnProfile, setAssetsOnProfile] = useState()
-  const [loading, setLoading] = useState(false)
+  const [showInfo, setShowInfo] = useState(false)
 
   useEffect(() => {
     if (currentUser) {
-      const { id, username, avatar_url, is_premium, created_at, assets_on_profile } = currentUser
+      const { username, avatar_url, assets_on_profile } = currentUser
       setUsername(username)
       setAvatarUrl(avatar_url)
-      setCreatedAt(created_at)
-      setIsPremium(is_premium)
       setAssetsOnProfile(assets_on_profile)
     }
   }, [currentUser])
@@ -81,16 +74,16 @@ const Settings = () => {
         <meta name='description' content='Settings | Project Moonshire' />
       </Head>
 
-      <div className='profile flex flex-col items-center justify-start w-full pb-12'>
+      <div className='profile flex flex-col items-center justify-start w-full pb-24'>
         <div className='flex flex-col items-center justify-start md:flex-row gap-[40px] w-full'>
-          <div className='w-full md:w-1/2'>
+          <div className='w-full md:w-1/2 md:max-w-[400px]'>
             <Avatar
               url={avatar_url}
               onUpload={(url) => handleUpload(url)}
             />
           </div>
-          <div className='flex flex-col md:items-start w-full'>
-            <div className='flex flex-col md:items-start md:justify-start w-full'>
+          <div className='flex flex-col items-start w-full'>
+            <div className='flex flex-col md:items-start justify-start w-full'>
               <label htmlFor="username">
                 <input
                   id="username"
@@ -108,34 +101,37 @@ const Settings = () => {
                 </div>
               }
               <hr className='mt-6 w-full' />
-            </div>
-          </div>
-        </div>
-        <div className='self-start'>
-          {currentUser?.username &&
-            <>
-              <h2 className='mt-12 mb-4'>Preferences</h2>
+
+              <div className='flex justify-between items-center relative w-full mt-12 mb-4'>
+                <h2>Preferences</h2>
+                <DotsVerticalIcon className='w-5 hover:cursor-pointer hover:text-cta' onClick={() => setShowInfo(current => !current)} />
+                {showInfo &&
+                  <div className='info-tab'>
+                    <button onClick={addToMetamask} className='button button-detail'>Add MOON to Metamask</button>
+                    <button className='button button-detail' onClick={disconnect}>Logout</button>
+                  </div>
+                }
+              </div>
               <div>
-                <label htmlFor="assetsOnProfile" className="cursor-pointer flex items-center justify-end">
+                <label htmlFor="assetsOnProfile" className="cursor-pointer flex items-center">
                   <input
                     type="checkbox"
                     id="assetsOnProfile"
                     defaultChecked={assetsOnProfile}
                     onChange={(e) => savePublicAssetState(e.target.checked)}
                   />
-
                   <span className='pl-4'>Show assets on your {` `}
                     <Link href={`/users/${encodeURIComponent(currentUser.username)}`}>
                       <a className='link-white'>public profile</a>
                     </Link>
-                    ?</span>
+                  </span>
                 </label>
+
+                <div className='self-start mt-8'>
+                </div>
               </div>
-            </>
-          }
-        </div>
-        <div className='self-start mt-8'>
-          <button className='button button-detail' onClick={disconnect}>Logout</button>
+            </div>
+          </div>
         </div>
       </div>
     </>

@@ -13,7 +13,7 @@ import { PulseLoader } from 'react-spinners'
 const Profile = () => {
   const { address, currentUser, hasMetamask } = useApp()
   const [view, setView] = useState('all')
-  const [display, setDisplay] = useState('list')
+  const [display, setDisplay] = useState('grid')
   const [sortBy, setSortBy] = useState('created_at')
   const [sortAsc, setSortAsc] = useState(false)
   const [search, setSearch] = useState('')

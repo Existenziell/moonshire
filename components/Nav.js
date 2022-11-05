@@ -1,12 +1,9 @@
-/* eslint-disable no-unused-vars */
-import { useState } from 'react'
-import useApp from "../context/App"
 import { useRouter } from 'next/router'
+import useApp from "../context/App"
 import Link from 'next/link'
 
 const Nav = () => {
   const { currentUser } = useApp()
-  const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
 
   const urls = [
@@ -19,15 +16,8 @@ const Nav = () => {
   ]
   if (currentUser?.roles?.name === 'Admin') urls.push({ name: 'Admin', href: '/admin', title: 'Admin' },)
 
-  const intercept = (e) => {
-    e.preventDefault()
-    setIsOpen(false)
-    router.push(e.target.href)
-  }
-
   return (
     <nav className='w-full'>
-      {/* Desktop menu */}
       <ul className="flex justify-start xs:justify-end items-center gap-6 pr-8 w-full text-tiny">
         {urls.map(u => (
           <li key={u.name}>
@@ -41,37 +31,6 @@ const Nav = () => {
           </li>
         ))}
       </ul>
-
-      {/* Mobile menu */}
-      {/* {isOpen &&
-                <ul className='mobile-menu absolute md:hidden left-0 right-0 top-0 bottom-0 pt-28 z-20 h-screen w-screen bg-brand dark:bg-brand-dark'>
-                    {urls.map(url => (
-                        <li key={url.name}>
-                            <a
-                                href={url.href}
-                                onClick={intercept}
-                                className={`${router.pathname === url.href && 'active-nav'}
-                                w-full block text-2xl md:text-4xl text-center leading-loose px-8 py-2 md:py-8
-                                hover:bg-brand-dark dark:hover:bg-brand hover:text-cta transition-all uppercase font-serif`}>
-                                {url.name}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            } */}
-
-      {/* Mobile Hamburger Button */}
-      {/* <button className='mobile-menu-button md:hidden outline-none' onClick={() => setIsOpen(!isOpen)} aria-label='Open Mobile Navigation'>
-                {!isOpen ?
-                    <svg xmlns='http://www.w3.org/2000/svg' className='mt-1 mr-4 h-14 w-14 text-brand-dark dark:text-brand hover:text-cta dark:hover:text-cta transition-colors duration-100' fill='none' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' viewBox='0 0 24 24' stroke='currentColor'>
-                        <path d='M4 6h16M4 12h16M4 18h16'></path>
-                    </svg>
-                    :
-                    <svg xmlns='http://www.w3.org/2000/svg' className='absolute top-8 right-4 h-14 w-14 z-20 text-brand-dark dark:text-brand hover:text-cta dark:hover:text-cta transition-colors duration-100' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
-                    </svg>
-                }
-            </button> */}
     </nav>
   )
 }

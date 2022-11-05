@@ -36,7 +36,7 @@ const User = () => {
 
       <div className='px-[20px] md:px-[40px] md:h-[calc(100vh-200px)]'>
         <div className='flex flex-col md:flex-row items-center justify-start gap-[40px] w-full'>
-          <div className='w-full md:w-1/2 shadow-2xl nextimg md:max-h-[calc(100vh-200px)]'>
+          <div className='w-full md:w-1/2 md:max-w-[400px] shadow-2xl nextimg md:max-h-[calc(100vh-200px)]'>
             <Image
               width={1000}
               height={1000}

@@ -84,6 +84,9 @@ input[type='checkbox'] {
   word-spacing: 0;
 }
 
+.info-tab {
+  @apply absolute top-6 right-6 bg-detail/30 dark:bg-detail-dark/30 p-6 rounded-sm backdrop-blur flex flex-col gap-1 select-none;
+}
 
 /* ==========================================================================
 	Navigation
