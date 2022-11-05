@@ -56,9 +56,7 @@ const Collections = () => {
     return collections
   }
 
-  const { status, data: collections } = useQuery(["collections", search], () =>
-    fetchApi()
-  )
+  const { status, data: collections } = useQuery(["collections", search], () => fetchApi())
 
   const toggleDeleteModal = (collection) => {
     setCollectionToDelete(collection)

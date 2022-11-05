@@ -40,9 +40,7 @@ const Collections = () => {
     return collections
   }
 
-  const { status, data: collections } = useQuery(["collections"], () =>
-    fetchApi()
-  )
+  const { status, data: collections } = useQuery(["collections"], () => fetchApi())
 
   const calcHeight = () => {
     const height = window.innerHeight - 260

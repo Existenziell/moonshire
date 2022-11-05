@@ -43,9 +43,7 @@ const Artists = () => {
     return artists
   }
 
-  const { status, data: artists } = useQuery(["artists", search], () =>
-    fetchApi()
-  )
+  const { status, data: artists } = useQuery(["artists", search], () => fetchApi())
 
   const toggleDeleteModal = (artist) => {
     setArtistToDelete(artist)

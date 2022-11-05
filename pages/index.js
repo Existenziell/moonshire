@@ -49,9 +49,7 @@ const Home = () => {
     return collections
   }
 
-  const { status, data: collections } = useQuery(["home"], () =>
-    fetchApi()
-  )
+  const { status, data: collections } = useQuery(["home"], () => fetchApi())
 
   if (status === "error") return <p>{status}</p>
 

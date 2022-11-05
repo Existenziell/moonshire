@@ -28,9 +28,7 @@ const User = () => {
     return user
   }
 
-  const { status, data: user } = useQuery(["user", queryId], () =>
-    fetchApi()
-  )
+  const { status, data: user } = useQuery(["user", queryId], () => fetchApi())
 
   useEffect(() => {
     setSession(supabase.auth.session())

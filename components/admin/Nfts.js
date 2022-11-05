@@ -27,9 +27,7 @@ const Nfts = () => {
     return nfts
   }
 
-  const { status, data: nfts } = useQuery(["nfts", search], () =>
-    fetchApi()
-  )
+  const { status, data: nfts } = useQuery(["nfts", search], () => fetchApi())
 
   const toggleDeleteModal = (nft) => {
     setNftToDelete(nft)

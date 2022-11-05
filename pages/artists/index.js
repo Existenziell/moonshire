@@ -27,9 +27,7 @@ const Artists = () => {
     return artists
   }
 
-  const { status, data: artists } = useQuery(["artists"], () =>
-    fetchApi()
-  )
+  const { status, data: artists } = useQuery(["artists"], () => fetchApi())
 
   const calcHeight = () => {
     const height = window.innerHeight - 260
