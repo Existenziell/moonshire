@@ -33,7 +33,8 @@ const Settings = () => {
   }, [currentUser])
 
   const setUser = (e) => {
-    setUsername(e.target.value)
+    const username = e.target.value.replace(/[^a-zA-Z0-9-_]/g, "")
+    setUsername(username)
     setModified(true)
   }
 
@@ -86,7 +87,6 @@ const Settings = () => {
             <Avatar
               url={avatar_url}
               onUpload={(url) => handleUpload(url)}
-            // size={120}
             />
           </div>
           <div className='flex flex-col md:items-start w-full'>
