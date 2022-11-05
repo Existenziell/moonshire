@@ -118,7 +118,7 @@ const Settings = () => {
                     type="checkbox"
                     id="assetsOnProfile"
                     defaultChecked={assetsOnProfile}
-                    onChange={(e) => savePublicAssetState(e.target.checked)}
+                    onClick={(e) => savePublicAssetState(e.target.checked)}
                   />
                   <span className='pl-4'>Show assets on your {` `}
                     <Link href={`/users/${encodeURIComponent(currentUser.username)}`}>
