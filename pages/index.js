@@ -39,8 +39,10 @@ const Home = () => {
       } else {
         collection.numberOfNfts = 0
       }
-      collection.priceUSD = await convertEthToUsd(collectionPrice)
-      collection.price = collectionPrice
+      if (collectionPrice) {
+        collection.priceUSD = await convertEthToUsd(collectionPrice)
+        collection.price = collectionPrice
+      }
     }
     // Filter to only get collections with more than 0 NFTs
     collections = collections.filter(collection => collection.numberOfNfts > 0)

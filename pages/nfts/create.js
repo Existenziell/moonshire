@@ -315,6 +315,7 @@ const CreateNft = ({ artists }) => {
                 <h1 className='mb-4'>Congratulations</h1>
                 <hr />
                 <p className='mt-4'>NFT was minted successfully.</p>
+                <p className='animate-pulse'>You will be redirected in a few seconds...</p>
                 <Success />
               </>
               :
