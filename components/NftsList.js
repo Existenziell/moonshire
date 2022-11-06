@@ -1,9 +1,24 @@
 import Image from "next/image"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+import { convertEthToUsd } from "../lib/convertEthToUsd"
 
 const NftsList = ({ nfts, display }) => {
+  const [convertedNfts, setConvertedNfts] = useState([])
+
+  const fetchUsdPrice = async () => {
+    for (let nft of nfts) {
+      nft.priceUSD = await convertEthToUsd(nft.price)
+    }
+    setConvertedNfts(nfts)
+  }
+
+  useEffect(() => {
+    fetchUsdPrice()
+  }, [nfts.length])
+
   return (
-    <table className={`${display === 'list' ? `table-auto` : `hidden`}  w-full mt-20`}>
+    <table className={`${display === 'list' ? `table-auto` : `hidden`} w-full mt-20`}>
       <thead className='text-left'>
         <tr className='font-bold border-b-2 border-lines dark:border-lines-dark'>
           <th className='pb-8'>Media</th>
@@ -16,7 +31,7 @@ const NftsList = ({ nfts, display }) => {
       </thead>
       <tbody>
 
-        {!nfts?.length &&
+        {!convertedNfts?.length &&
           <tr className='p-4 dark:text-brand'>
             <td colSpan={9}>
               No results
@@ -24,7 +39,7 @@ const NftsList = ({ nfts, display }) => {
           </tr>
         }
 
-        {nfts?.map((nft) => (
+        {convertedNfts?.map((nft) => (
           <tr key={nft.tokenId + nft.name} className='relative mb-[20px]'>
             <td className='px-0 w-[90px]'>
               <Link href={`/nfts/${nft.id}`}>
@@ -59,7 +74,10 @@ const NftsList = ({ nfts, display }) => {
                 </a>
               </Link>
             </td>
-            <td className='whitespace-nowrap text-[20px]'>{nft.price} ETH</td>
+            <td className='whitespace-nowrap'>
+              <span className="text-[20px]">{nft.price} ETH</span>
+              <span className='text-gray-400 ml-6 relative bottom-[4px] text-sm'>(${nft.priceUSD})</span>
+            </td>
 
             <td className='pr-0 pl-auto'>
               <div className='justify-end flex'>

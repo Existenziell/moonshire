@@ -222,8 +222,8 @@ const Nft = ({ nft }) => {
                     </div>
                   </div>
                   <div className='flex items-center gap-6'>
-                    <p className='my-0 text-[20px] whitespace-nowrap'>{price} ETH</p>
-                    <p className='text-[20px] text-gray-400 whitespace-nowrap'>${priceUSD}</p>
+                    <div className='text-gray-400'>(${priceUSD})</div>
+                    <div className='text-[20px] relative bottom-1 whitespace-nowrap'>{price} ETH</div>
                     {!address ?
                       <button
                         onClick={connectWallet}

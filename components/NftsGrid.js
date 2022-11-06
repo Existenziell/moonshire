@@ -15,7 +15,7 @@ const NftsGrid = ({ nfts, display, view }) => {
 
   useEffect(() => {
     fetchUsdPrice()
-  }, [nfts])
+  }, [nfts.length])
 
   return (
     <div className={`${display === 'grid' ? `grid` : `hidden`} grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-20 mt-20`}>
@@ -57,9 +57,9 @@ const NftsGrid = ({ nfts, display, view }) => {
             <hr />
 
             <div className="flex justify-between gap-8 items-center mt-6">
-              <div className="flex gap-4">
-                <h1 className="mb-0 whitespace-nowrap">{nft.price} ETH</h1>
-                <p className='text-[20px] text-gray-400 whitespace-nowrap'>${nft.priceUSD}</p>
+              <div className="flex items-center gap-4">
+                <h1 className="mb-0">{nft.price} ETH</h1>
+                <span className='text-gray-400 text-sm'>(${nft.priceUSD})</span>
               </div>
               <Link href={`/nfts/${nft.id}`}>
                 <a className='button button-cta uppercase'>
