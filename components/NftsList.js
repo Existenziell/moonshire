@@ -1,21 +1,21 @@
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import { convertEthToUsd } from "../lib/convertEthToUsd"
+// import { useEffect, useState } from "react"
+// import { convertEthToUsd } from "../lib/convertEthToUsd"
 
 const NftsList = ({ nfts, display }) => {
-  const [convertedNfts, setConvertedNfts] = useState([])
+  // const [convertedNfts, setConvertedNfts] = useState([])
 
-  const fetchUsdPrice = async () => {
-    for (let nft of nfts) {
-      nft.priceUSD = await convertEthToUsd(nft.price)
-    }
-    setConvertedNfts(nfts)
-  }
+  // const fetchUsdPrice = async () => {
+  //   for (let nft of nfts) {
+  //     nft.priceUSD = await convertEthToUsd(nft.price)
+  //   }
+  //   setConvertedNfts(nfts)
+  // }
 
-  useEffect(() => {
-    fetchUsdPrice()
-  }, [nfts.length])
+  // useEffect(() => {
+  //   fetchUsdPrice()
+  // }, [nfts.length])
 
   return (
     <table className={`${display === 'list' ? `table-auto` : `hidden`} w-full mt-20`}>
@@ -31,7 +31,7 @@ const NftsList = ({ nfts, display }) => {
       </thead>
       <tbody>
 
-        {!convertedNfts?.length &&
+        {!nfts?.length &&
           <tr className='p-4 dark:text-brand'>
             <td colSpan={9}>
               No results
@@ -39,7 +39,7 @@ const NftsList = ({ nfts, display }) => {
           </tr>
         }
 
-        {convertedNfts?.map((nft) => (
+        {nfts?.map((nft) => (
           <tr key={nft.tokenId + nft.name} className='relative mb-[20px]'>
             <td className='px-0 w-[90px]'>
               <Link href={`/nfts/${nft.id}`}>
@@ -76,7 +76,7 @@ const NftsList = ({ nfts, display }) => {
             </td>
             <td className='whitespace-nowrap'>
               <span className="text-[20px]">{nft.price} ETH</span>
-              <span className='text-gray-400 ml-6 relative bottom-[4px] text-sm'>(${nft.priceUSD})</span>
+              {/* <span className='text-gray-400 ml-6 relative bottom-[4px] text-sm'>(${nft.priceUSD})</span> */}
             </td>
 
             <td className='pr-0 pl-auto'>
