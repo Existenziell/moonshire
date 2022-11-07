@@ -92,8 +92,8 @@ const Nft = ({ nft }) => {
         <meta name='description' content={`${name} | NFT | Project Moonshire`} />
       </Head>
 
-      <div className='px-[20px] md:px-[40px] flex flex-col md:flex-row items-center justify-start gap-[40px] w-full'>
-        <div className='shadow-2xl nextimg md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)]'>
+      <div className='detail-page-wrapper'>
+        <div className='sized-image-wrapper'>
           <Image
             width={1000}
             height={1000}
@@ -104,7 +104,7 @@ const Nft = ({ nft }) => {
           />
         </div>
 
-        <div className='md:min-w-1/2 w-full'>
+        <div className='md:w-1/2 w-full'>
           {success ?
             <>
               <h1 className='mb-4'>Congratulations</h1>
@@ -221,9 +221,9 @@ const Nft = ({ nft }) => {
                       <p className='whitespace-nowrap'>{moment(lastEvent.created_at).format('MMMM Do YYYY, h:mm a')}</p>
                     </div>
                   </div>
-                  <div className='flex items-center gap-6'>
-                    <div className='text-gray-400'>(${priceUSD})</div>
-                    <div className='text-[20px] relative bottom-1 whitespace-nowrap'>{price} ETH</div>
+                  <div className='flex items-center gap-6 justify-end w-full'>
+                    <p className='text-gray-400 relative bottom-[1px]'>(${priceUSD})</p>
+                    <p className='text-[20px] relative bottom-1 whitespace-nowrap'>{price} ETH</p>
                     {!address ?
                       <button
                         onClick={connectWallet}

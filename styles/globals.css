@@ -105,6 +105,13 @@ input[type='checkbox'] {
   @apply relative top-[2px] pb-6 transition-colors border-b-2 border-white text-cta;
 }
 
+.detail-page-wrapper {
+  @apply flex flex-col md:flex-row items-center justify-start gap-[40px] w-full px-[20px] md:px-[40px];
+}
+
+.sized-image-wrapper {
+  @apply shadow-2xl nextimg w-full md:w-1/2 md:max-w-[calc(50vw-160px)] md:max-h-[calc(100vh-260px)]
+}
 
 /* ==========================================================================
 	Navigation
@@ -188,14 +195,6 @@ input[type='checkbox'] {
 
 .create-form-wrapper {
   @apply flex flex-col md:flex-row items-center justify-start gap-[40px] px-[40px];
-}
-
-.detail-page-wrapper {
-  @apply flex flex-col md:flex-row items-center justify-start gap-[40px] w-full px-[20px] md:px-[40px];
-}
-
-.detail-page-img-wrapper {
-  @apply shadow-2xl nextimg md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)];
 }
 
 

@@ -34,37 +34,35 @@ const User = () => {
         <meta name='description' content={`${username} | Project Moonshire`} />
       </Head>
 
-      <div className='px-[20px] md:px-[40px] md:h-[calc(100vh-200px)]'>
-        <div className='flex flex-col md:flex-row items-center justify-start gap-[40px] w-full'>
-          <div className='w-full md:w-1/2 md:max-w-[400px] shadow-2xl nextimg md:max-h-[calc(100vh-200px)]'>
-            <Image
-              width={1000}
-              height={1000}
-              placeholder="blur"
-              src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}
-              blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}
-              alt='User Image'
-              className='rounded'
-            />
-          </div>
-          <div className='md:w-1/2'>
-            <h1 className='mx-auto'>{username}</h1>
-            <hr className='my-8' />
-            {user?.nfts?.length > 0 && assets_on_profile &&
-              <>
-                <p className='mb-4'>Owned Assets:</p>
-                {user?.nfts?.map((nft, i) =>
-                  i <= 16 &&
-                  <Link key={nft.id} href={`/nfts/${nft.id}`}>
-                    <a className='block link'>{nft.name}</a>
-                  </Link>
-                )}
-                {user?.nfts?.length > 16 &&
-                  <p>...</p>
-                }
-              </>
-            }
-          </div>
+      <div className='detail-page-wrapper'>
+        <div className='sized-image-wrapper'>
+          <Image
+            width={1000}
+            height={1000}
+            placeholder="blur"
+            src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}
+            blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}
+            alt='User Image'
+            className='rounded'
+          />
+        </div>
+        <div className='md:w-1/2 w-full'>
+          <h1 className='mx-auto'>{username}</h1>
+          <hr className='my-8' />
+          {user?.nfts?.length > 0 && assets_on_profile &&
+            <>
+              <p className='mb-4'>Owned Assets:</p>
+              {user?.nfts?.map((nft, i) =>
+                i <= 16 &&
+                <Link key={nft.id} href={`/nfts/${nft.id}`}>
+                  <a className='block link'>{nft.name}</a>
+                </Link>
+              )}
+              {user?.nfts?.length > 16 &&
+                <p>...</p>
+              }
+            </>
+          }
         </div>
       </div>
     </>
