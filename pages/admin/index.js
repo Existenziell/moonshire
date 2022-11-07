@@ -48,7 +48,7 @@ const Admin = () => {
     }, undefined, { shallow: true })
   }
 
-  if (loading) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (loading) return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!address) return <p className='w-full h-full flex items-center justify-center'>Please connect your wallet to proceed.</p>
   if (!session) return <SupaAuth />
 
@@ -63,28 +63,28 @@ const Admin = () => {
         <div className='admin px-[20px] md:px-[40px] min-h-[calc(100vh-190px)]'>
           <div className='mb-10 border-b-2 border-detail dark:border-detail-dark'>
             <ul className='text-[20px] flex gap-12 transition-colors '>
-              <li className={view === 'collections' ? `relative top-[2px] pb-6 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`}>
+              <li className={view === 'collections' ? `admin-nav-active` : `admin-nav`}>
                 <button onClick={navigate} name='collections'>
                   Collections
                 </button>
               </li>
-              <li className={view === 'artists' ? `relative top-[2px] pb-6 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`}>
+              <li className={view === 'artists' ? `admin-nav-active` : `admin-nav`}>
                 <button onClick={navigate} name='artists'>
                   Artists
                 </button>
               </li>
-              <li className={view === 'nfts' ? `relative top-[2px] pb-6 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`}>
+              <li className={view === 'nfts' ? `admin-nav-active` : `admin-nav`}>
                 <button onClick={navigate} name='nfts'>
                   NFTs
                 </button>
               </li>
-              <li className={view === 'users' ? `relative top-[2px] pb-6 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`} >
+              <li className={view === 'users' ? `admin-nav-active` : `admin-nav`} >
                 <button onClick={navigate} name='users'>
                   Users
                 </button>
               </li>
               {(currentUser.username === 'Zooloo' || currentUser.username === 'Chris') &&
-                <li className={view === 'market' ? `relative top-[2px] pb-6 transition-colors border-b-2 border-white text-cta` : `hover:text-cta relative top-[2px]`} >
+                <li className={view === 'market' ? `admin-nav-active` : `admin-nav`} >
                   <button onClick={navigate} name='market'>
                     Market
                   </button>

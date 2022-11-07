@@ -295,7 +295,7 @@ const CreateNft = () => {
   }
 
   if (status === "error") return <p>{status}</p>
-  if (fetching) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (fetching) return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
 
   return (
     <>

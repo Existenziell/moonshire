@@ -73,7 +73,7 @@ const CreateCollection = () => {
       </Head>
 
       <form onSubmit={saveCollection} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'
-        className='create-collection flex flex-col md:flex-row items-center justify-start gap-[40px] px-[40px]'>
+        className='create-collection create-form-wrapper'>
 
         <div>
           <UploadImage

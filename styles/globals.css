@@ -78,6 +78,11 @@ input[type='checkbox'] {
   @apply text-cta bg-gray-100 rounded border-gray-300 focus:ring-cta dark:focus:ring-cta dark:ring-offset-gray-800 focus:ring-2 dark:bg-brand-dark dark:border-gray-600 hover:cursor-pointer;
 }
 
+
+/* ==========================================================================
+	Custom Overrides
+	========================================================================== */
+
 .nextimg {
   font-size: 0;
   letter-spacing: 0;
@@ -87,6 +92,19 @@ input[type='checkbox'] {
 .info-tab {
   @apply absolute top-6 right-6 bg-detail/30 dark:bg-detail-dark/30 p-6 rounded-sm backdrop-blur flex flex-col gap-1 select-none;
 }
+
+.fullscreen-wrapper {
+  @apply flex justify-center items-center w-full h-[calc(100vh-260px)];
+}
+
+.admin-nav {
+  @apply hover:text-cta relative top-[2px];
+}
+
+.admin-nav-active {
+  @apply relative top-[2px] pb-6 transition-colors border-b-2 border-white text-cta;
+}
+
 
 /* ==========================================================================
 	Navigation
@@ -148,8 +166,7 @@ input[type='checkbox'] {
 .edit-collection input[type='text'], .edit-collection input[type='number'], .edit-collection textarea,
 .create-artist input[type='text'], .create-artist input[type='number'], .create-artist textarea,
 .edit-artist input[type='text'], .edit-artist textarea,
-.create-nft input[type='text'], .create-nft textarea
-{
+.create-nft input[type='text'], .create-nft textarea {
   @apply px-5 py-4 rounded border-none bg-brand dark:bg-brand-dark focus:outline-none focus:ring-cta;
 }
 
@@ -160,7 +177,6 @@ input[type='checkbox'] {
     focus:outline-none focus:shadow-2xl focus:ring-cta;
 }
 
-
 /* Override react-select input */
 .nfts *[class$="singleValue"] {
   @apply text-brand-dark dark:text-brand;
@@ -168,6 +184,18 @@ input[type='checkbox'] {
 
 #react-select-true-input {
   @apply focus:ring-0;
+}
+
+.create-form-wrapper {
+  @apply flex flex-col md:flex-row items-center justify-start gap-[40px] px-[40px];
+}
+
+.detail-page-wrapper {
+  @apply flex flex-col md:flex-row items-center justify-start gap-[40px] w-full px-[20px] md:px-[40px];
+}
+
+.detail-page-img-wrapper {
+  @apply shadow-2xl nextimg md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)];
 }
 
 

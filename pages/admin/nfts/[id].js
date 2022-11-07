@@ -144,7 +144,7 @@ const NFT = () => {
   }
 
   if (status === "error") return <p>{status}</p>
-  if (initializing || !nft) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (initializing || !nft) return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!session) return <SupaAuth />
 
   const { id, name, description, ownerName, ownerAddress, price, tokenId, tokenURI, image_url, users, artists, collections, listed } = nft

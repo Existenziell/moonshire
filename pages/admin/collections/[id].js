@@ -77,7 +77,7 @@ const Collection = () => {
   }
 
   if (status === "error") return <p>{status}</p>
-  if (initializing || !collection) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (initializing || !collection) return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!session) return <SupaAuth />
 
   const { id, title, headline, description, year } = collection

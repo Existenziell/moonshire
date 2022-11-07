@@ -35,7 +35,7 @@ const Artists = () => {
   }
 
   if (status === "error") return <p>{status}</p>
-  if (status === 'loading') return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (status === 'loading') return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (status === 'success' && !artists) return <h1 className="mb-4 text-3xl">No artists found</h1>
 
   return (

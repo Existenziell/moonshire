@@ -22,7 +22,7 @@ const User = () => {
   const { status, data: user } = useQuery(["user", username], () => fetchApi())
 
   if (status === "error") return <p>{status}</p>
-  if (status === 'loading') return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (status === 'loading') return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (status === 'success' && !user) return <h1 className="mb-4 text-3xl">User not found</h1>
 
   const { avatar_url, assets_on_profile } = user

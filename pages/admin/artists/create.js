@@ -78,7 +78,7 @@ const Create = () => {
     }
   }
 
-  if (initializing) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (initializing) return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!session) return <SupaAuth />
 
   return (
@@ -89,7 +89,7 @@ const Create = () => {
       </Head>
 
       <form onSubmit={addArtist} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'
-        className='create-artist flex flex-col md:flex-row items-center justify-start gap-[40px] px-[40px]'>
+        className='create-artist create-form-wrapper'>
 
         <div>
           <UploadImage

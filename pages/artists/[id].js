@@ -33,7 +33,7 @@ const Artist = () => {
   const { status, data: artist } = useQuery(["artist", id], () => fetchApi())
 
   if (status === "error") return <p>{status}</p>
-  if (status === 'loading') return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (status === 'loading') return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (status === 'success' && !artist) return <h1 className="mb-4 text-3xl">No artist found</h1>
 
   const { name, headline, description, avatar_url, nfts, numberOfNfts, collections, numberOfCollections } = artist
@@ -46,7 +46,6 @@ const Artist = () => {
       </Head>
 
       <div className='px-[20px] md:px-[40px] md:h-[calc(100vh-200px)]'>
-
         <div className='flex flex-col md:flex-row items-center justify-start gap-[40px] w-full'>
           <div className='shadow-2xl nextimg md:max-w-[calc(50vw-160px)] md:max-h-[calc(100vh-260px)]'>
             <Image

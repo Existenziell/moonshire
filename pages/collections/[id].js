@@ -82,7 +82,7 @@ const Collection = () => {
             }
           </div>
           :
-          <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+          <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
         }
       </div>
     </>

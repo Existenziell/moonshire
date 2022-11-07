@@ -81,7 +81,7 @@ const Nft = ({ nft }) => {
     router.push(`/nfts/resell?id=${nft.id}&tokenId=${nft.tokenId}&tokenURI=${nft.tokenURI}&userId=${currentUser.id}`)
   }
 
-  if (!nft) return <div className='flex justify-center items-center w-full h-[calc(100vh-260px)]'>NFT not found</div>
+  if (!nft) return <div className='fullscreen-wrapper'>NFT not found</div>
 
   const { name, description, price, image_url, artists, events, lastEvent, listed, tokenURI, tokenId, priceUSD, physicalAssets, digitalAssets } = nft
 
