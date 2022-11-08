@@ -225,15 +225,19 @@ const Nft = () => {
                     events.map(e =>
                       <div key={e.id} className='flex items-center justify-between w-full mb-4'>
                         <div className="flex items-center gap-6">
-                          <Image
-                            src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${e.users.avatar_url}`}
-                            alt='NFT Creator'
-                            width={50}
-                            height={50}
-                            placeholder='blur'
-                            blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${e.users.avatar_url}`}
-                            className='rounded-sm'
-                          />
+                          <Link href={`/users/${encodeURIComponent(e.users.username)}`}>
+                            <a className="link-white">
+                              <Image
+                                src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${e.users.avatar_url}`}
+                                alt='NFT Creator'
+                                width={50}
+                                height={50}
+                                placeholder='blur'
+                                blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${e.users.avatar_url}`}
+                                className='rounded-sm'
+                              />
+                            </a>
+                          </Link>
                           <div>
                             <p>{e.typeClean} <Link href={`/users/${encodeURIComponent(e.users.username)}`}><a className="link-white">@{e.users?.username}</a></Link></p>
                             <p className="hidden md:block">{moment(e.created_at).format('MMMM Do YYYY, h:mm a')}</p>
@@ -263,14 +267,18 @@ const Nft = () => {
                 <div className='flex flex-col md:flex-row items-start md:items-center justify-between gap-10 mt-10'>
                   <div className='flex items-center gap-6'>
                     <div className="nextimg w-[50px] h-[50px]">
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${lastEvent.users.avatar_url}`}
-                        alt='NFT Creator'
-                        width={50}
-                        height={50}
-                        placeholder='blur'
-                        blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${lastEvent.users.avatar_url}`}
-                      />
+                      <Link href={`/users/${encodeURIComponent(lastEvent.users.username)}`}>
+                        <a className="link-white">
+                          <Image
+                            src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${lastEvent.users.avatar_url}`}
+                            alt='NFT Creator'
+                            width={50}
+                            height={50}
+                            placeholder='blur'
+                            blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${lastEvent.users.avatar_url}`}
+                          />
+                        </a>
+                      </Link>
                     </div>
                     <div>
                       {listed ? `Listed by ` : `Sold to `}
