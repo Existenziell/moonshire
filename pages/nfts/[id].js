@@ -1,5 +1,6 @@
 import { supabase } from "../../lib/supabase"
 import { useState, useEffect } from 'react'
+import { useQuery } from 'react-query'
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
 import { convertEthToUsd } from "../../lib/convertEthToUsd"
@@ -14,8 +15,9 @@ import Success from '../../components/Success'
 import Image from 'next/image'
 import moment from 'moment'
 
-const Nft = ({ nft }) => {
+const Nft = () => {
   const router = useRouter()
+  const { id: queryId } = router.query
   const { address, currentUser, signer, notify, connectWallet } = useApp()
   const [fetching, setFetching] = useState(true)
   const [buying, setBuying] = useState(false)
@@ -24,6 +26,58 @@ const Nft = ({ nft }) => {
   const [hash, setHash] = useState('')
   const [view, setView] = useState('description')
   const links = ['description', 'assets', 'provenance']
+
+  async function fetchApi(...args) {
+    if (!queryId) return
+    const { data: nft } = await supabase
+      .from('nfts')
+      .select(`*, artists(*), collections(*), users!nfts_user_fkey(*)`)
+      .eq('id', queryId)
+      .single()
+
+    const { data: events } = await supabase
+      .from('events')
+      .select(`*, nfts(*), users(*)`)
+      .eq('nft', queryId)
+      .order('created_at', { ascending: true })
+
+    if (nft) {
+      const physicalAssets = []
+      const digitalAssets = []
+      if (nft.assets) {
+        for (let el of nft.assets) {
+          el.type === 'digital' ?
+            digitalAssets.push(el)
+            :
+            physicalAssets.push(el)
+        }
+      }
+      nft.digitalAssets = digitalAssets
+      nft.physicalAssets = physicalAssets
+      nft.priceUSD = await convertEthToUsd(nft.price)
+    }
+    if (events.length) {
+      for (let e of events) {
+        switch (e.type) {
+          case 'CREATE':
+            e.typeClean = 'Minted by'
+            break
+          case 'BUY':
+            e.typeClean = 'Bought by'
+            break
+          case 'LIST':
+            e.typeClean = 'Listed by'
+            break
+        }
+      }
+      const lastEvent = events.pop()
+      nft.events = events
+      nft.lastEvent = lastEvent
+    }
+    return nft
+  }
+
+  const { status, data: nft } = useQuery(["nft", queryId], () => fetchApi())
 
   useEffect(() => {
     if (address && nft) {
@@ -81,6 +135,9 @@ const Nft = ({ nft }) => {
     router.push(`/nfts/resell?id=${nft.id}&tokenId=${nft.tokenId}&tokenURI=${nft.tokenURI}&userId=${currentUser.id}`)
   }
 
+  const calcHeight = () => (window.innerHeight - 260)
+
+  if (status === "error") return <p>{status}</p>
   if (!nft) return <div className='fullscreen-wrapper'>NFT not found</div>
 
   const { name, description, price, image_url, artists, events, lastEvent, listed, tokenURI, tokenId, priceUSD, physicalAssets, digitalAssets } = nft
@@ -92,11 +149,11 @@ const Nft = ({ nft }) => {
         <meta name='description' content={`${name} | NFT | Project Moonshire`} />
       </Head>
 
-      <div className='detail-page-wrapper'>
+      <div className='sized-page-wrapper'>
         <div className='sized-image-wrapper'>
           <Image
-            width={1000}
-            height={1000}
+            width={calcHeight()}
+            height={calcHeight()}
             placeholder="blur"
             src={image_url}
             blurDataURL={image_url}
@@ -252,75 +309,10 @@ const Nft = ({ nft }) => {
               }
             </>
           }
-        </div >
-      </div >
+        </div>
+      </div>
     </>
   )
 }
 
-export async function getServerSideProps(context) {
-  const id = context.params.id
-
-  const { data: nft } = await supabase
-    .from('nfts')
-    .select(`*, artists(*), collections(*), users(*)`)
-    .eq('id', id)
-    .single()
-
-  const { data: events } = await supabase
-    .from('events')
-    .select(`*, nfts(*)`)
-    .eq('nft', id)
-    .order('created_at', { ascending: true })
-
-  if (nft) {
-    const physicalAssets = []
-    const digitalAssets = []
-    if (nft.assets) {
-      for (let el of nft.assets) {
-        el.type === 'digital' ?
-          digitalAssets.push(el)
-          :
-          physicalAssets.push(el)
-      }
-    }
-    nft.digitalAssets = digitalAssets
-    nft.physicalAssets = physicalAssets
-    nft.priceUSD = await convertEthToUsd(nft.price)
-  }
-  if (events.length) {
-    for (let e of events) {
-      const { data: user } = await supabase
-        .from('users')
-        .select(`*`)
-        .eq('id', e.user)
-        .single()
-
-      e.users = {
-        username: user.username,
-        id: user.id,
-        avatar_url: user.avatar_url
-      }
-
-      switch (e.type) {
-        case 'CREATE':
-          e.typeClean = 'Minted by'
-          break
-        case 'BUY':
-          e.typeClean = 'Bought by'
-          break
-        case 'LIST':
-          e.typeClean = 'Listed by'
-          break
-      }
-    }
-    const lastEvent = events.pop()
-    nft.events = events
-    nft.lastEvent = lastEvent
-  }
-
-  return {
-    props: { nft },
-  }
-}
 export default Nft

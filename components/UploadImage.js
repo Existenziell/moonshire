@@ -4,24 +4,26 @@ import Image from 'next/image'
 import uploadImage from '../lib/supabase/uploadImage'
 import useApp from "../context/App"
 
-export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
+export default function UploadImage({ bucket, url, size, onUpload }) {
   const [imageUrl, setImageUrl] = useState(null)
   const [uploading, setUploading] = useState(false)
+  const [height, setHeight] = useState(0)
   const { darkmode } = useApp()
 
   useEffect(() => {
     if (url) {
       setImageUrl(`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${bucket}/${url}`)
     }
+    setHeight(window.innerHeight - 260)
   }, [url])
 
   return (
-    <div className='md:max-h-[calc(100vh-260px)] md:max-w-[calc(100vh-260px)]'>
+    <>
       {imageUrl ?
-        <div className='relative shadow-2xl nextimg'>
+        <div className='relative'>
           <Image
-            width={size}
-            height={size}
+            width={height}
+            height={height}
             placeholder="blur"
             src={imageUrl}
             blurDataURL={imageUrl}
@@ -38,11 +40,9 @@ export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
         :
         <div className='relative'>
           <Image
-            width={size}
-            height={size}
-            placeholder="blur"
+            width={height}
+            height={height}
             src={darkmode === 'light' ? `/upload.png` : `/upload-dark.png`}
-            blurDataURL='/upload.png'
             alt="Upload Image"
           />
 
@@ -62,6 +62,6 @@ export default function UploadImage({ bucket, url, size = 1000, onUpload }) {
           </label>
         </div>
       }
-    </div>
+    </>
   )
 }

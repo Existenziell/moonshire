@@ -20,8 +20,8 @@ export default function Avatar({ url, size = 400, onUpload }) {
       {avatarUrl ?
         <div className='relative shadow-2xl nextimg'>
           <Image
-            width={400}
-            height={400}
+            width={window.innerHeight - 260}
+            height={window.innerHeight - 260}
             placeholder="blur"
             layout='responsive'
             src={avatarUrl}
@@ -49,8 +49,8 @@ export default function Avatar({ url, size = 400, onUpload }) {
         :
         <div className='relative'>
           <Image
-            width={400}
-            height={400}
+            width={window.innerHeight - 260}
+            height={window.innerHeight - 260}
             layout='responsive'
             placeholder="blur"
             src={darkmode === 'light' ? `/upload.png` : `/upload-dark.png`}

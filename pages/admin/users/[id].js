@@ -69,6 +69,8 @@ const User = () => {
     }
   }
 
+  const calcHeight = () => (window.innerHeight - 260)
+
   if (status === "error") return <p>{status}</p>
   if (initializing || !user) return <div className='flex items-center justify-center mt-32'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!session) return <SupaAuth />
@@ -76,50 +78,49 @@ const User = () => {
   const { id, username, walletAddress, email, avatar_url } = user
 
   return (
-    <div className='mb-20 w-full relative'>
-      <form onSubmit={saveUser} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='edit-user flex flex-col items-start max-w-2xl mx-auto px-[40px]'>
-        <h1 className='mb-10'>Edit User</h1>
+    <div className='mb-20'>
+      <form onSubmit={saveUser} className='edit-user sized-page-wrapper' autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'>
 
-        <div className='flex flex-col md:flex-row gap-10 items-start justify-start'>
-          <div className='shadow-2xl nextimg'>
-            <Image
-              width={1000}
-              height={1000}
-              src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}
-              blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}
-              placeholder="blur"
-              alt='User Image'
-              className='rounded-sm'
-            />
+        <div className='sized-image-wrapper'>
+          <Image
+            width={calcHeight()}
+            height={calcHeight()}
+            src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}
+            blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}
+            placeholder="blur"
+            alt='User Image'
+            className='rounded-sm'
+          />
+        </div>
+        <div className='md:w-1/2 w-full'>
+          <div>
+            <h2 className='mb-2 inline-block mr-4'>Username</h2>
+            {username}
           </div>
           <div>
-            <div>
-              <h2 className='mb-2'>Username</h2>
-              {username}
-            </div>
-            <div>
-              <h2 className='mb-2 mt-8'>Email</h2>
-              {email}
-            </div>
-            <div>
-              <h2 className='mb-2 mt-8'>Wallet</h2>
-              {shortenAddress(walletAddress)}
-            </div>
+            <h2 className='mb-2 mt-8 inline-block mr-4'>Email</h2>
+            {email}
           </div>
-        </div>
+          <div>
+            <h2 className='mb-2 mt-8 inline-block mr-4'>Wallet</h2>
+            {shortenAddress(walletAddress)}
+          </div>
 
-        <h2 className='mt-10'>Role</h2>
-        <Select
-          options={roleOptions}
-          onChange={(e) => setSelectedRole(e.value)}
-          instanceId // Needed to prevent errors being thrown
-          defaultValue={roleOptions.filter(o => o.value === user.role)}
-          styles={styles}
-        />
+          <h2 className='mt-10 inline-block mr-4'>Role</h2>
+          <div className='max-w-max inline-block'>
+            <Select
+              options={roleOptions}
+              onChange={(e) => setSelectedRole(e.value)}
+              instanceId // Needed to prevent errors being thrown
+              defaultValue={roleOptions.filter(o => o.value === user.role)}
+              styles={styles}
+            />
+          </div>
 
-        <div className='flex items-center gap-2 mt-12'>
-          <input type='submit' className='button button-cta' value='Save' disabled={loading} />
-          <BackBtn href='/admin?view=users' />
+          <div className='flex items-center gap-2 mt-12'>
+            <input type='submit' className='button button-cta' value='Save' disabled={loading} />
+            <BackBtn href='/admin?view=users' />
+          </div>
         </div>
       </form>
     </div>

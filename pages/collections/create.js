@@ -72,10 +72,8 @@ const CreateCollection = () => {
         <meta name='description' content="Create Collection | Project Moonshire" />
       </Head>
 
-      <form onSubmit={saveCollection} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'
-        className='create-collection create-form-wrapper'>
-
-        <div>
+      <form onSubmit={saveCollection} className='create-collection sized-page-wrapper' autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'>
+        <div className='sized-image-wrapper'>
           <UploadImage
             bucket='collections'
             url={imageUrl}
@@ -101,7 +99,7 @@ const CreateCollection = () => {
                   disabled={loading}
                 />
               </label>
-              <hr className='my-8' />
+              <hr className='my-8 ml-4' />
 
               <label htmlFor='headline' className='mt-12 w-full'>
                 <input
@@ -115,7 +113,7 @@ const CreateCollection = () => {
 
               <label htmlFor='description' className='mt-12 w-full'>
                 <textarea
-                  name='description' id='description' rows={10}
+                  name='description' id='description' rows={5}
                   onChange={setData} required
                   placeholder="Description"
                   className='block mt-2 w-full'
@@ -132,6 +130,7 @@ const CreateCollection = () => {
                   disabled={loading}
                 />
               </label>
+              <hr className='my-8 ml-4' />
 
               <input type='submit' className='button button-cta mt-12 ml-4' value='Create' disabled={!formIsReady || loading} />
             </>

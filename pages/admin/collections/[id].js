@@ -83,72 +83,71 @@ const Collection = () => {
   const { id, title, headline, description, year } = collection
 
   return (
-    <div className='mb-20 w-full relative'>
-      <form onSubmit={saveCollection} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='edit-collection flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
-        <div className='md:w-1/2 h-full'>
-          <UploadImage
-            bucket='collections'
-            url={imageUrl}
-            onUpload={(url) => {
-              setFormData({ ...formData, image_url: url })
-              setImageUrl(url)
-            }}
+    <form onSubmit={saveCollection} className='edit-collection sized-page-wrapper' autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'>
+      <div className='sized-image-wrapper'>
+        <UploadImage
+          bucket='collections'
+          url={imageUrl}
+          onUpload={(url) => {
+            setFormData({ ...formData, image_url: url })
+            setImageUrl(url)
+          }}
+        />
+      </div>
+      <div className='w-full md:w-1/2'>
+        <label htmlFor='title' className='mt-12 w-full'>
+          <input
+            type='text' name='title' id='title'
+            onChange={setData} required
+            defaultValue={title}
+            placeholder='Title'
+            className='block mt-2 w-full text-[20px]'
+            disabled={loading}
           />
+        </label>
+        <hr className='my-8 ml-4' />
+
+        <label htmlFor='headline' className='mt-12 w-full'>
+          <input
+            type='text' name='headline' id='headline'
+            onChange={setData} required
+            defaultValue={headline}
+            placeholder='Headline'
+            className='block mt-2 w-full'
+            disabled={loading}
+          />
+        </label>
+
+        <label htmlFor='description' className='mt-12 w-full'>
+          <textarea
+            name='description' id='description' rows={5}
+            onChange={setData} required
+            defaultValue={description}
+            placeholder="Description"
+            className='block mt-2 w-full'
+            disabled={loading}
+          />
+        </label>
+
+        <label htmlFor='year' className='mt-12 w-full'>
+          <input
+            type='number' name='year' id='year'
+            onChange={setData} required
+            defaultValue={year}
+            placeholder='Year of Appearance'
+            className='block mt-2 w-full'
+            disabled={loading}
+          />
+        </label>
+        <hr className='my-8 ml-4' />
+
+        <div className='flex items-center gap-2 mt-12'>
+          <input type='submit' className='button button-cta ml-4' value='Save' disabled={loading} />
+          <BackBtn href='/admin?view=collections' />
         </div>
-        <div className='md:w-1/2'>
-          <label htmlFor='title' className='mt-12 w-full'>
-            <input
-              type='text' name='title' id='title'
-              onChange={setData} required
-              defaultValue={title}
-              placeholder='Title'
-              className='block mt-2 w-full text-[20px]'
-              disabled={loading}
-            />
-          </label>
-          <hr className='my-8' />
 
-          <label htmlFor='headline' className='mt-12 w-full'>
-            <input
-              type='text' name='headline' id='headline'
-              onChange={setData} required
-              defaultValue={headline}
-              placeholder='Headline'
-              className='block mt-2 w-full'
-              disabled={loading}
-            />
-          </label>
-
-          <label htmlFor='description' className='mt-12 w-full'>
-            <textarea
-              name='description' id='description' rows={10}
-              onChange={setData} required
-              defaultValue={description}
-              placeholder="Description"
-              className='block mt-2 w-full'
-              disabled={loading}
-            />
-          </label>
-
-          <label htmlFor='year' className='mt-12 w-full'>
-            <input
-              type='number' name='year' id='year'
-              onChange={setData} required
-              defaultValue={year}
-              placeholder='Year of Appearance'
-              className='block mt-2 w-full'
-              disabled={loading}
-            />
-          </label>
-
-          <div className='flex items-center gap-2 mt-12'>
-            <input type='submit' className='button button-cta ml-4' value='Save' disabled={loading} />
-            <BackBtn href='/admin?view=collections' />
-          </div>
-
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   )
 }
 

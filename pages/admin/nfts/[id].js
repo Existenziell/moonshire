@@ -26,7 +26,7 @@ const NFT = () => {
     if (!queryId) return
     const { data: nft } = await supabase
       .from('nfts')
-      .select(`*, artists(*), collections(*), users(*)`)
+      .select(`*, artists(*), collections(*), users!nfts_user_fkey(*)`)
       .eq('id', queryId)
       .single()
 
@@ -143,6 +143,8 @@ const NFT = () => {
     }
   }
 
+  const calcHeight = () => (window.innerHeight - 260)
+
   if (status === "error") return <p>{status}</p>
   if (initializing || !nft) return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (!session) return <SupaAuth />
@@ -151,17 +153,16 @@ const NFT = () => {
 
   return (
     <div className='mb-20 w-full relative'>
-      <form onSubmit={saveNft} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='edit-user flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
+      <form onSubmit={saveNft} className='edit-nft sized-page-wrapper' autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'>
 
-        <div className='md:w-1/2 h-full shadow-2xl nextimg'>
+        <div className='sized-image-wrapper'>
           <Image
-            width={1000}
-            height={1000}
+            width={calcHeight()}
+            height={calcHeight()}
             src={image_url}
             blurDataURL={image_url}
             placeholder="blur"
             alt='NFT Image'
-            className='aspect-square bg-cover md:max-h-[calc(100vh-260px)] md:max-w-[calc(50vw-160px)]'
           />
         </div>
 

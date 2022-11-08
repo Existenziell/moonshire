@@ -21,6 +21,8 @@ const User = () => {
 
   const { status, data: user } = useQuery(["user", username], () => fetchApi())
 
+  const calcHeight = () => (window.innerHeight - 260)
+
   if (status === "error") return <p>{status}</p>
   if (status === 'loading') return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
   if (status === 'success' && !user) return <h1 className="mb-4 text-3xl">User not found</h1>
@@ -34,11 +36,11 @@ const User = () => {
         <meta name='description' content={`${username} | Project Moonshire`} />
       </Head>
 
-      <div className='detail-page-wrapper'>
+      <div className='sized-page-wrapper'>
         <div className='sized-image-wrapper'>
           <Image
-            width={1000}
-            height={1000}
+            width={calcHeight()}
+            height={calcHeight()}
             placeholder="blur"
             src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}
             blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}avatars/${avatar_url}`}

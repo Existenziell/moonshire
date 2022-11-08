@@ -88,10 +88,8 @@ const Create = () => {
         <meta name='description' content="Create Artist | Project Moonshire" />
       </Head>
 
-      <form onSubmit={addArtist} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'
-        className='create-artist create-form-wrapper'>
-
-        <div>
+      <form onSubmit={addArtist} className='create-artist sized-page-wrapper' autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'>
+        <div className='sized-image-wrapper'>
           <UploadImage
             bucket='artists'
             url={fileUrl}
@@ -108,7 +106,7 @@ const Create = () => {
               disabled={loading}
             />
           </label>
-          <hr className='my-8' />
+          <hr className='my-8 ml-4' />
 
           <label htmlFor='headline' className='mt-12 w-full'>
             <input
@@ -122,7 +120,7 @@ const Create = () => {
 
           <label htmlFor='description' className='mt-12 w-full'>
             <textarea
-              name='description' id='description' rows={10}
+              name='description' id='description' rows={5}
               onChange={setData} required
               placeholder="Description"
               className='block mt-2 w-full'
@@ -139,8 +137,9 @@ const Create = () => {
               disabled={loading}
             />
           </label>
+          <hr className='my-8 ml-4' />
 
-          <input type='submit' className='button button-cta mt-10' value='Create' disabled={!formIsReady || loading} />
+          <input type='submit' className='button button-cta mt-10 ml-4' value='Create' disabled={!formIsReady || loading} />
         </div>
       </form>
     </>

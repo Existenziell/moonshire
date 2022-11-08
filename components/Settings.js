@@ -76,7 +76,7 @@ const Settings = () => {
 
       <div className='profile flex flex-col items-center justify-start w-full pb-24 mt-20'>
         <div className='flex flex-col items-center justify-start md:flex-row gap-[40px] w-full'>
-          <div className='w-full md:w-1/2 md:max-w-[400px]'>
+          <div className='w-full md:w-1/2'>
             <Avatar
               url={avatar_url}
               onUpload={(url) => handleUpload(url)}

@@ -105,13 +105,14 @@ input[type='checkbox'] {
   @apply relative top-[2px] pb-6 transition-colors border-b-2 border-white text-cta;
 }
 
-.detail-page-wrapper {
+.sized-page-wrapper {
   @apply flex flex-col md:flex-row items-center justify-start gap-[40px] w-full px-[20px] md:px-[40px];
 }
 
 .sized-image-wrapper {
-  @apply shadow-2xl nextimg w-full md:w-1/2 md:max-w-[calc(50vw-160px)] md:max-h-[calc(100vh-260px)]
+  @apply shadow-2xl nextimg bg-detail dark:bg-detail-dark;
 }
+
 
 /* ==========================================================================
 	Navigation
@@ -178,6 +179,7 @@ input[type='checkbox'] {
 }
 
 .edit-user input[type='text'], .edit-user textarea,
+.edit-nft input[type='text'], .edit-nft textarea,
 .list-nft input[type='text'], .list-nft textarea {
   @apply px-5 py-4 rounded-lg
   bg-brand dark:bg-brand-dark border border-detail dark:border-detail-dark 
@@ -191,10 +193,6 @@ input[type='checkbox'] {
 
 #react-select-true-input {
   @apply focus:ring-0;
-}
-
-.create-form-wrapper {
-  @apply flex flex-col md:flex-row items-center justify-start gap-[40px] px-[40px];
 }
 
 
@@ -257,11 +255,11 @@ input[type='checkbox'] {
 	========================================================================== */
 
 .snap-container {
-  @apply md:snap-y md:snap-mandatory md:h-[calc(100vh-200px)] md:overflow-y-scroll pb-24;
+  @apply md:snap-y md:snap-mandatory md:h-[calc(100vh-200px)] md:overflow-y-scroll;
 }
 
 .snap-item {
-  @apply md:snap-start md:snap-always md:h-[calc(100vh-200px)] w-full mb-40;
+  @apply md:snap-start md:snap-always md:h-[calc(100vh-200px)] w-full;
 }
 
 .snap-grid {

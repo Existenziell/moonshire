@@ -29,10 +29,7 @@ const Artists = () => {
 
   const { status, data: artists } = useQuery(["artists"], () => fetchApi())
 
-  const calcHeight = () => {
-    const height = window.innerHeight - 260
-    return height
-  }
+  const calcHeight = () => (window.innerHeight - 260)
 
   if (status === "error") return <p>{status}</p>
   if (status === 'loading') return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
@@ -45,12 +42,12 @@ const Artists = () => {
         <meta name='description' content="Artists | Project Moonshire" />
       </Head>
 
-      <div className='snap-container'>
+      <div className={`snap-container ${artists.length > 1 ? ` pb-24` : ``}`}>
         {artists.map(artist => {
-          const { id, name, headline, description, avatar_url, collections, numberOfCollections, nfts, numberOfNfts } = artist
+          const { id, name, headline, description, origin, avatar_url, collections, numberOfCollections, nfts, numberOfNfts } = artist
 
           return (
-            <div key={id} className='snap-item'>
+            <div key={id} className={`snap-item ${artists.length > 1 ? ` mb-20` : ``}`}>
               <div className='snap-grid'>
                 <Link href={`/artists/${id}`}>
                   <a className='snap-image'>
@@ -69,18 +66,16 @@ const Artists = () => {
                   <hr className='mt-8 mb-12' />
                   <p>{headline}</p>
                   <p className='mt-4'>{description}</p>
-                  {/* <p className='mt-4'>Origin: {origin}</p> */}
-                  {/* <p>{numberOfNfts} artworks by <span className='text-white'>{name}</span></p> */}
-                  {/* <p className='mt-8 text-xs'>On Moonshire since: {created_at.slice(0, 10)}</p> */}
+                  <p className='mt-4'>Origin: {origin}</p>
                   <div className='mt-16'>
                     <h1 className='mb-0'>Assets</h1>
                     <hr className='my-8' />
                     <div className='flex flex-col items-start justify-start md:max-h-64 flex-wrap'>
-                      <p className='mb-4'>{numberOfCollections} {numberOfCollections > 1 ? `Collections` : `Collection`}</p>
+                      <p className='mb-4'>{numberOfCollections} {numberOfCollections === 1 ? `Collection` : `Collections`}</p>
                       {collections.map(c => (
                         <Link key={c.id} href={`/collections/${c.id}`}><a className='link-white block'>{c.title}</a></Link>
                       ))}
-                      <p className='mt-8 mb-4'>{numberOfNfts} {numberOfNfts > 1 ? `NFTs` : `NFT`}</p>
+                      <p className='mt-8 mb-4'>{numberOfNfts} {numberOfNfts === 1 ? `NFT` : `NFTs`}</p>
                       {nfts.map(n => (
                         <Link key={n.id} href={`/nfts/${n.id}`}><a className='link-white block'>{n.name}</a></Link>
                       ))}

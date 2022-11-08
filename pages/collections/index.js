@@ -42,10 +42,7 @@ const Collections = () => {
 
   const { status, data: collections } = useQuery(["collections"], () => fetchApi())
 
-  const calcHeight = () => {
-    const height = window.innerHeight - 260
-    return height
-  }
+  const calcHeight = () => (window.innerHeight - 260)
 
   if (status === "error") return <p>{status}</p>
   if (status === 'loading') return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
@@ -66,12 +63,12 @@ const Collections = () => {
         <meta name='description' content="Collections | Project Moonshire" />
       </Head>
 
-      <div className='snap-container'>
+      <div className={`snap-container ${collections.length > 1 ? ` pb-24` : ``}`}>
         {collections.map(collection => {
-          const { id, title, headline, description, image_url, numberOfNfts, price, uniqueArtists } = collection
+          const { id, title, headline, year, description, image_url, numberOfNfts, price, uniqueArtists } = collection
 
           return (
-            <div key={id} className='snap-item'>
+            <div key={id} className={`snap-item ${collections.length > 1 ? ` mb-20` : ``}`}>
               <div className='snap-grid'>
                 <Link href={`/collections/${id}`}>
                   <a className='snap-image'>
@@ -90,8 +87,8 @@ const Collections = () => {
                   <hr className='mt-8 mb-12' />
                   <p className='mb-4'>{headline}</p>
                   <p className='my-4'>{description}</p>
-                  <div className='mb-4'>
-                    A selection of {numberOfNfts} exclusive artworks by{` `}
+                  <div className='mb-12'>
+                    A selection of {numberOfNfts} exclusive artworks by{`  `}
                     {uniqueArtists.length === 1 ?
                       <Link href={`/artists/${uniqueArtists.at(0).id}`}>
                         <a className='link-white'>
@@ -112,6 +109,7 @@ const Collections = () => {
                         </div>
                       ))
                     }
+                    {`  `}({year})
                   </div>
                   <hr className='my-8' />
                   <div className='flex items-center justify-between gap-10'>

@@ -82,73 +82,72 @@ const Artist = () => {
   const { id, name, headline, description, origin } = artist
 
   return (
-    <div className='mb-20 w-full relative'>
-      <form onSubmit={saveArtist} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='edit-artist flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
-        <div className='md:w-1/2 h-full'>
-          <UploadImage
-            bucket='artists'
-            url={avatarUrl}
-            onUpload={(url) => {
-              setFormData({ ...formData, avatar_url: url })
-              setAvatarUrl(url)
-            }}
+    <form onSubmit={saveArtist} className='edit-artist sized-page-wrapper' autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'>
+      <div className='sized-image-wrapper'>
+        <UploadImage
+          bucket='artists'
+          url={avatarUrl}
+          onUpload={(url) => {
+            setFormData({ ...formData, avatar_url: url })
+            setAvatarUrl(url)
+          }}
+        />
+      </div>
+
+      <div className='w-full md:w-1/2'>
+        <label htmlFor='name' className='mt-4 w-full block'>
+          <input
+            type='text' name='name' id='name'
+            onChange={setData} required
+            defaultValue={name}
+            placeholder='Name'
+            className='w-full text-[20px]'
+            disabled={loading}
           />
+        </label>
+        <hr className='my-8 ml-4' />
+
+        <label htmlFor='headline' className='mt-4 w-full block'>
+          <input
+            type='text' name='headline' id='headline'
+            onChange={setData} required
+            defaultValue={headline}
+            placeholder='Headline'
+            className='w-full'
+            disabled={loading}
+          />
+        </label>
+
+        <label htmlFor='description' className='mt-4 w-full block'>
+          <textarea
+            name='description' id='description' rows={5}
+            onChange={setData} required
+            defaultValue={description}
+            placeholder="Description"
+            className='w-full'
+            disabled={loading}
+          />
+        </label>
+
+        <label htmlFor='origin' className='mt-4 w-full block'>
+          <input
+            type='text' name='origin' id='origin'
+            onChange={setData} required
+            defaultValue={origin}
+            placeholder='Origin'
+            className='w-full'
+            disabled={loading}
+          />
+        </label>
+        <hr className='my-8 ml-4' />
+
+        <div className='flex items-center gap-2 mt-12'>
+          <input type='submit' className='button button-cta ml-4' value='Save' disabled={loading} />
+          <BackBtn href='/admin?view=artists' />
         </div>
 
-        <div className='md:w-1/2'>
-          <label htmlFor='name' className='mt-4 w-full block'>
-            <input
-              type='text' name='name' id='name'
-              onChange={setData} required
-              defaultValue={name}
-              placeholder='Name'
-              className='w-full text-[20px]'
-              disabled={loading}
-            />
-          </label>
-          <hr className='my-8' />
-
-          <label htmlFor='headline' className='mt-4 w-full block'>
-            <input
-              type='text' name='headline' id='headline'
-              onChange={setData} required
-              defaultValue={headline}
-              placeholder='Headline'
-              className='w-full'
-              disabled={loading}
-            />
-          </label>
-
-          <label htmlFor='description' className='mt-4 w-full block'>
-            <textarea
-              name='description' id='description' rows={10}
-              onChange={setData} required
-              defaultValue={description}
-              placeholder="Description"
-              className='w-full'
-              disabled={loading}
-            />
-          </label>
-
-          <label htmlFor='origin' className='mt-4 w-full block'>
-            <input
-              type='text' name='origin' id='origin'
-              onChange={setData} required
-              defaultValue={origin}
-              placeholder='Origin'
-              className='w-full'
-              disabled={loading}
-            />
-          </label>
-
-          <div className='flex items-center gap-2 mt-12'>
-            <input type='submit' className='button button-cta ml-4' value='Save' disabled={loading} />
-            <BackBtn href='/admin?view=artists' />
-          </div>
-
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   )
 }
 

@@ -316,8 +316,8 @@ const CreateNft = () => {
           </Link>
         </div>
         :
-        <form onSubmit={createNft} autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false' className='create-nft flex flex-col md:flex-row items-center justify-center gap-[40px] px-[40px]'>
-          <div>
+        <form onSubmit={createNft} className='create-nft sized-page-wrapper' autoComplete='off' autoCorrect='off' spellCheck='false' autoCapitalize='false'>
+          <div className='sized-image-wrapper'>
             <FilePicker
               url={fileUrl}
               onChange={(e) => handleUpload(e)}
@@ -344,7 +344,7 @@ const CreateNft = () => {
                     disabled={loading}
                   />
                 </label>
-                <hr className='my-8' />
+                <hr className='my-8 ml-4' />
 
                 <label htmlFor='description' className='mt-12 w-full'>
                   <textarea
@@ -357,8 +357,8 @@ const CreateNft = () => {
                 </label>
 
                 <div className='flex items-center justify-between gap-8 mt-4'>
-                  <div className='w-1/2'>
-                    <p className='mb-2 ml-5'>Artist</p>
+                  <div className='w-1/2 ml-4'>
+                    <p className='mb-2'>Artist</p>
                     <label htmlFor='artist' className='w-full'>
                       <Select
                         options={artistOptions}
@@ -371,7 +371,7 @@ const CreateNft = () => {
                     </label>
                   </div>
                   <div className='w-1/2'>
-                    <p className='mb-2 ml-5'>Collection</p>
+                    <p className='mb-2'>Collection</p>
                     <label htmlFor='collection' className='w-full'>
                       <Select
                         options={collectionOptions}

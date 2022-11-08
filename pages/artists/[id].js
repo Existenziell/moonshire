@@ -1,10 +1,10 @@
 import { supabase } from '../../lib/supabase'
 import { useQuery } from 'react-query'
+import { useRouter } from 'next/router'
+import { PulseLoader } from 'react-spinners'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
-import { PulseLoader } from 'react-spinners'
 
 const Artist = () => {
   const router = useRouter()
@@ -32,9 +32,11 @@ const Artist = () => {
 
   const { status, data: artist } = useQuery(["artist", id], () => fetchApi())
 
+  const calcHeight = () => (window.innerHeight - 260)
+
   if (status === "error") return <p>{status}</p>
   if (status === 'loading') return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
-  if (status === 'success' && !artist) return <h1 className="mb-4 text-3xl">No artist found</h1>
+  if (status === 'success' && !artist) return ``
 
   const { name, headline, description, avatar_url, nfts, numberOfNfts, collections, numberOfCollections, origin } = artist
 
@@ -45,11 +47,11 @@ const Artist = () => {
         <meta name='description' content={`${name} | Artist | Project Moonshire`} />
       </Head>
 
-      <div className='detail-page-wrapper'>
+      <div className='sized-page-wrapper'>
         <div className='sized-image-wrapper'>
           <Image
-            width={1000}
-            height={1000}
+            width={calcHeight()}
+            height={calcHeight()}
             placeholder="blur"
             src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${avatar_url}`}
             blurDataURL={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}artists/${avatar_url}`}
