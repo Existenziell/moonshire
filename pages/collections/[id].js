@@ -10,44 +10,48 @@ import NftsList from '../../components/NftsList'
 import useApp from '../../context/App'
 
 const Collection = () => {
-  const { conversionRateEthUsd } = useApp()
   const router = useRouter()
-  const { id } = router.query
+  const { id: queryId } = router.query
+  const { conversionRateEthUsd } = useApp()
   const [view, setView] = useState('all')
   const [display, setDisplay] = useState('grid')
   const [sortBy, setSortBy] = useState('created_at')
   const [sortAsc, setSortAsc] = useState(false)
   const [search, setSearch] = useState('')
 
-  async function fetchApi(...args) {
-    if (!id) return
-    let { data: collection } = await supabase.from('collections').select(`*`).eq('id', id).single()
-    let { data: nfts } = await supabase.from('nfts')
-      .select(`*, artists(*), collections(*)`)
-      .ilike('name', `%${search}%`)
-      .order(sortBy, { ascending: sortAsc })
-
-    let collectionNfts = nfts.filter(n => n.collection === collection.id)
-    collection.numberOfNfts = collectionNfts.length
-
-    if (view === 'sold') collectionNfts = collectionNfts.filter(n => (n.listed === false))
-    if (view === 'available') collectionNfts = collectionNfts.filter(n => (n.listed === true))
-
-    collection.nfts = collectionNfts
-
+  async function fetchCollection(...args) {
+    if (!queryId) return
+    let { data: collection } = await supabase.from('collections').select(`*`).eq('id', queryId).single()
     return collection
   }
 
-  const { status, data: collection } = useQuery(["collection", id, sortBy, sortAsc, search, view], () =>
-    fetchApi()
-  )
+  async function fetchNfts(...args) {
+    if (!queryId) return
+    let { data: nfts } = await supabase.from('nfts')
+      .select(`*, artists(*), collections(*)`)
+      .ilike('name', `%${search}%`)
+      .eq('collection', queryId)
+      .order(sortBy, { ascending: sortAsc })
 
-  const navigate = (e) => {
-    setView(e.target.name)
+    if (view === 'sold') nfts = nfts.filter(n => (n.listed === false))
+    if (view === 'available') nfts = nfts.filter(n => (n.listed === true))
+    return nfts
   }
 
-  if (status === "error") return <p>{status}</p>
-  if (status === 'success' && !collection) return <h1 className="mb-4 text-3xl">Collection not found</h1>
+  const { statusCollection, data: collection } = useQuery(["collection", queryId], () =>
+    fetchCollection()
+  )
+
+  const { statusNfts, data: nfts } = useQuery(["nfts", collection?.id, sortBy, sortAsc, search, view], () =>
+    fetchNfts()
+  )
+
+  const navigate = (e) => (setView(e.target.name))
+
+  if (statusCollection === "error" || statusNfts === 'error') return <p>Error</p>
+  if (statusCollection === 'success' && !collection) return <h1 className="mb-4 text-3xl">Collection not found</h1>
+  if (statusCollection === 'loading' || statusNfts === 'loading') return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (statusNfts === 'loading') return <div className='fullscreen-wrapper'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
 
   return (
     <>
@@ -55,6 +59,10 @@ const Collection = () => {
         <title>{collection?.title} | Collection | Project Moonshire</title>
         <meta name='description' content={`${collection?.title} | Collection | Project Moonshire`} />
       </Head>
+
+      <h1 className="h-16 flex items-center justify-center text-center bg-detail dark:bg-detail-dark mb-4">
+        {collection?.title}
+      </h1>
 
       <div className='px-[20px] md:px-[40px] w-full'>
         <TabBar links={['all', 'available', 'sold']}
@@ -68,15 +76,15 @@ const Collection = () => {
           search={search}
           setSearch={setSearch}
           resetSearch={() => setSearch('')}
-          length={collection?.nfts?.length}
+          length={nfts?.length}
         />
 
-        {collection?.nfts ?
+        {nfts ?
           <div className="flex flex-wrap justify-between gap-20 mb-20">
-            {collection?.nfts?.length > 0 ?
+            {nfts?.length > 0 ?
               <>
-                <NftsGrid nfts={collection.nfts} display={display} view={view} conversionRateEthUsd={conversionRateEthUsd} />
-                <NftsList nfts={collection.nfts} display={display} conversionRateEthUsd={conversionRateEthUsd} />
+                <NftsGrid nfts={nfts} display={display} view={view} conversionRateEthUsd={conversionRateEthUsd} />
+                <NftsList nfts={nfts} display={display} conversionRateEthUsd={conversionRateEthUsd} />
               </>
               :
               <p className="flex flex-col items-center justify-center w-full">No results</p>
