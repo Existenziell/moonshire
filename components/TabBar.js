@@ -23,7 +23,7 @@ const TabBar = ({ links, extra, view, navigate, setDisplay, display, sortBy, sor
 
       {view !== 'settings' &&
         <div className='hidden md:flex items-center gap-8 relative bottom-2'>
-          {length ? <span className='text-brand-dark/20 dark:text-white'>{length} {length === 1 ? `result` : `results`}</span> : null}
+          {length ? <span className='text-brand-dark/20 dark:text-brand/20'>{length} {length === 1 ? `result` : `results`}</span> : null}
 
           <button onClick={() => setDisplay('grid')}>
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"

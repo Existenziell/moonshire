@@ -11,7 +11,7 @@ import Settings from '../components/Settings'
 import { PulseLoader } from 'react-spinners'
 
 const Profile = () => {
-  const { address, currentUser, hasMetamask } = useApp()
+  const { address, currentUser, hasMetamask, conversionRateEthUsd } = useApp()
   const [view, setView] = useState('all')
   const [display, setDisplay] = useState('grid')
   const [sortBy, setSortBy] = useState('created_at')
@@ -99,8 +99,8 @@ const Profile = () => {
               :
               nfts?.length > 0 ?
                 <>
-                  <NftsGrid nfts={nfts} display={display} view={view} />
-                  <NftsList nfts={nfts} display={display} />
+                  <NftsGrid nfts={nfts} display={display} view={view} conversionRateEthUsd={conversionRateEthUsd} />
+                  <NftsList nfts={nfts} display={display} conversionRateEthUsd={conversionRateEthUsd} />
                 </>
                 :
                 <p className="flex flex-col items-center justify-center w-full">No results</p>

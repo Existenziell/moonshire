@@ -24,6 +24,7 @@ export const AppProvider = ({ children }) => {
   const [chainId, setChainId] = useState(null)
   const [darkmode, setDarkmode] = useState('')
   const [contractBalance, setContractBalance] = useState(null)
+  const [conversionRateEthUsd, setConversionRateEthUsd] = useState()
   const router = useRouter()
 
   const providerOptions = {
@@ -142,6 +143,15 @@ export const AppProvider = ({ children }) => {
     }
   }
 
+  useEffect(() => {
+    const getConversionRateEthUsd = async () => {
+      const result = await fetch(`https://api.coinconvert.net/convert/eth/usd?amount=1`)
+      const rate = await result.json()
+      setConversionRateEthUsd(rate.USD)
+    }
+    getConversionRateEthUsd()
+  }, [])
+
   const checkChain = (chainId) => {
     if (parseInt(chainId) === 11155111) {  // Local: 1337 - Rinkeby: 4 - Mumbai: 80001 - Sepolia: 11155111
       return true
@@ -156,6 +166,7 @@ export const AppProvider = ({ children }) => {
     currentUser, setCurrentUser,
     hasMetamask, setHasMetamask, chainId, checkChain,
     notify, notificationMsg, setNotificationMsg, darkmode, setDarkmode,
+    conversionRateEthUsd,
   }
 
   return (

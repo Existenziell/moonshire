@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { useRouter } from 'next/router'
 import { PulseLoader } from 'react-spinners'
-import { convertEthToUsd } from "../../lib/convertEthToUsd"
 import useApp from "../../context/App"
 import Head from 'next/head'
 import Link from 'next/link'
@@ -14,11 +13,12 @@ import fetchMyNfts from '../../lib/contract/fetchMyNfts'
 import Success from '../../components/Success'
 import Image from 'next/image'
 import moment from 'moment'
+import Error from "../../components/Error"
 
 const Nft = () => {
   const router = useRouter()
   const { id: queryId } = router.query
-  const { address, currentUser, signer, notify, connectWallet } = useApp()
+  const { address, currentUser, signer, notify, connectWallet, conversionRateEthUsd } = useApp()
   const [fetching, setFetching] = useState(true)
   const [buying, setBuying] = useState(false)
   const [sellerIsOwner, setSellerIsOwner] = useState(false)
@@ -34,6 +34,7 @@ const Nft = () => {
       .select(`*, artists(*), collections(*), users!nfts_user_fkey(*)`)
       .eq('id', queryId)
       .single()
+    if (!nft) return
 
     const { data: events } = await supabase
       .from('events')
@@ -54,8 +55,8 @@ const Nft = () => {
       }
       nft.digitalAssets = digitalAssets
       nft.physicalAssets = physicalAssets
-      nft.priceUSD = await convertEthToUsd(nft.price)
     }
+
     if (events.length) {
       for (let e of events) {
         switch (e.type) {
@@ -114,7 +115,7 @@ const Nft = () => {
     logWeb3(`Initiating blockchain transfer...`)
 
     try {
-      const hash = await buyNft(nft, signer, address, currentUser.id)
+      const hash = await buyNft(nft, signer, address, currentUser.id)(nft.price * conversionRateEthUsd).toFixed(2)
       if (hash) {
         notify("Transfer to your wallet was successful!")
         setHash(hash)
@@ -137,10 +138,11 @@ const Nft = () => {
 
   const calcHeight = () => (window.innerHeight - 260)
 
-  if (status === "error") return <p>{status}</p>
-  if (!nft) return <div className='fullscreen-wrapper'>NFT not found</div>
+  if (status === "error") return <Error message={status} />
+  if (status === 'loading') return <div className='flex items-center justify-center min-w-max h-[calc(100vh-420px)]'><PulseLoader color={'var(--color-cta)'} size={10} /></div>
+  if (status === "success" && !nft) return ''
 
-  const { name, description, price, image_url, artists, events, lastEvent, listed, tokenURI, tokenId, priceUSD, physicalAssets, digitalAssets } = nft
+  const { name, description, price, image_url, artists, events, lastEvent, listed, tokenURI, tokenId, physicalAssets, digitalAssets } = nft
 
   return (
     <>
@@ -279,7 +281,7 @@ const Nft = () => {
                     </div>
                   </div>
                   <div className='flex items-center gap-6 justify-end w-full'>
-                    <p className='text-gray-400 relative bottom-[1px]'>(${priceUSD})</p>
+                    <p className='text-gray-400 relative bottom-[1px]'>(${(price * conversionRateEthUsd).toFixed(2)})</p>
                     <p className='text-[20px] relative bottom-1 whitespace-nowrap'>{price} ETH</p>
                     {!address ?
                       <button

@@ -6,8 +6,10 @@ import Head from 'next/head'
 import TabBar from '../../components/TabBar'
 import NftsGrid from '../../components/NftsGrid'
 import NftsList from '../../components/NftsList'
+import useApp from '../../context/App'
 
 const Nfts = () => {
+  const { conversionRateEthUsd } = useApp()
   const [view, setView] = useState('all')
   const [display, setDisplay] = useState('grid')
   const [sortBy, setSortBy] = useState('created_at')
@@ -63,8 +65,8 @@ const Nfts = () => {
           :
           nfts?.length > 0 ?
             <>
-              <NftsGrid nfts={nfts} display={display} view={view} />
-              <NftsList nfts={nfts} display={display} />
+              <NftsGrid nfts={nfts} display={display} view={view} conversionRateEthUsd={conversionRateEthUsd} />
+              <NftsList nfts={nfts} display={display} conversionRateEthUsd={conversionRateEthUsd} />
             </>
             :
             <p className="flex flex-col items-center justify-center w-full">No results</p>

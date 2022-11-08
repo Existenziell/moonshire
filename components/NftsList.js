@@ -1,22 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
-// import { useEffect, useState } from "react"
-// import { convertEthToUsd } from "../lib/convertEthToUsd"
 
-const NftsList = ({ nfts, display }) => {
-  // const [convertedNfts, setConvertedNfts] = useState([])
-
-  // const fetchUsdPrice = async () => {
-  //   for (let nft of nfts) {
-  //     nft.priceUSD = await convertEthToUsd(nft.price)
-  //   }
-  //   setConvertedNfts(nfts)
-  // }
-
-  // useEffect(() => {
-  //   fetchUsdPrice()
-  // }, [nfts.length])
-
+const NftsList = ({ nfts, display, conversionRateEthUsd }) => {
   return (
     <table className={`${display === 'list' ? `table-auto` : `hidden`} w-full mt-20`}>
       <thead className='text-left'>
@@ -76,7 +61,7 @@ const NftsList = ({ nfts, display }) => {
             </td>
             <td className='whitespace-nowrap'>
               <span className="text-[20px]">{nft.price} ETH</span>
-              {/* <span className='text-gray-400 ml-6 relative bottom-[4px] text-sm'>(${nft.priceUSD})</span> */}
+              <span className='text-gray-400 ml-6 relative bottom-[4px] text-sm'>(${(nft.price * conversionRateEthUsd).toFixed(2)})</span>
             </td>
 
             <td className='pr-0 pl-auto'>

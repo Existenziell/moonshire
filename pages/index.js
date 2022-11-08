@@ -3,9 +3,11 @@ import { useQuery } from 'react-query'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import { convertEthToUsd } from '../lib/convertEthToUsd'
+import useApp from '../context/App'
 
 const Home = () => {
+  const { conversionRateEthUsd } = useApp()
+
   async function fetchApi(...args) {
     let { data: collections } = await supabase
       .from('collections')
@@ -40,7 +42,6 @@ const Home = () => {
         collection.numberOfNfts = 0
       }
       if (collectionPrice) {
-        collection.priceUSD = await convertEthToUsd(collectionPrice)
         collection.price = collectionPrice
       }
     }
@@ -63,7 +64,7 @@ const Home = () => {
       <div className='h-screen md:snap-y md:snap-mandatory md:overflow-y-scroll'>
         {collections?.length > 0 &&
           collections.map((collection, idx) => {
-            const { id, title, image_url, uniqueArtists, price, priceUSD } = collection
+            const { id, title, image_url, uniqueArtists, price } = collection
 
             return (
               <div key={id} className={`h-screen w-full md:snap-start md:snap-always flex items-center justify-center relative`}>
@@ -97,7 +98,7 @@ const Home = () => {
                     </div>
                     <div className='flex items-center gap-12'>
                       <span className='text-4xl text-white'>{price} ETH</span>
-                      <span className='text-4xl text-gray-400 hidden md:block'>${priceUSD}</span>
+                      <span className='text-4xl text-gray-400 hidden md:block'>${(price * conversionRateEthUsd).toFixed(2)}</span>
                       <Link href={id ? `/collections/${id}` : `/collections`}>
                         <a><button className='button button-cta'>EXPLORE</button></a>
                       </Link>

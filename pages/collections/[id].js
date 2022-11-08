@@ -7,8 +7,10 @@ import Head from 'next/head'
 import TabBar from '../../components/TabBar'
 import NftsGrid from '../../components/NftsGrid'
 import NftsList from '../../components/NftsList'
+import useApp from '../../context/App'
 
 const Collection = () => {
+  const { conversionRateEthUsd } = useApp()
   const router = useRouter()
   const { id } = router.query
   const [view, setView] = useState('all')
@@ -73,8 +75,8 @@ const Collection = () => {
           <div className="flex flex-wrap justify-between gap-20 mb-20">
             {collection?.nfts?.length > 0 ?
               <>
-                <NftsGrid nfts={collection.nfts} display={display} view={view} />
-                <NftsList nfts={collection.nfts} display={display} />
+                <NftsGrid nfts={collection.nfts} display={display} view={view} conversionRateEthUsd={conversionRateEthUsd} />
+                <NftsList nfts={collection.nfts} display={display} conversionRateEthUsd={conversionRateEthUsd} />
               </>
               :
               <p className="flex flex-col items-center justify-center w-full">No results</p>
