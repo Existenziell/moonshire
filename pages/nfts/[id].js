@@ -115,7 +115,7 @@ const Nft = () => {
     logWeb3(`Initiating blockchain transfer...`)
 
     try {
-      const hash = await buyNft(nft, signer, address, currentUser.id)(nft.price * conversionRateEthUsd).toFixed(2)
+      const hash = await buyNft(nft, signer, address, currentUser.id)
       if (hash) {
         notify("Transfer to your wallet was successful!")
         setHash(hash)
@@ -128,7 +128,7 @@ const Nft = () => {
       }
       setBuying(false)
     } catch (e) {
-      notify("Something went wrong!...")
+      notify("Something went wrong...")
     }
   }
 
